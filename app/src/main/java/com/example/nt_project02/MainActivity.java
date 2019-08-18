@@ -111,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void initUI() {
 
-
         final String[] colors = getResources().getStringArray(R.array.default_preview);
 
         final NavigationTabBar navigationTabBar = (NavigationTabBar) findViewById(R.id.ntb_horizontal);
@@ -121,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                         getResources().getDrawable(R.drawable.home),
                         Color.parseColor(colors[0]))
                         //.selectedIcon(getResources().getDrawable(R.drawable.ic_sixth))
-                        .title("소식")
+                        .title("doq")
                         .badgeTitle("NTB")
                         .build()
         );
