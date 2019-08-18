@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                         getResources().getDrawable(R.drawable.home),
                         Color.parseColor(colors[0]))
                         //.selectedIcon(getResources().getDrawable(R.drawable.ic_sixth))
-                        .title("doq")
+                        .title("소식")
                         .badgeTitle("NTB")
                         .build()
         );
