@@ -11,7 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_foreground_native"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MessageActivity">
+
+        </activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,11 +22,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".Sign_UpActivity"></activity>
-        <activity android:name=".PasswordResetActivity"></activity>
-        <activity android:name=".MemberActivity"></activity>
-        <activity android:name=".Native_Register"></activity>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".Sign_UpActivity" />
+        <activity android:name=".PasswordResetActivity" />
+        <activity android:name=".MemberActivity" />
+        <activity android:name=".Native_Register" />
     </application>
 
 </manifest>
