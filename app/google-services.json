@@ -126,6 +126,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "737568200127-81sd9hutbthl6ail8jjke02lp1cdbc2f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nt_project02",
+            "certificate_hash": "c1636891a0758403e66ce56cbd0e9ab11ae9a6ef"
+          }
+        },
+        {
           "client_id": "737568200127-fpc92gko7a732cp31jb7db4fu5qcoeni.apps.googleusercontent.com",
           "client_type": 3
         }
