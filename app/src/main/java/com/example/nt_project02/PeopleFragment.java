@@ -25,14 +25,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 
 public class PeopleFragment extends Fragment {
-
 
     @Nullable
     @Override
@@ -51,13 +49,11 @@ public class PeopleFragment extends Fragment {
 
 
 
-
         List<UserModel> userModels;
         public PeopleFragmentRecyclerViewAdapter(){
-
-
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             userModels = new ArrayList<>();
+
 
             db.collection("users")
                     .get()
@@ -68,16 +64,13 @@ public class PeopleFragment extends Fragment {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     userModels.add(document.toObject(UserModel.class));
 
-
                                 }
-                                notifyDataSetChanged();
                             } else {
 
                             }
                         }
                     });
-
-     /*       FirebaseDatabase.getInstance().getReference().child("users").addValueEventListener(new ValueEventListener() {
+   /*         FirebaseDatabase.getInstance().getReference().child("users").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     userModels.clear();
@@ -106,12 +99,12 @@ public class PeopleFragment extends Fragment {
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position){
 
-           Glide.with
+            Glide.with
                     (holder.itemView.getContext());
-                   /* .load(userModels.get(position).profieImageUrl)
+                 /*   .load(userModels.get(position).profieImageUrl)
                     .apply(new RequestOptions().circleCrop())
                     .into(((CustomViewHolder)holder).imageView);*/
-            ((CustomViewHolder)holder).textView.setText(userModels.get(position).sex);
+            ((CustomViewHolder)holder).textView.setText(userModels.get(position).name);
         }
 
         @Override
