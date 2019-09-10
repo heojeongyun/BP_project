@@ -113,9 +113,6 @@ public class MemberActivity extends AppCompatActivity {
     };
 
 
-
-
-
     private void profileUpdate() {
 
 

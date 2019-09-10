@@ -33,12 +33,14 @@
         android:layout_height="wrap_content"
         android:text="Native Travel" />
 
-    <ListView
-        android:id="@+id/listView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/peoplefragment_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="678dp"
-        android:layout_below="@+id/setting_demo"
-        android:layout_marginTop="34dp">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_search"
+        android:layout_marginTop="7dp">
 
-    </ListView>
+    </androidx.recyclerview.widget.RecyclerView>
+
+
 </RelativeLayout>
