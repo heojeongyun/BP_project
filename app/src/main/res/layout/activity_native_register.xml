@@ -90,7 +90,7 @@
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="지역 소개" />
+            android:text="현지인 소개" />
 
         <EditText
             android:id="@+id/tv_information"
@@ -98,7 +98,7 @@
             android:layout_height="250dp"
             android:background="#E7E6E6"
             android:gravity="center"
-            android:hint="자신의 지역을 소개해주세요!" />
+            android:hint="자신만의 소개를 해주세요!" />
     </LinearLayout>
 
     <Button

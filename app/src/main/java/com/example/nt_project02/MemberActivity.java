@@ -76,6 +76,7 @@ public class MemberActivity extends AppCompatActivity {
 
             }
         });
+
         city_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -136,10 +137,10 @@ public class MemberActivity extends AppCompatActivity {
             if (user != null) {
                 db.collection("users").document(user.getUid()).set(memberInfo)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                startToast("회원정보 등록 성공.");
-                                finish();
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        startToast("회원정보 등록 성공.");
+                                        finish();
 
                             }
                         }).addOnFailureListener(new OnFailureListener() {
