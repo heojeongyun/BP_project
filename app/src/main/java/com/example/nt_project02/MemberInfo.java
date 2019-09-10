@@ -11,6 +11,7 @@ public class MemberInfo {
     private String user_kind;
 
 
+
     public MemberInfo(String name, String sex, String phone, String city, String user_kind) {
         this.name = name;
         this.sex = sex;
