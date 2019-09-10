@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_search"
-        android:layout_marginTop="7dp">
+        android:layout_marginTop="40dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 

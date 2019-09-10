@@ -76,7 +76,7 @@ public class PeopleFragment extends Fragment {
 
             Glide.with
                     (holder.itemView.getContext())
-                    .load(userModels.get(position).profieImageUrl)
+                    .load(userModels.get(position).profileImageUrl)
                     .apply(new RequestOptions().circleCrop())
                     .into(((CustomViewHolder)holder).imageView);
             ((CustomViewHolder)holder).textView.setText(userModels.get(position).userName);
