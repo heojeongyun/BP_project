@@ -46,11 +46,12 @@ public class SplashActivity extends AppCompatActivity {
                             boolean updated = task.getResult();
 
 
+
                         } else {
 
                         }
                         displayWelcomeMessage();
-                        MystartActivity(Sign_UpActivity.class);
+
                     }
 
 
@@ -73,7 +74,11 @@ public class SplashActivity extends AppCompatActivity {
             });
 
             builder.create().show();
+
+        }else{
+            MystartActivity(Sign_UpActivity.class);
         }
+
 
     }
 
