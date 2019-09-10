@@ -95,7 +95,7 @@ public class PeopleFragment extends Fragment {
             public CustomViewHolder(View view) {
                 super(view);
                 imageView = (ImageView) view.findViewById(R.id.frienditem_imageview);
-                textView = (TextView) view.findViewById(R.id.frienditem_textview);
+                textView = (TextView) view.findViewById(R.id.frienditem_nick);
             }
         }
     }
