@@ -1,10 +1,14 @@
 package com.example.nt_project02.Native_Profile;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.nt_project02.Chat.MessageActivity;
 import com.example.nt_project02.R;
 import com.google.android.material.tabs.TabLayout;
 
@@ -59,6 +63,16 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
 
         initializeViewPager();
         initializeTabLayout();
+
+        Button chat_button=(Button) findViewById(R.id.profile_chat_button);
+        chat_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MystartActivity(MessageActivity.class);
+            }
+        });
+
+
     }
 
     @Override
@@ -77,6 +91,13 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
 
     @Override
     public void onPageScrollStateChanged(int state) {
+
+    }
+
+    private void MystartActivity(Class c){
+        Intent intent=new Intent(this,c);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
 
     }
 }
