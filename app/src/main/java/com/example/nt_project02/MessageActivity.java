@@ -36,7 +36,7 @@ public class MessageActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private List<ChatData> chatList;
-    private String nick="nick2";
+    private String nick="nick1";
     private FirebaseDatabase database;
     private DatabaseReference myRef;
 

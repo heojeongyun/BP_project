@@ -76,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
         News_Fragment news_fragment =new News_Fragment();
         adapter.addItem(news_fragment);
 
-        Profile_Fragment profile_fragment =new Profile_Fragment();
-        adapter.addItem(profile_fragment);
+        PeopleFragment peopleFragment =new PeopleFragment();
+        adapter.addItem(peopleFragment);
 
         Chatting_Fragment chatting_fragment =new Chatting_Fragment();
         adapter.addItem(chatting_fragment);
@@ -87,6 +87,11 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager.setAdapter(adapter);
         initUI();
+
+
+
+
+
 
     }
 

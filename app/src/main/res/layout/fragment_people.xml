@@ -18,6 +18,14 @@
         android:textSize="12sp" />
 
 
+    <FrameLayout
+        android:id="@+id/main_framelayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"></FrameLayout>
+
     <TextView
         android:gravity="center"
         android:id="@+id/setting_demo"
@@ -25,10 +33,14 @@
         android:layout_height="wrap_content"
         android:text="Native Travel" />
 
-    <ListView
-        android:id="@+id/listView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/peoplefragment_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="678dp"
-        android:layout_below="@+id/setting_demo"
-        android:layout_marginTop="34dp"></ListView>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_search"
+        android:layout_marginTop="40dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
 </RelativeLayout>

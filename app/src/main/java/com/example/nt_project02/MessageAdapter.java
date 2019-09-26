@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,12 +24,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
         public TextView TextView_nickname;
         public TextView TextView_msg;
         public View rootView;
+        public ImageView profile_Image;
         // each data item is just a string in this case
         public TextView textView;
         public MyViewHolder(LinearLayout v) {
             super(v);
             TextView_nickname=v.findViewById(R.id.TextView_nickname);
             TextView_msg=v.findViewById(R.id.TextView_msg);
+            profile_Image=v.findViewById(R.id.profile_Image);
             rootView=v;
         }
     }
