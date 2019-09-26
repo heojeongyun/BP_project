@@ -2,43 +2,68 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="71dp">
+    android:layout_height="100dp">
 
     <LinearLayout
         android:layout_margin="10dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="80dp"
+        >
 
         <ImageView
             android:id="@+id/frienditem_imageview"
-            android:layout_width="50dp"
-            android:layout_height="50dp" />
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
 
-        <TextView
-            android:id="@+id/frienditem_nick"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="30dp"
-            android:text="닉네임" />
 
-        <TextView
-            android:id="@+id/frienditem_region"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="30dp"
-            android:text="지역" />
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/frienditem_hash"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="30dp"
-            android:text="해시태그" />
+
+            <TextView
+                android:id="@+id/frienditem_nick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/frienditem_imageview"
+                android:layout_toRightOf="@id/frienditem_imageview"
+                android:text="닉네임"
+                android:textStyle="bold"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/frienditem_region"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/frienditem_imageview"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@id/frienditem_imageview"
+                android:text="지역" />
+
+            <TextView
+                android:id="@+id/frienditem_hash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/frienditem_imageview"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+
+                android:layout_toRightOf="@id/frienditem_imageview"
+                android:text="해시태그"
+                android:textColor="#E91E63" />
+
+
+        </LinearLayout>
+
+
+
+
+
+
 
 
     </LinearLayout>

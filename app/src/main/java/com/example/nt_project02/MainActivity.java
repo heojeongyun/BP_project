@@ -12,6 +12,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.example.nt_project02.Fragment.Chatting_Fragment;
 import com.example.nt_project02.Fragment.News_Fragment;
@@ -90,9 +93,8 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         initUI();
 
-
-
-
+        EditText editText = findViewById(R.id.txt_search);
+        TextView resultTextView = findViewById(R.id.textView);
 
 
     }
@@ -144,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
                 new NavigationTabBar.Model.Builder(
                         getResources().getDrawable(R.drawable.chatting),
                         Color.parseColor(colors[2]))
-                       // .selectedIcon(getResources().getDrawable(R.drawable.ic_seventh))
+                        // .selectedIcon(getResources().getDrawable(R.drawable.ic_seventh))
                         .title("채팅")
                         .badgeTitle("state")
                         .build()
