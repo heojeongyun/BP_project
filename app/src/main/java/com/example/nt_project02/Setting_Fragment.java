@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,17 +16,27 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Setting_Fragment extends Fragment {
 
     ImageView ivUser;
+    private StorageReference mStorageRef;
+    Bitmap bitmap;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView=(ViewGroup) inflater.inflate(R.layout.setting,container,false);
+        mStorageRef = FirebaseStorage.getInstance().getReference();
 
 
 
@@ -51,13 +62,42 @@ public class Setting_Fragment extends Fragment {
 
     }
 
+    public void uploadImage(){
+        StorageReference mountainsRef = mStorageRef.child("users").child("email"+".jpg");
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream ();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray ();
+
+        UploadTask uploadTask = mountainsRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @SuppressWarnings ( "VisibleForTests" )
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                //수정Uri downloadUrl = taskSnapshot.getDownloadUrl ();
+                //수정Log.d("url", String.valueOf(downloadUrl));
+
+            }
+
+        });
+
+
+    }
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         Uri image = data.getData();
         try{
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), image);
+            bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), image);
             ivUser.setImageBitmap (bitmap);
+            uploadImage ();
 
         } catch (IOException e) {
             e.printStackTrace();
