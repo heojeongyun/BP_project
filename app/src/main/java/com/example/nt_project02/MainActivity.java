@@ -130,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
                         Color.parseColor(colors[0]))
                         //.selectedIcon(getResources().getDrawable(R.drawable.ic_sixth))
                         .title("소식")
-                        .badgeTitle("NTB")
                         .build()
         );
         models.add(
@@ -139,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
                         Color.parseColor(colors[1]))
 //                        .selectedIcon(getResources().getDrawable(R.drawable.ic_eighth))
                         .title("매칭")
-                        .badgeTitle("with")
                         .build()
         );
         models.add(
@@ -148,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
                         Color.parseColor(colors[2]))
                         // .selectedIcon(getResources().getDrawable(R.drawable.ic_seventh))
                         .title("채팅")
-                        .badgeTitle("state")
                         .build()
         );
         models.add(
@@ -157,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
                         Color.parseColor(colors[3]))
 //                        .selectedIcon(getResources().getDrawable(R.drawable.ic_eighth))
                         .title("설정")
-                        .badgeTitle("icon")
                         .build()
         );
 
@@ -184,15 +180,6 @@ public class MainActivity extends AppCompatActivity {
         navigationTabBar.postDelayed(new Runnable() {
             @Override
             public void run() {
-                for (int i = 0; i < navigationTabBar.getModels().size(); i++) {
-                    final NavigationTabBar.Model model = navigationTabBar.getModels().get(i);
-                    navigationTabBar.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            model.showBadge();
-                        }
-                    }, i * 100);
-                }
             }
         }, 500);
     }
