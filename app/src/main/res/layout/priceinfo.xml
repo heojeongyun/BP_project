@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="숙박"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:layout_margin="10dp"
+        android:textSize="16sp"
+        android:id="@+id/priceInfoTextView1"
+        android:text="해운대 더 좋은 민박집 : 360,000 "/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="추천 카페"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:layout_margin="10dp"
+        android:textSize="16sp"
+        android:id="@+id/priceInfoTextView2"
+        android:text="더 좋은 카페 시그니처 메뉴 : 5,000원"/>
+</LinearLayout>

@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import devlight.io.library.ntb.NavigationTabBar;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG="MainActivity";
+    private static final String TAG="Profile";
     ViewPager viewPager;
 
     @Override
