@@ -102,7 +102,9 @@ public class PeopleFragment extends Fragment {
                  /*   .load(userModels.get(position).profieImageUrl)
                     .apply(new RequestOptions().circleCrop())
                     .into(((CustomViewHolder)holder).imageView);*/
-            ((CustomViewHolder)holder).textView.setText(userModels.get(position).name);
+            ((CustomViewHolder)holder).Nick_textView.setText(userModels.get(position).name);
+            ((CustomViewHolder)holder).Region_textView.setText(userModels.get(position).region);
+            ((CustomViewHolder)holder).Hash_textView.setText(userModels.get(position).hash);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -125,12 +127,16 @@ public class PeopleFragment extends Fragment {
 
         private class CustomViewHolder extends RecyclerView.ViewHolder {
             public  ImageView imageView;
-            public TextView textView;
+            public TextView Nick_textView;
+            public TextView Region_textView;
+            public TextView Hash_textView;
 
             public CustomViewHolder(View view) {
                 super(view);
                 imageView = (ImageView) view.findViewById(R.id.frienditem_imageview);
-                textView = (TextView) view.findViewById(R.id.frienditem_nick);
+                Nick_textView = (TextView) view.findViewById(R.id.frienditem_nick);
+                Region_textView=(TextView) view.findViewById(R.id.frienditem_region);
+                Hash_textView=(TextView) view.findViewById(R.id.frienditem_hash);
             }
         }
     }
