@@ -28,6 +28,7 @@
         <activity android:name=".PasswordResetActivity" />
         <activity android:name=".MemberActivity" />
         <activity android:name=".Native_Register" />
+        <activity android:name=".Native_Profile.Profile"/>
     </application>
 
 </manifest>

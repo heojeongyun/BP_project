@@ -74,7 +74,25 @@
         android:layout_weight="0.5"
         android:orientation="vertical">
 
-        <android.support.design.widget.TabLayout
+        <com.google.android.material.tabs.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tab_layout">
+
+            <com.google.android.material.tabs.TabItem
+                android:text="추천코스"
+                />
+
+            <com.google.android.material.tabs.TabItem
+                android:text="가격정보"
+                />
+
+            <com.google.android.material.tabs.TabItem
+                android:text="Review"
+                />
+        </com.google.android.material.tabs.TabLayout>
+
+      <!--  <android.support.design.widget.TabLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:id="@+id/tab_layout">
@@ -86,7 +104,12 @@
             <android.support.design.widget.TabItem
                 android:text="Review"/>
 
-        </android.support.design.widget.TabLayout>
+        </android.support.design.widget.TabLayout>-->
+
+
+
+
+
 
    <!--     <android.support.v4.view.ViewPager
 

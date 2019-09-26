@@ -1,15 +1,12 @@
 package com.example.nt_project02.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,7 +19,6 @@ import java.util.List;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.nt_project02.Native_Profile.Profile;
 import com.example.nt_project02.R;
 import com.example.nt_project02.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -49,11 +45,6 @@ public class PeopleFragment extends Fragment {
 
         return view;
     }
-
-
-
-
-
 
 
     class PeopleFragmentRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
@@ -131,11 +122,8 @@ public class PeopleFragment extends Fragment {
             public CustomViewHolder(View view) {
                 super(view);
                 imageView = (ImageView) view.findViewById(R.id.frienditem_imageview);
-                textView = (TextView) view.findViewById(R.id.frienditem_nick);
+                textView = (TextView) view.findViewById(R.id.frienditem_textview);
             }
         }
-
-
-
     }
 }
