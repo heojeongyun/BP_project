@@ -13,10 +13,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.example.nt_project02.Fragment.Chatting_Fragment;
-import com.example.nt_project02.Fragment.News_Fragment;
-import com.example.nt_project02.Fragment.PeopleFragment;
-import com.example.nt_project02.Fragment.Setting_Fragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
