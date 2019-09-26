@@ -112,6 +112,7 @@ public class Sign_UpActivity extends AppCompatActivity {
         Toast.makeText(Sign_UpActivity.this, msg,
                 Toast.LENGTH_SHORT).show();
     }
+
     private void MystartActivity(Class c){
         Intent intent=new Intent(this,c);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
