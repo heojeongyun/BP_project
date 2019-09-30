@@ -1,15 +1,15 @@
 package com.example.nt_project02.Chat;
 
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
 import com.example.nt_project02.R;
 import com.google.firebase.database.ChildEventListener;
@@ -47,6 +47,8 @@ public class MessageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
+
+
 
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView );
