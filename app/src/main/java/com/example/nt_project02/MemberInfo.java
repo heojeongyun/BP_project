@@ -1,9 +1,8 @@
 package com.example.nt_project02;
 
-import android.widget.EditText;
-
 public class MemberInfo {
 
+    private String uid;
     private String name;
     private String sex;
     private String phone;
@@ -12,12 +11,21 @@ public class MemberInfo {
 
 
 
-    public MemberInfo(String name, String sex, String phone, String city, String user_kind) {
+    public MemberInfo(String uid,String name, String sex, String phone, String city, String user_kind) {
+        this.uid=uid;
         this.name = name;
         this.sex = sex;
         this.phone = phone;
         this.city = city;
         this.user_kind = user_kind;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getName() {

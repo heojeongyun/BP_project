@@ -15,9 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.nt_project02.Chat.UserModel;
 import com.example.nt_project02.Native_Profile.Profile;
 import com.example.nt_project02.R;
-import com.example.nt_project02.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -111,7 +111,12 @@ public class PeopleFragment extends Fragment {
                 public void onClick(View v) {
                     if (position !=RecyclerView.NO_POSITION){
                         /*Toast.makeText(getContext(),position+"",Toast.LENGTH_LONG).show();*/
-                        MystartActivity(Profile.class);
+                        Intent intent=new Intent(getContext(), Profile.class);
+                        intent.putExtra("destination_UserModels", userModels.get(position));
+                        startActivity(intent);
+
+
+
 
                     }
 
@@ -140,10 +145,8 @@ public class PeopleFragment extends Fragment {
             }
         }
     }
-    private void MystartActivity(Class c){
-        Intent intent=new Intent(getContext(),c);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
 
-    }
+
+
+
 }

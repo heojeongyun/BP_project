@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.nt_project02.Chat.MessageActivity;
+import com.example.nt_project02.Chat.UserModel;
 import com.example.nt_project02.R;
 import com.google.android.material.tabs.TabLayout;
 
@@ -16,8 +18,12 @@ import com.google.android.material.tabs.TabLayout;
 public class Profile extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
     private ViewPager mViewPager;
+    private String destinationUid;
 
     private MyPagerAdapter mPagerAdapter;
+    private UserModel userModel;
+    private TextView nick_text;
+    private TextView self_info_text;
 
     private void initializeViewPager() {
 
@@ -61,8 +67,23 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+
+
+
+
         initializeViewPager();
         initializeTabLayout();
+
+        Intent data=getIntent();
+
+        userModel = data.getParcelableExtra("destination_UserModels");
+
+        nick_text=(TextView) findViewById(R.id.nickAgeTV);
+        self_info_text=(TextView) findViewById(R.id.Self_info_TextView);
+
+        nick_text.setText(userModel.getNick());
+        self_info_text.setText(userModel.getSelf_info());
+
 
         Button chat_button=(Button) findViewById(R.id.profile_chat_button);
         chat_button.setOnClickListener(new View.OnClickListener() {
