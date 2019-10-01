@@ -71,12 +71,18 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
 
 
 
+
+
         initializeViewPager();
         initializeTabLayout();
 
         Intent data=getIntent();
 
         userModel = data.getParcelableExtra("destination_UserModels");
+
+        destinationUid=userModel.getUid();
+
+
 
         nick_text=(TextView) findViewById(R.id.nickAgeTV);
         self_info_text=(TextView) findViewById(R.id.Self_info_TextView);
@@ -89,7 +95,10 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
         chat_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MystartActivity(MessageActivity.class);
+                Intent intent=new Intent(getApplicationContext(), MessageActivity.class);
+                intent.putExtra("destinationUid",destinationUid);
+                startActivity(intent);
+
             }
         });
 
@@ -115,10 +124,5 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
 
     }
 
-    private void MystartActivity(Class c){
-        Intent intent=new Intent(this,c);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
 
-    }
 }
