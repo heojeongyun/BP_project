@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 public class UserModel implements Parcelable {
 
-    //public String profieImageUrl;
+    public String imageurl;
     public String uid;
     public String nick;
     public String region;
@@ -19,6 +19,7 @@ public class UserModel implements Parcelable {
 
     public UserModel(Parcel parcel) {
 
+        imageurl=parcel.readString();
         uid=parcel.readString();
         name=parcel.readString();
         city=parcel.readString();
@@ -66,6 +67,7 @@ public class UserModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.imageurl);
         dest.writeString(this.uid);
         dest.writeString(this.name);
         dest.writeString(this.city);
@@ -84,6 +86,15 @@ public class UserModel implements Parcelable {
     @Override
     public int describeContents() {
         return 0;
+    }
+
+
+    public String getImageurl() {
+        return imageurl;
+    }
+
+    public void setImageurl(String imageurl) {
+        this.imageurl = imageurl;
     }
 
     public String getUid() {

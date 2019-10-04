@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.nt_project02.Chat.UserModel;
 import com.example.nt_project02.Native_Profile.Profile;
 import com.example.nt_project02.R;
@@ -98,10 +99,10 @@ public class PeopleFragment extends Fragment {
         public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position){
 
             Glide.with
-                    (holder.itemView.getContext());
-                 /*   .load(userModels.get(position).profieImageUrl)
+                    (holder.itemView.getContext())
+                    .load(userModels.get(position).imageurl)
                     .apply(new RequestOptions().circleCrop())
-                    .into(((CustomViewHolder)holder).imageView);*/
+                    .into(((CustomViewHolder)holder).imageView);
             ((CustomViewHolder)holder).Nick_textView.setText(userModels.get(position).name);
             ((CustomViewHolder)holder).Region_textView.setText(userModels.get(position).region);
             ((CustomViewHolder)holder).Hash_textView.setText(userModels.get(position).hash);
