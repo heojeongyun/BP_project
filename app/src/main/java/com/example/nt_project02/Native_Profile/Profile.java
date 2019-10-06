@@ -80,7 +80,7 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
 
         userModel = data.getParcelableExtra("destination_UserModels");
 
-        destinationUid=userModel.getUid();
+        /*destinationUid=userModel.getUid();*/
 
 
 
@@ -96,7 +96,7 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getApplicationContext(), MessageActivity.class);
-                intent.putExtra("destinationUid",destinationUid);
+                intent.putExtra("destination_UserModel", userModel);
                 startActivity(intent);
 
             }
