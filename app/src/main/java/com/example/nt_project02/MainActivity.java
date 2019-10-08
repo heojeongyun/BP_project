@@ -1,20 +1,19 @@
 package com.example.nt_project02;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.SearchView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.nt_project02.Fragment.Chatting_Fragment;
 import com.example.nt_project02.Fragment.News_Fragment;
@@ -27,8 +26,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import devlight.io.library.ntb.NavigationTabBar;
 
 public class MainActivity extends AppCompatActivity {
@@ -95,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
 
         EditText editText = findViewById(R.id.txt_search);
         TextView resultTextView = findViewById(R.id.textView);
+
+        passPushTokenToServer();
 
 
     }
@@ -206,6 +211,18 @@ public class MainActivity extends AppCompatActivity {
         public int getCount() {
             return items.size();
         }
+    }
+
+    void passPushTokenToServer(){
+
+        String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String token = FirebaseInstanceId.getInstance().getToken();
+        Map<String,Object> map=new HashMap<>();
+        map.put("pushToken",token);
+
+
+        FirebaseFirestore.getInstance().collection("users").document(uid).update(map);
+
     }
 
 
