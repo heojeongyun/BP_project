@@ -189,7 +189,7 @@ public class MessageActivity extends AppCompatActivity {
                  FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment).addOnCompleteListener(new OnCompleteListener<Void>() {
                      @Override
                      public void onComplete(@NonNull Task<Void> task) {
-                         //sendGcm();
+                         sendGcm();
                          editText.setText("");
 
                      }
@@ -226,11 +226,12 @@ public class MessageActivity extends AppCompatActivity {
         Request request=new Request.Builder()
                 .header("Content-Type","application/json")
                 .addHeader("Authorization","key=AIzaSyBjcVeOPoTAHTd7wCz7xzadu1ofOTGLAL4")
-                .url("https://gcm-http.googleapis.com/gcm/send")
+                .url("https://fcm.googleapis.com/fcm/send")
                 .post(requestBody)
                 .build();
         OkHttpClient okHttpClient=new OkHttpClient();
         okHttpClient.newCall(request).enqueue(new Callback() {
+
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
@@ -243,6 +244,9 @@ public class MessageActivity extends AppCompatActivity {
         });
 
     }
+
+
+
 
     void checkChatRoom(){
         FirebaseDatabase.getInstance().getReference().child("chatrooms").orderByChild("users/"+uid).equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
