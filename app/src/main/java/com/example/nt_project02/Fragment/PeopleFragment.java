@@ -103,7 +103,7 @@ public class PeopleFragment extends Fragment {
                     .load(userModels.get(position).imageurl)
                     .apply(new RequestOptions().circleCrop())
                     .into(((CustomViewHolder)holder).imageView);
-            ((CustomViewHolder)holder).Nick_textView.setText(userModels.get(position).name);
+            ((CustomViewHolder)holder).Nick_textView.setText(userModels.get(position).nick);
             ((CustomViewHolder)holder).Region_textView.setText(userModels.get(position).region);
             ((CustomViewHolder)holder).Hash_textView.setText(userModels.get(position).hash);
 

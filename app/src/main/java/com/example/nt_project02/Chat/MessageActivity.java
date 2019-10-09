@@ -29,6 +29,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
@@ -55,7 +57,7 @@ public class MessageActivity extends AppCompatActivity {
 
 
 
-    private String TAG="sw";
+    private String userNick;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -80,9 +82,9 @@ public class MessageActivity extends AppCompatActivity {
 
         Intent data=getIntent();
 
-        uid=FirebaseAuth.getInstance().getCurrentUser().getUid(); // 여행자 아이디
+        uid=FirebaseAuth.getInstance().getCurrentUser().getUid(); // 어플 현재 이용자 아이디
         userModel=data.getParcelableExtra("destination_UserModel");
-        destinationUid=userModel.getUid(); // 현지인 아이디
+        destinationUid=userModel.getUid(); // 상대방 아이디
 
 
 
@@ -215,10 +217,32 @@ public class MessageActivity extends AppCompatActivity {
     void sendGcm(){
         Gson gson=new Gson();
 
+
+
+
+        //보내는 사람 닉네임 가져오기
+        FirebaseFirestore.getInstance().collection("users").document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        userNick=document.get("nick").toString();
+                    } else {
+
+                    }
+                } else {
+
+                }
+            }
+        });
+
         NotificationModel notificationModel=new NotificationModel();
         notificationModel.to=userModel.getPushToken();
-        notificationModel.notification.title="보낸이 아이디";
+        notificationModel.notification.title=userNick;
         notificationModel.notification.text=editText.getText().toString();
+        notificationModel.data.title=userNick;
+        notificationModel.data.text=editText.getText().toString();
 
         RequestBody requestBody=RequestBody.create(MediaType.parse("application/json; charset=utf8"),gson.toJson(notificationModel));
 
