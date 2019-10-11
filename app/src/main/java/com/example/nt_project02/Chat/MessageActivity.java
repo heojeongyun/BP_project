@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.nt_project02.NotificationModel;
 import com.example.nt_project02.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,12 +29,26 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class MessageActivity extends AppCompatActivity {
     private String destinationUid;
@@ -42,7 +57,7 @@ public class MessageActivity extends AppCompatActivity {
 
 
 
-    private String TAG="sw";
+    private String userNick;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -67,9 +82,9 @@ public class MessageActivity extends AppCompatActivity {
 
         Intent data=getIntent();
 
-        uid=FirebaseAuth.getInstance().getCurrentUser().getUid(); // 여행자 아이디
+        uid=FirebaseAuth.getInstance().getCurrentUser().getUid(); // 어플 현재 이용자 아이디
         userModel=data.getParcelableExtra("destination_UserModel");
-        destinationUid=userModel.getUid(); // 현지인 아이디
+        destinationUid=userModel.getUid(); // 상대방 아이디
 
 
 
@@ -176,7 +191,9 @@ public class MessageActivity extends AppCompatActivity {
                  FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment).addOnCompleteListener(new OnCompleteListener<Void>() {
                      @Override
                      public void onComplete(@NonNull Task<Void> task) {
+                         sendGcm();
                          editText.setText("");
+
                      }
                  });
              }
@@ -196,6 +213,64 @@ public class MessageActivity extends AppCompatActivity {
 
 
     }
+
+    void sendGcm(){
+        Gson gson=new Gson();
+
+
+
+
+        //보내는 사람 닉네임 가져오기
+        FirebaseFirestore.getInstance().collection("users").document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        userNick=document.get("nick").toString();
+                    } else {
+
+                    }
+                } else {
+
+                }
+            }
+        });
+
+        NotificationModel notificationModel=new NotificationModel();
+        notificationModel.to=userModel.getPushToken();
+        notificationModel.notification.title=userNick;
+        notificationModel.notification.text=editText.getText().toString();
+        notificationModel.data.title=userNick;
+        notificationModel.data.text=editText.getText().toString();
+
+        RequestBody requestBody=RequestBody.create(MediaType.parse("application/json; charset=utf8"),gson.toJson(notificationModel));
+
+
+        Request request=new Request.Builder()
+                .header("Content-Type","application/json")
+                .addHeader("Authorization","key=AIzaSyBjcVeOPoTAHTd7wCz7xzadu1ofOTGLAL4")
+                .url("https://fcm.googleapis.com/fcm/send")
+                .post(requestBody)
+                .build();
+        OkHttpClient okHttpClient=new OkHttpClient();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
+            }
+        });
+
+    }
+
+
+
 
     void checkChatRoom(){
         FirebaseDatabase.getInstance().getReference().child("chatrooms").orderByChild("users/"+uid).equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
