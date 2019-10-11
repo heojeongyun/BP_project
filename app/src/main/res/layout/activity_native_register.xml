@@ -15,7 +15,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="현지인 등록"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:textColor="#5DA4BE"/>
 
     </LinearLayout>
 
@@ -106,5 +107,6 @@
         android:layout_width="154dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="등록하기" />
+        android:text="등록하기"
+        android:background="#5DA4BE"/>
 </LinearLayout>

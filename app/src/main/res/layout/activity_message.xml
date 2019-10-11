@@ -38,7 +38,8 @@
             android:id="@+id/messageActivity_Button"
             android:layout_width="80dp"
             android:layout_height="match_parent"
-            android:text="전송" />
+            android:text="전송"
+            android:background="#5DA4BE"/>
 
 
     </LinearLayout>

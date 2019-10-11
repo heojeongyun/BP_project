@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/gotoPasswordResetbutton"
+        android:layout_width="37dp"
+        android:layout_height="39dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/resetting" />
+
+
 
 
 
@@ -13,10 +25,11 @@
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="60dp"
             android:gravity="center"
             android:text="로그인"
-            android:textColor="#000000"
+            android:textColor="#5DA4BE"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -48,17 +61,15 @@
                 android:id="@+id/CheckButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#5DA4BE"
                 android:text="로그인" />
 
-            <Button
-                android:id="@+id/gotoPasswordResetbutton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="비밀번호 재설정" />
+
+
+
         </LinearLayout>
 
     </LinearLayout>
-
 
 
 </RelativeLayout>

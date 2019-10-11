@@ -13,7 +13,8 @@
 
         <TextView
             android:text="정보입력"
-            android:textColor="@color/colorPrimary"
+            android:textColor="#5DA4BE"
+            android:textSize="24dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -145,12 +146,15 @@
             android:id="@+id/CheckButton"
             android:text="확인"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="#5DA4BE"
+            android:layout_marginRight="10dp" />
         <Button
             android:id="@+id/bt_join_cancel"
             android:text="취소"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="#5DA4BE"/>
     </LinearLayout>
 
 

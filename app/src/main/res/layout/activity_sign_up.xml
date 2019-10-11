@@ -16,7 +16,7 @@
             android:layout_height="200dp"
             android:gravity="center"
             android:text="회원가입"
-            android:textColor="#000000"
+            android:textColor="#5DA4BE"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -57,13 +57,16 @@
                 android:id="@+id/signUpButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="회원가입" />
+                android:text="회원가입"
+                android:background="#5DA4BE"/>
 
             <Button
                 android:id="@+id/CheckButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="로그인" />
+                android:text="로그인"
+                android:background="#5DA4BE"
+                android:layout_marginTop="10dp"/>
         </LinearLayout>
 
     </LinearLayout>
