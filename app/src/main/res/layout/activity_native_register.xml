@@ -108,5 +108,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="등록하기"
-        android:background="#5DA4BE"/>
+        android:background="@drawable/button_selector"/>
 </LinearLayout>

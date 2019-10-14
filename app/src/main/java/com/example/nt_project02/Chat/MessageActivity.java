@@ -74,7 +74,6 @@ public class MessageActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
     private ValueEventListener valueEventListener;
-    int peopleCount =0;
 
 
 
@@ -343,36 +342,28 @@ public class MessageActivity extends AppCompatActivity {
 
                     for(DataSnapshot item:dataSnapshot.getChildren()){
                         String key=item.getKey();
-                        ChatModel.Comment comment_origin=item.getValue(ChatModel.Comment.class);
-                        ChatModel.Comment comment_motify=item.getValue(ChatModel.Comment.class);
-                        comment_motify.readUsers.put(uid,true);
+                        ChatModel.Comment comment=item.getValue(ChatModel.Comment.class);
+                        comment.readUsers.put(uid,true);
 
-                        readUsersMap.put(key,comment_motify);
-                        comments.add(comment_origin);
+                        readUsersMap.put(key,comment);
+                        comments.add(comment);
 
 
                     }
 
-                    if(!comments.get(comments.size()-1).readUsers.containsKey(uid)) {
-                        FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").updateChildren(readUsersMap)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
+                    FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").updateChildren(readUsersMap)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
 
 
-                                        //메세지가 갱신
-                                        notifyDataSetChanged();
+                            //메세지가 갱신
+                            notifyDataSetChanged();
 
-                                        recyclerView.scrollToPosition(comments.size() - 1);
+                            recyclerView.scrollToPosition(comments.size()-1);
 
-                                    }
-                                });
-                    }else{
-                        notifyDataSetChanged();
-
-                        recyclerView.scrollToPosition(comments.size() - 1);
-
-                    }
+                        }
+                    });
 
                 }
 
@@ -439,37 +430,25 @@ public class MessageActivity extends AppCompatActivity {
         }
 
         void setReadCounter(final int position, final TextView textView){
+            FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Map<String,Boolean> users=(Map<String,Boolean>) dataSnapshot.getValue();
 
-            if(peopleCount==0) {
-                FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        Map<String, Boolean> users = (Map<String, Boolean>) dataSnapshot.getValue();
-                        peopleCount=users.size();
-                        int count = peopleCount - comments.get(position).readUsers.size();
-                        if (count > 0) {
-                            textView.setVisibility(View.VISIBLE);
-                            textView.setText(String.valueOf(count));
-                        } else {
-                            textView.setVisibility(View.INVISIBLE);
-                        }
+                    int count=users.size() -comments.get(position).readUsers.size();
+                    if(count>0){
+                        textView.setVisibility(View.VISIBLE);
+                        textView.setText(String.valueOf(count));
+                    }else{
+                        textView.setVisibility(View.INVISIBLE);
                     }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-            }else{
-                int count = peopleCount - comments.get(position).readUsers.size();
-                if (count > 0) {
-                    textView.setVisibility(View.VISIBLE);
-                    textView.setText(String.valueOf(count));
-                } else {
-                    textView.setVisibility(View.INVISIBLE);
                 }
 
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
         }
 
         @Override

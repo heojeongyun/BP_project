@@ -147,14 +147,14 @@
             android:text="확인"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#5DA4BE"
+            android:background="@drawable/button_selector"
             android:layout_marginRight="10dp" />
         <Button
             android:id="@+id/bt_join_cancel"
             android:text="취소"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#5DA4BE"/>
+            android:background="@drawable/button_selector"/>
     </LinearLayout>
 
 
