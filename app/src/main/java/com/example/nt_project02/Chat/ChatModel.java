@@ -14,5 +14,6 @@ public class ChatModel {
         public String message;
         public Object timestamp;
         public Map<String,Object> readUsers=new HashMap<>();
+        public Map<String,Boolean> message_image=new HashMap<>();
     }
 }

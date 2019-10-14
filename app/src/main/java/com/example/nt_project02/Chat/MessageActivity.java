@@ -64,7 +64,6 @@ public class MessageActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private List<ChatData> chatList;
     private String uid;
     private String chatRoomUid;
     private FirebaseDatabase database;
@@ -392,8 +391,11 @@ public class MessageActivity extends AppCompatActivity {
             MessageViewHolder messageViewHolder=((MessageViewHolder)holder);
 
 
+            /*if (comments.get(position).message_image.)*/
+
             //내가 보내 메세지
             if(comments.get(position).uid.equals(uid)){
+
                 messageViewHolder.textView_message.setText(comments.get(position).message);
                 messageViewHolder.textView_message.setBackgroundResource(R.drawable.rightbubble);
                 messageViewHolder.linearLayout_destination.setVisibility(View.INVISIBLE);
@@ -403,7 +405,8 @@ public class MessageActivity extends AppCompatActivity {
 
 
                 //상대방이 보낸 메세지
-            }else{
+            }else
+                {
 
               /*  Glide.with(holder.itemView.getContext())
                         .load(userModel.imageurl)
@@ -465,8 +468,10 @@ public class MessageActivity extends AppCompatActivity {
             public TextView textView_timestamp;
             public TextView textView_readCounter_left;
             public TextView textView_readCounter_right;
+            public ImageView message_image;
 
             public MessageViewHolder(View view){
+
                 super(view);
                 textView_message=view.findViewById(R.id.TextView_msg);
                 textView_name=(TextView) view.findViewById(R.id.TextView_nickname);
@@ -476,7 +481,7 @@ public class MessageActivity extends AppCompatActivity {
                 textView_timestamp=(TextView) view.findViewById(R.id.textview_timestamp);
                 textView_readCounter_left=(TextView) view.findViewById(R.id.messageItem_textview_readCounter_left);
                 textView_readCounter_right=(TextView)view.findViewById(R.id.messageItem_textview_readCounter_right);
-
+                message_image=(ImageView)view.findViewById(R.id.message_image);
             }
 
         }

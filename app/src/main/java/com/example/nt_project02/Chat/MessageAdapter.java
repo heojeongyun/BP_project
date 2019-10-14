@@ -26,6 +26,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
         public TextView TextView_msg;
         public View rootView;
         public ImageView profile_Image;
+        public ImageView message_Image;
         // each data item is just a string in this case
         public TextView textView;
         public MyViewHolder(LinearLayout v) {
@@ -33,6 +34,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
             TextView_nickname=v.findViewById(R.id.TextView_nickname);
             TextView_msg=v.findViewById(R.id.TextView_msg);
             profile_Image=v.findViewById(R.id.profile_Image);
+            message_Image=v.findViewById(R.id.message_image);
             rootView=v;
         }
     }
@@ -63,6 +65,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
         // - replace the contents of the view with that element
 
         ChatData chat=mDataset.get(position);
+
 
         holder.TextView_nickname.setText(chat.getNickname());
         holder.TextView_msg.setText(chat.getMsg());
