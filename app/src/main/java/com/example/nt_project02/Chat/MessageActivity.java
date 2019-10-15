@@ -1,6 +1,7 @@
 package com.example.nt_project02.Chat;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -13,12 +14,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.nt_project02.NotificationModel;
 import com.example.nt_project02.R;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -31,6 +35,9 @@ import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
@@ -56,7 +63,9 @@ public class MessageActivity extends AppCompatActivity {
     private String destinationUid;
     private Button button;
     private EditText editText;
+    private Button Image_Button;
 
+    private static final int GALLERY_PICK=1;
 
 
     private String userNick;
@@ -66,6 +75,7 @@ public class MessageActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private String uid;
     private String chatRoomUid;
+    private String ImageUrl;
     private FirebaseDatabase database;
     private DatabaseReference myRef;
     private UserModel userModel;
@@ -155,6 +165,18 @@ public class MessageActivity extends AppCompatActivity {
        // destinationUid=getIntent().getStringExtra("destinationUid");
         button=(Button)findViewById(R.id.messageActivity_Button);
         editText=(EditText)findViewById(R.id.messageActivity_editText);
+        Image_Button=(Button)findViewById(R.id.messageActivity_picture);
+
+        Image_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+
+                startActivityForResult(Intent.createChooser(intent,"SELECT IMAGE"), GALLERY_PICK);
+            }
+        });
 
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -215,6 +237,79 @@ public class MessageActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+
+        if(requestCode==GALLERY_PICK && resultCode==RESULT_OK){
+            final Uri imageUri=data.getData();
+
+
+            final StorageReference ref = FirebaseStorage.getInstance().getReference().child("UserImages").child(uid);
+            UploadTask uploadTask = ref.putFile(imageUri);
+
+
+
+
+            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+
+                    // Continue with the task to get the download URL
+                    return ref.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        ImageUrl= task.getResult().toString();
+
+
+                        ChatModel chatModel=new ChatModel();
+                        chatModel.users.put(uid,true);
+                        chatModel.users.put(destinationUid,true);
+
+                        if(chatRoomUid==null){
+                            button.setEnabled(false);
+                            FirebaseDatabase.getInstance().getReference().child("chatrooms").push().setValue(chatModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    checkChatRoom();
+                                }
+                            });
+
+
+                        }else{
+
+                            ChatModel.Comment comment=new ChatModel.Comment();
+                            comment.uid=uid;
+                            comment.message_image=ImageUrl;
+                            comment.timestamp= ServerValue.TIMESTAMP;
+                            FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    sendGcm();
+                                    /*editText.setText("");*/
+
+                                }
+                            });
+                        }
+                    } else {
+                        // Handle failures
+                        // ...
+                    }
+                }
+            });
+
+
+        }
     }
 
     void sendGcm(){
@@ -391,37 +486,79 @@ public class MessageActivity extends AppCompatActivity {
             MessageViewHolder messageViewHolder=((MessageViewHolder)holder);
 
 
-            /*if (comments.get(position).message_image.)*/
-
-            //내가 보내 메세지
-            if(comments.get(position).uid.equals(uid)){
-
-                messageViewHolder.textView_message.setText(comments.get(position).message);
-                messageViewHolder.textView_message.setBackgroundResource(R.drawable.rightbubble);
-                messageViewHolder.linearLayout_destination.setVisibility(View.INVISIBLE);
-                messageViewHolder.linearLayout_main.setGravity(Gravity.RIGHT);
-                setReadCounter(position,messageViewHolder.textView_readCounter_left);
 
 
+            if (comments.get(position).message_image==null){
 
-                //상대방이 보낸 메세지
-            }else
+                //내가 보내 메세지
+                if(comments.get(position).uid.equals(uid)){
+
+                    messageViewHolder.textView_message.setText(comments.get(position).message);
+                    messageViewHolder.textView_message.setBackgroundResource(R.drawable.rightbubble);
+                    messageViewHolder.linearLayout_destination.setVisibility(View.INVISIBLE);
+                    messageViewHolder.linearLayout_main.setGravity(Gravity.RIGHT);
+                    setReadCounter(position,messageViewHolder.textView_readCounter_left);
+
+
+
+                    //상대방이 보낸 메세지
+                }else
                 {
 
               /*  Glide.with(holder.itemView.getContext())
                         .load(userModel.imageurl)
                         .apply(new RequestOptions().circleCrop())
                         .into(messageViewHolder.imageView_profile);*/
-                messageViewHolder.textView_name.setText(userModel.getNick());
-                messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
-                messageViewHolder.textView_message.setBackgroundResource(R.drawable.leftbubble);
-                messageViewHolder.textView_message.setText(comments.get(position).message);
-                messageViewHolder.textView_message.setTextSize(25);
-                messageViewHolder.linearLayout_main.setGravity(Gravity.LEFT);
-                setReadCounter(position,messageViewHolder.textView_readCounter_right);
+                    messageViewHolder.textView_name.setText(userModel.getNick());
+                    messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
+                    messageViewHolder.textView_message.setBackgroundResource(R.drawable.leftbubble);
+                    messageViewHolder.textView_message.setText(comments.get(position).message);
+                    messageViewHolder.textView_message.setTextSize(25);
+                    messageViewHolder.linearLayout_main.setGravity(Gravity.LEFT);
+                    setReadCounter(position,messageViewHolder.textView_readCounter_right);
 
 
+                }
+
+            }else{
+                //내가 보내 메세지
+                if(comments.get(position).uid.equals(uid)){
+
+                    messageViewHolder.textView_message.setText(comments.get(position).message);
+                    messageViewHolder.textView_message.setBackgroundResource(R.drawable.rightbubble);
+                    messageViewHolder.linearLayout_destination.setVisibility(View.INVISIBLE);
+                    messageViewHolder.linearLayout_main.setGravity(Gravity.RIGHT);
+                    messageViewHolder.textView_message.setVisibility(View.INVISIBLE);
+                    Glide.with(holder.itemView.getContext()).load(comments.get(position).message_image)
+                            .into(messageViewHolder.message_image);
+                    setReadCounter(position,messageViewHolder.textView_readCounter_left);
+
+
+
+                    //상대방이 보낸 메세지
+                }else
+                {
+
+              /*  Glide.with(holder.itemView.getContext())
+                        .load(userModel.imageurl)
+                        .apply(new RequestOptions().circleCrop())
+                        .into(messageViewHolder.imageView_profile);*/
+                    messageViewHolder.textView_name.setText(userModel.getNick());
+                    messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
+                   /* messageViewHolder.textView_message.setBackgroundResource(R.drawable.leftbubble);
+                    messageViewHolder.textView_message.setText(comments.get(position).message);
+                    messageViewHolder.textView_message.setTextSize(25);*/
+                    messageViewHolder.linearLayout_main.setGravity(Gravity.LEFT);
+                    messageViewHolder.textView_message.setVisibility(View.INVISIBLE);
+                    Glide.with(holder.itemView.getContext()).load(comments.get(position).message_image)
+                            .into(messageViewHolder.message_image);
+                    setReadCounter(position,messageViewHolder.textView_readCounter_right);
+
+
+                }
             }
+
+
 
             long unixTime=(long) comments.get(position).timestamp;
             Date date=new Date(unixTime);
