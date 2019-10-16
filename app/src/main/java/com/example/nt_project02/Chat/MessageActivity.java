@@ -249,7 +249,7 @@ public class MessageActivity extends AppCompatActivity {
             final Uri imageUri=data.getData();
 
 
-            final StorageReference ref = FirebaseStorage.getInstance().getReference().child("UserImages").child(uid);
+            final StorageReference ref = FirebaseStorage.getInstance().getReference().child("UserImages").child(imageUri.toString());
             UploadTask uploadTask = ref.putFile(imageUri);
 
 
@@ -297,6 +297,7 @@ public class MessageActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     sendGcm();
                                     /*editText.setText("");*/
+                                    ImageUrl=null;  //초기화
 
                                 }
                             });
