@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.nt_project02.Native_Register;
 import com.example.nt_project02.R;
+import com.example.nt_project02.Sign_UpActivity;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -90,6 +91,15 @@ public class Setting_Fragment extends Fragment {
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
                 startActivityForResult(intent, PICK_FROM_ALBUM);
+            }
+        });
+
+        Button LogoutButton=(Button) rootView.findViewById(R.id.LogoutButton);
+
+        LogoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MystartActivity(Sign_UpActivity.class);
             }
         });
 

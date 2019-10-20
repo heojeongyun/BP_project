@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.nt_project02.Chat.ChatModel;
 import com.example.nt_project02.Chat.MessageActivity;
 import com.example.nt_project02.Chat.UserModel;
@@ -129,10 +131,10 @@ public class Chatting_Fragment extends Fragment {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                         UserModel userModel=document.toObject(UserModel.class);
-                /*        Glide.with(customViewHolder.itemView.getContext())
+                        Glide.with(customViewHolder.itemView.getContext())
                                 .load(userModel.getImageurl())
                                 .apply(new RequestOptions().circleCrop())
-                                .into(customViewHolder.imageView);*/
+                                .into(customViewHolder.imageView);
                         customViewHolder.textView_title.setText(userModel.getNick());
 
 
@@ -146,7 +148,12 @@ public class Chatting_Fragment extends Fragment {
             Map<String,ChatModel.Comment> commentMap=new TreeMap<>(Collections.<String>reverseOrder());
             commentMap.putAll(chatModels.get(position).comments);
             String lastMessageKey=(String) commentMap.keySet().toArray()[0];
-            customViewHolder.textView_lastMessage.setText(chatModels.get(position).comments.get(lastMessageKey).message);
+            if(chatModels.get(position).comments.get(lastMessageKey).message!=null){
+                customViewHolder.textView_lastMessage.setText(chatModels.get(position).comments.get(lastMessageKey).message);
+            }else{
+                customViewHolder.textView_lastMessage.setText("사진");
+            }
+
 
             customViewHolder.itemView.setOnClickListener(new View.OnClickListener(){
 

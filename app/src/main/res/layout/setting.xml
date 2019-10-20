@@ -48,6 +48,15 @@
             android:text="현지인 등록"
             android:layout_gravity="center"/>
 
+        <Button
+            android:id="@+id/LogoutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_selector"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="로그아웃"/>
+
     </LinearLayout>
 
 

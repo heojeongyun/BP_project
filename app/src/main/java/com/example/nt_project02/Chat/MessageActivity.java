@@ -212,6 +212,7 @@ public class MessageActivity extends AppCompatActivity {
                  ChatModel.Comment comment=new ChatModel.Comment();
                  comment.uid=uid;
                  comment.message=editText.getText().toString();
+                 comment.IsImage=false;
                  comment.timestamp= ServerValue.TIMESTAMP;
                  FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment).addOnCompleteListener(new OnCompleteListener<Void>() {
                      @Override
@@ -290,14 +291,15 @@ public class MessageActivity extends AppCompatActivity {
 
                             ChatModel.Comment comment=new ChatModel.Comment();
                             comment.uid=uid;
-                            comment.message_image=ImageUrl;
+                            comment.message=ImageUrl;
+                            comment.IsImage=true;
                             comment.timestamp= ServerValue.TIMESTAMP;
                             FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     sendGcm();
                                     /*editText.setText("");*/
-                                    ImageUrl=null;  //초기화
+                                    ImageUrl=null; //초기화
 
                                 }
                             });
@@ -446,7 +448,7 @@ public class MessageActivity extends AppCompatActivity {
 
                     }
 
-                    FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").updateChildren(readUsersMap)
+                    databaseReference.updateChildren(readUsersMap)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -489,7 +491,7 @@ public class MessageActivity extends AppCompatActivity {
 
 
 
-            if (comments.get(position).message_image==null){
+            if (!comments.get(position).IsImage){
 
                 //내가 보내 메세지
                 if(comments.get(position).uid.equals(uid)){
@@ -498,6 +500,7 @@ public class MessageActivity extends AppCompatActivity {
                     messageViewHolder.textView_message.setBackgroundResource(R.drawable.rightbubble);
                     messageViewHolder.linearLayout_destination.setVisibility(View.INVISIBLE);
                     messageViewHolder.linearLayout_main.setGravity(Gravity.RIGHT);
+                    messageViewHolder.message_image.setVisibility(View.INVISIBLE);
                     setReadCounter(position,messageViewHolder.textView_readCounter_left);
 
 
@@ -516,6 +519,7 @@ public class MessageActivity extends AppCompatActivity {
                     messageViewHolder.textView_message.setText(comments.get(position).message);
                     messageViewHolder.textView_message.setTextSize(25);
                     messageViewHolder.linearLayout_main.setGravity(Gravity.LEFT);
+                    messageViewHolder.message_image.setVisibility(View.GONE);
                     setReadCounter(position,messageViewHolder.textView_readCounter_right);
 
 
@@ -530,7 +534,7 @@ public class MessageActivity extends AppCompatActivity {
                     messageViewHolder.linearLayout_destination.setVisibility(View.INVISIBLE);
                     messageViewHolder.linearLayout_main.setGravity(Gravity.RIGHT);
                     messageViewHolder.textView_message.setVisibility(View.INVISIBLE);
-                    Glide.with(holder.itemView.getContext()).load(comments.get(position).message_image)
+                    Glide.with(holder.itemView.getContext()).load(comments.get(position).message)
                             .into(messageViewHolder.message_image);
                     setReadCounter(position,messageViewHolder.textView_readCounter_left);
 
@@ -551,7 +555,7 @@ public class MessageActivity extends AppCompatActivity {
                     messageViewHolder.textView_message.setTextSize(25);*/
                     messageViewHolder.linearLayout_main.setGravity(Gravity.LEFT);
                     messageViewHolder.textView_message.setVisibility(View.INVISIBLE);
-                    Glide.with(holder.itemView.getContext()).load(comments.get(position).message_image)
+                    Glide.with(holder.itemView.getContext()).load(comments.get(position).message)
                             .into(messageViewHolder.message_image);
                     setReadCounter(position,messageViewHolder.textView_readCounter_right);
 

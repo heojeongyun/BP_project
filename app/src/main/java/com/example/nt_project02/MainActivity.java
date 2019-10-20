@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -73,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        findViewById(R.id.LogoutButton).setOnClickListener(onClickListener);
+
 
         viewPager=(ViewPager) findViewById(R.id.vp_horizontal_ntb);
 
@@ -104,17 +103,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    View.OnClickListener onClickListener=new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()){
-                case R.id.LogoutButton:
-                    FirebaseAuth.getInstance().signOut();
-                    MystartActivity(Sign_UpActivity.class);
-                    break;
-            }
-        }
-    };
+;
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+    }
 
     private void MystartActivity(Class c){
         Intent intent=new Intent(this,c);

@@ -1,6 +1,7 @@
 package com.example.nt_project02;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,7 +10,6 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -132,6 +132,7 @@ public class MemberActivity extends AppCompatActivity {
                                     public void onSuccess(Void aVoid) {
                                         startToast("회원정보 등록 성공.");
                                         finish();
+                                        MystartActivity(MainActivity.class);
 
                             }
                         }).addOnFailureListener(new OnFailureListener() {
@@ -158,6 +159,14 @@ public class MemberActivity extends AppCompatActivity {
 
         Toast.makeText(MemberActivity.this, msg,
                 Toast.LENGTH_SHORT).show();
+    }
+
+
+    private void MystartActivity(Class c){
+        Intent intent=new Intent(this,c);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+
     }
 
 

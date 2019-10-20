@@ -2,13 +2,12 @@ package com.example.nt_project02;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -79,7 +78,7 @@ public class Sign_UpActivity extends AppCompatActivity {
                                     //Log.d(TAG, "createUserWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     startToast("회원가입 성공");
-                                    MystartActivity(MainActivity.class);
+                                    MystartActivity(MemberActivity.class);
 
                                 } else {
                                     // 회원가입 실패 했을 떄 UI.

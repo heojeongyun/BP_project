@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Button
+<!--    <Button
         android:id="@+id/LogoutButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_selector"
-        android:text="로그아웃" />
+        android:text="로그아웃" />-->
 
 
     <androidx.viewpager.widget.ViewPager
