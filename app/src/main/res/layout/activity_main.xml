@@ -34,7 +34,8 @@
         app:ntb_swiped="true"
         app:ntb_tinted="true"
         app:ntb_title_mode="all"
-        app:ntb_titled="true" />
+        app:ntb_titled="true"
+        app:ntb_bg_color="#034F84"/>
 
 
 

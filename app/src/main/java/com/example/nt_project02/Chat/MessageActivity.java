@@ -19,7 +19,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.nt_project02.NotificationModel;
 import com.example.nt_project02.R;
 import com.google.android.gms.tasks.Continuation;
@@ -500,6 +499,7 @@ public class MessageActivity extends AppCompatActivity {
                     messageViewHolder.textView_message.setBackgroundResource(R.drawable.lastrightbubble);
                     messageViewHolder.linearLayout_destination.setVisibility(View.INVISIBLE);
                     messageViewHolder.linearLayout_main.setGravity(Gravity.RIGHT);
+                    messageViewHolder.textView_message.setTextSize(25);
                     messageViewHolder.message_image.setVisibility(View.INVISIBLE);
                     setReadCounter(position,messageViewHolder.textView_readCounter_left);
 
@@ -519,13 +519,12 @@ public class MessageActivity extends AppCompatActivity {
                     messageViewHolder.textView_message.setText(comments.get(position).message);
                     messageViewHolder.textView_message.setTextSize(25);
                     messageViewHolder.linearLayout_main.setGravity(Gravity.LEFT);
-                    messageViewHolder.message_image.setVisibility(View.GONE);
                     setReadCounter(position,messageViewHolder.textView_readCounter_right);
 
 
                 }
 
-            }else{
+            }/*else{
                 //내가 보내 메세지
                 if(comments.get(position).uid.equals(uid)){
 
@@ -544,15 +543,15 @@ public class MessageActivity extends AppCompatActivity {
                 }else
                 {
 
-              /*  Glide.with(holder.itemView.getContext())
+              *//*  Glide.with(holder.itemView.getContext())
                         .load(userModel.imageurl)
                         .apply(new RequestOptions().circleCrop())
-                        .into(messageViewHolder.imageView_profile);*/
+                        .into(messageViewHolder.imageView_profile);*//*
                     messageViewHolder.textView_name.setText(userModel.getNick());
                     messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
-                   /* messageViewHolder.textView_message.setBackgroundResource(R.drawable.leftbubble);
+                   *//* messageViewHolder.textView_message.setBackgroundResource(R.drawable.leftbubble);
                     messageViewHolder.textView_message.setText(comments.get(position).message);
-                    messageViewHolder.textView_message.setTextSize(25);*/
+                    messageViewHolder.textView_message.setTextSize(25);*//*
                     messageViewHolder.linearLayout_main.setGravity(Gravity.LEFT);
                     messageViewHolder.textView_message.setVisibility(View.INVISIBLE);
                     Glide.with(holder.itemView.getContext()).load(comments.get(position).message)
@@ -561,7 +560,7 @@ public class MessageActivity extends AppCompatActivity {
 
 
                 }
-            }
+            }*/
 
 
 

@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         models.add(
                 new NavigationTabBar.Model.Builder(
                         getResources().getDrawable(R.drawable.home),
-                        Color.parseColor(colors[0]))
+                        Color.parseColor(colors[4]))
                         //.selectedIcon(getResources().getDrawable(R.drawable.ic_sixth))
                         .title("소식")
                         .build()
