@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 app:srcCompat="@drawable/travel"
-                android:id="@+id/mainImage"/>
+                android:id="@+id/profile_Image"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

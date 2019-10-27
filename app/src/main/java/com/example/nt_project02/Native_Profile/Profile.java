@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
 import com.example.nt_project02.Chat.MessageActivity;
 import com.example.nt_project02.Chat.UserModel;
 import com.example.nt_project02.R;
@@ -24,6 +26,7 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
     private UserModel userModel;
     private TextView nick_text;
     private TextView self_info_text;
+    private ImageView profile_image;
 
     private void initializeViewPager() {
 
@@ -84,20 +87,31 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
 
 
 
+
         nick_text=(TextView) findViewById(R.id.nickAgeTV);
         self_info_text=(TextView) findViewById(R.id.Self_info_TextView);
+        profile_image=(ImageView) findViewById(R.id.profile_Image);
 
         nick_text.setText(userModel.getNick());
         self_info_text.setText(userModel.getSelf_info());
+        Glide.with(getApplicationContext())
+                .load(userModel.getImageurl())
+                .into(profile_image);
+
+
+
 
 
         Button chat_button=(Button) findViewById(R.id.profile_chat_button);
         chat_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 Intent intent=new Intent(getApplicationContext(), MessageActivity.class);
                 intent.putExtra("destination_UserModel", userModel);
                 startActivity(intent);
+
 
             }
         });
