@@ -497,7 +497,7 @@ public class MessageActivity extends AppCompatActivity {
                 if(comments.get(position).uid.equals(uid)){
 
                     messageViewHolder.textView_message.setText(comments.get(position).message);
-                    messageViewHolder.textView_message.setBackgroundResource(R.drawable.rightbubble);
+                    messageViewHolder.textView_message.setBackgroundResource(R.drawable.lastrightbubble);
                     messageViewHolder.linearLayout_destination.setVisibility(View.INVISIBLE);
                     messageViewHolder.linearLayout_main.setGravity(Gravity.RIGHT);
                     messageViewHolder.message_image.setVisibility(View.INVISIBLE);
@@ -515,7 +515,7 @@ public class MessageActivity extends AppCompatActivity {
                         .into(messageViewHolder.imageView_profile);*/
                     messageViewHolder.textView_name.setText(userModel.getNick());
                     messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
-                    messageViewHolder.textView_message.setBackgroundResource(R.drawable.leftbubble);
+                    messageViewHolder.textView_message.setBackgroundResource(R.drawable.lastleftbubble);
                     messageViewHolder.textView_message.setText(comments.get(position).message);
                     messageViewHolder.textView_message.setTextSize(25);
                     messageViewHolder.linearLayout_main.setGravity(Gravity.LEFT);
@@ -530,7 +530,7 @@ public class MessageActivity extends AppCompatActivity {
                 if(comments.get(position).uid.equals(uid)){
 
                     messageViewHolder.textView_message.setText(comments.get(position).message);
-                    messageViewHolder.textView_message.setBackgroundResource(R.drawable.rightbubble);
+                    messageViewHolder.textView_message.setBackgroundResource(R.drawable.lastrightbubble);
                     messageViewHolder.linearLayout_destination.setVisibility(View.INVISIBLE);
                     messageViewHolder.linearLayout_main.setGravity(Gravity.RIGHT);
                     messageViewHolder.textView_message.setVisibility(View.INVISIBLE);
@@ -550,7 +550,7 @@ public class MessageActivity extends AppCompatActivity {
                         .into(messageViewHolder.imageView_profile);*/
                     messageViewHolder.textView_name.setText(userModel.getNick());
                     messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
-                   /* messageViewHolder.textView_message.setBackgroundResource(R.drawable.leftbubble);
+                   /* messageViewHolder.textView_message.setBackgroundResource(R.drawable.lastleftbubble);
                     messageViewHolder.textView_message.setText(comments.get(position).message);
                     messageViewHolder.textView_message.setTextSize(25);*/
                     messageViewHolder.linearLayout_main.setGravity(Gravity.LEFT);
