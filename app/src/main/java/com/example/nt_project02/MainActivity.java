@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         models.add(
                 new NavigationTabBar.Model.Builder(
                         getResources().getDrawable(R.drawable.home),
-                        Color.parseColor(colors[4]))
+                        Color.parseColor(colors[0]))
                         //.selectedIcon(getResources().getDrawable(R.drawable.ic_sixth))
                         .title("소식")
                         .build()
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
         models.add(
                 new NavigationTabBar.Model.Builder(
                         getResources().getDrawable(R.drawable.setting),
-                        Color.parseColor(colors[3]))
+                        Color.parseColor(colors[4]))
 //                        .selectedIcon(getResources().getDrawable(R.drawable.ic_eighth))
                         .title("설정")
                         .build()
