@@ -8,15 +8,17 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_height="100dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:gravity="center"
             android:text="정보입력"
             android:textColor="#5DA4BE"
             android:textSize="24dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -142,19 +144,26 @@
         android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/CheckButton"
-            android:text="확인"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_selector"
-            android:layout_marginRight="10dp" />
+
+
         <Button
             android:id="@+id/bt_join_cancel"
-            android:text="취소"
-            android:layout_width="wrap_content"
+            android:layout_width="184dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_selector"/>
+            android:background="@drawable/button_selector"
+            android:text="취소"
+            android:layout_marginRight="10dp"/>
+
+        <Button
+            android:id="@+id/CheckButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_selector"
+            android:text="확인" />
+
+
+
+
     </LinearLayout>
 
 
