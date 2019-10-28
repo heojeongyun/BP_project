@@ -17,13 +17,15 @@
             android:gravity="center"
             android:text="정보입력"
             android:textColor="#5DA4BE"
-            android:textSize="24dp"
-            android:textStyle="bold" />
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:layout_marginTop="50dp"
+            />
 
     </LinearLayout>
 
     <LinearLayout
-        android:padding="8dp"
+        android:padding="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
@@ -152,14 +154,20 @@
             android:layout_height="wrap_content"
             android:background="@drawable/button_selector"
             android:text="취소"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:textSize="20dp"
+            android:textColor="@android:color/background_light"
+            android:textStyle="normal"/>
 
         <Button
             android:id="@+id/CheckButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/button_selector"
-            android:text="확인" />
+            android:text="확인"
+            android:textSize="20dp"
+            android:textColor="@android:color/background_light"
+            android:textStyle="normal"/>
 
 
 
