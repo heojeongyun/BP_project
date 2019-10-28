@@ -3,6 +3,7 @@ package com.example.nt_project02.Fragment;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -41,6 +43,8 @@ import java.util.TimeZone;
 import java.util.TreeMap;
 
 public class Chatting_Fragment extends Fragment {
+
+
 
     private SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy.MM.dd HH:mm");
 
@@ -65,8 +69,11 @@ public class Chatting_Fragment extends Fragment {
         private String uid;
         private List<ChatModel> chatModels=new ArrayList<>();
         private List<UserModel> userModels;
+        private DatabaseReference databaseReference;
+
 
         public ChatRecyclerViewAdapter() {
+            //databaseReference=FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments");
             userModels=new ArrayList<>();
             uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
             FirebaseDatabase.getInstance().getReference().child("chatrooms").orderByChild("users/"+uid).equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -104,6 +111,7 @@ public class Chatting_Fragment extends Fragment {
 
 
             // 일일이 챗방에 있는 유저를 체크
+
             for(String user:chatModels.get(position).users.keySet()){
                 if(!user.equals(uid)){
                     destinationUid=user;
@@ -113,6 +121,7 @@ public class Chatting_Fragment extends Fragment {
                             if (task.isSuccessful()) {
                                 DocumentSnapshot document = task.getResult();
                                 userModels.add(document.toObject(UserModel.class));
+
 
 
                             } else {
@@ -140,19 +149,23 @@ public class Chatting_Fragment extends Fragment {
 
                     } else {
 
+
                     }
                 }
             });
+
+
 
             //메세지를 내림 차순으로 정렬 후 마지막 메세지의 키값을 가져옴
             Map<String,ChatModel.Comment> commentMap=new TreeMap<>(Collections.<String>reverseOrder());
             commentMap.putAll(chatModels.get(position).comments);
             String lastMessageKey=(String) commentMap.keySet().toArray()[0];
-            if(chatModels.get(position).comments.get(lastMessageKey).message!=null){
+            if(!chatModels.get(position).comments.get(lastMessageKey).IsImage){
                 customViewHolder.textView_lastMessage.setText(chatModels.get(position).comments.get(lastMessageKey).message);
             }else{
                 customViewHolder.textView_lastMessage.setText("사진");
             }
+
 
 
             customViewHolder.itemView.setOnClickListener(new View.OnClickListener(){

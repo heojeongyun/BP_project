@@ -1,10 +1,17 @@
 package com.example.nt_project02.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +34,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class PeopleFragment extends Fragment {
@@ -35,31 +43,77 @@ public class PeopleFragment extends Fragment {
 
 
 
+
+
+ /*   private List<UserModel> userModel;
+    private ArrayList<UserModel> userModels;
+    private ArrayList<UserModel> arrayList;
+    private EditText editText;*/
+    private PeopleFragmentRecyclerViewAdapter adapter;
+
+
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_people, container, false);
+
+
+
+
+ /*       editText=(EditText) view.findViewById(R.id.txt_search);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = editText.getText().toString()
+                        .toLowerCase(Locale.getDefault());
+                adapter.filter(text);
+
+
+            }
+        });*/
+
+        adapter=new PeopleFragmentRecyclerViewAdapter();
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.peoplefragment_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
 
+        recyclerView.setAdapter(adapter);
 
-        recyclerView.setAdapter(new PeopleFragmentRecyclerViewAdapter());
+
 
         return view;
     }
 
 
-    class PeopleFragmentRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+
+
+    class PeopleFragmentRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+
 
 
 
         List<UserModel> userModels;
-        public PeopleFragmentRecyclerViewAdapter(){
+        public PeopleFragmentRecyclerViewAdapter() {
+
+
+
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             userModels = new ArrayList<>();
+            //arrayList=new ArrayList<>();
 
 
             db.collection("users")
-                    .whereEqualTo("user_kind","현지인")
+                    .whereEqualTo("user_kind", "현지인")
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -67,6 +121,7 @@ public class PeopleFragment extends Fragment {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     userModels.add(document.toObject(UserModel.class));
+                                    //arrayList.add(document.toObject(UserModel.class));
 
                                 }
                                 notifyDataSetChanged();
@@ -93,10 +148,10 @@ public class PeopleFragment extends Fragment {
 
 
 
-
         }
+
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friend, parent, false);
 
             return new CustomViewHolder(view);
@@ -104,27 +159,25 @@ public class PeopleFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position){
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
             Glide.with
                     (holder.itemView.getContext())
                     .load(userModels.get(position).imageurl)
                     .apply(new RequestOptions().circleCrop())
-                    .into(((CustomViewHolder)holder).imageView);
-            ((CustomViewHolder)holder).Nick_textView.setText(userModels.get(position).nick);
-            ((CustomViewHolder)holder).Region_textView.setText(userModels.get(position).region);
-            ((CustomViewHolder)holder).Hash_textView.setText(userModels.get(position).hash);
+                    .into(((CustomViewHolder) holder).imageView);
+            ((CustomViewHolder) holder).Nick_textView.setText(userModels.get(position).nick);
+            ((CustomViewHolder) holder).Region_textView.setText(userModels.get(position).region);
+            ((CustomViewHolder) holder).Hash_textView.setText(userModels.get(position).hash);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (position !=RecyclerView.NO_POSITION){
+                    if (position != RecyclerView.NO_POSITION) {
                         /*Toast.makeText(getContext(),position+"",Toast.LENGTH_LONG).show();*/
-                        Intent intent=new Intent(getContext(), Profile.class);
+                        Intent intent = new Intent(getContext(), Profile.class);
                         intent.putExtra("destination_UserModels", userModels.get(position));
                         startActivity(intent);
-
-
 
 
                     }
@@ -135,10 +188,30 @@ public class PeopleFragment extends Fragment {
         }
 
         @Override
-        public int getItemCount(){
+        public int getItemCount() {
 
             return userModels.size();
         }
+
+   /*     public void filter(String charText) {
+            charText = charText.toLowerCase(Locale.getDefault());
+            userModels.clear();
+            if (charText.length() == 0) {
+                userModels.addAll(arrayList);
+            } else {
+                for (UserModel user : arrayList) {
+                    String name =context.getResources().getString(user);
+                    if (name.toLowerCase().contains(charText)) {
+                        userModels.add(user);
+                    }
+                }
+            }
+            notifyDataSetChanged();
+        }*/
+
+
+
+    }
 
         private class CustomViewHolder extends RecyclerView.ViewHolder {
             public  ImageView imageView;
@@ -159,4 +232,5 @@ public class PeopleFragment extends Fragment {
 
 
 
-}
+
+

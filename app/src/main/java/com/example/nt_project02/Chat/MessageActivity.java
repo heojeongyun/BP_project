@@ -104,58 +104,7 @@ public class MessageActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-       /* recyclerView.setHasFixedSize(true);
 
-
-        // use a linear layout manager
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
-        // specify an adapter (see also next example)
-        chatList=new ArrayList<>();
-        mAdapter = new MessageAdapter(chatList,MessageActivity.this,nick);
-        recyclerView.setAdapter(mAdapter);*/
-
-
-/*        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("message");*/
-
-
-    /*    ChatData chat=new ChatData();
-        chat.setNickname(nick);
-        chat.setMsg("hi");
-        myRef.setValue(chat);*/
-
-       /* myRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                ChatData chat=dataSnapshot.getValue(ChatData.class);
-                ((MessageAdapter) mAdapter).addChat(chat);
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
 
 
 
@@ -181,17 +130,7 @@ public class MessageActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             /*   String msg=editText.getText().toString();
 
-                if (msg != null) {
-                    ChatData chat=new ChatData();
-                    chat.setNickname(nick);
-                    chat.setMsg(msg);
-                    myRef.push().setValue(chat);
-
-                }*/
-
-             /*Toast.makeText(getApplicationContext(),destinationUid,Toast.LENGTH_LONG).show();*/
              ChatModel chatModel=new ChatModel();
              chatModel.users.put(uid,true);
              chatModel.users.put(destinationUid,true);

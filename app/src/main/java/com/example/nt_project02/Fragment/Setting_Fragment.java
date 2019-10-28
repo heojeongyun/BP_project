@@ -18,6 +18,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.nt_project02.Chat.UserModel;
 import com.example.nt_project02.Native_Register;
 import com.example.nt_project02.R;
 import com.example.nt_project02.Sign_UpActivity;
@@ -29,21 +32,27 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Setting_Fragment extends Fragment {
 
-    ImageView ivUser;
+    private ImageView ivUser;
     private static final int PICK_FROM_ALBUM = 10;
     private Uri imageUri;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String register_ImageURL;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+    private String user_uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private UserModel userModel;
 
 
 
@@ -53,35 +62,51 @@ public class Setting_Fragment extends Fragment {
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.setting, container, false);
 
-        if (ContextCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
+
+        db.collection("users")
+                .whereEqualTo("uid", user_uid)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                userModel=document.toObject(UserModel.class);
+                                if(userModel.getImageurl()!=null) {
+                                    register_ImageURL = userModel.getImageurl();
+                                    Glide.with(getContext())
+                                            .load(register_ImageURL)
+                                            .apply(new RequestOptions().circleCrop())
+                                            .into(ivUser);
+                                }
 
 
-            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                            }
 
-            } else {
+                        } else {
 
+                        }
+                    }
+                });
 
-                ActivityCompat.requestPermissions(getActivity(),
-                        new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
-                        1);
-
-            }
-        }
 
         Button native_register = (Button) rootView.findViewById(R.id.native_register);
         native_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MystartActivity(Native_Register.class);
+                String User_Kind=userModel.getUser_kind();
+                if(User_Kind.equals("현지인")) {
+                    MystartActivity(Native_Register.class);
+                }else{
+                    startToast("접근권한이 없습니다");
+                }
 
             }
         });
 
         ivUser = (ImageView) rootView.findViewById(R.id.ivUser);
-        ivUser.setOnClickListener(new View.OnClickListener() {
+        Button upload=(Button)rootView.findViewById(R.id.Upload);
+        upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View rootView) {
 
@@ -132,64 +157,65 @@ public class Setting_Fragment extends Fragment {
         if (requestCode == PICK_FROM_ALBUM) {
 
 
-            ivUser.setImageURI(data.getData());
-            imageUri = data.getData(); //이미지 경로 원본
+            if (data != null) {
+
+                ivUser.setImageURI(data.getData());
+                imageUri = data.getData();
+
+                //이미지 경로 원본
 
 
-            final StorageReference ref = FirebaseStorage.getInstance().getReference().child("UserImages").child(user.getUid());
-            UploadTask uploadTask = ref.putFile(imageUri);
+                final StorageReference ref = FirebaseStorage.getInstance().getReference().child("UserImages").child(user.getUid());
+                UploadTask uploadTask = ref.putFile(imageUri);
 
 
-
-
-            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-
-                    // Continue with the task to get the download URL
-                    return ref.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        String ImageUrl = task.getResult().toString();
-
-
-                        Map<String, Object> imageurl = new HashMap<>();
-                        imageurl.put("imageurl", ImageUrl);
-
-                        if (user != null) {
-                            db.collection("users").document(user.getUid()).set(imageurl, SetOptions.merge())
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            startToast("사진 등록 성공.");
-
-
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    startToast("사진 등록 실패.");
-
-                                }
-                            });
-
+                Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                        if (!task.isSuccessful()) {
+                            throw task.getException();
                         }
-                    } else {
-                        // Handle failures
-                        // ...
+
+                        // Continue with the task to get the download URL
+                        return ref.getDownloadUrl();
                     }
-                }
-            });
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if (task.isSuccessful()) {
+                            String ImageUrl = task.getResult().toString();
 
 
+                            Map<String, Object> imageurl = new HashMap<>();
+                            imageurl.put("imageurl", ImageUrl);
+
+                            if (user != null) {
+                                db.collection("users").document(user.getUid()).set(imageurl, SetOptions.merge())
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                startToast("사진 등록 성공.");
 
 
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        startToast("사진 등록 실패.");
+
+                                    }
+                                });
+
+                            }
+                        } else {
+                            // Handle failures
+                            // ...
+                        }
+                    }
+                });
+
+
+            }
 
 
 
