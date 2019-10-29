@@ -154,8 +154,6 @@ public class Chatting_Fragment extends Fragment {
                 }
             });
 
-
-
             //메세지를 내림 차순으로 정렬 후 마지막 메세지의 키값을 가져옴
             Map<String,ChatModel.Comment> commentMap=new TreeMap<>(Collections.<String>reverseOrder());
             commentMap.putAll(chatModels.get(position).comments);

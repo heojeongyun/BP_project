@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -53,6 +54,7 @@ public class Setting_Fragment extends Fragment {
     private FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
     private String user_uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private UserModel userModel;
+    private TextView nick_textview;
 
 
 
@@ -61,6 +63,8 @@ public class Setting_Fragment extends Fragment {
                              Bundle savedInstanceState) {
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.setting, container, false);
+
+        nick_textview=(TextView) rootView.findViewById(R.id.nick_TextView);
 
 
         db.collection("users")
@@ -78,6 +82,8 @@ public class Setting_Fragment extends Fragment {
                                             .load(register_ImageURL)
                                             .apply(new RequestOptions().circleCrop())
                                             .into(ivUser);
+                                    nick_textview.setText(userModel.getNick());
+
                                 }
 
 

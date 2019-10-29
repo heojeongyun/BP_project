@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.nt_project02.NotificationModel;
 import com.example.nt_project02.R;
 import com.google.android.gms.tasks.Continuation;
@@ -188,7 +190,7 @@ public class MessageActivity extends AppCompatActivity {
             final Uri imageUri=data.getData();
 
 
-            final StorageReference ref = FirebaseStorage.getInstance().getReference().child("UserImages").child(imageUri.toString());
+            final StorageReference ref = FirebaseStorage.getInstance().getReference().child("MessageImages").child(imageUri.toString());
             UploadTask uploadTask = ref.putFile(imageUri);
 
 
@@ -413,6 +415,8 @@ public class MessageActivity extends AppCompatActivity {
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_chat,parent,false);
 
 
@@ -448,10 +452,10 @@ public class MessageActivity extends AppCompatActivity {
                 }else
                 {
 
-              /*  Glide.with(holder.itemView.getContext())
+                Glide.with(holder.itemView.getContext())
                         .load(userModel.imageurl)
                         .apply(new RequestOptions().circleCrop())
-                        .into(messageViewHolder.imageView_profile);*/
+                        .into(messageViewHolder.imageView_profile);
                     messageViewHolder.textView_name.setText(userModel.getNick());
                     messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
                     messageViewHolder.textView_message.setBackgroundResource(R.drawable.lastleftbubble);
@@ -463,12 +467,11 @@ public class MessageActivity extends AppCompatActivity {
 
                 }
 
-            }/*else{
+            }else{
                 //내가 보내 메세지
                 if(comments.get(position).uid.equals(uid)){
 
                     messageViewHolder.textView_message.setText(comments.get(position).message);
-                    messageViewHolder.textView_message.setBackgroundResource(R.drawable.lastrightbubble);
                     messageViewHolder.linearLayout_destination.setVisibility(View.INVISIBLE);
                     messageViewHolder.linearLayout_main.setGravity(Gravity.RIGHT);
                     messageViewHolder.textView_message.setVisibility(View.INVISIBLE);
@@ -482,15 +485,14 @@ public class MessageActivity extends AppCompatActivity {
                 }else
                 {
 
-              *//*  Glide.with(holder.itemView.getContext())
+                Glide.with(holder.itemView.getContext())
                         .load(userModel.imageurl)
                         .apply(new RequestOptions().circleCrop())
-                        .into(messageViewHolder.imageView_profile);*//*
+                        .into(messageViewHolder.imageView_profile);
                     messageViewHolder.textView_name.setText(userModel.getNick());
                     messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
-                   *//* messageViewHolder.textView_message.setBackgroundResource(R.drawable.leftbubble);
                     messageViewHolder.textView_message.setText(comments.get(position).message);
-                    messageViewHolder.textView_message.setTextSize(25);*//*
+                    messageViewHolder.textView_message.setTextSize(25);
                     messageViewHolder.linearLayout_main.setGravity(Gravity.LEFT);
                     messageViewHolder.textView_message.setVisibility(View.INVISIBLE);
                     Glide.with(holder.itemView.getContext()).load(comments.get(position).message)
@@ -499,7 +501,7 @@ public class MessageActivity extends AppCompatActivity {
 
 
                 }
-            }*/
+            }
 
 
 
