@@ -13,6 +13,8 @@
 
 
 
+
+
     <androidx.recyclerview.widget.RecyclerView
 
 
@@ -29,12 +31,33 @@
         android:orientation="vertical">
 
 
-        <EditText
-            android:id="@+id/messageActivity_editText"
+        <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/messageActivity_editText"
+                android:layout_width="330dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="5dp"
+                />
+
+            <Button
+                android:id="@+id/messageActivity_Button"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/push_button"
+                android:text="보내기"
+                android:textColor="@android:color/white"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
 
         <LinearLayout
 
@@ -51,18 +74,7 @@
                 android:background="@drawable/picture" />
 
 
-            <Button
 
-
-                android:id="@+id/messageActivity_Button"
-                android:layout_width="94dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="260dp"
-                android:background="@drawable/push_button"
-                android:text="보내기"
-                android:textColor="@android:color/white"
-                android:textSize="15dp"
-                android:textStyle="bold" />
 
 
         </LinearLayout>

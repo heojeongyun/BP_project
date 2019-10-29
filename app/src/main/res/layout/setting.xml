@@ -5,24 +5,28 @@
     android:layout_height="fill_parent"
     >
 
+    <TextView
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Naravel Setting"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="#5DA4BE"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="center"
+        />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-
+        android:layout_marginTop="100dp"
         >
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="설정"
-            android:textAllCaps="true"
-            android:textColor="#5DA4BE"
-            android:textSize="30dp"
-            android:textStyle="bold"
-            android:layout_marginTop="120dp"/>
+
+
 
         <ImageView
             android:id="@+id/ivUser"
@@ -30,18 +34,27 @@
             android:layout_height="150dp"
             android:src="@drawable/user"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"/>
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="별명"
+            android:textSize="20dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            />
 
         <Button
             android:id="@+id/Upload"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="60dp"
             android:background="@drawable/button_selector"
             android:text="사진 등록"
             android:textColor="@color/browser_actions_bg_grey"
-            android:textSize="15dp"
+            android:textSize="18dp"
             android:textStyle="bold"/>
 
         <Button
@@ -53,7 +66,7 @@
             android:background="@drawable/button_selector"
             android:text="현지인 등록"
             android:textColor="@android:color/background_light"
-            android:textSize="15dp"
+            android:textSize="18dp"
             android:textStyle="bold" />
 
         <Button
@@ -65,7 +78,7 @@
             android:background="@drawable/button_selector"
             android:text="로그아웃"
             android:textColor="@android:color/background_light"
-            android:textSize="15dp"
+            android:textSize="18dp"
             android:textStyle="bold" />
 
     </LinearLayout>
