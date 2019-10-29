@@ -76,7 +76,7 @@ public class SplashActivity extends AppCompatActivity {
             builder.create().show();
 
         }else{
-            MystartActivity(Sign_UpActivity.class);
+            MystartActivity(LoginActivity.class);
         }
 
 

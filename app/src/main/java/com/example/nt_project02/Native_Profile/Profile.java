@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.nt_project02.Chat.MessageActivity;
 import com.example.nt_project02.Chat.UserModel;
 import com.example.nt_project02.R;
@@ -96,6 +97,7 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
         self_info_text.setText(userModel.getSelf_info());
         Glide.with(getApplicationContext())
                 .load(userModel.getImageurl())
+                .apply(new RequestOptions().circleCrop())
                 .into(profile_image);
 
 

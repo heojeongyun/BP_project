@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.nt_project02.Chat.UserModel;
+import com.example.nt_project02.LoginActivity;
 import com.example.nt_project02.Native_Register;
 import com.example.nt_project02.R;
 import com.example.nt_project02.Sign_UpActivity;
@@ -82,7 +83,7 @@ public class Setting_Fragment extends Fragment {
                                             .load(register_ImageURL)
                                             .apply(new RequestOptions().circleCrop())
                                             .into(ivUser);
-                                    nick_textview.setText(userModel.getNick());
+                                    nick_textview.setText(userModel.getName());
 
                                 }
 
@@ -130,7 +131,7 @@ public class Setting_Fragment extends Fragment {
         LogoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MystartActivity(Sign_UpActivity.class);
+                MystartActivity(LoginActivity.class);
             }
         });
 

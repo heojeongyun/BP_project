@@ -468,7 +468,7 @@ public class MessageActivity extends AppCompatActivity {
                 }
 
             }else{
-                //내가 보내 메세지
+                //내가 보내 사진
                 if(comments.get(position).uid.equals(uid)){
 
                     messageViewHolder.textView_message.setText(comments.get(position).message);
@@ -481,7 +481,7 @@ public class MessageActivity extends AppCompatActivity {
 
 
 
-                    //상대방이 보낸 메세지
+                    //상대방이 보낸 사진
                 }else
                 {
 
@@ -491,8 +491,6 @@ public class MessageActivity extends AppCompatActivity {
                         .into(messageViewHolder.imageView_profile);
                     messageViewHolder.textView_name.setText(userModel.getNick());
                     messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
-                    messageViewHolder.textView_message.setText(comments.get(position).message);
-                    messageViewHolder.textView_message.setTextSize(25);
                     messageViewHolder.linearLayout_main.setGravity(Gravity.LEFT);
                     messageViewHolder.textView_message.setVisibility(View.INVISIBLE);
                     Glide.with(holder.itemView.getContext()).load(comments.get(position).message)
@@ -521,10 +519,10 @@ public class MessageActivity extends AppCompatActivity {
                     Map<String,Boolean> users=(Map<String,Boolean>) dataSnapshot.getValue();
 
                     int count=users.size() -comments.get(position).readUsers.size();
-                    if(count>0){
+                    if(count==1){
                         textView.setVisibility(View.VISIBLE);
                         textView.setText(String.valueOf(count));
-                    }else{
+                    }else if(count==0){
                         textView.setVisibility(View.INVISIBLE);
                     }
                 }

@@ -29,6 +29,14 @@ public class LoginActivity extends AppCompatActivity {
 
         findViewById(R.id.CheckButton).setOnClickListener(onClickListener);
         findViewById(R.id.gotoPasswordResetbutton).setOnClickListener(onClickListener);
+        findViewById(R.id.signUp_Activity_Button).setOnClickListener(onClickListener);
+    }
+
+    public void onBackPressed() {
+        super.onBackPressed();
+        moveTaskToBack(true);
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(1);
     }
 
 
@@ -41,6 +49,9 @@ public class LoginActivity extends AppCompatActivity {
                     break;
                 case R.id.gotoPasswordResetbutton:
                     MystartActivity(PasswordResetActivity.class);
+                    break;
+                case R.id.signUp_Activity_Button:
+                    MystartActivity(Sign_UpActivity.class);
                     break;
             }
 

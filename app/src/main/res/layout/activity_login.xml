@@ -66,6 +66,18 @@
                 android:textStyle="normal" />
 
 
+            <Button
+                android:id="@+id/signUp_Activity_Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="회원가입"
+                android:background="@drawable/button_selector"
+                android:layout_marginTop="10dp"
+                android:textSize="17dp"
+                android:textColor="@android:color/background_light"
+                android:textStyle="normal"/>
+
+
 
 
         </LinearLayout>

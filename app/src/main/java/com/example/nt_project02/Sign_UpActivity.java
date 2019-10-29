@@ -28,17 +28,12 @@ public class Sign_UpActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         findViewById(R.id.signUpButton).setOnClickListener(onClickListener);
-        findViewById(R.id.CheckButton).setOnClickListener(onClickListener);
+
     }
 
 
 
-    public void onBackPressed() {
-        super.onBackPressed();
-        moveTaskToBack(true);
-        android.os.Process.killProcess(android.os.Process.myPid());
-        System.exit(1);
-    }
+
 
 
 
@@ -51,9 +46,7 @@ public class Sign_UpActivity extends AppCompatActivity {
                         signUp();
                         break;
 
-                    case R.id.CheckButton:
-                        MystartActivity(LoginActivity.class);
-                        break;
+
         }
     }
 
