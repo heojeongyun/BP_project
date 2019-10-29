@@ -24,50 +24,58 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 app:srcCompat="@drawable/travel"
-                android:id="@+id/profile_Image"/>
+                android:id="@+id/profile_Image"
+                android:layout_marginTop="30dp"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/nickAgeTV"
                 android:textAlignment="center"
                 android:textSize="16sp"
-                android:text="별명 / 나이"
+                android:text="별명"
                 android:textStyle="bold"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="250dp"
             android:layout_weight="0.5"
             android:orientation="vertical"
-            android:layout_margin="20dp">
+            android:layout_margin="20dp"
+            >
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:textSize="16sp"
-                android:text="소개글"/>
+                android:textSize="20dp"
+                android:text="소개글"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"/>
 
             <TextView
                 android:id="@+id/Self_info_TextView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAlignment="center"
-                android:textSize="16sp"
-                android:layout_marginTop="15dp"
+                android:textSize="15dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginBottom="15dp"
                 android:layout_weight="1"
-                android:textStyle="bold"
+                android:textStyle="normal"
                 android:text="현지인 소개글"/>
 
             <Button
                 android:id="@+id/profile_chat_button"
-                android:layout_width="match_parent"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
+                android:background="@drawable/button_selector"
                 android:text="채팅하기"
-                android:background="@drawable/button_selector"/>
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold"
+                android:textSize="17dp"
+                android:layout_gravity="center"/>
 
         </LinearLayout>
 
@@ -86,6 +94,7 @@
 
             <com.google.android.material.tabs.TabItem
                 android:text="추천코스"
+
                 />
 
             <com.google.android.material.tabs.TabItem

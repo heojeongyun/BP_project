@@ -31,7 +31,7 @@ public class MyPagerAdapter extends PagerAdapter {
         if (mCurrentIndex == 0) {
 
             TextView textView = mCurrentView.findViewById( R.id.travelPreviewText);
-            textView.setText("현지인이 추천하는 테마별 코스");
+            textView.setText("");
         } else if (mCurrentIndex == 1) {
 
             TextView textView1 = mCurrentView.findViewById(R.id.priceInfoTextView1);

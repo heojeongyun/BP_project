@@ -23,12 +23,13 @@
         <TextView
             android:id="@+id/reviewText"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="20dp"
+            android:layout_height="30dp"
+            android:layout_margin="44dp"
             android:layout_weight="0.8"
-            android:text="여행자 후기"
+            android:text="여행자 후기 업데이트"
             android:textAlignment="center"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
+
     </LinearLayout>
 
     <LinearLayout

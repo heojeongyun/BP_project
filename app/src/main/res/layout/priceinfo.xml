@@ -1,39 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.2"
-        android:textSize="18sp"
+        android:textSize="18dp"
         android:textStyle="bold"
-        android:text="숙박"/>
+        android:text="식당"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.3"
-        android:layout_margin="10dp"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:id="@+id/priceInfoTextView1"
-        android:text="해운대 더 좋은 민박집 : 360,000 "/>
+        android:text="광안리 신라횟집 물회 : 15,000원 \n대연동 유일한식탁 치즈돈까지 : 11,000원 \n부산대 카메:7,900원"
+        android:layout_marginLeft="20dp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.2"
-        android:textSize="18sp"
+        android:textSize="18dp"
         android:textStyle="bold"
-        android:text="추천 카페"/>
+        android:text="추천 카페"
+        android:layout_marginLeft="20dp"
+        />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.3"
-        android:layout_margin="10dp"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:id="@+id/priceInfoTextView2"
-        android:text="더 좋은 카페 시그니처 메뉴 : 5,000원"/>
+        android:text="해운대 더 좋은 카페 시그니처 메뉴 : 5,000원 \n남천동 보성녹차 팥빙수 : 3,000원"
+        android:layout_marginLeft="20dp"/>
 </LinearLayout>
