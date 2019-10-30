@@ -152,11 +152,12 @@ public class Chatting_Fragment extends Fragment {
             if(chatModels.get(position).comments.size()>=1) {
                 commentMap.putAll(chatModels.get(position).comments);
                 lastMessageKey = (String) commentMap.keySet().toArray()[0];
-            }
-            if(!chatModels.get(position).comments.get(lastMessageKey).IsImage){
-                customViewHolder.textView_lastMessage.setText(chatModels.get(position).comments.get(lastMessageKey).message);
-            }else{
-                customViewHolder.textView_lastMessage.setText("사진");
+
+                if (!chatModels.get(position).comments.get(lastMessageKey).IsImage) {
+                    customViewHolder.textView_lastMessage.setText(chatModels.get(position).comments.get(lastMessageKey).message);
+                } else {
+                    customViewHolder.textView_lastMessage.setText("사진");
+                }
             }
 
 
@@ -176,10 +177,12 @@ public class Chatting_Fragment extends Fragment {
 
             simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
 
-            long unixTime=(long) chatModels.get(position).comments.get(lastMessageKey).timestamp;
+            if(chatModels.get(position).comments.size()>=1) {
+                long unixTime = (long) chatModels.get(position).comments.get(lastMessageKey).timestamp;
 
-            Date date=new Date(unixTime);
-            customViewHolder.textView_timestamp.setText(simpleDateFormat.format(date));
+                Date date = new Date(unixTime);
+                customViewHolder.textView_timestamp.setText(simpleDateFormat.format(date));
+            }
         }
 
         @Override

@@ -16,6 +16,7 @@ import com.example.nt_project02.Chat.MessageActivity;
 import com.example.nt_project02.Chat.UserModel;
 import com.example.nt_project02.R;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class Profile extends AppCompatActivity implements ViewPager.OnPageChangeListener {
@@ -28,6 +29,7 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
     private TextView nick_text;
     private TextView self_info_text;
     private ImageView profile_image;
+    private String uid;
 
     private void initializeViewPager() {
 
@@ -84,6 +86,7 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
 
         userModel = data.getParcelableExtra("destination_UserModels");
         destinationUid=userModel.getUid();
+        uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         /*destinationUid=userModel.getUid();*/
 
@@ -111,10 +114,11 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
             public void onClick(View v) {
 
 
-                Intent intent=new Intent(getApplicationContext(), MessageActivity.class);
-                intent.putExtra("destination_Uid", destinationUid);
-                startActivity(intent);
-
+                if(destinationUid != uid) {
+                    Intent intent = new Intent(getApplicationContext(), MessageActivity.class);
+                    intent.putExtra("destination_Uid", destinationUid);
+                    startActivity(intent);
+                }
 
             }
         });
