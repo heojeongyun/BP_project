@@ -25,7 +25,7 @@ public class MyPagerAdapter extends PagerAdapter {
         mContext = context;
     }
 
-    // 각 뷰별로 텍스트 및 이미지 설정
+    // 각 뷰별로 텍스트 및 이미지
     private void updateView() {
 
         if (mCurrentIndex == 0) {
@@ -50,6 +50,9 @@ public class MyPagerAdapter extends PagerAdapter {
 
             ReviewClass review2 = new ReviewClass();
             adapter.addReview(review2);
+
+            ReviewClass review3 = new ReviewClass();
+            adapter.addReview(review3);
         }
     }
 
