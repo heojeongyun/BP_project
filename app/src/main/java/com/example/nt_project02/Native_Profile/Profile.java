@@ -49,19 +49,19 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 
-                // 탭이 선택되면 position 을 가져와 해당 뷰 노출
+
                 int position = tab.getPosition();
                 mViewPager.setCurrentItem(position);
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                // TODO : tab의 상태가 선택되지 않음으로 변경.
+
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                // TODO : 이미 선택된 tab이 다시
+
             }
         });
     }
