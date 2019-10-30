@@ -8,117 +8,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:737568200127:android:24ce4ef99969196a",
-        "android_client_info": {
-          "package_name": "com.example.chat"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "737568200127-s1emvmvnbu5p7biqns4mssonqi64n995.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.chat",
-            "certificate_hash": "c1636891a0758403e66ce56cbd0e9ab11ae9a6ef"
-          }
-        },
-        {
-          "client_id": "737568200127-fpc92gko7a732cp31jb7db4fu5qcoeni.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyD3fc6U_aETe7mI6XEFc_Y9lhjIqjdEdVQ"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "737568200127-fpc92gko7a732cp31jb7db4fu5qcoeni.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:737568200127:android:a22c283a9ec49799",
-        "android_client_info": {
-          "package_name": "com.example.login2"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "737568200127-fhi6c2drkuvam1j4rkeopli0ve8jgftf.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.login2",
-            "certificate_hash": "c1636891a0758403e66ce56cbd0e9ab11ae9a6ef"
-          }
-        },
-        {
-          "client_id": "737568200127-fpc92gko7a732cp31jb7db4fu5qcoeni.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyD3fc6U_aETe7mI6XEFc_Y9lhjIqjdEdVQ"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "737568200127-fpc92gko7a732cp31jb7db4fu5qcoeni.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:737568200127:android:621c59fc401d7f41",
-        "android_client_info": {
-          "package_name": "com.example.management"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "737568200127-ofbbldnpjk4k0bsg9vs7u46cqda84147.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.management",
-            "certificate_hash": "c1636891a0758403e66ce56cbd0e9ab11ae9a6ef"
-          }
-        },
-        {
-          "client_id": "737568200127-fpc92gko7a732cp31jb7db4fu5qcoeni.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyD3fc6U_aETe7mI6XEFc_Y9lhjIqjdEdVQ"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "737568200127-fpc92gko7a732cp31jb7db4fu5qcoeni.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:737568200127:android:cd16fb30d6ecc112",
         "android_client_info": {
           "package_name": "com.example.nt_project02"
@@ -126,47 +15,10 @@
       },
       "oauth_client": [
         {
-          "client_id": "737568200127-81sd9hutbthl6ail8jjke02lp1cdbc2f.apps.googleusercontent.com",
+          "client_id": "737568200127-br5jlf9t7dd0a61jjgela7alncpsv9aq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.nt_project02",
-            "certificate_hash": "c1636891a0758403e66ce56cbd0e9ab11ae9a6ef"
-          }
-        },
-        {
-          "client_id": "737568200127-fpc92gko7a732cp31jb7db4fu5qcoeni.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyD3fc6U_aETe7mI6XEFc_Y9lhjIqjdEdVQ"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "737568200127-fpc92gko7a732cp31jb7db4fu5qcoeni.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:737568200127:android:39edc59b7833da50",
-        "android_client_info": {
-          "package_name": "com.example.test"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "737568200127-gdulan92dn4555gn9f0g52ifohbfc60n.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.test",
             "certificate_hash": "c1636891a0758403e66ce56cbd0e9ab11ae9a6ef"
           }
         },

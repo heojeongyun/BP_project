@@ -3,6 +3,7 @@ package com.example.nt_project02.Chat;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,11 +80,13 @@ public class MessageActivity extends AppCompatActivity {
     private String ImageUrl;
     private FirebaseDatabase database;
     private DatabaseReference myRef;
-    private UserModel userModel;
+
     private SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy.MM.dd HH:mm");
 
+    private UserModel destinationUserModel;
     private DatabaseReference databaseReference;
     private ValueEventListener valueEventListener;
+    int peopleCount=0;
 
 
 
@@ -96,9 +99,8 @@ public class MessageActivity extends AppCompatActivity {
 
         Intent data=getIntent();
 
-        uid=FirebaseAuth.getInstance().getCurrentUser().getUid(); // 어플 현재 이용자 아이디
-        userModel=data.getParcelableExtra("destination_UserModel");
-        destinationUid=userModel.getUid(); // 상대방 아이디
+        uid=FirebaseAuth.getInstance().getCurrentUser().getUid();//어플 현재 이용자 아이디
+        destinationUid=data.getStringExtra("destination_Uid"); // 상대방 아이디
 
 
 
@@ -120,9 +122,9 @@ public class MessageActivity extends AppCompatActivity {
         Image_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
+                Intent intent=new Intent(Intent.ACTION_PICK);
+                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+
 
                 startActivityForResult(Intent.createChooser(intent,"SELECT IMAGE"), GALLERY_PICK);
             }
@@ -279,7 +281,7 @@ public class MessageActivity extends AppCompatActivity {
         });
 
         NotificationModel notificationModel=new NotificationModel();
-        notificationModel.to=userModel.getPushToken();
+        notificationModel.to=destinationUserModel.getPushToken();
         notificationModel.notification.title=userNick;
         notificationModel.notification.text=editText.getText().toString();
         notificationModel.data.title=userNick;
@@ -331,7 +333,6 @@ public class MessageActivity extends AppCompatActivity {
                     return;
                 }
 
-
                 for(DataSnapshot item : dataSnapshot.getChildren()){
                     ChatModel chatModel =item.getValue(ChatModel.class);
                     if(chatModel.users.containsKey(destinationUid)&& chatModel.users.size()==2){
@@ -358,15 +359,20 @@ public class MessageActivity extends AppCompatActivity {
 
 
         public RecyclerViewAdapter() {
-            comments=new ArrayList<>();
+            comments = new ArrayList<>();
 
 
-            getMessageList();
+            FirebaseFirestore.getInstance().collection("users").document(destinationUid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    DocumentSnapshot document = task.getResult();
+                    destinationUserModel=document.toObject(UserModel.class);
+                    getMessageList();
 
-
+                }
+            });
 
         }
-
         void getMessageList(){
 
             databaseReference=FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments");
@@ -379,28 +385,33 @@ public class MessageActivity extends AppCompatActivity {
 
                     for(DataSnapshot item:dataSnapshot.getChildren()){
                         String key=item.getKey();
-                        ChatModel.Comment comment=item.getValue(ChatModel.Comment.class);
-                        comment.readUsers.put(uid,true);
+                        ChatModel.Comment comment_origin = item.getValue(ChatModel.Comment.class);
+                        ChatModel.Comment comment_motify = item.getValue(ChatModel.Comment.class);
+                        comment_motify.readUsers.put(uid, true);
 
-                        readUsersMap.put(key,comment);
-                        comments.add(comment);
-
-
+                        readUsersMap.put(key, comment_motify);
+                        comments.add(comment_origin);
                     }
 
-                    databaseReference.updateChildren(readUsersMap)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
+                    if(comments.size()>=1) {
+                        if (!comments.get(comments.size() - 1).readUsers.containsKey(uid)) {
 
 
-                            //메세지가 갱신
+                            FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments")
+                                    .updateChildren(readUsersMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    notifyDataSetChanged();
+                                    recyclerView.scrollToPosition(comments.size() - 1);
+                                }
+                            });
+                        } else {
                             notifyDataSetChanged();
-
-                            recyclerView.scrollToPosition(comments.size()-1);
-
+                            recyclerView.scrollToPosition(comments.size() - 1);
                         }
-                    });
+                        //메세지가 갱신
+                    }
+
 
                 }
 
@@ -412,38 +423,60 @@ public class MessageActivity extends AppCompatActivity {
 
         }
 
+        public int getItemViewType(int position) {
+            if(!comments.get(position).IsImage){
+                return 0;
+            }else{
+                return 1;
+            }
+
+
+        }
+
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
 
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_chat,parent,false);
+            if(viewType==0){
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_chat,parent,false);
 
+                return new MessageViewHolder(view);
+            }else{
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_chat2,parent,false);
 
+                return new ImageViewHolder(view);
+            }
 
-            return new MessageViewHolder(view);
 
 
         }
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-            MessageViewHolder messageViewHolder=((MessageViewHolder)holder);
 
 
 
+
+            long unixTime=(long) comments.get(position).timestamp;
+            Date date=new Date(unixTime);
+            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+            String time=simpleDateFormat.format(date);
 
             if (!comments.get(position).IsImage){
+                MessageViewHolder messageViewHolder=((MessageViewHolder)holder);
 
-                //내가 보내 메세지
+                messageViewHolder.textView_timestamp.setText(time);
+                //내가 보낸 메세지
                 if(comments.get(position).uid.equals(uid)){
 
-                    messageViewHolder.textView_message.setText(comments.get(position).message);
-                    messageViewHolder.textView_message.setBackgroundResource(R.drawable.lastrightbubble);
                     messageViewHolder.linearLayout_destination.setVisibility(View.INVISIBLE);
-                    messageViewHolder.linearLayout_main.setGravity(Gravity.RIGHT);
+                    messageViewHolder.textView_message.setBackgroundResource(R.drawable.lastrightbubble);
+                    messageViewHolder.textView_message.setText(comments.get(position).message);
                     messageViewHolder.textView_message.setTextSize(25);
-                    messageViewHolder.message_image.setVisibility(View.INVISIBLE);
+                    messageViewHolder.linearLayout_main.setGravity(Gravity.RIGHT);
+                    messageViewHolder.textView_message.setGravity(Gravity.RIGHT);
+                    //messageViewHolder.message_image.setVisibility(View.INVISIBLE);
                     setReadCounter(position,messageViewHolder.textView_readCounter_left);
 
 
@@ -453,31 +486,33 @@ public class MessageActivity extends AppCompatActivity {
                 {
 
                 Glide.with(holder.itemView.getContext())
-                        .load(userModel.imageurl)
+                        .load(destinationUserModel.imageurl)
                         .apply(new RequestOptions().circleCrop())
                         .into(messageViewHolder.imageView_profile);
-                    messageViewHolder.textView_name.setText(userModel.getNick());
+                    messageViewHolder.textView_name.setText(destinationUserModel.getNick());
                     messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
                     messageViewHolder.textView_message.setBackgroundResource(R.drawable.lastleftbubble);
                     messageViewHolder.textView_message.setText(comments.get(position).message);
                     messageViewHolder.textView_message.setTextSize(25);
                     messageViewHolder.linearLayout_main.setGravity(Gravity.LEFT);
-                    setReadCounter(position,messageViewHolder.textView_readCounter_right);
+                    //setReadCounter(position,messageViewHolder.textView_readCounter_right);
 
 
                 }
 
-            }else{
+            }else if(comments.get(position).IsImage){
                 //내가 보내 사진
+                ImageViewHolder imageViewHolder=((ImageViewHolder)holder);
+                imageViewHolder.textView_timestamp.setText(time);
                 if(comments.get(position).uid.equals(uid)){
 
-                    messageViewHolder.textView_message.setText(comments.get(position).message);
-                    messageViewHolder.linearLayout_destination.setVisibility(View.INVISIBLE);
-                    messageViewHolder.linearLayout_main.setGravity(Gravity.RIGHT);
-                    messageViewHolder.textView_message.setVisibility(View.INVISIBLE);
+                    //imageViewHolder.textView_message.setText(comments.get(position).message);
+                    imageViewHolder.linearLayout_destination.setVisibility(View.INVISIBLE);
+                    imageViewHolder.linearLayout_main.setGravity(Gravity.RIGHT);
+                    //imageViewHolder.textView_message.setVisibility(View.INVISIBLE);
                     Glide.with(holder.itemView.getContext()).load(comments.get(position).message)
-                            .into(messageViewHolder.message_image);
-                    setReadCounter(position,messageViewHolder.textView_readCounter_left);
+                            .into(imageViewHolder.message_image);
+                    setReadCounter(position,imageViewHolder.textView_readCounter_left);
 
 
 
@@ -486,16 +521,18 @@ public class MessageActivity extends AppCompatActivity {
                 {
 
                 Glide.with(holder.itemView.getContext())
-                        .load(userModel.imageurl)
+                        .load(destinationUserModel.imageurl)
                         .apply(new RequestOptions().circleCrop())
-                        .into(messageViewHolder.imageView_profile);
-                    messageViewHolder.textView_name.setText(userModel.getNick());
-                    messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
-                    messageViewHolder.linearLayout_main.setGravity(Gravity.LEFT);
-                    messageViewHolder.textView_message.setVisibility(View.INVISIBLE);
+                        .into(imageViewHolder.imageView_profile);
+                    imageViewHolder.textView_name.setText(destinationUserModel.getNick());
+                    imageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
+                    imageViewHolder.linearLayout_main.setGravity(Gravity.LEFT);
+                    //imageViewHolder.textView_message.setVisibility(View.INVISIBLE);
                     Glide.with(holder.itemView.getContext()).load(comments.get(position).message)
-                            .into(messageViewHolder.message_image);
-                    setReadCounter(position,messageViewHolder.textView_readCounter_right);
+                            .into(imageViewHolder.message_image);
+                    setReadCounter(position,imageViewHolder.textView_readCounter_right);
+
+
 
 
                 }
@@ -503,35 +540,45 @@ public class MessageActivity extends AppCompatActivity {
 
 
 
-            long unixTime=(long) comments.get(position).timestamp;
-            Date date=new Date(unixTime);
-            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
-            String time=simpleDateFormat.format(date);
-            messageViewHolder.textView_timestamp.setText(time);
+
+
 
 
         }
 
         void setReadCounter(final int position, final TextView textView){
-            FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Map<String,Boolean> users=(Map<String,Boolean>) dataSnapshot.getValue();
+            if (peopleCount == 0) {
 
-                    int count=users.size() -comments.get(position).readUsers.size();
-                    if(count==1){
-                        textView.setVisibility(View.VISIBLE);
-                        textView.setText(String.valueOf(count));
-                    }else if(count==0){
-                        textView.setVisibility(View.INVISIBLE);
+
+                FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Map<String, Boolean> users = (Map<String, Boolean>) dataSnapshot.getValue();
+                        peopleCount = users.size();
+                        int count = peopleCount - comments.get(position).readUsers.size();
+                        if (count > 0) {
+                            textView.setVisibility(View.VISIBLE);
+                            textView.setText(String.valueOf(count));
+                        } else {
+                            textView.setVisibility(View.INVISIBLE);
+                        }
                     }
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
+                    }
+                });
+            }else{
+                int count = peopleCount - comments.get(position).readUsers.size();
+                if (count > 0) {
+                    textView.setVisibility(View.VISIBLE);
+                    textView.setText(String.valueOf(count));
+                } else {
+                    textView.setVisibility(View.INVISIBLE);
                 }
-            });
+            }
+
         }
 
         @Override
@@ -548,12 +595,38 @@ public class MessageActivity extends AppCompatActivity {
             public TextView textView_timestamp;
             public TextView textView_readCounter_left;
             public TextView textView_readCounter_right;
-            public ImageView message_image;
+            //public ImageView message_image;
 
             public MessageViewHolder(View view){
 
                 super(view);
                 textView_message=view.findViewById(R.id.TextView_msg);
+                textView_name=(TextView) view.findViewById(R.id.TextView_nickname);
+                imageView_profile=(ImageView) view.findViewById(R.id.profile_Image);
+                linearLayout_destination=(LinearLayout) view.findViewById(R.id.linearlayout_destination);
+                linearLayout_main=(LinearLayout)view.findViewById(R.id.linearlayout_main);
+                textView_timestamp=(TextView) view.findViewById(R.id.textview_timestamp);
+                textView_readCounter_left=(TextView) view.findViewById(R.id.messageItem_textview_readCounter_left);
+                textView_readCounter_right=(TextView)view.findViewById(R.id.messageItem_textview_readCounter_right);
+                //message_image=(ImageView)view.findViewById(R.id.message_image);
+            }
+
+        }
+        private class ImageViewHolder extends RecyclerView.ViewHolder{
+            //public TextView textView_message;
+            public TextView textView_name;
+            public ImageView imageView_profile;
+            public LinearLayout linearLayout_destination;
+            public LinearLayout linearLayout_main;
+            public TextView textView_timestamp;
+            public TextView textView_readCounter_left;
+            public TextView textView_readCounter_right;
+            public ImageView message_image;
+
+            public ImageViewHolder(View view){
+
+                super(view);
+                //textView_message=view.findViewById(R.id.TextView_msg);
                 textView_name=(TextView) view.findViewById(R.id.TextView_nickname);
                 imageView_profile=(ImageView) view.findViewById(R.id.profile_Image);
                 linearLayout_destination=(LinearLayout) view.findViewById(R.id.linearlayout_destination);
@@ -570,7 +643,10 @@ public class MessageActivity extends AppCompatActivity {
     @Override
     public void onBackPressed(){
 
-        databaseReference.removeEventListener(valueEventListener);
+        if(valueEventListener!=null) {
+            databaseReference.removeEventListener(valueEventListener);
+
+        }
         finish();
         overridePendingTransition(R.anim.fromleft,R.anim.toright);
 

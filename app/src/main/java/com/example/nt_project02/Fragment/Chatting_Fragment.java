@@ -70,13 +70,15 @@ public class Chatting_Fragment extends Fragment {
         private List<ChatModel> chatModels=new ArrayList<>();
         private List<UserModel> userModels;
         private DatabaseReference databaseReference;
+        private String lastMessageKey;
+        private ArrayList<String> destinationUsers=new ArrayList<>();
 
 
         public ChatRecyclerViewAdapter() {
             //databaseReference=FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments");
             userModels=new ArrayList<>();
             uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
-            FirebaseDatabase.getInstance().getReference().child("chatrooms").orderByChild("users/"+uid).equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
+            FirebaseDatabase.getInstance().getReference().child("chatrooms").orderByChild("users/"+uid).equalTo(true).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -115,20 +117,10 @@ public class Chatting_Fragment extends Fragment {
             for(String user:chatModels.get(position).users.keySet()){
                 if(!user.equals(uid)){
                     destinationUid=user;
-                    FirebaseFirestore.getInstance().collection("users").document(destinationUid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()) {
-                                DocumentSnapshot document = task.getResult();
-                                userModels.add(document.toObject(UserModel.class));
+                    destinationUsers.add(destinationUid);
 
 
 
-                            } else {
-
-                            }
-                        }
-                    });
 
                 }
             }
@@ -155,9 +147,12 @@ public class Chatting_Fragment extends Fragment {
             });
 
             //메세지를 내림 차순으로 정렬 후 마지막 메세지의 키값을 가져옴
+
             Map<String,ChatModel.Comment> commentMap=new TreeMap<>(Collections.<String>reverseOrder());
-            commentMap.putAll(chatModels.get(position).comments);
-            String lastMessageKey=(String) commentMap.keySet().toArray()[0];
+            if(chatModels.get(position).comments.size()>=1) {
+                commentMap.putAll(chatModels.get(position).comments);
+                lastMessageKey = (String) commentMap.keySet().toArray()[0];
+            }
             if(!chatModels.get(position).comments.get(lastMessageKey).IsImage){
                 customViewHolder.textView_lastMessage.setText(chatModels.get(position).comments.get(lastMessageKey).message);
             }else{
@@ -171,7 +166,7 @@ public class Chatting_Fragment extends Fragment {
                 @Override
                 public void onClick(View view){
                     Intent intent=new Intent(view.getContext(), MessageActivity.class);
-                    intent.putExtra("destination_UserModel", userModels.get(position));
+                    intent.putExtra("destination_Uid", destinationUsers.get(position));
 
                     ActivityOptions activityOptions=ActivityOptions.makeCustomAnimation(view.getContext(),R.anim.fromright,R.anim.toleft);
                     startActivity(intent,activityOptions.toBundle());
