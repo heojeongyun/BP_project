@@ -70,7 +70,7 @@ public class MessageActivity extends AppCompatActivity {
     private static final int GALLERY_PICK=1;
 
 
-    private String userNick;
+    private String username;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -270,7 +270,7 @@ public class MessageActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        userNick=document.get("nick").toString();
+                        username=document.get("name").toString();
                     } else {
 
                     }
@@ -282,9 +282,9 @@ public class MessageActivity extends AppCompatActivity {
 
         NotificationModel notificationModel=new NotificationModel();
         notificationModel.to=destinationUserModel.getPushToken();
-        notificationModel.notification.title=userNick;
+        notificationModel.notification.title=username;
         notificationModel.notification.text=editText.getText().toString();
-        notificationModel.data.title=userNick;
+        notificationModel.data.title=username;
         notificationModel.data.text=editText.getText().toString();
 
         RequestBody requestBody=RequestBody.create(MediaType.parse("application/json; charset=utf8"),gson.toJson(notificationModel));

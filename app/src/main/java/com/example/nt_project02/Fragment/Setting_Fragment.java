@@ -123,6 +123,9 @@ public class Setting_Fragment extends Fragment {
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
                 startActivityForResult(intent, PICK_FROM_ALBUM);
+
+                nick_textview.setText(userModel.getName());
+
             }
         });
 

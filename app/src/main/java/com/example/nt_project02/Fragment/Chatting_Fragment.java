@@ -72,6 +72,7 @@ public class Chatting_Fragment extends Fragment {
         private DatabaseReference databaseReference;
         private String lastMessageKey;
         private ArrayList<String> destinationUsers=new ArrayList<>();
+        private String destinationUid=null;
 
 
         public ChatRecyclerViewAdapter() {
@@ -85,6 +86,8 @@ public class Chatting_Fragment extends Fragment {
                     chatModels.clear();
                     for(DataSnapshot item:dataSnapshot.getChildren()){
                         chatModels.add(item.getValue(ChatModel.class));
+
+
 
                     }
                     notifyDataSetChanged();
@@ -109,42 +112,58 @@ public class Chatting_Fragment extends Fragment {
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
 
             final CustomViewHolder customViewHolder=(CustomViewHolder)holder;
-            String destinationUid=null;
+
 
 
             // 일일이 챗방에 있는 유저를 체크
 
-            for(String user:chatModels.get(position).users.keySet()){
-                if(!user.equals(uid)){
-                    destinationUid=user;
-                    destinationUsers.add(destinationUid);
 
 
-
-
-                }
-            }
-
-
-            FirebaseFirestore.getInstance().collection("users").document(destinationUid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            FirebaseDatabase.getInstance().getReference().child("chatrooms").addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        UserModel userModel=document.toObject(UserModel.class);
-                        Glide.with(customViewHolder.itemView.getContext())
-                                .load(userModel.getImageurl())
-                                .apply(new RequestOptions().circleCrop())
-                                .into(customViewHolder.imageView);
-                        customViewHolder.textView_title.setText(userModel.getNick());
-
-
-                    } else {
-
-
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for(String user:chatModels.get(position).users.keySet()){
+                        if(!user.equals(uid)) {
+                            destinationUid = user;
+                            destinationUsers.add(destinationUid);
+                        }
                     }
                 }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
             });
+
+
+
+
+
+
+
+
+            if(destinationUid!=null) {
+                FirebaseFirestore.getInstance().collection("users").document(destinationUid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            UserModel userModel = document.toObject(UserModel.class);
+                            Glide.with(customViewHolder.itemView.getContext())
+                                    .load(userModel.getImageurl())
+                                    .apply(new RequestOptions().circleCrop())
+                                    .into(customViewHolder.imageView);
+                            customViewHolder.textView_title.setText(userModel.getName());
+
+
+                        } else {
+
+
+                        }
+                    }
+                });
+            }
 
             //메세지를 내림 차순으로 정렬 후 마지막 메세지의 키값을 가져옴
 
