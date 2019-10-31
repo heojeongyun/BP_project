@@ -75,6 +75,7 @@ public class Chatting_Fragment extends Fragment {
         private String destinationUid=null;
 
 
+
         public ChatRecyclerViewAdapter() {
             //databaseReference=FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments");
             userModels=new ArrayList<>();
@@ -85,12 +86,16 @@ public class Chatting_Fragment extends Fragment {
 
                     chatModels.clear();
                     for(DataSnapshot item:dataSnapshot.getChildren()){
+
                         chatModels.add(item.getValue(ChatModel.class));
+
+
 
 
 
                     }
                     notifyDataSetChanged();
+
                 }
 
                 @Override
@@ -115,28 +120,20 @@ public class Chatting_Fragment extends Fragment {
 
 
 
+
+
+
+
             // 일일이 챗방에 있는 유저를 체크
+            for(String user:chatModels.get(position).users.keySet()){
+                if(!user.equals(uid)) {
 
+                    destinationUid = user;
+                    destinationUsers.add(destinationUid);
 
-
-            FirebaseDatabase.getInstance().getReference().child("chatrooms").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for(String user:chatModels.get(position).users.keySet()){
-                        if(!user.equals(uid)) {
-                            destinationUid = user;
-                            destinationUsers.add(destinationUid);
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
-            });
-
-
+            }
 
 
 
@@ -146,8 +143,12 @@ public class Chatting_Fragment extends Fragment {
             if(destinationUid!=null) {
                 FirebaseFirestore.getInstance().collection("users").document(destinationUid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
+
+
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
+
+
                             DocumentSnapshot document = task.getResult();
                             UserModel userModel = document.toObject(UserModel.class);
                             Glide.with(customViewHolder.itemView.getContext())
@@ -155,6 +156,8 @@ public class Chatting_Fragment extends Fragment {
                                     .apply(new RequestOptions().circleCrop())
                                     .into(customViewHolder.imageView);
                             customViewHolder.textView_title.setText(userModel.getName());
+
+
 
 
                         } else {

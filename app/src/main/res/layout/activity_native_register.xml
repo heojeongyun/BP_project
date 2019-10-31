@@ -39,7 +39,7 @@
             android:layout_height="35dp"
             android:background="#E7E6E6"
             android:gravity="center"
-            android:hint="앞에서 설정한 이름 고정" />
+            android:hint="별명을 설정해 주세요." />
     </LinearLayout>
     <LinearLayout
         android:padding="8dp"

@@ -475,7 +475,7 @@ public class MessageActivity extends AppCompatActivity {
                     messageViewHolder.textView_message.setText(comments.get(position).message);
                     messageViewHolder.textView_message.setTextSize(25);
                     messageViewHolder.linearLayout_main.setGravity(Gravity.RIGHT);
-                    messageViewHolder.textView_message.setGravity(Gravity.RIGHT);
+                    //messageViewHolder.textView_message.setGravity(Gravity.RIGHT);
                     //messageViewHolder.message_image.setVisibility(View.INVISIBLE);
                     setReadCounter(position,messageViewHolder.textView_readCounter_left);
 

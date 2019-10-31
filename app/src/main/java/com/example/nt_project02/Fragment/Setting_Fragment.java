@@ -126,6 +126,7 @@ public class Setting_Fragment extends Fragment {
 
                 nick_textview.setText(userModel.getName());
 
+
             }
         });
 
@@ -205,6 +206,7 @@ public class Setting_Fragment extends Fragment {
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                                 startToast("사진 등록 성공.");
+                                                //MystartActivity(LoginActivity.class);
 
 
                                             }
