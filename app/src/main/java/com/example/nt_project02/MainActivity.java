@@ -34,36 +34,48 @@ import java.util.Map;
 import devlight.io.library.ntb.NavigationTabBar;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG="Profile";
+    private static final String TAG="Main";
     ViewPager viewPager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //파이어 베이스 유저 가져오기
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+        //유저가 없다면 회원가입으로 돌아가게 하기
         if(user==null){
             MystartActivity(Sign_UpActivity.class);
         }else{// 회원가입 로그인 성공
+
+            // 파이어스토어 객체선언
             FirebaseFirestore db = FirebaseFirestore.getInstance();
+            //파이어스토어에서 해당 유저의 uid를 이용하여 정보 가져오기
             final DocumentReference docRef = db.collection("users").document(user.getUid());
             docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
+                //정보 가져오는 것이 성공적일 때
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
+                        //DocumentSnapshot에 정보를 담아둠
                         DocumentSnapshot document = task.getResult();
+                        //document가 null이 아닐 때
                         if(document!=null){
+                            //재차 확인
                             if (document.exists()) {
+                                //LogCat에 출력
                                 Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-
+                                //아니면 No such document라고 출력됨
                             } else {
                                 Log.d(TAG, "No such document");
+                                //로그인은 됐는데, 상세정보가 등록되어 있지 않으면 MemberActivity클래스로 이동
                                 MystartActivity(MemberActivity.class);
                             }
                         }
-
+                        //아예 오류떠서 실패했을 때
                     } else {
                         Log.d(TAG, "get failed with ", task.getException());
                     }
@@ -98,18 +110,20 @@ public class MainActivity extends AppCompatActivity {
         EditText editText = findViewById(R.id.txt_search);
         TextView resultTextView = findViewById(R.id.textView);
 
+        //해당 단말기 토큰을 가져온다(푸시 메세지 등등 전용)
         passPushTokenToServer();
 
 
     }
 
-;
+    ;
 
     @Override
+    //뒤로가기 버튼 비활성화 (로그아웃 해야 처음 로그인 화면으로 가게끔)
     public void onBackPressed() {
         //super.onBackPressed();
     }
-
+    //액티비티 이동 메서드
     private void MystartActivity(Class c){
         Intent intent=new Intent(this,c);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -183,7 +197,9 @@ public class MainActivity extends AppCompatActivity {
         }, 500);
     }
 
+    //어댑터 설정 클래스
     class PagerAdapter extends FragmentStatePagerAdapter {
+
 
         ArrayList<Fragment> items=new ArrayList<Fragment>();
 
@@ -207,6 +223,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //토큰 가져오는 메소드
     void passPushTokenToServer(){
 
         String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -214,10 +231,11 @@ public class MainActivity extends AppCompatActivity {
         Map<String,Object> map=new HashMap<>();
         map.put("pushToken",token);
 
-
+        //파이어베이스의 해당하는 아이디에 토큰을 업데이트
         FirebaseFirestore.getInstance().collection("users").document(uid).update(map);
 
     }
 
 
 }
+

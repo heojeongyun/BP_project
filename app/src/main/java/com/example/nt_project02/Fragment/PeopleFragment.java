@@ -85,6 +85,7 @@ public class PeopleFragment extends Fragment {
             }
         });*/
 
+
         adapter=new PeopleFragmentRecyclerViewAdapter();
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.peoplefragment_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));

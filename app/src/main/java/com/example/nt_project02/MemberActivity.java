@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MemberActivity extends AppCompatActivity {
+
     private static final String TAG="MemberInfoActivity";
     RadioGroup sex_rg,user_kind_rg;
     String sex,user_kind,city;
@@ -40,6 +41,7 @@ public class MemberActivity extends AppCompatActivity {
         Spinner city_spinner=(Spinner) findViewById(R.id.City_Spinner);
 
 
+        //성별 라디오 버튼 체크시
         sex_rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -55,6 +57,7 @@ public class MemberActivity extends AppCompatActivity {
             }
         });
 
+        //사용자 종류 라디오 버튼 체크시
         user_kind_rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -70,7 +73,9 @@ public class MemberActivity extends AppCompatActivity {
             }
         });
 
+        //도시 스피너 체크시
         city_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 city=parent.getItemAtPosition(position).toString();
@@ -84,10 +89,13 @@ public class MemberActivity extends AppCompatActivity {
 
     }
 
+    //뒤로가기 버튼 눌렀을 때
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
     }
+
 
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -106,11 +114,12 @@ public class MemberActivity extends AppCompatActivity {
 
     };
 
-
+    //프로필 업데이트 메서드
     private void profileUpdate() {
 
 
 
+        //지역변수 선언
         String name = ((EditText) findViewById(R.id.tv_name)).getText().toString();
         String phone = ((EditText) findViewById(R.id.tv_phone)).getText().toString();
         String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -118,21 +127,25 @@ public class MemberActivity extends AppCompatActivity {
 
 
 
-
+        //각각의 정보가 빈칸인지 아닌지 확인
         if (name.length() > 0 && phone.length()>0 && sex.length()>0 &&city.length()>0&&user_kind.length()>0) {
+            //현재 유저 정보 가져오기
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+            //MemberInfo 객체 선언
             MemberInfo memberInfo = new MemberInfo(uid,name,sex,phone,city,user_kind);
 
+            //현재 유저가 있다면
             if (user != null) {
+                //파이어 스토어에 등록
                 db.collection("users").document(user.getUid()).set(memberInfo)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        startToast("회원정보 등록 성공.");
-                                        finish();
-                                        MystartActivity(MainActivity.class);
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                startToast("회원정보 등록 성공.");
+                                finish();
+                                MystartActivity(MainActivity.class);
 
                             }
                         }).addOnFailureListener(new OnFailureListener() {
@@ -142,6 +155,7 @@ public class MemberActivity extends AppCompatActivity {
                         Log.w(TAG, "Error writing document", e);
                     }
                 });
+
 
             }
 
