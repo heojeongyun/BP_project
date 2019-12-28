@@ -25,7 +25,7 @@ public class MyPagerAdapter extends PagerAdapter {
         mContext = context;
     }
 
-    // 각 뷰별로 텍스트 및 이미지
+    // priceinfo, travelreview관련 view들의 index를 기준으로 지도라던지 식당후기나 여행후기등을 업로드
     private void updateView() {
 
         if (mCurrentIndex == 0) {
@@ -59,7 +59,7 @@ public class MyPagerAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-
+        // 리뷰 관련 페이지인 travelpreview, priceinfo, review tab을 볼 수 있게 하는 함수
         mCurrentView = null;
 
         if (mContext != null) {
@@ -86,7 +86,7 @@ public class MyPagerAdapter extends PagerAdapter {
 
         return mCurrentView;
     }
-
+    // 작성한 내용이 tab을 넘길시 삭제되지 않도록 보정
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((View) object);

@@ -64,20 +64,20 @@ public class Setting_Fragment extends Fragment {
                              Bundle savedInstanceState) {
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.setting, container, false);
-
+        // setting.xml의 nick_textview 객체 생성
         nick_textview=(TextView) rootView.findViewById(R.id.nick_TextView);
 
-
+        // Firebase db로 부터 사용자 정보 불러오기
         db.collection("users")
                 .whereEqualTo("uid", user_uid)
-                .get()
+                .get()// 사용자 정보 확인하기
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
+                        if (task.isSuccessful()) { // 사용자 정보가 일치할 경우에 Firebase db로부터 사용자 사진과 별명을 가져온다
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 userModel=document.toObject(UserModel.class);
-                                if(userModel.getImageurl()!=null) {
+                                if(userModel.getImageurl()!=null) { // 이미지의 URL값이 존재할 경우에만 사진을 가져온다
                                     register_ImageURL = userModel.getImageurl();
                                     Glide.with(getContext())
                                             .load(register_ImageURL)
@@ -102,7 +102,7 @@ public class Setting_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String User_Kind=userModel.getUser_kind();
-                if(User_Kind.equals("현지인")) {
+                if(User_Kind.equals("현지인")) { // 사용자가 현지인인 경우에만 정보를 등록/수정 가능
                     MystartActivity(Native_Register.class);
                 }else{
                     startToast("접근권한이 없습니다");
@@ -110,10 +110,11 @@ public class Setting_Fragment extends Fragment {
 
             }
         });
-
+        // 등록버튼의 객체를 선언
         ivUser = (ImageView) rootView.findViewById(R.id.ivUser);
         Button upload=(Button)rootView.findViewById(R.id.Upload);
         upload.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View rootView) {
 
@@ -122,16 +123,16 @@ public class Setting_Fragment extends Fragment {
 
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-                startActivityForResult(intent, PICK_FROM_ALBUM);
+                startActivityForResult(intent, PICK_FROM_ALBUM); //갤러리로부터 사진을 가져와 등록하는 부분
 
-                nick_textview.setText(userModel.getName());
+                nick_textview.setText(userModel.getName()); // userModel의 이름 가져오기
 
 
             }
         });
 
         Button LogoutButton=(Button) rootView.findViewById(R.id.LogoutButton);
-
+        //LogoutButton 클릭시 LoginActivity 화면으로 넘어가게 하는 부분
         LogoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,7 +147,7 @@ public class Setting_Fragment extends Fragment {
 
     private void MystartActivity(Class c) {
         Intent intent = new Intent(getActivity(), c);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // 로그아웃시 초기화하는 부분
         startActivity(intent);
 
     }
@@ -173,13 +174,11 @@ public class Setting_Fragment extends Fragment {
                 ivUser.setImageURI(data.getData());
                 imageUri = data.getData();
 
-                //이미지 경로 원본
-
-
+                // Firebase storage로부터 이미지 URL을 통해 이미지 파일을 가져온다
                 final StorageReference ref = FirebaseStorage.getInstance().getReference().child("UserImages").child(user.getUid());
                 UploadTask uploadTask = ref.putFile(imageUri);
 
-
+                // 등록한 사진의 URL을 Firebase storage에 업로드 하는 부분
                 Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                     @Override
                     public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
@@ -196,7 +195,7 @@ public class Setting_Fragment extends Fragment {
                         if (task.isSuccessful()) {
                             String ImageUrl = task.getResult().toString();
 
-
+                            // 이미지 URL과 실제 이미지를 매칭시켜 객체에 저장하는 부분
                             Map<String, Object> imageurl = new HashMap<>();
                             imageurl.put("imageurl", ImageUrl);
 
@@ -242,7 +241,7 @@ public class Setting_Fragment extends Fragment {
 
 
 
-
+    // 알림 메세지를 출력하는 함수이다
     private void startToast(String msg){
 
         Toast.makeText(getContext(), msg,

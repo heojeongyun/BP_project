@@ -11,16 +11,14 @@ import android.widget.TextView;
 import com.example.nt_project02.R;
 
 import java.util.ArrayList;
-
+// reviewList라는 custom View를 생성
 public class MyAdapter extends BaseAdapter {
 
     private ArrayList<ReviewClass> reviewList = new ArrayList<> ();
-
     public void addReview(ReviewClass review) {
-
         reviewList.add(review);
     }
-
+    // reviewList를 초기화하는 함수인데 아마 사용되지 않는듯하다..
     public void clearReView() {
 
         reviewList.clear();
@@ -47,6 +45,7 @@ public class MyAdapter extends BaseAdapter {
         Context context = viewGroup.getContext();
 
         /* 'listview_custom' Layout을 inflate하여 convertView 참조 획득 */
+        // 사용자 입장에서 현지인에게 리뷰를 새로 생성하기 위해 배경화면이 될 Layout인 list_item을 불러오며 원하는 사진과 후기를 첨부
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate( R.layout.list_item, viewGroup, false);
