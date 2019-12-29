@@ -18,3 +18,4 @@ public class ChatModel {
         //public String message_image;
     }
 }
+
