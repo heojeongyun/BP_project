@@ -40,8 +40,7 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class
-PeopleFragment extends Fragment {
+public class PeopleFragment extends Fragment {
 
     @Nullable
 
@@ -59,7 +58,7 @@ PeopleFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_people, container, false); // fragment_people 실제 객체화
+        View view = inflater.inflate(R.layout.fragment_people, container, false);
 
 
 
@@ -86,7 +85,6 @@ PeopleFragment extends Fragment {
             }
         });*/
 
-        // 어댑터 객체생성
         adapter=new PeopleFragmentRecyclerViewAdapter();
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.peoplefragment_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
@@ -100,7 +98,7 @@ PeopleFragment extends Fragment {
 
 
 
-    // adapter 객체로 생성한 PeopleFragmentRecyclerViewAdapter 클래스
+
     class PeopleFragmentRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
@@ -117,13 +115,13 @@ PeopleFragment extends Fragment {
             //arrayList=new ArrayList<>();
 
 
-            db.collection("users") // Firebase의 db에서 사용자 정보를 불러온다
+            db.collection("users")
                     .whereEqualTo("user_kind", "현지인")
-                    .get() // Firebase의 db에서 사용자 정보중 현지인의 정보만 불러온다
+                    .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) { // 정보를 성공적으로 불러왔을 경우 현지인 목록에 현지인들의 정보를 반복 추가한다
+                            if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     userModels.add(document.toObject(UserModel.class));
                                     //arrayList.add(document.toObject(UserModel.class));
@@ -160,7 +158,6 @@ PeopleFragment extends Fragment {
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            // Firebase db에서 불러온 현지인의 정보를 UserModels에 붙여넣는 양식
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friend, parent, false);
 
             return new CustomViewHolder(view);
@@ -170,13 +167,11 @@ PeopleFragment extends Fragment {
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
-            Glide.with // Glide는 이미지의 URL을 이미지로 변환해 빠르게 불러올 수 있는 라이브러리이다
-                    // Firebase db에 저장되어있는 이미지 URL로부터 이미지를 불러오는 작업이다
+            Glide.with
                     (holder.itemView.getContext())
                     .load(userModels.get(position).imageurl)
                     .apply(new RequestOptions().circleCrop())
                     .into(((CustomViewHolder) holder).imageView);
-            // Item_friends의 별명, 사는 지역, 해쉬태그의 포지션을 카운트한다
             ((CustomViewHolder) holder).Nick_textView.setText(userModels.get(position).nick);
             ((CustomViewHolder) holder).Region_textView.setText(userModels.get(position).region);
             ((CustomViewHolder) holder).Hash_textView.setText(userModels.get(position).hash);
@@ -185,7 +180,6 @@ PeopleFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     if (position != RecyclerView.NO_POSITION) {
-                        // 어댑터 내의 POSITION 값이 존재할 경우 그 현지인을 클릭시에 Profile로 갱신한다
                         /*Toast.makeText(getContext(),position+"",Toast.LENGTH_LONG).show();*/
                         Intent intent = new Intent(getContext(), Profile.class);
                         intent.putExtra("destination_UserModels", userModels.get(position));
@@ -200,7 +194,7 @@ PeopleFragment extends Fragment {
         }
 
         @Override
-        public int getItemCount() { //userModels의 사이즈를 정의하는 함수인데 필요한가 싶다..
+        public int getItemCount() {
 
             return userModels.size();
         }
@@ -225,12 +219,12 @@ PeopleFragment extends Fragment {
 
     }
 
-        private class CustomViewHolder extends RecyclerView.ViewHolder { // 실제 사용자들에게 보여지는 부분이다
+        private class CustomViewHolder extends RecyclerView.ViewHolder {
             public  ImageView imageView;
             public TextView Nick_textView;
             public TextView Region_textView;
             public TextView Hash_textView;
-            // item_friends.xml 내의 여러 탭을 사용하기 위해서 선언하는 부분이다
+
             public CustomViewHolder(View view) {
                 super(view);
                 imageView = (ImageView) view.findViewById(R.id.frienditem_imageview);
