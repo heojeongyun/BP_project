@@ -195,7 +195,7 @@ public class Setting_Fragment extends Fragment {
                         if (task.isSuccessful()) {
                             String ImageUrl = task.getResult().toString();
 
-                            // 이미지 URL과 실제 이미지를 매칭시켜 객체에 저장하는 부분
+                            // 이미지 URL과 실제 이미지를 매칭시켜 객체에 저장하는 곳
                             Map<String, Object> imageurl = new HashMap<>();
                             imageurl.put("imageurl", ImageUrl);
 
