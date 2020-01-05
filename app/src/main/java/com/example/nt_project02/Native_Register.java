@@ -1,6 +1,7 @@
 package com.example.nt_project02;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,12 +24,14 @@ import com.google.firebase.firestore.SetOptions;
 public class Native_Register extends AppCompatActivity {
 
     String region;
+    String user_kind;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_native_register);
 
+        user_kind="현지인";
 
         Spinner region_spinner=(Spinner) findViewById(R.id.native_spinner);
 
@@ -62,6 +65,7 @@ public class Native_Register extends AppCompatActivity {
         String nick = ((EditText) findViewById(R.id.native_confirm)).getText().toString();
         String hash = ((EditText) findViewById(R.id.hash_tag)).getText().toString();
         String self_info = ((EditText) findViewById(R.id.tv_information)).getText().toString();
+        String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
 
@@ -71,7 +75,7 @@ public class Native_Register extends AppCompatActivity {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-            Native_MemberInfo native_memberInfo = new Native_MemberInfo(nick,region,hash,self_info);
+            Native_MemberInfo native_memberInfo = new Native_MemberInfo(uid,nick,region,hash,self_info,user_kind);
 
             if (user != null) {
                 db.collection("users").document(user.getUid()).set(native_memberInfo,SetOptions.merge())
@@ -80,6 +84,7 @@ public class Native_Register extends AppCompatActivity {
                             public void onSuccess(Void aVoid) {
                                 startToast("현지인 정보 등록 성공.");
                                 finish();
+                                MystartActivity(MainActivity.class);
 
                             }
                         }).addOnFailureListener(new OnFailureListener() {
@@ -103,5 +108,12 @@ public class Native_Register extends AppCompatActivity {
 
         Toast.makeText(Native_Register.this, msg,
                 Toast.LENGTH_SHORT).show();
+    }
+
+    private void MystartActivity(Class c){
+        Intent intent=new Intent(this,c);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+
     }
 }

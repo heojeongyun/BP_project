@@ -2,6 +2,7 @@ package com.example.nt_project02;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,6 +14,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -75,9 +80,46 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
-                                //FirebaseUser user = mAuth.getCurrentUser();
+                                FirebaseUser user = mAuth.getCurrentUser();
                                 startToast("로그인 성공");
-                                MystartActivity(MainActivity.class);
+                                String uid=user.getUid();
+                                // 파이어스토어 객체선언
+                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                //파이어스토어에서 해당 유저의 uid를 이용하여 정보 가져오기
+                                final DocumentReference docRef = db.collection("users").document(uid);
+                                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    //정보 가져오는 것이 성공적일 때
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+
+                                            //DocumentSnapshot에 정보를 담아둠
+
+                                            DocumentSnapshot document = task.getResult();
+
+                                            //document가 null이 아닐 때
+
+                                            if(document!=null){
+
+                                                //재차 확인
+                                                if (document.exists()) {
+
+
+                                                    MystartActivity(MainActivity.class);
+                                                } else {
+
+                                                    //로그인은 됐는데, 상세정보가 등록되어 있지 않으면 MemberActivity클래스로 이동
+                                                    MystartActivity(MemberTypeActivity.class);
+                                                }
+                                            }
+                                            //아예 오류떠서 실패했을 때
+                                        } else {
+                                            Log.d("login", "get failed with ", task.getException());
+                                        }
+                                    }
+                                });
+
+
 
                             } else {
 

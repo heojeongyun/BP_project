@@ -97,7 +97,8 @@ public class Setting_Fragment extends Fragment {
                 });
 
 
-        Button native_register = (Button) rootView.findViewById(R.id.native_register);
+
+    /*    Button native_register = (Button) rootView.findViewById(R.id.native_register);
         native_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,7 +110,7 @@ public class Setting_Fragment extends Fragment {
                 }
 
             }
-        });
+        });*/
         // 등록버튼의 객체를 선언
         ivUser = (ImageView) rootView.findViewById(R.id.ivUser);
         Button upload=(Button)rootView.findViewById(R.id.Upload);

@@ -38,7 +38,7 @@ public class MemberActivity extends AppCompatActivity {
 
         findViewById(R.id.CheckButton).setOnClickListener(onClickListener);
         sex_rg=(RadioGroup)findViewById(R.id.SexRadioGroup);
-        user_kind_rg=(RadioGroup)findViewById(R.id.User_Kind);
+        //user_kind_rg=(RadioGroup)findViewById(R.id.User_Kind);
         Spinner city_spinner=(Spinner) findViewById(R.id.City_Spinner);
 
 
@@ -58,8 +58,11 @@ public class MemberActivity extends AppCompatActivity {
             }
         });
 
+        user_kind="여행자";
+
+
         //사용자 종류 라디오 버튼 체크시
-        user_kind_rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        /*user_kind_rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
@@ -72,7 +75,7 @@ public class MemberActivity extends AppCompatActivity {
                 }
 
             }
-        });
+        });*/
 
         //도시 스피너 체크시
         city_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
