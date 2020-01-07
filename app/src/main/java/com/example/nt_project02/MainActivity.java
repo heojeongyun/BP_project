@@ -121,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     //뒤로가기 버튼 비활성화 (로그아웃 해야 처음 로그인 화면으로 가게끔)
     public void onBackPressed() {
+
         //super.onBackPressed();
     }
     //액티비티 이동 메서드
