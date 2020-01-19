@@ -48,12 +48,12 @@ public class PeopleFragment extends Fragment {
 
 
 
- /*   private List<UserModel> userModel;
+    private List<UserModel> userModel;
     private ArrayList<UserModel> userModels;
     private ArrayList<UserModel> arrayList;
-    private EditText editText;*/
+    private EditText editText;
     private PeopleFragmentRecyclerViewAdapter adapter;
-
+    private Context context;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,7 +63,7 @@ public class PeopleFragment extends Fragment {
 
 
 
- /*       editText=(EditText) view.findViewById(R.id.txt_search);
+        editText=(EditText) view.findViewById(R.id.txt_search);
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -72,18 +72,19 @@ public class PeopleFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                adapter.searchUser(s.toString());
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 String text = editText.getText().toString()
                         .toLowerCase(Locale.getDefault());
-                adapter.filter(text);
+                //adapter.filter(text);
 
 
             }
-        });*/
+        });
+
 
         adapter=new PeopleFragmentRecyclerViewAdapter();
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.peoplefragment_recyclerview);
@@ -106,13 +107,14 @@ public class PeopleFragment extends Fragment {
 
 
         List<UserModel> userModels;
+        List<UserModel> saveList;
         public PeopleFragmentRecyclerViewAdapter() {
 
 
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             userModels = new ArrayList<>();
-            //arrayList=new ArrayList<>();
+            saveList=new ArrayList<>();
 
 
             db.collection("users")
@@ -124,7 +126,7 @@ public class PeopleFragment extends Fragment {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     userModels.add(document.toObject(UserModel.class));
-                                    //arrayList.add(document.toObject(UserModel.class));
+                                    saveList.add(document.toObject(UserModel.class));
 
                                 }
                                 notifyDataSetChanged();
@@ -199,25 +201,50 @@ public class PeopleFragment extends Fragment {
             return userModels.size();
         }
 
-   /*     public void filter(String charText) {
+/*
+        public void filter(String charText) {
             charText = charText.toLowerCase(Locale.getDefault());
             userModels.clear();
             if (charText.length() == 0) {
                 userModels.addAll(arrayList);
             } else {
                 for (UserModel user : arrayList) {
-                    String name =context.getResources().getString(user);
+                    String name =context.getResources().getString(user.getName());
                     if (name.toLowerCase().contains(charText)) {
                         userModels.add(user);
                     }
                 }
             }
             notifyDataSetChanged();
-        }*/
+        }
+*/
+
+        public void searchUser(String search){
+
+            userModels.clear();
+
+            for(int i = 0; i < saveList.size(); i++){
+
+                if(saveList.get(i).getNick() !=null &&saveList.get(i).getNick().contains(search)){//contains메소드로 search 값이 있으면 true를 반환함
+
+                    userModels.add(saveList.get(i));
+
+                }
+
+            }
+
+            adapter.notifyDataSetChanged();//어댑터에 값일 바뀐것을 알려줌
 
 
+        }
 
     }
+
+
+
+
+
+
 
         private class CustomViewHolder extends RecyclerView.ViewHolder {
             public  ImageView imageView;
