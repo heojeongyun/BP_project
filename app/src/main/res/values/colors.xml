@@ -5,6 +5,7 @@
     <color name="colorAccent">#3F51B5</color>
     <color name="statusBarColor">#A1CDE1</color>
     <color name="button">#7C5DA4BE</color>
+    <color name="white">#FFFFFF</color>
 
 
 </resources>

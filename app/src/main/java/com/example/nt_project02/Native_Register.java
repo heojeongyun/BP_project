@@ -62,20 +62,20 @@ public class Native_Register extends AppCompatActivity {
 
 
 
-        String nick = ((EditText) findViewById(R.id.native_confirm)).getText().toString();
-        String hash = ((EditText) findViewById(R.id.hash_tag)).getText().toString();
-        String self_info = ((EditText) findViewById(R.id.tv_information)).getText().toString();
+        String native_name = ((EditText) findViewById(R.id.native_name)).getText().toString();
+        String phone_number = ((EditText) findViewById(R.id.phone_number)).getText().toString();
+        String birthday_information = ((EditText) findViewById(R.id.birthday_information)).getText().toString();
         String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
 
 
 
-        if (nick.length() > 0 && hash.length()>0 && self_info.length()>0 &&region.length()>0) {
+        if (native_name.length() > 0 && phone_number.length()>0 && birthday_information.length()>0 &&region.length()>0) {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-            Native_MemberInfo native_memberInfo = new Native_MemberInfo(uid,nick,region,hash,self_info,user_kind);
+            Native_MemberInfo native_memberInfo = new Native_MemberInfo(uid,native_name,region,phone_number,birthday_information,user_kind);
 
             if (user != null) {
                 db.collection("users").document(user.getUid()).set(native_memberInfo,SetOptions.merge())

@@ -1,23 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:gravity="center">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="현지인 등록"
-            android:textSize="25dp"
+            android:id="@+id/textView"
+            android:layout_width="212dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="25dp"
+            android:gravity="center_vertical"
+            android:text="나는 현지인!"
             android:textColor="#5DA4BE"
-            android:textStyle="bold"/>
+            android:textSize="35dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/native_explain"
+            android:layout_width="351dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
+            android:gravity="center_vertical"
+            android:text="현지인은 여행자들에게 정보를 제공하는 역할을 합니다. 여행자를 위해 최선을 다해주세요!"
+            android:textColor="#5DA4BE"
+            android:textSize="15dp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -25,88 +39,141 @@
         android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         >
 
         <TextView
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="별명" />
+            android:layout_marginLeft="20dp"
+            android:gravity="left"
+            android:text="이름"
+            android:textSize="20dp"
+            />
 
         <EditText
-            android:id="@+id/native_confirm"
+            android:id="@+id/native_name"
             android:layout_width="300dp"
-            android:layout_height="35dp"
-            android:background="#E7E6E6"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:hint="별명을 설정해 주세요." />
+            android:layout_marginLeft="20dp"
+            android:textSize="20dp"/>
     </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="109dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:gravity="left"
+            android:text="휴대전화"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/phone_number"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:gravity="center"
+            android:textSize="20dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="97dp"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:gravity="left"
+            android:text="성별"
+            android:textSize="20dp" />
+
+        <RadioGroup
+            android:id="@+id/sex_radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp">
+
+            <RadioButton
+                android:id="@+id/man_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="남성" />
+
+            <RadioButton
+                android:id="@+id/woman_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="여성" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="97dp"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="89dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:gravity="left"
+            android:text="생년월일"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/birthday_information"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:gravity="center"
+            android:textSize="20dp" />
+    </LinearLayout>
+
     <LinearLayout
         android:padding="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_region"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="지역" />
+            android:layout_marginLeft="20dp"
+            android:gravity="left"
+            android:text="지역"
+            android:textSize="20dp" />
 
         <Spinner
             android:id="@+id/native_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_weight="0"
-            android:background="#E7E6E6"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
             android:entries="@array/현지인지역구"
             android:gravity="center" />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="133dp"
-        android:padding="8dp">
-
-        <TextView
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="해시태그" />
-
-        <EditText
-            android:id="@+id/hash_tag"
-            android:layout_width="300dp"
-            android:layout_height="115dp"
-            android:background="#E7E6E6"
-            android:gravity="center"
-            android:hint="여행테마를 #해시태그로 나타내세요!" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="266dp"
-        android:padding="8dp">
-
-        <TextView
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="현지인 소개" />
-
-        <EditText
-            android:id="@+id/tv_information"
-            android:layout_width="300dp"
-            android:layout_height="250dp"
-            android:background="#E7E6E6"
-            android:gravity="center"
-            android:hint="자신만의 소개를 해주세요!" />
-    </LinearLayout>
-
     <Button
         android:id="@+id/submit_button"
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="등록하기"
@@ -114,5 +181,5 @@
         android:textColor="@android:color/background_light"
         android:textStyle="normal"
         android:background="@drawable/button_selector"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="0dp"/>
 </LinearLayout>
