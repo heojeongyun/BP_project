@@ -78,6 +78,12 @@
                 android:textSize="17dp"
                 android:layout_gravity="center"/>
 
+            <Button
+                android:id="@+id/activity_profile_BookMark"
+                android:text="즐겨찾기"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
         </LinearLayout>
 
     </LinearLayout>
