@@ -3,19 +3,21 @@ package com.example.nt_project02;
 public class Native_MemberInfo {
 
     String uid;
-    String nick;
-    String region;
-    String hash;
-    String self_info;
+    String name;
+    String phonenumber;
+    String sex;
+    String birthday;
     String user_kind;
+    String region;
 
-    public Native_MemberInfo(String uid, String nick, String region, String hash, String self_info, String user_kind) {
+    public Native_MemberInfo(String uid, String name, String phonenumber, String sex, String birthday, String user_kind, String region) {
         this.uid = uid;
-        this.nick = nick;
-        this.region = region;
-        this.hash = hash;
-        this.self_info = self_info;
+        this.name = name;
+        this.phonenumber = phonenumber;
+        this.sex = sex;
+        this.birthday = birthday;
         this.user_kind = user_kind;
+        this.region = region;
     }
 
     public String getUid() {
@@ -26,36 +28,36 @@ public class Native_MemberInfo {
         this.uid = uid;
     }
 
-    public String getNick() {
-        return nick;
+    public String getName() {
+        return name;
     }
 
-    public void setNick(String nick) {
-        this.nick = nick;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getRegion() {
-        return region;
+    public String getPhonenumber() {
+        return phonenumber;
     }
 
-    public void setRegion(String region) {
-        this.region = region;
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
     }
 
-    public String getHash() {
-        return hash;
+    public String getSex() {
+        return sex;
     }
 
-    public void setHash(String hash) {
-        this.hash = hash;
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
-    public String getSelf_info() {
-        return self_info;
+    public String getBirthday() {
+        return birthday;
     }
 
-    public void setSelf_info(String self_info) {
-        this.self_info = self_info;
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public String getUser_kind() {
@@ -64,5 +66,13 @@ public class Native_MemberInfo {
 
     public void setUser_kind(String user_kind) {
         this.user_kind = user_kind;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
     }
 }
