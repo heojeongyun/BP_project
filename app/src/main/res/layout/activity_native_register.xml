@@ -55,7 +55,7 @@
             android:id="@+id/native_name"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="left"
             android:layout_marginLeft="20dp"
             android:textSize="20dp"/>
     </LinearLayout>
@@ -80,7 +80,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:gravity="center"
+            android:gravity="left"
             android:textSize="20dp" />
     </LinearLayout>
 
@@ -110,6 +110,7 @@
                 android:id="@+id/man_radio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="false"
                 android:text="남성" />
 
             <RadioButton
@@ -141,7 +142,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:gravity="center"
+            android:gravity="left"
             android:textSize="20dp" />
     </LinearLayout>
 
@@ -166,7 +167,7 @@
             android:layout_height="50dp"
             android:layout_marginLeft="20dp"
             android:entries="@array/현지인지역구"
-            android:gravity="center" />
+            android:gravity="left" />
 
     </LinearLayout>
 
@@ -175,10 +176,10 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="등록하기"
-        android:textSize="17dp"
-        android:textColor="@android:color/background_light"
-        android:textStyle="normal"
+        android:layout_marginTop="15dp"
         android:background="@drawable/button_selector"
-        android:layout_marginTop="0dp"/>
+        android:text="등록하기"
+        android:textColor="@android:color/background_light"
+        android:textSize="17dp"
+        android:textStyle="normal" />
 </LinearLayout>
