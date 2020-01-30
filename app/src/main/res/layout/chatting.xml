@@ -6,26 +6,25 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Native Chatting List"
-        android:textSize="20dp"
-        android:textStyle="bold"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="120dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="Chatting List"
         android:textColor="#5DA4BE"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="15dp"
-        />
+        android:textSize="30dp"
+        android:textStyle="bold" />
 
-<androidx.recyclerview.widget.RecyclerView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/chatfragment_recyclerview">
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/chatfragment_recyclerview">
 
-</androidx.recyclerview.widget.RecyclerView>
+    </androidx.recyclerview.widget.RecyclerView>
 
 
 
 
 </LinearLayout>
-

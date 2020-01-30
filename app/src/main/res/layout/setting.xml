@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
 
     <TextView
-        android:gravity="center"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Naravel Setting"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:textColor="#5DA4BE"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="20dp"
         android:layout_gravity="center"
-        />
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="120dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="Setting"
+        android:textColor="#5DA4BE"
+        android:textSize="30dp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -59,17 +59,17 @@
             android:textSize="18dp"
             android:textStyle="bold"/>
 
-   <!--     <Button
-            android:id="@+id/native_register"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_selector"
-            android:text="현지인 상세정보 등록"
-            android:textColor="@android:color/background_light"
-            android:textSize="18dp"
-            android:textStyle="bold" />-->
+        <!--     <Button
+                 android:id="@+id/native_register"
+                 android:layout_width="280dp"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="center"
+                 android:layout_marginTop="20dp"
+                 android:background="@drawable/button_selector"
+                 android:text="현지인 상세정보 등록"
+                 android:textColor="@android:color/background_light"
+                 android:textSize="18dp"
+                 android:textStyle="bold" />-->
 
         <Button
             android:id="@+id/LogoutButton"
@@ -86,4 +86,4 @@
     </LinearLayout>
 
 
-</RelativeLayout>
+</LinearLayout>
