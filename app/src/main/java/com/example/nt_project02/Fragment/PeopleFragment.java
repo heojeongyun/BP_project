@@ -174,9 +174,9 @@ public class PeopleFragment extends Fragment {
                     .load(userModels.get(position).imageurl)
                     .apply(new RequestOptions().circleCrop())
                     .into(((CustomViewHolder) holder).imageView);
-            ((CustomViewHolder) holder).Nick_textView.setText(userModels.get(position).nick);
+            ((CustomViewHolder) holder).Nick_textView.setText(userModels.get(position).name);
             ((CustomViewHolder) holder).Region_textView.setText(userModels.get(position).region);
-            ((CustomViewHolder) holder).Hash_textView.setText(userModels.get(position).hash);
+            //((CustomViewHolder) holder).Hash_textView.setText(userModels.get(position).hash);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -225,7 +225,7 @@ public class PeopleFragment extends Fragment {
 
             for(int i = 0; i < saveList.size(); i++){
 
-                if(saveList.get(i).getNick() !=null &&saveList.get(i).getNick().contains(search)){//contains메소드로 search 값이 있으면 true를 반환함
+                if(saveList.get(i).getName() !=null &&saveList.get(i).getName().contains(search)){//contains메소드로 search 값이 있으면 true를 반환함
 
                     userModels.add(saveList.get(i));
 

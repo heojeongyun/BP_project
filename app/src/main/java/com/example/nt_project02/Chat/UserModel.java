@@ -3,35 +3,39 @@ package com.example.nt_project02.Chat;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserModel implements Parcelable {
 
-    public String pushToken;
-    public String imageurl;
-    public String uid;
-    public String nick;
-    public String region;
-    public String hash;
-    public String self_info;
+    public String birthday;
+    public List<String> bookmarks;
     public String name;
+    public String phonenumber;
+    public String pushToken;
+    public String region;
     public String sex;
-    public String phone;
-    public String city;
+    public String uid;
     public String user_kind;
+    public String imageurl;
+
+
 
     public UserModel(Parcel parcel) {
 
-        pushToken=parcel.readString();
-        imageurl=parcel.readString();
-        uid=parcel.readString();
+        birthday=parcel.readString();
+        bookmarks = new ArrayList<String>();
+        parcel.readList(bookmarks, UserModel.class.getClassLoader());
         name=parcel.readString();
-        city=parcel.readString();
-        nick=parcel.readString();
-        self_info=parcel.readString();
-        user_kind=parcel.readString();
+        phonenumber=parcel.readString();
+        pushToken=parcel.readString();
         region=parcel.readString();
         sex=parcel.readString();
-        phone=parcel.readString();
-        hash=parcel.readString();
+        uid=parcel.readString();
+        user_kind=parcel.readString();
+        sex=parcel.readString();
+        imageurl=parcel.readString();
+
 
     }
     public UserModel(){
@@ -69,18 +73,18 @@ public class UserModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.pushToken);
-        dest.writeString(this.imageurl);
-        dest.writeString(this.uid);
+
+        dest.writeString(this.birthday);
+        dest.writeList(this.bookmarks);
         dest.writeString(this.name);
-        dest.writeString(this.city);
-        dest.writeString(this.nick);
-        dest.writeString(this.self_info);
-        dest.writeString(this.user_kind);
+        dest.writeString(this.phonenumber);
+        dest.writeString(this.pushToken);
         dest.writeString(this.region);
         dest.writeString(this.sex);
-        dest.writeString(this.phone);
-        dest.writeString(this.hash);
+        dest.writeString(this.uid);
+        dest.writeString(this.user_kind);
+        dest.writeString(this.imageurl);
+
 
 
     }
@@ -92,60 +96,20 @@ public class UserModel implements Parcelable {
     }
 
 
-    public String getPushToken() {
-        return pushToken;
+    public String getBirthday() {
+        return birthday;
     }
 
-    public void setPushToken(String pushToken) {
-        this.pushToken = pushToken;
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
-    public String getImageurl() {
-        return imageurl;
+    public List<String> getBookmarks() {
+        return bookmarks;
     }
 
-    public void setImageurl(String imageurl) {
-        this.imageurl = imageurl;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
-    public String getNick() {
-        return nick;
-    }
-
-    public void setNick(String nick) {
-        this.nick = nick;
-    }
-
-    public String getRegion() {
-        return region;
-    }
-
-    public void setRegion(String region) {
-        this.region = region;
-    }
-
-    public String getHash() {
-        return hash;
-    }
-
-    public void setHash(String hash) {
-        this.hash = hash;
-    }
-
-    public String getSelf_info() {
-        return self_info;
-    }
-
-    public void setSelf_info(String self_info) {
-        this.self_info = self_info;
+    public void setBookmarks(List<String> bookmarks) {
+        this.bookmarks = bookmarks;
     }
 
     public String getName() {
@@ -156,6 +120,30 @@ public class UserModel implements Parcelable {
         this.name = name;
     }
 
+    public String getPhonenumber() {
+        return phonenumber;
+    }
+
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
+    }
+
+    public String getPushToken() {
+        return pushToken;
+    }
+
+    public void setPushToken(String pushToken) {
+        this.pushToken = pushToken;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
     public String getSex() {
         return sex;
     }
@@ -164,20 +152,12 @@ public class UserModel implements Parcelable {
         this.sex = sex;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getUid() {
+        return uid;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getUser_kind() {
@@ -186,6 +166,14 @@ public class UserModel implements Parcelable {
 
     public void setUser_kind(String user_kind) {
         this.user_kind = user_kind;
+    }
+
+    public String getImageurl() {
+        return imageurl;
+    }
+
+    public void setImageurl(String imageurl) {
+        this.imageurl = imageurl;
     }
 
     public static Creator<UserModel> getCREATOR() {

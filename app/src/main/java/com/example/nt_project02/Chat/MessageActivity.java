@@ -511,7 +511,7 @@ public class MessageActivity extends AppCompatActivity {
                         .load(destinationUserModel.imageurl)
                         .apply(new RequestOptions().circleCrop())
                         .into(messageViewHolder.imageView_profile);
-                    messageViewHolder.textView_name.setText(destinationUserModel.getNick());
+                    messageViewHolder.textView_name.setText(destinationUserModel.getName());
                     messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
                     messageViewHolder.textView_message.setBackgroundResource(R.drawable.lastleftbubble);
                     messageViewHolder.textView_message.setText(comments.get(position).message);
@@ -546,7 +546,7 @@ public class MessageActivity extends AppCompatActivity {
                         .load(destinationUserModel.imageurl)
                         .apply(new RequestOptions().circleCrop())
                         .into(imageViewHolder.imageView_profile);
-                    imageViewHolder.textView_name.setText(destinationUserModel.getNick());
+                    imageViewHolder.textView_name.setText(destinationUserModel.getName());
                     imageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
                     imageViewHolder.linearLayout_main.setGravity(Gravity.LEFT);
                     //imageViewHolder.textView_message.setVisibility(View.INVISIBLE);

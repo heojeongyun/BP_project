@@ -47,6 +47,12 @@
             android:textStyle="bold"
             />
 
+
+        <Button
+            android:id="@+id/fragment_setting_BookmarkButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="즐겨찾기"/>
         <Button
             android:id="@+id/Upload"
             android:layout_width="280dp"
@@ -82,6 +88,7 @@
             android:textColor="@android:color/background_light"
             android:textSize="18dp"
             android:textStyle="bold" />
+
 
     </LinearLayout>
 

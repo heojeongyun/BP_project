@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+
+    <TextView
+        android:gravity="center"
+        android:id="@+id/setting_demo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Native Bookmark"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="#5DA4BE"
+        android:layout_marginTop="5dp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/activity_bookmark_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="602dp"
+        android:layout_below="@+id/setting_demo"
+        android:layout_marginTop="-1dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+</RelativeLayout>

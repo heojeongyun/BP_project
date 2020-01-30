@@ -2,13 +2,16 @@ package com.example.nt_project02.Native_Profile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
@@ -16,14 +19,25 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.nt_project02.Chat.MessageActivity;
 import com.example.nt_project02.Chat.UserModel;
+import com.example.nt_project02.Native_Register;
 import com.example.nt_project02.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -34,6 +48,7 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
 
     private MyPagerAdapter mPagerAdapter;
     private UserModel userModel;
+    private UserModel destination_userModel;
     private TextView nick_text;
     private TextView self_info_text;
     private ImageView profile_image;
@@ -41,6 +56,7 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
     private CheckBox activity_profile_BookMark;
     private FirebaseFirestore db;
     private DocumentReference Ref;
+    private List<String> bookmarks_array;
 
     private void initializeViewPager() {
         // 각 review 의 내용들을 표시관련
@@ -91,8 +107,8 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
 
         Intent data=getIntent();
         // Firebase db로 부터 저장된 현지인의 정보들을 불러오는 작업
-        userModel = data.getParcelableExtra("destination_UserModels");
-        destinationUid=userModel.getUid();
+        destination_userModel = data.getParcelableExtra("destination_UserModels");
+        destinationUid=destination_userModel.getUid();
         uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         /*destinationUid=userModel.getUid();*/
@@ -103,11 +119,12 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
         self_info_text=(TextView) findViewById(R.id.Self_info_TextView);
         profile_image=(ImageView) findViewById(R.id.profile_Image);
 
-        nick_text.setText(userModel.getNick());
-        self_info_text.setText(userModel.getSelf_info());
+        nick_text.setText(destination_userModel.getName());
+
+        //self_info_text.setText(userModel.getSelf_info());
         // 이미지 URL을 통해 이미지를 불러오는 작업
         Glide.with(getApplicationContext())
-                .load(userModel.getImageurl())
+                .load(destination_userModel.getImageurl())
                 .apply(new RequestOptions().circleCrop())
                 .into(profile_image);
 
@@ -129,20 +146,64 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
 
             }
         });
+
         activity_profile_BookMark=(CheckBox) findViewById(R.id.activity_profile_BookMark);
 
+        //문서 위치 선언
         db=FirebaseFirestore.getInstance();
         Ref=db.collection("users").document(FirebaseAuth.getInstance().getUid());
-        final Map<String,String> bookmarks=new HashMap<>();
-        bookmarks.put("bookmarks",uid);
+
+        //현재 여행자 정보 가져오기
+        db.collection("users")
+                .whereEqualTo("uid",uid)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                userModel=document.toObject(UserModel.class);
+                                bookmarks_array=userModel.getBookmarks();
+                                //즐켜찾기 목록이 있을 시
+                                if(bookmarks_array !=null) {
+                                    //현재 프로필 현지인이 포함되어 있으면
+                                    if(bookmarks_array.contains(destinationUid)){
+                                        activity_profile_BookMark.setChecked(true);
+                                    }else{
+                                        activity_profile_BookMark.setChecked(false);
+                                    }
+                                    //startToast(bookmarks_array.get(0));
+                                }
+                                Log.d("Profile_Traver_data", document.getId() + " => " + document.getData());
+
+                            }
+                        } else {
+                            Log.d("Profile_Traver_data", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+
+
+
+
+
+
 
         activity_profile_BookMark.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    db.collection("users").document(FirebaseAuth.getInstance().getUid()).set(bookmarks);
-                    //Ref.update("bookmarks", FieldValue.arrayUnion(uid));
+
+                    //즐겨찾기 리스트 추가 (중복불가)
+                    Ref.update("bookmarks",FieldValue.arrayUnion(destinationUid));
+
+
+                }else{
+                    Ref.update("bookmarks",FieldValue.arrayRemove(destinationUid));
+
                 }
+
             }
         });
 
@@ -166,6 +227,13 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
     public void onPageScrollStateChanged(int state) {
 
     }
+
+    private void startToast(String msg){
+
+        Toast.makeText(Profile.this, msg,
+                Toast.LENGTH_SHORT).show();
+    }
+
 
 
 }

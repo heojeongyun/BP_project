@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.nt_project02.BookmarkActivity;
 import com.example.nt_project02.Chat.UserModel;
 import com.example.nt_project02.LoginActivity;
 import com.example.nt_project02.Native_Register;
@@ -141,7 +142,17 @@ public class Setting_Fragment extends Fragment {
             }
         });
 
+        Button fragment_setting_BookmarkButton=(Button) rootView.findViewById(R.id.fragment_setting_BookmarkButton);
+        fragment_setting_BookmarkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MystartActivity(BookmarkActivity.class);
+            }
+        });
+
         return rootView;
+
+
 
     }
 
