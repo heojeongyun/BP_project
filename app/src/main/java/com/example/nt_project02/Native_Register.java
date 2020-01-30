@@ -53,7 +53,7 @@ public class Native_Register extends AppCompatActivity {
 
         sex_rg=(RadioGroup)findViewById(R.id.sex_radioGroup);
         //user_kind_rg=(RadioGroup)findViewById(R.id.User_Kind);
-        Spinner city_spinner=(Spinner) findViewById(R.id.City_Spinner);
+        Spinner city_spinner=(Spinner) findViewById(R.id.native_spinner);
 
 
         //성별 라디오 버튼 체크시

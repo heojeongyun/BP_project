@@ -23,7 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class MemberActivity extends AppCompatActivity {
 
     private static final String TAG="MemberInfoActivity";
-    RadioGroup sex_rg,user_kind_rg;
+    RadioGroup sex_rg;
     String sex,user_kind,city;
 
 
@@ -34,12 +34,14 @@ public class MemberActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_member_init2);
 
+        user_kind="현지인";
 
 
-        findViewById(R.id.CheckButton).setOnClickListener(onClickListener);
-        sex_rg=(RadioGroup)findViewById(R.id.SexRadioGroup);
+
+        findViewById(R.id.submit_button).setOnClickListener(onClickListener);
+        sex_rg=(RadioGroup)findViewById(R.id.sex_radioGroup);
         //user_kind_rg=(RadioGroup)findViewById(R.id.User_Kind);
-        Spinner city_spinner=(Spinner) findViewById(R.id.City_Spinner);
+        Spinner city_spinner=(Spinner) findViewById(R.id.traveler_spinner);
 
 
         //성별 라디오 버튼 체크시
@@ -47,10 +49,10 @@ public class MemberActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
-                    case R.id.male :
+                    case R.id.man_radio :
                         sex="남자";
                         break;
-                    case R.id.female :
+                    case R.id.woman_radio :
                         sex="여자";
                         break;
                 }
@@ -106,7 +108,8 @@ public class MemberActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.CheckButton:
+
+                case R.id.submit_button:
                     profileUpdate();
                     break;
 
@@ -124,21 +127,21 @@ public class MemberActivity extends AppCompatActivity {
 
 
         //지역변수 선언
-        String name = ((EditText) findViewById(R.id.tv_name)).getText().toString();
-        String phone = ((EditText) findViewById(R.id.tv_phone)).getText().toString();
+        String name = ((EditText) findViewById(R.id.traveler_name)).getText().toString();
         String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String birthday_information = ((EditText) findViewById(R.id.birthday_information)).getText().toString();
 
 
 
 
         //각각의 정보가 빈칸인지 아닌지 확인
-        if (name.length() > 0 && phone.length()>0 && sex.length()>0 &&city.length()>0&&user_kind.length()>0) {
+        if (name.length() > 0 && birthday_information.length()>0 && sex.length()>0 &&city.length()>0&&user_kind.length()>0) {
             //현재 유저 정보 가져오기
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
             //MemberInfo 객체 선언
-            MemberInfo memberInfo = new MemberInfo(uid,name,sex,phone,city,user_kind);
+            MemberInfo memberInfo = new MemberInfo(uid,name,sex,birthday_information,city,user_kind);
 
             //현재 유저가 있다면
             if (user != null) {

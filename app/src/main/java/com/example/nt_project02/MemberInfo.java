@@ -5,7 +5,7 @@ public class MemberInfo {
     private String uid;
     private String name;
     private String sex;
-    private String phone;
+    private String birthday;
     private String city;
     private String user_kind;
 
@@ -15,7 +15,7 @@ public class MemberInfo {
         this.uid=uid;
         this.name = name;
         this.sex = sex;
-        this.phone = phone;
+        this.birthday = phone;
         this.city = city;
         this.user_kind = user_kind;
     }
@@ -45,11 +45,11 @@ public class MemberInfo {
     }
 
     public String getPhone() {
-        return phone;
+        return birthday;
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        this.birthday = phone;
     }
 
     public String getCity() {
