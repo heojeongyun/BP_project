@@ -14,69 +14,58 @@
         android:layout_weight="0.5"
         android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:orientation="vertical"
-            android:layout_margin="20dp">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                app:srcCompat="@drawable/travel"
-                android:id="@+id/profile_Image"
-                android:layout_marginTop="30dp"/>
+
+        <LinearLayout
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/star_button"
+                android:layout_width="20dp"
+                android:layout_height="26dp"
+                android:layout_below="@id/profile_Image"
+                android:layout_gravity="center"
+                android:layout_marginLeft="170dp"
+                android:layout_toRightOf="@id/star_button"
+                android:background="@drawable/btn_star"
+                android:button="@null"
+                android:textColor="@android:color/background_light"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/nickAgeTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/nickAgeTV"
+                android:text="별명"
                 android:textAlignment="center"
                 android:textSize="16sp"
-                android:text="별명"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="251dp"
-            android:layout_weight="0.5"
-            android:orientation="vertical"
-            android:layout_margin="20dp"
-            >
-
-            <TextView
+            <ImageView
+                android:id="@+id/profile_Image"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textSize="20dp"
-                android:text="소개글"
-                android:textStyle="bold"
-                android:layout_marginTop="20dp"/>
-
-            <TextView
-                android:id="@+id/Self_info_TextView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textAlignment="center"
-                android:textSize="15dp"
+                android:layout_height="150dp"
                 android:layout_marginTop="30dp"
-                android:layout_marginBottom="15dp"
-                android:layout_weight="1"
-                android:textStyle="normal"
-                android:text="현지인 소개글"/>
+                app:srcCompat="@drawable/travel" />
+
+
 
             <Button
                 android:id="@+id/profile_chat_button"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/button_selector"
-                android:text="채팅하기"
+                android:text="매칭요청"
                 android:textColor="@android:color/background_light"
-                android:textStyle="bold"
                 android:textSize="17dp"
-                android:layout_gravity="center"/>
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/activity_profile_BookMark"
@@ -99,51 +88,77 @@
             android:layout_height="wrap_content"
             android:id="@+id/tab_layout">
 
-            <com.google.android.material.tabs.TabItem
-                android:text="추천코스"
+            <com.google.android.material.tabs.TabItem android:text="소개글"
 
                 />
 
-            <com.google.android.material.tabs.TabItem
-                android:text="가격정보"
-                />
+            <com.google.android.material.tabs.TabItem android:text="추천코스" />
 
             <com.google.android.material.tabs.TabItem
                 android:text="Review"
                 />
         </com.google.android.material.tabs.TabLayout>
 
-      <!--  <android.support.design.widget.TabLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:id="@+id/tab_layout">
+        <!--  <android.support.design.widget.TabLayout
+              android:layout_height="wrap_content"
+              android:layout_width="match_parent"
+              android:id="@+id/tab_layout">
 
-            <android.support.design.widget.TabItem
-                android:text="추천코스"/>
-            <android.support.design.widget.TabItem
-                android:text="가격정보"/>
-            <android.support.design.widget.TabItem
-                android:text="Review"/>
+              <android.support.design.widget.TabItem
+                  android:text="추천코스"/>
+              <android.support.design.widget.TabItem
+                  android:text="가격정보"/>
+              <android.support.design.widget.TabItem
+                  android:text="Review"/>
 
-        </android.support.design.widget.TabLayout>-->
-
-
+          </android.support.design.widget.TabLayout>-->
 
 
 
 
-   <!--     <android.support.v4.view.ViewPager
 
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-        </android.support.v4.view.ViewPager>
-        -->
+        <!--     <android.support.v4.view.ViewPager
+
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent">
+
+             </android.support.v4.view.ViewPager>
+             -->
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="251dp"
+                android:layout_margin="20dp"
+                android:layout_weight="0.5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="소개글"
+                    android:textAlignment="center"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/Self_info_TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="1"
+                    android:text="현지인 소개글"
+                    android:textAlignment="center"
+                    android:textSize="15dp"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
         </androidx.viewpager.widget.ViewPager>
 
 
