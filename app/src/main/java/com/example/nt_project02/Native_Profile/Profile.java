@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +19,12 @@ import com.example.nt_project02.Chat.UserModel;
 import com.example.nt_project02.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Profile extends AppCompatActivity implements ViewPager.OnPageChangeListener {
@@ -30,6 +38,9 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
     private TextView self_info_text;
     private ImageView profile_image;
     private String uid;
+    private CheckBox activity_profile_BookMark;
+    private FirebaseFirestore db;
+    private DocumentReference Ref;
 
     private void initializeViewPager() {
         // 각 review 의 내용들을 표시관련
@@ -118,7 +129,22 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
 
             }
         });
+        activity_profile_BookMark=(CheckBox) findViewById(R.id.activity_profile_BookMark);
 
+        db=FirebaseFirestore.getInstance();
+        Ref=db.collection("users").document(FirebaseAuth.getInstance().getUid());
+        final Map<String,String> bookmarks=new HashMap<>();
+        bookmarks.put("bookmarks",uid);
+
+        activity_profile_BookMark.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    db.collection("users").document(FirebaseAuth.getInstance().getUid()).set(bookmarks);
+                    //Ref.update("bookmarks", FieldValue.arrayUnion(uid));
+                }
+            }
+        });
 
     }
     // Profile Scroll 부분을 관리하는 부분

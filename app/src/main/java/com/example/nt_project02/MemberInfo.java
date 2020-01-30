@@ -1,7 +1,7 @@
 package com.example.nt_project02;
 
 public class MemberInfo {
-
+    //수정
     private String uid;
     private String name;
     private String sex;

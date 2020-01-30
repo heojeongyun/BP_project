@@ -23,6 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
 public class Native_Register extends AppCompatActivity {
+    //수정
 
     String region;
     String user_kind;

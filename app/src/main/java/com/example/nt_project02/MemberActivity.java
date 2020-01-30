@@ -25,6 +25,7 @@ public class MemberActivity extends AppCompatActivity {
     private static final String TAG="MemberInfoActivity";
     RadioGroup sex_rg;
     String sex,user_kind,city;
+    // 수정
 
 
 
