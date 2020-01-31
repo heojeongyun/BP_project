@@ -15,6 +15,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +30,7 @@ import com.example.nt_project02.Native_Profile.Profile;
 import com.example.nt_project02.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -54,6 +56,8 @@ public class PeopleFragment extends Fragment {
     private EditText editText;
     private PeopleFragmentRecyclerViewAdapter adapter;
     private Context context;
+    private String TAG="PeopleFragment";
+    private String name;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -117,7 +121,8 @@ public class PeopleFragment extends Fragment {
             saveList=new ArrayList<>();
 
 
-            db.collection("users")
+
+        /*    db.collection("users")
                     .whereEqualTo("user_kind", "현지인")
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -125,16 +130,50 @@ public class PeopleFragment extends Fragment {
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
+
                                     userModels.add(document.toObject(UserModel.class));
                                     saveList.add(document.toObject(UserModel.class));
 
+                                    Log.d(TAG, document.getId() + " => " + document.getData());
                                 }
                                 notifyDataSetChanged();
                             } else {
-
+                                Log.d(TAG, "Error getting documents: ", task.getException());
                             }
+
+                        }
+                    });*/
+
+
+
+
+
+
+            db.collection("users")
+                    .whereEqualTo("user_kind", "현지인")
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot value,
+                                            @Nullable FirebaseFirestoreException e) {
+                            if (e != null) {
+                                Log.w(TAG, "Listen failed.", e);
+                                return;
+                            }
+
+                            userModels.clear();
+                            for (QueryDocumentSnapshot doc : value) {
+                                if (doc != null) {
+
+
+                                    userModels.add(doc.toObject(UserModel.class));
+
+                                }
+                            }
+                            notifyDataSetChanged();
+                            Log.d(TAG, "Current data: " + userModels);
                         }
                     });
+
 
 
 
@@ -260,7 +299,14 @@ public class PeopleFragment extends Fragment {
                 Hash_textView=(TextView) view.findViewById(R.id.frienditem_hash);
             }
         }
+
+    private void startToast(String msg){
+
+        Toast.makeText(getContext(), msg,
+                Toast.LENGTH_SHORT).show();
     }
+
+}
 
 
 

@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -34,7 +36,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
@@ -57,7 +61,7 @@ public class Setting_Fragment extends Fragment {
     private String user_uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private UserModel userModel;
     private TextView nick_textview;
-
+    private String TAG="Setting_Fragment";
 
 
     @Override
@@ -69,7 +73,7 @@ public class Setting_Fragment extends Fragment {
         nick_textview=(TextView) rootView.findViewById(R.id.nick_TextView);
 
         // Firebase db로 부터 사용자 정보 불러오기
-        db.collection("users")
+        /*db.collection("users")
                 .whereEqualTo("uid", user_uid)
                 .get()// 사용자 정보 확인하기
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -77,6 +81,7 @@ public class Setting_Fragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) { // 사용자 정보가 일치할 경우에 Firebase db로부터 사용자 사진과 별명을 가져온다
                             for (QueryDocumentSnapshot document : task.getResult()) {
+
                                 userModel=document.toObject(UserModel.class);
                                 if(userModel.getImageurl()!=null) { // 이미지의 URL값이 존재할 경우에만 사진을 가져온다
                                     register_ImageURL = userModel.getImageurl();
@@ -95,7 +100,42 @@ public class Setting_Fragment extends Fragment {
 
                         }
                     }
+                });*/
+
+        db.collection("users")
+                .whereEqualTo("uid", user_uid)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(TAG, "Listen failed.", e);
+                            return;
+                        }
+
+
+                        for (QueryDocumentSnapshot doc : value) {
+                            if (doc != null) {
+
+
+                                userModel=doc.toObject(UserModel.class);
+                                if(userModel.getImageurl()!=null) { // 이미지의 URL값이 존재할 경우에만 사진을 가져온다
+                                    register_ImageURL = userModel.getImageurl();
+                                    Glide.with(getContext())
+                                            .load(register_ImageURL)
+                                            .apply(new RequestOptions().circleCrop())
+                                            .into(ivUser);
+                                    nick_textview.setText(userModel.getName());
+                                }
+
+                            }
+                        }
+
+                        Log.d(TAG, "Current data: " + userModel);
+                    }
                 });
+
+
 
 
 
@@ -114,14 +154,25 @@ public class Setting_Fragment extends Fragment {
         });*/
         // 등록버튼의 객체를 선언
         ivUser = (ImageView) rootView.findViewById(R.id.ivUser);
-        Button upload=(Button)rootView.findViewById(R.id.Upload);
+        ivUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                startActivityForResult(intent, PICK_FROM_ALBUM); //갤러리로부터 사진을 가져와 등록하는 부분
+
+                nick_textview.setText(userModel.getName()); // userModel의 이름 가져오기
+
+            }
+        });
+        /*Button upload=(Button)rootView.findViewById(R.id.Upload);
         upload.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View rootView) {
 
-                /*Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(i,PICK_FROM_ALBUM);*/
+                *//*Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i,PICK_FROM_ALBUM);*//*
 
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
@@ -131,7 +182,7 @@ public class Setting_Fragment extends Fragment {
 
 
             }
-        });
+        });*/
 
         Button LogoutButton=(Button) rootView.findViewById(R.id.LogoutButton);
         //LogoutButton 클릭시 LoginActivity 화면으로 넘어가게 하는 부분
@@ -183,7 +234,7 @@ public class Setting_Fragment extends Fragment {
 
             if (data != null) {
 
-                ivUser.setImageURI(data.getData());
+                //ivUser.setImageURI(data.getData());
                 imageUri = data.getData();
 
                 // Firebase storage로부터 이미지 URL을 통해 이미지 파일을 가져온다
