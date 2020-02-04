@@ -3,27 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-
-
     <TextView
-        android:gravity="center"
-        android:id="@+id/setting_demo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Native Bookmark"
-        android:textSize="20dp"
-        android:textStyle="bold"
+        android:id="@+id/textView"
+        android:layout_width="212dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="25dp"
+        android:gravity="center_vertical"
+        android:text="BookMark"
         android:textColor="#5DA4BE"
-        android:layout_marginTop="5dp"
-        />
+        android:textSize="35dp"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/activity_bookmark_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="602dp"
-        android:layout_below="@+id/setting_demo"
-        android:layout_marginTop="-1dp">
+        android:layout_marginTop="90dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 

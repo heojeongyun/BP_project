@@ -6,15 +6,15 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="120dp"
-        android:layout_marginBottom="20dp"
-        android:gravity="center"
+        android:id="@+id/textView"
+        android:layout_width="212dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="25dp"
+        android:gravity="center_vertical"
         android:text="Chatting List"
         android:textColor="#5DA4BE"
-        android:textSize="30dp"
+        android:textSize="35dp"
         android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
