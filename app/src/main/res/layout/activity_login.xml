@@ -89,5 +89,28 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/activity_login_TemporaryNativeButton"
+        android:layout_width="360dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_selector"
+        android:layout_marginTop="10dp"
+        android:text="현지인 빠른 로그인"
+        android:textColor="@android:color/background_light"
+        android:textSize="21dp"
+        android:textStyle="normal" />
+
+    <Button
+        android:id="@+id/activity_login_TemporaryTravelerButton"
+        android:layout_width="360dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_selector"
+        android:layout_marginTop="10dp"
+        android:text="여행자 빠른 로그인"
+        android:textColor="@android:color/background_light"
+        android:textSize="21dp"
+        android:textStyle="normal" />
 
 </LinearLayout>
