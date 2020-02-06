@@ -11,12 +11,12 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="212dp"
+            android:layout_width="260dp"
             android:layout_height="60dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="25dp"
             android:gravity="center_vertical"
-            android:text="나는 현지인!"
+            android:text="현지인 등록 신청"
             android:textColor="#5DA4BE"
             android:textSize="35dp"
             android:textStyle="bold" />
@@ -43,11 +43,11 @@
         >
 
         <TextView
-            android:layout_width="70dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:gravity="left"
-            android:text="이름"
+            android:text="이름 (본명)"
             android:textSize="20dp"
             />
 
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:gravity="left"
-            android:text="휴대전화"
+            android:text="전화번호"
             android:textSize="20dp" />
 
         <EditText
@@ -178,7 +178,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="15dp"
         android:background="@drawable/button_selector"
-        android:text="등록하기"
+        android:text="등록 신청하기"
         android:textColor="@android:color/background_light"
         android:textSize="17dp"
         android:textStyle="normal" />

@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    View.OnClickListener onClickListener = new View.OnClickListener() {
+    View.OnClickListener onClickListener =   new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {

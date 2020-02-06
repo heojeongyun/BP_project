@@ -35,7 +35,7 @@ public class Native_Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_native_register);
 
-        user_kind="현지인";
+      // user_kind="현지인";
 
         Spinner region_spinner=(Spinner) findViewById(R.id.native_spinner);
 
@@ -87,7 +87,7 @@ public class Native_Register extends AppCompatActivity {
     private void profileUpdate() {
 
 
-
+        //현지인 등록 신청이기 때문에 접수 후 승인이 되기 전에는 ProfileUpdate가 되지 않도록 추후 코드 수정 필요.
         String native_name = ((EditText) findViewById(R.id.native_name)).getText().toString();
         String phone_number = ((EditText) findViewById(R.id.phone_number)).getText().toString();
         String birthday_information = ((EditText) findViewById(R.id.birthday_information)).getText().toString();
