@@ -36,7 +36,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -58,13 +57,12 @@ public class Setting_Fragment extends Fragment {
     private Uri imageUri;
     private String register_ImageURL;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
     private String user_uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private UserModel userModel;
     private TextView nick_textview;
-    private String TAG = "Setting_Fragment";
+    private String TAG="Setting_Fragment";
     private String user_kind;
-    private Button NativeRegisterButton;
 
 
     @Override
@@ -73,7 +71,7 @@ public class Setting_Fragment extends Fragment {
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.setting, container, false);
         // setting.xml의 nick_textview 객체 생성
-        nick_textview = (TextView) rootView.findViewById(R.id.nick_TextView);
+        nick_textview=(TextView) rootView.findViewById(R.id.nick_TextView);
 
         // Firebase db로 부터 사용자 정보 불러오기
         /*db.collection("users")
@@ -105,7 +103,6 @@ public class Setting_Fragment extends Fragment {
                     }
                 });*/
 
-        NativeRegisterButton = (Button) rootView.findViewById(R.id.native_register_Button);
         db.collection("users")
                 .whereEqualTo("uid", user_uid)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -122,26 +119,9 @@ public class Setting_Fragment extends Fragment {
                             if (doc != null) {
 
 
-
-                                userModel = doc.toObject(UserModel.class);
-                                user_kind = userModel.getUser_kind();
-                                if (user_kind != null) {
-                                    if (user_kind.equals("현지인")) { //현지인이면 등록 버튼 안 보이게
-                                        NativeRegisterButton.setVisibility(View.GONE);
-                                    } else {
-                                        NativeRegisterButton.setOnClickListener(new View.OnClickListener() { //현지인 등록 버튼
-                                            @Override
-                                            public void onClick(View v) {
-                                                Intent intent = new Intent(getActivity(), Native_Register.class);
-                                                //intent.putExtra("user_kind", "여행자");
-                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                startActivity(intent);
-
-                                            }
-                                        });
-                                    }
-                                }
-                                if (userModel.getImageurl() != null) { // 이미지의 URL값이 존재할 경우에만 사진을 가져온다
+                                userModel=doc.toObject(UserModel.class);
+                                //user_kind=userModel.getUser_kind();
+                                if(userModel.getImageurl()!=null) { // 이미지의 URL값이 존재할 경우에만 사진을 가져온다
                                     register_ImageURL = userModel.getImageurl();
                                     Glide.with(getContext())
                                             .load(register_ImageURL)
@@ -153,9 +133,12 @@ public class Setting_Fragment extends Fragment {
                             }
                         }
 
+
                         Log.d(TAG, "Current data: " + userModel);
                     }
                 });
+
+
 
 
 
@@ -187,6 +170,8 @@ public class Setting_Fragment extends Fragment {
 
             }
         });
+
+        //Log.d(TAG,user_kind);
         /*Button upload=(Button)rootView.findViewById(R.id.Upload);
         upload.setOnClickListener(new View.OnClickListener() {
 
@@ -206,7 +191,7 @@ public class Setting_Fragment extends Fragment {
             }
         });*/
 
-        Button LogoutButton = (Button) rootView.findViewById(R.id.LogoutButton);
+        Button LogoutButton=(Button) rootView.findViewById(R.id.LogoutButton);
         //LogoutButton 클릭시 LoginActivity 화면으로 넘어가게 하는 부분
         LogoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -215,7 +200,7 @@ public class Setting_Fragment extends Fragment {
             }
         });
 
-        Button fragment_setting_BookmarkButton = (Button) rootView.findViewById(R.id.fragment_setting_BookmarkButton);
+        Button fragment_setting_BookmarkButton=(Button) rootView.findViewById(R.id.fragment_setting_BookmarkButton);
         fragment_setting_BookmarkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -223,17 +208,11 @@ public class Setting_Fragment extends Fragment {
             }
         });
 
-
-
-
-
-
-
         return rootView;
-        }
 
 
 
+    }
 
 
     private void MystartActivity(Class c) {

@@ -178,4 +178,20 @@ public class UserModel implements Parcelable {
     public static Creator<UserModel> getCREATOR() {
         return CREATOR;
     }
+
+    @Override
+    public String toString() {
+        return "UserModel{" +
+                "birthday='" + birthday + '\'' +
+                ", bookmarks=" + bookmarks +
+                ", name='" + name + '\'' +
+                ", phonenumber='" + phonenumber + '\'' +
+                ", pushToken='" + pushToken + '\'' +
+                ", region='" + region + '\'' +
+                ", sex='" + sex + '\'' +
+                ", uid='" + uid + '\'' +
+                ", user_kind='" + user_kind + '\'' +
+                ", imageurl='" + imageurl + '\'' +
+                '}';
+    }
 }

@@ -223,6 +223,7 @@ public class PeopleFragment extends Fragment {
                     if (position != RecyclerView.NO_POSITION) {
                         /*Toast.makeText(getContext(),position+"",Toast.LENGTH_LONG).show();*/
                         Intent intent = new Intent(getContext(), Profile.class);
+                        Log.d(TAG,userModels.get(position).toString());
                         intent.putExtra("destination_UserModels", userModels.get(position));
                         startActivity(intent);
 
