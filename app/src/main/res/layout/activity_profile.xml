@@ -23,25 +23,12 @@
             android:layout_weight="0.5"
             android:orientation="vertical">
 
+
             <CheckBox
                 android:id="@+id/activity_profile_BookMark"
-                android:text="즐겨찾기"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-       <!--     <CheckBox
-                android:id="@+id/star_button"
-                android:layout_width="20dp"
-                android:layout_height="26dp"
-                android:layout_below="@id/profile_Image"
-                android:layout_gravity="center"
-                android:layout_marginLeft="170dp"
-                android:layout_toRightOf="@id/star_button"
-                android:button="@null"
-                android:textColor="@android:color/background_light"
-                android:textSize="10sp"
-                android:textStyle="bold"
-                android:text="즐겨찾기"/>-->
+                android:layout_width="42dp"
+                android:layout_height="51dp"
+                android:button="@drawable/btn_star" />
 
             <TextView
                 android:id="@+id/nickAgeTV"
@@ -57,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="106dp"
                 android:layout_marginTop="30dp" />
-                <!--app:srcCompat="@drawable/travel"--> />
+            <!--app:srcCompat="@drawable/travel"--> />
 
 
 

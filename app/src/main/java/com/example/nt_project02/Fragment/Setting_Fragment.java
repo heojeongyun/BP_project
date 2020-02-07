@@ -62,6 +62,7 @@ public class Setting_Fragment extends Fragment {
     private UserModel userModel;
     private TextView nick_textview;
     private String TAG="Setting_Fragment";
+    private String user_kind;
 
 
     @Override
@@ -119,6 +120,7 @@ public class Setting_Fragment extends Fragment {
 
 
                                 userModel=doc.toObject(UserModel.class);
+                                //user_kind=userModel.getUser_kind();
                                 if(userModel.getImageurl()!=null) { // 이미지의 URL값이 존재할 경우에만 사진을 가져온다
                                     register_ImageURL = userModel.getImageurl();
                                     Glide.with(getContext())
@@ -131,9 +133,12 @@ public class Setting_Fragment extends Fragment {
                             }
                         }
 
+
                         Log.d(TAG, "Current data: " + userModel);
                     }
                 });
+
+
 
 
 
@@ -165,6 +170,8 @@ public class Setting_Fragment extends Fragment {
 
             }
         });
+
+        //Log.d(TAG,user_kind);
         /*Button upload=(Button)rootView.findViewById(R.id.Upload);
         upload.setOnClickListener(new View.OnClickListener() {
 

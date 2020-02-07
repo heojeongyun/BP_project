@@ -57,6 +57,8 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
     private FirebaseFirestore db;
     private DocumentReference Ref;
     private List<String> bookmarks_array;
+    private String TAG="Profile";
+
 
     private void initializeViewPager() {
         // 각 review 의 내용들을 표시관련
@@ -106,12 +108,12 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
         initializeTabLayout();
 
         Intent data=getIntent();
+
         // Firebase db로 부터 저장된 현지인의 정보들을 불러오는 작업
         destination_userModel = data.getParcelableExtra("destination_UserModels");
         destinationUid=destination_userModel.getUid();
         uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        /*destinationUid=userModel.getUid();*/
 
 
 
@@ -121,7 +123,11 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
 
         nick_text.setText(destination_userModel.getName());
 
-        //self_info_text.setText(userModel.getSelf_info());
+
+        //현재 현지인 정보 출력
+
+        Log.d(TAG,"Current data:"+destination_userModel.toString());
+
         // 이미지 URL을 통해 이미지를 불러오는 작업
         Glide.with(getApplicationContext())
                 .load(destination_userModel.getImageurl())
