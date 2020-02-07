@@ -64,6 +64,7 @@ public class Setting_Fragment extends Fragment {
     private TextView nick_textview;
     private String TAG = "Setting_Fragment";
     private String user_kind;
+    private Button NativeRegisterButton;
 
 
     @Override
@@ -104,6 +105,7 @@ public class Setting_Fragment extends Fragment {
                     }
                 });*/
 
+        NativeRegisterButton = (Button) rootView.findViewById(R.id.native_register_Button);
         db.collection("users")
                 .whereEqualTo("uid", user_uid)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -120,8 +122,25 @@ public class Setting_Fragment extends Fragment {
                             if (doc != null) {
 
 
+
                                 userModel = doc.toObject(UserModel.class);
-                                //user_kind = userModel.getUser_kind();
+                                user_kind = userModel.getUser_kind();
+                                if (user_kind != null) {
+                                    if (user_kind.equals("현지인")) { //현지인이면 등록 버튼 안 보이게
+                                        NativeRegisterButton.setVisibility(View.GONE);
+                                    } else {
+                                        NativeRegisterButton.setOnClickListener(new View.OnClickListener() { //현지인 등록 버튼
+                                            @Override
+                                            public void onClick(View v) {
+                                                Intent intent = new Intent(getActivity(), Native_Register.class);
+                                                //intent.putExtra("user_kind", "여행자");
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                startActivity(intent);
+
+                                            }
+                                        });
+                                    }
+                                }
                                 if (userModel.getImageurl() != null) { // 이미지의 URL값이 존재할 경우에만 사진을 가져온다
                                     register_ImageURL = userModel.getImageurl();
                                     Glide.with(getContext())
@@ -205,24 +224,9 @@ public class Setting_Fragment extends Fragment {
         });
 
 
-       Button NativeRegisterButton = (Button) rootView.findViewById(R.id.native_register_Button);
 
-       if (user_kind != null) {
-           if (user_kind.equals("현지인")) { //현지인이면 등록 버튼 안 보이게
-                    NativeRegisterButton.setVisibility(View.GONE);
-                } else {
-                    NativeRegisterButton.setOnClickListener(new View.OnClickListener() { //현지인 등록 버튼
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(getActivity(), Native_Register.class);
-                            //intent.putExtra("user_kind", "여행자");
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
 
-                        }
-                    });
-                }
-       }
+
 
 
         return rootView;
