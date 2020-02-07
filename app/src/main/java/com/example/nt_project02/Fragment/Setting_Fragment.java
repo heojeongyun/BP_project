@@ -121,6 +121,7 @@ public class Setting_Fragment extends Fragment {
 
 
                                 userModel = doc.toObject(UserModel.class);
+                                //user_kind = userModel.getUser_kind();
                                 if (userModel.getImageurl() != null) { // 이미지의 URL값이 존재할 경우에만 사진을 가져온다
                                     register_ImageURL = userModel.getImageurl();
                                     Glide.with(getContext())
@@ -203,8 +204,9 @@ public class Setting_Fragment extends Fragment {
             }
         });
 
-       user_kind = userModel.getUser_kind();
+
        Button NativeRegisterButton = (Button) rootView.findViewById(R.id.native_register_Button);
+
        if (user_kind != null) {
            if (user_kind.equals("현지인")) { //현지인이면 등록 버튼 안 보이게
                     NativeRegisterButton.setVisibility(View.GONE);

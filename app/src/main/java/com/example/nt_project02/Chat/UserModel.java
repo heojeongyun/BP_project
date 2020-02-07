@@ -33,7 +33,6 @@ public class UserModel implements Parcelable {
         sex=parcel.readString();
         uid=parcel.readString();
         user_kind=parcel.readString();
-        sex=parcel.readString();
         imageurl=parcel.readString();
 
 
