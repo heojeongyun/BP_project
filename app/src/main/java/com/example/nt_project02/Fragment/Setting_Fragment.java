@@ -224,11 +224,6 @@ public class Setting_Fragment extends Fragment {
         });
 
 
-
-
-
-
-
         return rootView;
         }
 
@@ -318,7 +313,6 @@ public class Setting_Fragment extends Fragment {
 
 
             }
-
 
 
 
