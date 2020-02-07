@@ -23,12 +23,13 @@
             android:layout_weight="0.5"
             android:orientation="vertical">
 
-
             <CheckBox
                 android:id="@+id/activity_profile_BookMark"
-                android:layout_width="42dp"
-                android:layout_height="51dp"
-                android:button="@drawable/btn_star" />
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="right"
+                android:background="@drawable/btn_star"
+                android:button="@null" />
 
             <TextView
                 android:id="@+id/nickAgeTV"

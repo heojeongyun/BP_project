@@ -48,47 +48,53 @@
             />
 
 
-        <Button
-            android:id="@+id/fragment_setting_BookmarkButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="즐겨찾기"/>
+            <Button
+                android:id="@+id/fragment_setting_BookmarkButton"
+                android:layout_width="120dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="#00ff0000"
+                android:textColor="#5DA4BE"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:text="즐겨찾기"/>
 
-        <!--<Button
-            android:id="@+id/Upload"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="60dp"
-            android:background="@drawable/button_selector"
-            android:text="사진 등록"
-            android:textColor="@color/browser_actions_bg_grey"
-            android:textSize="18dp"
-            android:textStyle="bold"/>-->
+            <!--<Button
+                android:id="@+id/Upload"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="60dp"
+                android:background="@drawable/button_selector"
+                android:text="사진 등록"
+                android:textColor="@color/browser_actions_bg_grey"
+                android:textSize="18dp"
+                android:textStyle="bold"/>-->
 
-        <!--     <Button
-                 android:id="@+id/native_register"
-                 android:layout_width="280dp"
-                 android:layout_height="wrap_content"
-                 android:layout_gravity="center"
-                 android:layout_marginTop="20dp"
-                 android:background="@drawable/button_selector"
-                 android:text="현지인 상세정보 등록"
-                 android:textColor="@android:color/background_light"
-                 android:textSize="18dp"
-                 android:textStyle="bold" />-->
+            <!--     <Button
+                     android:id="@+id/native_register"
+                     android:layout_width="280dp"
+                     android:layout_height="wrap_content"
+                     android:layout_gravity="center"
+                     android:layout_marginTop="20dp"
+                     android:background="@drawable/button_selector"
+                     android:text="현지인 상세정보 등록"
+                     android:textColor="@android:color/background_light"
+                     android:textSize="18dp"
+                     android:textStyle="bold" />-->
 
-        <Button
-            android:id="@+id/LogoutButton"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_selector"
-            android:text="로그아웃"
-            android:textColor="@android:color/background_light"
-            android:textSize="18dp"
-            android:textStyle="bold" />
+            <Button
+                android:id="@+id/LogoutButton"
+                android:layout_width="120dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="#00ff0000"
+                android:text="로그아웃"
+                android:textColor="#5DA4BE"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
 
     </LinearLayout>
