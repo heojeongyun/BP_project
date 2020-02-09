@@ -1,39 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     >
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="120dp"
-        android:layout_marginBottom="20dp"
-        android:gravity="center"
+        android:id="@+id/textView"
+        android:layout_width="212dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="25dp"
+        android:gravity="center_vertical"
         android:text="Home"
         android:textColor="#5DA4BE"
-        android:textSize="30dp"
-        android:textStyle="bold" />
+        android:textSize="35dp"
+        android:textStyle="bold"/>
+    <!--test-->
 
 
     <LinearLayout
-        android:layout_width="396dp"
+        android:layout_width="match_parent"
         android:layout_height="454dp"
-        android:layout_marginLeft="10dp"
         android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
 
 
-        <Spinner
-            android:id="@+id/rank_spinner"
-            android:layout_width="300dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
-            android:entries="@array/랭킹"
-            android:gravity="left" />
+            android:orientation="horizontal"
+            >
+
+
+            <Button
+                android:id="@+id/데이트코스"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="데이트코스"
+                android:background="@drawable/btn_bg"
+                android:layout_marginRight="3dp"/>
+
+            <Button
+                android:id="@+id/자연관광"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_bg"
+                android:text="자연관광"
+                android:layout_marginRight="3dp"/>
+
+            <Button
+                android:id="@+id/나홀로여행"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_bg"
+                android:text="나홀로여행"
+                android:layout_marginRight="3dp"/>
+
+
+            <Button
+                android:id="@+id/엑티비티"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_bg"
+                android:text="엑티비티" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="1dp"
+            android:orientation="horizontal">
+
+
+            <Button
+                android:id="@+id/맛집탐방"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_bg"
+                android:text="맛집탐방"
+                android:layout_marginRight="3dp"/>
+
+            <Button
+                android:id="@+id/쇼핑"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_bg"
+                android:text="쇼핑"
+                android:layout_marginRight="3dp"/>
+
+            <Button
+                android:id="@+id/랜드마크"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_bg"
+                android:text="랜드마크"
+                android:layout_marginRight="3dp"/>
+
+            <Button
+                android:id="@+id/문화생활"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_bg"
+                android:text="문화생활" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            >
+
+            <Spinner
+                android:id="@+id/rank_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:entries="@array/랭킹" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/activity_news_list"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp">
+
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#00BCD4"
+                />
+
+        </LinearLayout>
 
     </LinearLayout>
 
