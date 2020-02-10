@@ -130,11 +130,11 @@
 
         <TextView
             android:id="@+id/tv_region"
-            android:layout_width="70dp"
+            android:layout_width="87dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:gravity="left"
-            android:text="지역"
+            android:text="거주지역"
             android:textSize="20dp" />
 
         <Spinner
