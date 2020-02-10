@@ -166,6 +166,7 @@ public class PeopleFragment extends Fragment {
 
 
                                     userModels.add(doc.toObject(UserModel.class));
+                                    saveList.add(doc.toObject(UserModel.class));
 
                                 }
                             }

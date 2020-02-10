@@ -106,6 +106,7 @@ public class Setting_Fragment extends Fragment {
                 });*/
 
         NativeRegisterButton = (Button) rootView.findViewById(R.id.native_register_Button);
+
         db.collection("users")
                 .whereEqualTo("uid", user_uid)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -116,6 +117,7 @@ public class Setting_Fragment extends Fragment {
                             Log.w(TAG, "Listen failed.", e);
                             return;
                         }
+
 
 
                         for (QueryDocumentSnapshot doc : value) {
@@ -161,6 +163,8 @@ public class Setting_Fragment extends Fragment {
 
 
 
+
+
     /*    Button native_register = (Button) rootView.findViewById(R.id.native_register);
         native_register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,7 +187,6 @@ public class Setting_Fragment extends Fragment {
                 intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
                 startActivityForResult(intent, PICK_FROM_ALBUM); //갤러리로부터 사진을 가져와 등록하는 부분
 
-                nick_textview.setText(userModel.getName()); // userModel의 이름 가져오기
 
             }
         });
