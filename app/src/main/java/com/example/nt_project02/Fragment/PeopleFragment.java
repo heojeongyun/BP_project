@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.nt_project02.Chat.UserModel;
+import com.example.nt_project02.NativeSearch;
 import com.example.nt_project02.Native_Profile.Profile;
 import com.example.nt_project02.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -62,13 +63,19 @@ public class PeopleFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_people, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_people, container,
+                false);
+        EditText editText = rootView.findViewById(R.id.txt_search);
+
+        editText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MystartActivity(NativeSearch.class);
+            }
+        });
 
 
-
-
-        editText=(EditText) view.findViewById(R.id.txt_search);
-        editText.addTextChangedListener(new TextWatcher() {
+     /*   editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -87,18 +94,27 @@ public class PeopleFragment extends Fragment {
 
 
             }
-        });
+        });*/
+
 
 
         adapter=new PeopleFragmentRecyclerViewAdapter();
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.peoplefragment_recyclerview);
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.peoplefragment_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
 
         recyclerView.setAdapter(adapter);
 
 
 
-        return view;
+        return rootView;
+    }
+
+
+    private void MystartActivity(Class c) {
+        Intent intent = new Intent(getActivity(), c);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // 로그아웃시 초기화하는 부분
+        startActivity(intent);
+
     }
 
 
