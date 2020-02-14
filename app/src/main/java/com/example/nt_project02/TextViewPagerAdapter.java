@@ -30,9 +30,9 @@ public class TextViewPagerAdapter extends PagerAdapter {
         if (mContext != null) {
             // LayoutInflater를 통해 "/res/layout/page.xml"을 뷰로 생성.
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.activity_nr_page, container, false);
+            view = inflater.inflate(R.layout.activity_search_popular, container, false);
 
-            TextView textView = (TextView) view.findViewById(R.id.activity_nr_page_txt) ;
+            TextView textView = (TextView) view.findViewById(R.id.activity_ns_txt) ;
             textView.setText("검색 " + position) ;
         }
 
