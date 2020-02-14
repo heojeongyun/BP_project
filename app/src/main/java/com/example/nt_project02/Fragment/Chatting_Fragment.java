@@ -73,11 +73,12 @@ public class Chatting_Fragment extends Fragment {
         private String lastMessageKey;
         private ArrayList<String> destinationUsers=new ArrayList<>();
         private String destinationUid=null;
+        private String TAG="Chatting_Fragment";
 
 
 
         public ChatRecyclerViewAdapter() { //채팅 목록 가져오기
-            //databaseReference=FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments");
+
             userModels=new ArrayList<>();
             uid= FirebaseAuth.getInstance().getCurrentUser().getUid();//uid는 파이어베이스에서 가져옴
             FirebaseDatabase.getInstance().getReference().child("chatrooms")
@@ -92,16 +93,20 @@ public class Chatting_Fragment extends Fragment {
                         chatModels.add(item.getValue(ChatModel.class));
                         //Clear된 것들을 다시 Add해줌
 
+
                     }
                     notifyDataSetChanged(); //새로고침
 
                 }
 
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
+
             });
+            Log.d(TAG,"chatModels:"+chatModels);
         }
 
         @NonNull
@@ -120,19 +125,20 @@ public class Chatting_Fragment extends Fragment {
 
 
 
-
-
-
             // 일일이 챗방에 있는 유저를 체크
             for(String user:chatModels.get(position).users.keySet()){
-                if(!user.equals(uid)) { //내가 아닌 사람을 뽑아옴
+                            if(!user.equals(uid)) { //내가 아닌 사람을 뽑아옴
 
-                    destinationUid = user;
-                    destinationUsers.add(destinationUid);
+                                destinationUid = user;
+                                destinationUsers.add(destinationUid);
 
 
-                }
-            }
+                            }
+                        }
+            Log.d(TAG,"destinationUsers:"+destinationUsers);
+
+
+
 
 
 
@@ -165,6 +171,7 @@ public class Chatting_Fragment extends Fragment {
                 });
             }
 
+
             //메세지를 내림 차순으로 정렬 후 마지막 메세지의 키값을 가져옴
             Map<String,ChatModel.Comment> commentMap=new TreeMap<>(Collections. <String>reverseOrder());
             if(chatModels.get(position).comments.size()>=1) {//메시지가 있을 때에만 메시지를 읽어오도록 하는 if문
@@ -183,8 +190,11 @@ public class Chatting_Fragment extends Fragment {
 
             customViewHolder.itemView.setOnClickListener(new View.OnClickListener(){//클릭 이벤트
 
+
                 @Override
                 public void onClick(View view){
+
+
                     Intent intent=new Intent(view.getContext(), MessageActivity.class); //채팅방 액티비티
                     intent.putExtra("destination_Uid", destinationUsers.get(position));//누구랑 대화할지
 

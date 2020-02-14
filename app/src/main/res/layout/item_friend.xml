@@ -21,7 +21,7 @@
 
         <LinearLayout
             android:layout_marginLeft="20dp"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:orientation="vertical">
 
@@ -60,6 +60,14 @@
 
 
         </LinearLayout>
+
+        <ImageView
+            android:src="@drawable/chick"
+            android:id="@+id/item_friend_RankImage"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_vertical"/>
+
 
 
     </LinearLayout>

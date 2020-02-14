@@ -221,33 +221,43 @@ public class PeopleFragment extends Fragment {
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
             Integer bookmarks_number;
+            //색 가져오기
             Integer Gold = ContextCompat.getColor(getContext(), R.color.Gold);
             Integer Silver=ContextCompat.getColor(getContext(), R.color.Silver);
             Integer White=ContextCompat.getColor(getContext(), R.color.white);
 
+            //초기화
             ((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(White);
+            ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.chick);
+            ((CustomViewHolder)holder).imageView.setImageResource(R.drawable.user);
 
             bookmarks_number=userModels.get(position).bookmarks_number;
 
             if((bookmarks_number !=null)&& (bookmarks_number!=0)){
                 if(bookmarks_number>=2){
                     ((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(Gold);
+                    ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.peacock);
                 }else{
                     ((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(Silver);
+                    ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.chicken);
                 }
 
 
-
             }
+            //테스트
 
-            Glide.with
-                    (holder.itemView.getContext())
-                    .load(userModels.get(position).imageurl)
-                    .apply(new RequestOptions().circleCrop())
-                    .into(((CustomViewHolder) holder).imageView);
-            ((CustomViewHolder) holder).Nick_textView.setText(userModels.get(position).name);
-            ((CustomViewHolder) holder).Region_textView.setText(userModels.get(position).region);
-            //((CustomViewHolder) holder).Hash_textView.setText(userModels.get(position).hash);
+            //현지인 등록 이미지가 있을 경우 이미지 넣기
+            if(userModels.get(position).imageurl!=null) {
+                Glide.with
+                        (holder.itemView.getContext())
+                        .load(userModels.get(position).imageurl)
+                        .apply(new RequestOptions().circleCrop())
+                        .into(((CustomViewHolder) holder).imageView);
+            }
+                ((CustomViewHolder) holder).Nick_textView.setText(userModels.get(position).name);
+                ((CustomViewHolder) holder).Region_textView.setText(userModels.get(position).region);
+                //((CustomViewHolder) holder).Hash_textView.setText(userModels.get(position).hash);
+
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -274,23 +284,7 @@ public class PeopleFragment extends Fragment {
             return userModels.size();
         }
 
-/*
-        public void filter(String charText) {
-            charText = charText.toLowerCase(Locale.getDefault());
-            userModels.clear();
-            if (charText.length() == 0) {
-                userModels.addAll(arrayList);
-            } else {
-                for (UserModel user : arrayList) {
-                    String name =context.getResources().getString(user.getName());
-                    if (name.toLowerCase().contains(charText)) {
-                        userModels.add(user);
-                    }
-                }
-            }
-            notifyDataSetChanged();
-        }
-*/
+
 
         public void searchUser(String search){
 
@@ -325,6 +319,7 @@ public class PeopleFragment extends Fragment {
             public TextView Region_textView;
             public TextView Hash_textView;
             public LinearLayout fragment_people_ItemLayout;
+            public ImageView item_friend_RankImage;
 
             public CustomViewHolder(View view) {
                 super(view);
@@ -333,6 +328,7 @@ public class PeopleFragment extends Fragment {
                 Nick_textView = (TextView) view.findViewById(R.id.frienditem_nick);
                 Region_textView=(TextView) view.findViewById(R.id.frienditem_region);
                 Hash_textView=(TextView) view.findViewById(R.id.frienditem_hash);
+                item_friend_RankImage=(ImageView) view.findViewById(R.id.item_friend_RankImage);
             }
         }
 
