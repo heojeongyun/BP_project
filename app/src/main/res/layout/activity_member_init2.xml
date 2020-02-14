@@ -11,12 +11,12 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="212dp"
+            android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="25dp"
             android:gravity="center_vertical"
-            android:text="나는 여행자!"
+            android:text="Welcome to Naravel"
             android:textColor="#5DA4BE"
             android:textSize="35dp"
             android:textStyle="bold" />
@@ -28,7 +28,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="0dp"
             android:gravity="center_vertical"
-            android:text="여행자는 현지인과의 대화를 통해 정보를 얻어 여행을 할 수 있습니다! 대화 중 예의를 지켜주세요."
+            android:text="TIP : Narabel에서 현지인으로 등록해 내가 사는 지역의 가이드가 되어보세요!"
             android:textColor="#5DA4BE"
             android:textSize="15dp"
             android:textStyle="bold" />
@@ -130,11 +130,11 @@
 
         <TextView
             android:id="@+id/tv_region"
-            android:layout_width="70dp"
+            android:layout_width="87dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:gravity="left"
-            android:text="지역"
+            android:text="거주지역"
             android:textSize="20dp" />
 
         <Spinner

@@ -1,5 +1,6 @@
 package com.example.nt_project02;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                                 //아니면 No such document라고 출력됨
                             } else {
                                 Log.d(TAG, "No such document");
-                                //로그인은 됐는데, 상세정보가 등록되어 있지 않으면 MemberActivity클래스로 이동
+//                                로그인은 됐는데, 상세정보가 등록되어 있지 않으면 MemberActivity클래스로 이동
                                 MystartActivity(MemberActivity.class);
                             }
                         }

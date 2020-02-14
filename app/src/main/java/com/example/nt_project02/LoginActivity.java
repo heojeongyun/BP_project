@@ -118,8 +118,8 @@ public class LoginActivity extends AppCompatActivity {
                                                     MystartActivity(MainActivity.class);
                                                 } else {
 
-                                                    //로그인은 됐는데, 상세정보가 등록되어 있지 않으면 MemberActivity클래스로 이동
-                                                    MystartActivity(MemberTypeActivity.class);
+//                                                    //로그인은 됐는데, 상세정보가 등록되어 있지 않으면 MemberActivity클래스로 이동
+                                                    MystartActivity(MemberActivity.class);
                                                 }
                                             }
                                             //아예 오류떠서 실패했을 때

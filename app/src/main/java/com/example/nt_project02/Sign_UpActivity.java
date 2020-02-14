@@ -77,7 +77,7 @@ public class Sign_UpActivity extends AppCompatActivity {
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     startToast("회원가입 성공");
                                     //MystartActivity(MemberActivity.class);
-                                    MystartActivity(MemberTypeActivity.class);
+                                    MystartActivity(MemberActivity.class);
                                 } else {
                                     // 회원가입 실패 했을 떄 UI.
                                     //Log.w(TAG, "createUserWithEmail:failure", task.getException());
