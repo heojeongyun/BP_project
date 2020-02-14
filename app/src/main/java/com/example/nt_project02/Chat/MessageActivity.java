@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,8 +25,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.nt_project02.GoogleMap_Fragment;
+import com.example.nt_project02.Native_Register;
 import com.example.nt_project02.NotificationModel;
 import com.example.nt_project02.R;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -77,6 +81,7 @@ public class MessageActivity extends AppCompatActivity {
     private String username;
 
     private RecyclerView recyclerView;
+    private FrameLayout frameLayout;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private String uid;
@@ -92,6 +97,9 @@ public class MessageActivity extends AppCompatActivity {
     private ValueEventListener valueEventListener;
     int peopleCount=0;
 
+    //지도 프래그먼트 선언
+    private GoogleMap_Fragment googleMap_fragment;
+
 
 
 
@@ -100,6 +108,8 @@ public class MessageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
+
+        googleMap_fragment=new GoogleMap_Fragment();
 
         Intent data=getIntent();
 
@@ -111,6 +121,8 @@ public class MessageActivity extends AppCompatActivity {
 
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        frameLayout=(FrameLayout)findViewById(R.id.container);
+
 
 
 
@@ -171,6 +183,16 @@ public class MessageActivity extends AppCompatActivity {
              }
 
 
+
+            }
+        });
+
+        Button activtiy_message_MapButton=(Button)findViewById(R.id.activity_message_MapButton);
+
+        activtiy_message_MapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.container,googleMap_fragment).commit();
 
             }
         });

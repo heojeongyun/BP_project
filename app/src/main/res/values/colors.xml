@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="Bronze">#c49c48</color>
+    <color name="Gold">#ffd700</color>
+    <color name="Silver">#c0c0c0</color>
     <color name="colorPrimary">#5DA4BE</color>
     <color name="colorPrimaryDark">#A1CDE1</color>
     <color name="colorAccent">#3F51B5</color>

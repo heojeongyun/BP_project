@@ -55,6 +55,7 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
     private String uid;
     private CheckBox activity_profile_BookMark;
     private FirebaseFirestore db;
+    private DocumentReference destination_Ref;
     private DocumentReference Ref;
     private List<String> bookmarks_array;
     private String TAG="Profile";
@@ -157,7 +158,11 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
 
         //문서 위치 선언
         db=FirebaseFirestore.getInstance();
+        //현재 여행자 정보 파이어스토어 경로
         Ref=db.collection("users").document(FirebaseAuth.getInstance().getUid());
+
+        //현재 현지인 정보 파이어스토어경로
+        destination_Ref=db.collection("users").document(destinationUid);
 
         //현재 여행자 정보 가져오기
         db.collection("users")
@@ -196,22 +201,26 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
 
 
 
-        activity_profile_BookMark.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        //즐겨찾기 체크박스 클릭 시
+        activity_profile_BookMark.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-
+            public void onClick(View v) {
+                //즐겨찾기 등록 되어 있을 때
+                if(activity_profile_BookMark.isChecked()){
                     //즐겨찾기 리스트 추가 (중복불가)
                     Ref.update("bookmarks",FieldValue.arrayUnion(destinationUid));
+                    destination_Ref.update("bookmarks_number", FieldValue.increment(1));
 
-
+                //즐겨찾기 되어 있지 않을 때
                 }else{
+                    //즐겨찾기 리스트 항목 제거
                     Ref.update("bookmarks",FieldValue.arrayRemove(destinationUid));
-
+                    destination_Ref.update("bookmarks_number", FieldValue.increment(-1));//현지인 즐겨찾기 수 추가
                 }
-
             }
         });
+
+
 
     }
     // Profile Scroll 부분을 관리하는 부분

@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_foreground_native"
@@ -12,7 +12,13 @@
         android:roundIcon="@mipmap/ic_launcher_foreground_native"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BookmarkActivity"></activity>
+        <activity android:name=".Chat.GoogleMapActivity"></activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA7YlrC4J7fuD4VCTkCNgoQzg8zTVJytsg" />
+
+        <activity android:name=".BookmarkActivity" />
         <activity android:name=".MemberTypeActivity" />
         <activity android:name=".Chat.MessageActivity" />
         <activity android:name=".MainActivity" />

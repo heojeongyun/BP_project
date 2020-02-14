@@ -9,8 +9,9 @@ public class Native_MemberInfo {
     String birthday;
     String user_kind;
     String region;
+    Integer bookmarks_number;
 
-    public Native_MemberInfo(String uid, String name, String phonenumber, String sex, String birthday, String user_kind, String region) {
+    public Native_MemberInfo(String uid, String name, String phonenumber, String sex, String birthday, String user_kind, String region, Integer bookmarks_number) {
         this.uid = uid;
         this.name = name;
         this.phonenumber = phonenumber;
@@ -18,6 +19,7 @@ public class Native_MemberInfo {
         this.birthday = birthday;
         this.user_kind = user_kind;
         this.region = region;
+        this.bookmarks_number = bookmarks_number;
     }
 
     public String getUid() {
@@ -74,5 +76,13 @@ public class Native_MemberInfo {
 
     public void setRegion(String region) {
         this.region = region;
+    }
+
+    public Integer getBookmarks_number() {
+        return bookmarks_number;
+    }
+
+    public void setBookmarks_number(Integer bookmarks_number) {
+        this.bookmarks_number = bookmarks_number;
     }
 }

@@ -14,11 +14,13 @@ import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,10 +32,12 @@ import com.example.nt_project02.Native_Profile.Profile;
 import com.example.nt_project02.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -145,13 +149,12 @@ public class PeopleFragment extends Fragment {
                     });*/
 
 
+            Query postOrder = FirebaseFirestore.getInstance().collection("users").orderBy("bookmarks_number",Query.Direction.DESCENDING);
 
 
-
-
-            db.collection("users")
-                    .whereEqualTo("user_kind", "현지인")
-                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+           /*db.collection("users")
+                    .whereEqualTo("user_kind", "현지인")*/
+                    postOrder.addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot value,
                                             @Nullable FirebaseFirestoreException e) {
@@ -168,12 +171,21 @@ public class PeopleFragment extends Fragment {
                                     userModels.add(doc.toObject(UserModel.class));
                                     saveList.add(doc.toObject(UserModel.class));
 
+
+
                                 }
+
                             }
                             notifyDataSetChanged();
+
+
+
+
                             Log.d(TAG, "Current data: " + userModels);
                         }
+
                     });
+
 
 
 
@@ -208,6 +220,25 @@ public class PeopleFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+            Integer bookmarks_number;
+            Integer Gold = ContextCompat.getColor(getContext(), R.color.Gold);
+            Integer Silver=ContextCompat.getColor(getContext(), R.color.Silver);
+            Integer White=ContextCompat.getColor(getContext(), R.color.white);
+
+            ((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(White);
+
+            bookmarks_number=userModels.get(position).bookmarks_number;
+
+            if((bookmarks_number !=null)&& (bookmarks_number!=0)){
+                if(bookmarks_number>=2){
+                    ((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(Gold);
+                }else{
+                    ((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(Silver);
+                }
+
+
+
+            }
 
             Glide.with
                     (holder.itemView.getContext())
@@ -233,6 +264,7 @@ public class PeopleFragment extends Fragment {
 
                 }
             });
+
 
         }
 
@@ -292,9 +324,11 @@ public class PeopleFragment extends Fragment {
             public TextView Nick_textView;
             public TextView Region_textView;
             public TextView Hash_textView;
+            public LinearLayout fragment_people_ItemLayout;
 
             public CustomViewHolder(View view) {
                 super(view);
+                fragment_people_ItemLayout=(LinearLayout) view.findViewById(R.id.fragment_people_itemLayout);
                 imageView = (ImageView) view.findViewById(R.id.frienditem_imageview);
                 Nick_textView = (TextView) view.findViewById(R.id.frienditem_nick);
                 Region_textView=(TextView) view.findViewById(R.id.frienditem_region);
