@@ -3,12 +3,15 @@ package com.example.nt_project02.Chat;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserModel implements Parcelable {
 
     public String birthday;
+    public Integer bookmarks_number;
     public List<String> bookmarks;
     public String name;
     public String phonenumber;
@@ -24,6 +27,7 @@ public class UserModel implements Parcelable {
     public UserModel(Parcel parcel) {
 
         birthday=parcel.readString();
+        bookmarks_number=parcel.readInt();
         bookmarks = new ArrayList<String>();
         parcel.readList(bookmarks, UserModel.class.getClassLoader());
         name=parcel.readString();
@@ -74,6 +78,7 @@ public class UserModel implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
 
         dest.writeString(this.birthday);
+        dest.writeInt(this.bookmarks_number);
         dest.writeList(this.bookmarks);
         dest.writeString(this.name);
         dest.writeString(this.phonenumber);
@@ -101,6 +106,15 @@ public class UserModel implements Parcelable {
 
     public void setBirthday(String birthday) {
         this.birthday = birthday;
+    }
+
+
+    public Integer getBookmarks_number() {
+        return bookmarks_number;
+    }
+
+    public void setBookmarks_number(Integer bookmarks_number) {
+        this.bookmarks_number = bookmarks_number;
     }
 
     public List<String> getBookmarks() {
@@ -183,6 +197,7 @@ public class UserModel implements Parcelable {
     public String toString() {
         return "UserModel{" +
                 "birthday='" + birthday + '\'' +
+                ", bookmasrs_number=" + bookmarks_number +
                 ", bookmarks=" + bookmarks +
                 ", name='" + name + '\'' +
                 ", phonenumber='" + phonenumber + '\'' +

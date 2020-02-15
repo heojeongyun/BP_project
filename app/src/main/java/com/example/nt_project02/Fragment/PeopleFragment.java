@@ -14,11 +14,13 @@ import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,10 +33,12 @@ import com.example.nt_project02.Native_Profile.Profile;
 import com.example.nt_project02.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -161,13 +165,12 @@ public class PeopleFragment extends Fragment {
                     });*/
 
 
+            Query postOrder = FirebaseFirestore.getInstance().collection("users").orderBy("bookmarks_number",Query.Direction.DESCENDING);
 
 
-
-
-            db.collection("users")
-                    .whereEqualTo("user_kind", "현지인")
-                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+           /*db.collection("users")
+                    .whereEqualTo("user_kind", "현지인")*/
+                    postOrder.addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot value,
                                             @Nullable FirebaseFirestoreException e) {
@@ -184,12 +187,21 @@ public class PeopleFragment extends Fragment {
                                     userModels.add(doc.toObject(UserModel.class));
                                     saveList.add(doc.toObject(UserModel.class));
 
+
+
                                 }
+
                             }
                             notifyDataSetChanged();
+
+
+
+
                             Log.d(TAG, "Current data: " + userModels);
                         }
+
                     });
+
 
 
 
@@ -224,15 +236,44 @@ public class PeopleFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+            Integer bookmarks_number;
+            //색 가져오기
+            Integer Gold = ContextCompat.getColor(getContext(), R.color.Gold);
+            Integer Silver=ContextCompat.getColor(getContext(), R.color.Silver);
+            Integer White=ContextCompat.getColor(getContext(), R.color.white);
 
-            Glide.with
-                    (holder.itemView.getContext())
-                    .load(userModels.get(position).imageurl)
-                    .apply(new RequestOptions().circleCrop())
-                    .into(((CustomViewHolder) holder).imageView);
-            ((CustomViewHolder) holder).Nick_textView.setText(userModels.get(position).name);
-            ((CustomViewHolder) holder).Region_textView.setText(userModels.get(position).region);
-            //((CustomViewHolder) holder).Hash_textView.setText(userModels.get(position).hash);
+            //초기화
+            ((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(White);
+            ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.chick);
+            ((CustomViewHolder)holder).imageView.setImageResource(R.drawable.user);
+
+            bookmarks_number=userModels.get(position).bookmarks_number;
+
+            if((bookmarks_number !=null)&& (bookmarks_number!=0)){
+                if(bookmarks_number>=2){
+                    ((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(Gold);
+                    ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.peacock);
+                }else{
+                    ((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(Silver);
+                    ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.chicken);
+                }
+
+
+            }
+            //테스트
+
+            //현지인 등록 이미지가 있을 경우 이미지 넣기
+            if(userModels.get(position).imageurl!=null) {
+                Glide.with
+                        (holder.itemView.getContext())
+                        .load(userModels.get(position).imageurl)
+                        .apply(new RequestOptions().circleCrop())
+                        .into(((CustomViewHolder) holder).imageView);
+            }
+                ((CustomViewHolder) holder).Nick_textView.setText(userModels.get(position).name);
+                ((CustomViewHolder) holder).Region_textView.setText(userModels.get(position).region);
+                //((CustomViewHolder) holder).Hash_textView.setText(userModels.get(position).hash);
+
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -250,6 +291,7 @@ public class PeopleFragment extends Fragment {
                 }
             });
 
+
         }
 
         @Override
@@ -258,23 +300,7 @@ public class PeopleFragment extends Fragment {
             return userModels.size();
         }
 
-/*
-        public void filter(String charText) {
-            charText = charText.toLowerCase(Locale.getDefault());
-            userModels.clear();
-            if (charText.length() == 0) {
-                userModels.addAll(arrayList);
-            } else {
-                for (UserModel user : arrayList) {
-                    String name =context.getResources().getString(user.getName());
-                    if (name.toLowerCase().contains(charText)) {
-                        userModels.add(user);
-                    }
-                }
-            }
-            notifyDataSetChanged();
-        }
-*/
+
 
         public void searchUser(String search){
 
@@ -304,13 +330,17 @@ public class PeopleFragment extends Fragment {
             public TextView Nick_textView;
             public TextView Region_textView;
             public TextView Hash_textView;
+            public LinearLayout fragment_people_ItemLayout;
+            public ImageView item_friend_RankImage;
 
             public CustomViewHolder(View view) {
                 super(view);
+                fragment_people_ItemLayout=(LinearLayout) view.findViewById(R.id.fragment_people_itemLayout);
                 imageView = (ImageView) view.findViewById(R.id.frienditem_imageview);
                 Nick_textView = (TextView) view.findViewById(R.id.frienditem_nick);
                 Region_textView=(TextView) view.findViewById(R.id.frienditem_region);
                 Hash_textView=(TextView) view.findViewById(R.id.frienditem_hash);
+                item_friend_RankImage=(ImageView) view.findViewById(R.id.item_friend_RankImage);
             }
         }
 

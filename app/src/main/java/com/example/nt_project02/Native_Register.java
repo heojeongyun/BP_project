@@ -92,6 +92,7 @@ public class Native_Register extends AppCompatActivity {
         String phone_number = ((EditText) findViewById(R.id.phone_number)).getText().toString();
         String birthday_information = ((EditText) findViewById(R.id.birthday_information)).getText().toString();
         String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Integer bookmarks_number=0;
 
 
 
@@ -101,7 +102,7 @@ public class Native_Register extends AppCompatActivity {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-            Native_MemberInfo native_memberInfo = new Native_MemberInfo(uid,native_name,phone_number,sex,birthday_information,user_kind,region);
+            Native_MemberInfo native_memberInfo = new Native_MemberInfo(uid,native_name,phone_number,sex,birthday_information,user_kind,region,bookmarks_number);
 
             if (user != null) {
                 db.collection("users").document(user.getUid()).set(native_memberInfo,SetOptions.merge())
