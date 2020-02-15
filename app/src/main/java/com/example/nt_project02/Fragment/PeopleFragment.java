@@ -299,10 +299,6 @@ public class PeopleFragment extends Fragment {
 
 
 
-
-
-
-
         private class CustomViewHolder extends RecyclerView.ViewHolder {
             public  ImageView imageView;
             public TextView Nick_textView;

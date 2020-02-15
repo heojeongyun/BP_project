@@ -1,61 +1,32 @@
 package com.example.nt_project02;
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import androidx.annotation.NonNull;
-import androidx.viewpager.widget.PagerAdapter;
+import java.util.ArrayList;
+import java.util.List;
 
-public class TextViewPagerAdapter extends PagerAdapter {
+public class TextViewPagerAdapter extends FragmentStatePagerAdapter {
 
-    // LayoutInflater 서비스 사용을 위한 Context 참조 저장.
-    private Context mContext = null ;
+    private final List<Fragment> mFragmentList = new ArrayList<>();
+    private final List<String> mFragmentTitleList = new ArrayList<>();
 
-    public TextViewPagerAdapter() {
-
+    public void addFragment(Fragment fragment, String title){
+        mFragmentList.add(fragment);
+        mFragmentTitleList.add(title);
     }
-
-    // Context를 전달받아 mContext에 저장하는 생성자 추가.
-    public TextViewPagerAdapter(Context context) {
-        mContext = context ;
+    public CharSequence getPageTitle(int position) {
+        return mFragmentTitleList.get(position);
     }
-
+    public TextViewPagerAdapter(FragmentManager fm){
+        super(fm);
+    }
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-        View view = null ;
-
-        if (mContext != null) {
-            // LayoutInflater를 통해 "/res/layout/page.xml"을 뷰로 생성.
-            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.activity_search_popular, container, false);
-
-            TextView textView = (TextView) view.findViewById(R.id.activity_ns_txt) ;
-            textView.setText("검색 " + position) ;
-        }
-
-        // 뷰페이저에 추가.
-        container.addView(view) ;
-
-        return view ;
-    }
-
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        // 뷰페이저에서 삭제.
-        container.removeView((View) object);
-    }
+    public Fragment getItem(int position) { return mFragmentList.get(position); }
 
     @Override
     public int getCount() {
-        // 전체 페이지 수는 4개로 고정.
-        return 4;
-    }
-
-    @Override
-    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return (view == (View)object);
+        return mFragmentList.size() ;
     }
 }
