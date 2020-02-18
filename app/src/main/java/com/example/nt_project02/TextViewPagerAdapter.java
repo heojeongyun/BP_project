@@ -19,9 +19,12 @@ public class TextViewPagerAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         return mFragmentTitleList.get(position);
     }
+
+
     public TextViewPagerAdapter(FragmentManager fm){
         super(fm);
     }
+
     @Override
     public Fragment getItem(int position) { return mFragmentList.get(position); }
 

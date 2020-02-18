@@ -177,24 +177,24 @@ public class Search_Popular extends Fragment {
         }
 
 
-                   public  void searchUser(String search){
+        public  void searchUser(String search){
 
-                userModels.clear();
+            userModels.clear();
 
-                for(int i = 0; i < saveList.size(); i++){
+            for(int i = 0; i < saveList.size(); i++){
 
-                    if(saveList.get(i).getName() !=null &&saveList.get(i).getName().contains(search)){//contains메소드로 search 값이 있으면 true를 반환함
+                if(saveList.get(i).getName() !=null &&saveList.get(i).getName().contains(search)){//contains메소드로 search 값이 있으면 true를 반환함
 
-                        userModels.add(saveList.get(i));
-
-                    }
+                    userModels.add(saveList.get(i));
 
                 }
 
-                adapter.notifyDataSetChanged();//어댑터에 값일 바뀐것을 알려줌
-
-
             }
+
+            adapter.notifyDataSetChanged();//어댑터에 값일 바뀐것을 알려줌
+
+
+        }
 
     }
 

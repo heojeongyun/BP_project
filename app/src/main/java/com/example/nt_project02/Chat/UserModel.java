@@ -20,6 +20,8 @@ public class UserModel implements Parcelable {
     public String user_kind;
     public String imageurl;
     public String hashtag;
+    public List<String> requests;
+
     public UserModel(Parcel parcel) {
         birthday=parcel.readString();
         bookmarks_number=parcel.readInt();
@@ -34,6 +36,8 @@ public class UserModel implements Parcelable {
         user_kind=parcel.readString();
         imageurl=parcel.readString();
         hashtag=parcel.readString();
+        requests = new ArrayList<String>();
+        parcel.readList(requests, UserModel.class.getClassLoader());
     }
     public UserModel(){
     }
@@ -75,6 +79,7 @@ public class UserModel implements Parcelable {
         dest.writeString(this.user_kind);
         dest.writeString(this.imageurl);
         dest.writeString(this.hashtag);
+        dest.writeList(this.requests);
     }
     @Override
     public int describeContents() {
@@ -152,14 +157,24 @@ public class UserModel implements Parcelable {
     public void setHashtag(String hashtag) {
         this.hashtag = hashtag;
     }
+
+    public List<String> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(List<String> requests) {
+        this.requests = requests;
+    }
+
     public static Creator<UserModel> getCREATOR() {
         return CREATOR;
     }
+
     @Override
     public String toString() {
         return "UserModel{" +
                 "birthday='" + birthday + '\'' +
-                ", bookmasrs_number=" + bookmarks_number +
+                ", bookmarks_number=" + bookmarks_number +
                 ", bookmarks=" + bookmarks +
                 ", name='" + name + '\'' +
                 ", phonenumber='" + phonenumber + '\'' +
@@ -170,6 +185,7 @@ public class UserModel implements Parcelable {
                 ", user_kind='" + user_kind + '\'' +
                 ", imageurl='" + imageurl + '\'' +
                 ", hashtag='" + hashtag + '\'' +
+                ", requests=" + requests +
                 '}';
     }
 }

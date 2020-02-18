@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:layout_weight="0.5"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/activity_ncm_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="별명"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/activity_ncm_image"
+            android:layout_width="match_parent"
+            android:layout_height="106dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/user"/>
+        <!--app:srcCompat="@drawable/travel"--> />
+
+
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <Button
+        android:id="@+id/activity_ncm_btn_accept"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_selector"
+        android:text="수락"
+        android:textColor="@android:color/background_light"
+        android:textSize="17dp"
+        android:textStyle="bold" />
+
+    <Button
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/activity_ncm_btn_accept"
+        android:id="@+id/activity_ncm_btn_reject"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_selector"
+        android:text="거절"
+        android:textColor="@android:color/background_light"
+        android:textSize="17dp"
+        android:textStyle="bold" />
+
+</RelativeLayout>
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>
+
+
+
+

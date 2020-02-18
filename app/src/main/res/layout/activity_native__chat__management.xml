@@ -12,22 +12,15 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="25dp"
         android:gravity="center_vertical"
-        android:text="Chatting List"
+        android:text="Sing up List"
         android:textColor="#5DA4BE"
         android:textSize="35dp"
         android:textStyle="bold" />
 
-    <ImageButton
-        android:id="@+id/btn_traveler_chat_management"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_gravity="right"
-        android:background="@drawable/traveler_chat_management"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recyclerView_chat_Fragment">
+        android:id="@+id/recyclerView_ncm">
 
     </androidx.recyclerview.widget.RecyclerView>
 

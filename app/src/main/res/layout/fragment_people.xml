@@ -25,7 +25,7 @@
         android:layout_marginTop="70dp"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
-        android:hint="지역, 테마별로 검색"
+        android:hint="현지인 검색하기"
         android:singleLine="true"
         android:textSize="17dp" />
 

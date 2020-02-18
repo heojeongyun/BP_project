@@ -52,11 +52,6 @@ public class PeopleFragment extends Fragment {
 
     @Nullable
 
-
-
-
-
-
     private List<UserModel> userModels;
     private List<UserModel> saveList;
     private EditText editText;
@@ -174,37 +169,37 @@ public class PeopleFragment extends Fragment {
 
            /*db.collection("users")
                     .whereEqualTo("user_kind", "현지인")*/
-                    postOrder.addSnapshotListener(new EventListener<QuerySnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable QuerySnapshot value,
-                                            @Nullable FirebaseFirestoreException e) {
-                            if (e != null) {
-                                Log.w(TAG, "Listen failed.", e);
-                                return;
-                            }
+            postOrder.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot value,
+                                    @Nullable FirebaseFirestoreException e) {
+                    if (e != null) {
+                        Log.w(TAG, "Listen failed.", e);
+                        return;
+                    }
 
-                            userModels.clear();
-                            for (QueryDocumentSnapshot doc : value) {
-                                if (doc != null) {
-
-
-                                    userModels.add(doc.toObject(UserModel.class));
-                                    saveList.add(doc.toObject(UserModel.class));
+                    userModels.clear();
+                    for (QueryDocumentSnapshot doc : value) {
+                        if (doc != null) {
 
 
-
-                                }
-
-                            }
-                            notifyDataSetChanged();
+                            userModels.add(doc.toObject(UserModel.class));
+                            saveList.add(doc.toObject(UserModel.class));
 
 
 
-
-                            Log.d(TAG, "Current data: " + userModels);
                         }
 
-                    });
+                    }
+                    notifyDataSetChanged();
+
+
+
+
+                    Log.d(TAG, "Current data: " + userModels);
+                }
+
+            });
 
 
 
@@ -274,9 +269,9 @@ public class PeopleFragment extends Fragment {
                         .apply(new RequestOptions().circleCrop())
                         .into(((CustomViewHolder) holder).imageView);
             }
-                ((CustomViewHolder) holder).Nick_textView.setText(userModels.get(position).name);
-                ((CustomViewHolder) holder).Region_textView.setText(userModels.get(position).region);
-                //((CustomViewHolder) holder).Hash_textView.setText(userModels.get(position).hash);
+            ((CustomViewHolder) holder).Nick_textView.setText(userModels.get(position).name);
+            ((CustomViewHolder) holder).Region_textView.setText(userModels.get(position).region);
+            //((CustomViewHolder) holder).Hash_textView.setText(userModels.get(position).hash);
 
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -329,24 +324,24 @@ public class PeopleFragment extends Fragment {
 
 
 
-        private class CustomViewHolder extends RecyclerView.ViewHolder {
-            public  ImageView imageView;
-            public TextView Nick_textView;
-            public TextView Region_textView;
-            public TextView Hash_textView;
-            public LinearLayout fragment_people_ItemLayout;
-            public ImageView item_friend_RankImage;
+    private class CustomViewHolder extends RecyclerView.ViewHolder {
+        public  ImageView imageView;
+        public TextView Nick_textView;
+        public TextView Region_textView;
+        public TextView Hash_textView;
+        public LinearLayout fragment_people_ItemLayout;
+        public ImageView item_friend_RankImage;
 
-            public CustomViewHolder(View view) {
-                super(view);
-                fragment_people_ItemLayout=(LinearLayout) view.findViewById(R.id.fragment_people_itemLayout);
-                imageView = (ImageView) view.findViewById(R.id.frienditem_imageview);
-                Nick_textView = (TextView) view.findViewById(R.id.frienditem_nick);
-                Region_textView=(TextView) view.findViewById(R.id.frienditem_region);
-                Hash_textView=(TextView) view.findViewById(R.id.frienditem_hash);
-                item_friend_RankImage=(ImageView) view.findViewById(R.id.item_friend_RankImage);
-            }
+        public CustomViewHolder(View view) {
+            super(view);
+            fragment_people_ItemLayout=(LinearLayout) view.findViewById(R.id.fragment_people_itemLayout);
+            imageView = (ImageView) view.findViewById(R.id.frienditem_imageview);
+            Nick_textView = (TextView) view.findViewById(R.id.frienditem_nick);
+            Region_textView=(TextView) view.findViewById(R.id.frienditem_region);
+            Hash_textView=(TextView) view.findViewById(R.id.frienditem_hash);
+            item_friend_RankImage=(ImageView) view.findViewById(R.id.item_friend_RankImage);
         }
+    }
 
     private void startToast(String msg){
 

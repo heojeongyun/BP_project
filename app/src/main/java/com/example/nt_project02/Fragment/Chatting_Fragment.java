@@ -2,11 +2,14 @@ package com.example.nt_project02.Fragment;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,17 +24,25 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.nt_project02.Chat.ChatModel;
 import com.example.nt_project02.Chat.MessageActivity;
 import com.example.nt_project02.Chat.UserModel;
+import com.example.nt_project02.Native_Chat_Management;
+import com.example.nt_project02.Native_Register;
 import com.example.nt_project02.R;
+import com.example.nt_project02.Traveler_Chat_Management;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,16 +58,65 @@ public class Chatting_Fragment extends Fragment {
 
 
     private SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy.MM.dd HH:mm"); //사람이 알아볼 수 있게 데이터 포맷을 정해 줌
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String user_uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private UserModel userModel;
+    private String TAG = "Setting_Fragment";
+    private String user_kind;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.chatting, container, false);
 
-
-        RecyclerView recyclerView=rootView.findViewById(R.id.chatfragment_recyclerview);
+        RecyclerView recyclerView=rootView.findViewById(R.id.recyclerView_chat_Fragment);
         recyclerView.setAdapter(new ChatRecyclerViewAdapter());
         recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext())); //리스트로 보여줄 것이다
+
+        final ImageButton traveler_management_btn = (ImageButton) rootView.findViewById(R.id.btn_traveler_chat_management);
+
+        //파이어베이스에서 사용자를 불러온다음 설정버튼을 변경
+        db.collection("users")
+                .whereEqualTo("uid", user_uid)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(TAG, "Listen failed.", e);
+                            return;
+                        }
+
+                        for (QueryDocumentSnapshot doc : value) {
+                            if (doc != null) {
+
+                                userModel = doc.toObject(UserModel.class);
+                                user_kind = userModel.getUser_kind();
+                                if (user_kind != null) {
+                                    if (user_kind.equals("현지인")) { //현지인인 경우 현지인 관리창 연결
+                                        traveler_management_btn.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                Intent intent = new Intent(getActivity(), Native_Chat_Management.class);
+                                                startActivity(intent);
+                                            }
+                                        });
+                                    } else { // 여행자인 경우 여행자 관리창 연결
+                                        traveler_management_btn.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                Intent intent = new Intent(getActivity(), Traveler_Chat_Management.class);
+                                                startActivity(intent);
+                                            }
+                                        });
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                });
 
 
         return rootView;
@@ -83,7 +143,7 @@ public class Chatting_Fragment extends Fragment {
             uid= FirebaseAuth.getInstance().getCurrentUser().getUid();//uid는 파이어베이스에서 가져옴
             FirebaseDatabase.getInstance().getReference().child("chatrooms")
                     .orderByChild("users/"+uid).equalTo(true).addValueEventListener(new ValueEventListener() {
-                        //파이어베이스의 chatrooms에 내가 소속된 방에 대해서 이벤트를 받음
+                //파이어베이스의 chatrooms에 내가 소속된 방에 대해서 이벤트를 받음
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -114,6 +174,7 @@ public class Chatting_Fragment extends Fragment {
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chat,parent,false);
 
+
             return new CustomViewHolder(view); //뷰 재사용
         }
 
@@ -130,14 +191,14 @@ public class Chatting_Fragment extends Fragment {
                 if(!user.equals(uid)){//내가 아닌 사람을 뽑아옴
                     destinationUid = user;
                 }
-                            if(!destinationUsers.contains(destinationUid)) {
+                if(!destinationUsers.contains(destinationUid)) {
 
 
-                                destinationUsers.add(destinationUid);
+                    destinationUsers.add(destinationUid);
 
 
-                            }
-                        }
+                }
+            }
 
             Log.d(TAG,"destinationUsers:"+destinationUsers);
 
@@ -149,30 +210,29 @@ public class Chatting_Fragment extends Fragment {
             if(destinationUid!=null) {//상대방이 있을 때
                 FirebaseFirestore.getInstance().collection("users").document(destinationUid).get()
                         .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {//users의 Uid를 가져와서 거기에 대해 리스너 대기
-                    @Override
+                            @Override
 
 
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
 
 
-                            DocumentSnapshot document = task.getResult();
-                            UserModel userModel = document.toObject(UserModel.class);
-                            Glide.with(customViewHolder.itemView.getContext())
-                                    .load(userModel.getImageurl())//userModel에서 이미지를 가져온다
-                                    .apply(new RequestOptions().circleCrop())
-                                    .into(customViewHolder.imageView);
-                            customViewHolder.textView_title.setText(userModel.getName());//채팅방 타이틀을 상대방 이름으로
+                                    DocumentSnapshot document = task.getResult();
+                                    UserModel userModel = document.toObject(UserModel.class);
+                                    Glide.with(customViewHolder.itemView.getContext())
+                                                .load(userModel.getImageurl())//userModel에서 이미지를 가져온다
+                                                .apply(new RequestOptions().circleCrop())
+                                                .into(customViewHolder.imageView);
+                                    customViewHolder.textView_title.setText(userModel.getName());//채팅방 타이틀을 상대방 이름으로
 
 
 
+                                } else {
 
-                        } else {
 
-
-                        }
-                    }
-                });
+                                }
+                            }
+                        });
             }
 
 

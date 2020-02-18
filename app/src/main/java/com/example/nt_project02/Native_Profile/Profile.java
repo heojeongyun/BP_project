@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
@@ -28,8 +29,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
@@ -52,6 +55,8 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
     private TextView nick_text;
     private TextView self_info_text;
     private ImageView profile_image;
+    private String user_kind;
+    private String user_uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private String uid;
     private CheckBox activity_profile_BookMark;
     private FirebaseFirestore db;
@@ -138,19 +143,15 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
 
 
 
-        // 현지인과 채팅을 하기 위해 채팅버튼 클릭시 현지인과의 1대1 대화창으로 연결해주는 부분
+        // 현지인과 채팅을 하기 위해 매칭요청 하는 버튼
         Button chat_button=(Button) findViewById(R.id.profile_chat_button);
         chat_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                // 사용자가 현지인이 아닌 경우에만 현지인과의 1대1 대화창으로 연결해주는 부분
-                if(destinationUid != uid) {
-                    Intent intent = new Intent(getApplicationContext(), MessageActivity.class);
-                    intent.putExtra("destination_Uid", destinationUid);
-                    startActivity(intent);
-                }
-
+                // 파이어베이스 requests 필드에 아이디 등록
+                Ref.update("requests",FieldValue.arrayUnion(destinationUid));
+                destination_Ref.update("requests",FieldValue.arrayUnion(uid));
+                startToast("매칭을 성공적으로 요청했습니다");
             }
         });
 

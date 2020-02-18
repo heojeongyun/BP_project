@@ -36,6 +36,8 @@
         <activity android:name=".Native_Register" />
         <activity android:name=".Native_Profile.Profile" />
         <activity android:name=".NativeSearch"/>
+        <activity android:name=".Traveler_Chat_Management"/>
+        <activity android:name=".Native_Chat_Management"/>
 
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
