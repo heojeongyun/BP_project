@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 public class UserModel implements Parcelable {
+
     public String birthday;
     public Integer bookmarks_number;
     public List<String> bookmarks;
@@ -20,6 +21,7 @@ public class UserModel implements Parcelable {
     public String user_kind;
     public String imageurl;
     public String hashtag;
+
     public UserModel(Parcel parcel) {
         birthday=parcel.readString();
         bookmarks_number=parcel.readInt();

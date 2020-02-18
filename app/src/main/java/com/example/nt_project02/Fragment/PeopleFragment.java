@@ -77,6 +77,7 @@ public class PeopleFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), NativeSearch.class);
                 intent.putParcelableArrayListExtra("UserModels", (ArrayList<? extends Parcelable>) userModels);
+                intent.putParcelableArrayListExtra("SaveList", (ArrayList<? extends Parcelable>) saveList);
                 startActivity(intent);
 
             }
@@ -276,7 +277,7 @@ public class PeopleFragment extends Fragment {
             }
                 ((CustomViewHolder) holder).Nick_textView.setText(userModels.get(position).name);
                 ((CustomViewHolder) holder).Region_textView.setText(userModels.get(position).region);
-                //((CustomViewHolder) holder).Hash_textView.setText(userModels.get(position).hash);
+                ((CustomViewHolder) holder).Hash_textView.setText(userModels.get(position).hashtag);
 
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -330,6 +331,7 @@ public class PeopleFragment extends Fragment {
 
 
         private class CustomViewHolder extends RecyclerView.ViewHolder {
+
             public  ImageView imageView;
             public TextView Nick_textView;
             public TextView Region_textView;

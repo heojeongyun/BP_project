@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.nt_project02.Chat.MessageActivity;
 import com.example.nt_project02.Chat.UserModel;
+import com.example.nt_project02.Fragment.PeopleFragment;
 import com.example.nt_project02.Native_Register;
 import com.example.nt_project02.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -130,10 +131,14 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
         Log.d(TAG,"Current data:"+destination_userModel.toString());
 
         // 이미지 URL을 통해 이미지를 불러오는 작업
-        Glide.with(getApplicationContext())
-                .load(destination_userModel.getImageurl())
-                .apply(new RequestOptions().circleCrop())
-                .into(profile_image);
+
+        if(destination_userModel.getImageurl()!=null) {
+            Glide.with
+                    (getApplicationContext())
+                    .load(destination_userModel.getImageurl())
+                    .apply(new RequestOptions().circleCrop())
+                    .into(profile_image);
+        }
 
 
 
