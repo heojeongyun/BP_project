@@ -2,10 +2,13 @@ package com.example.nt_project02;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,18 +31,50 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
 
 public class Search_Popular extends Fragment {
 
-    private SearchPopularRecyclerViewAdapter adapter;
+
+    private  SearchPopularRecyclerViewAdapter adapter;
+    private  EditText NativeSearch_editText;
+
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_search_popular, container,false);
+
+        NativeSearch_editText=((NativeSearch)getActivity()).editText;
+
+        NativeSearch_editText.addTextChangedListener(new TextWatcher() {
+            @Override
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                adapter.searchUser(s.toString());
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = NativeSearch_editText.getText().toString()
+                        .toLowerCase(Locale.getDefault());
+                //adapter.filter(text);
+
+
+            }
+        });
+
         adapter=new SearchPopularRecyclerViewAdapter();
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.search_popular_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
@@ -141,9 +176,33 @@ public class Search_Popular extends Fragment {
             return userModels.size();
         }
 
+
+                   public  void searchUser(String search){
+
+                userModels.clear();
+
+                for(int i = 0; i < saveList.size(); i++){
+
+                    if(saveList.get(i).getName() !=null &&saveList.get(i).getName().contains(search)){//contains메소드로 search 값이 있으면 true를 반환함
+
+                        userModels.add(saveList.get(i));
+
+                    }
+
+                }
+
+                adapter.notifyDataSetChanged();//어댑터에 값일 바뀐것을 알려줌
+
+
+            }
+
     }
 
-    private class CustomViewHolder extends RecyclerView.ViewHolder {
+
+
+
+
+    private static class CustomViewHolder extends RecyclerView.ViewHolder {
         public ImageView imageView;
         public TextView Nick_textView;
         public TextView Region_textView;

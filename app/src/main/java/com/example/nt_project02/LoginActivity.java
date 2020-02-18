@@ -54,9 +54,11 @@ public class LoginActivity extends AppCompatActivity {
                 case R.id.CheckButton:
                     login();
                     break;
+
                 case R.id.gotoPasswordResetbutton:
                     MystartActivity(PasswordResetActivity.class);
                     break;
+
                 case R.id.signUp_Activity_Button:
                     MystartActivity(Sign_UpActivity.class);
                     break;

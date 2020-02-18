@@ -3,6 +3,7 @@ package com.example.nt_project02.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -55,9 +56,9 @@ public class PeopleFragment extends Fragment {
 
 
 
-    private List<UserModel> userModel;
-    private ArrayList<UserModel> userModels;
-    private ArrayList<UserModel> arrayList;
+
+    private List<UserModel> userModels;
+    private List<UserModel> saveList;
     private EditText editText;
     private PeopleFragmentRecyclerViewAdapter adapter;
     private Context context;
@@ -65,22 +66,26 @@ public class PeopleFragment extends Fragment {
     private String name;
 
 
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_people, container,
                 false);
-        EditText editText = rootView.findViewById(R.id.txt_search);
+        editText = rootView.findViewById(R.id.txt_search);
 
         editText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MystartActivity(NativeSearch.class);
+                Intent intent = new Intent(getContext(), NativeSearch.class);
+                intent.putParcelableArrayListExtra("UserModels", (ArrayList<? extends Parcelable>) userModels);
+                startActivity(intent);
+
             }
         });
 
 
-     /*   editText.addTextChangedListener(new TextWatcher() {
+        /*editText.addTextChangedListener(new TextWatcher() {
             @Override
+
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
@@ -98,8 +103,8 @@ public class PeopleFragment extends Fragment {
 
 
             }
-        });*/
-
+        });
+*/
 
 
         adapter=new PeopleFragmentRecyclerViewAdapter();
@@ -130,8 +135,7 @@ public class PeopleFragment extends Fragment {
 
 
 
-        List<UserModel> userModels;
-        List<UserModel> saveList;
+
         public PeopleFragmentRecyclerViewAdapter() {
 
 

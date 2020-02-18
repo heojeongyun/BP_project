@@ -127,14 +127,18 @@ public class Chatting_Fragment extends Fragment {
 
             // 일일이 챗방에 있는 유저를 체크
             for(String user:chatModels.get(position).users.keySet()){
-                            if(!user.equals(uid)) { //내가 아닌 사람을 뽑아옴
+                if(!user.equals(uid)){//내가 아닌 사람을 뽑아옴
+                    destinationUid = user;
+                }
+                            if(!destinationUsers.contains(destinationUid)) {
 
-                                destinationUid = user;
+
                                 destinationUsers.add(destinationUid);
 
 
                             }
                         }
+
             Log.d(TAG,"destinationUsers:"+destinationUsers);
 
 
@@ -193,7 +197,6 @@ public class Chatting_Fragment extends Fragment {
 
                 @Override
                 public void onClick(View view){
-
 
                     Intent intent=new Intent(view.getContext(), MessageActivity.class); //채팅방 액티비티
                     intent.putExtra("destination_Uid", destinationUsers.get(position));//누구랑 대화할지

@@ -14,11 +14,11 @@
         android:inputType="textPersonName"
         android:hint="Name" />
 
-    <androidx.viewpager.widget.ViewPager
+   <!-- <androidx.viewpager.widget.ViewPager
         android:id="@+id/activity_nativesearch_vp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="1">-->
 
 
 
@@ -47,7 +47,14 @@
                 android:layout_height="wrap_content"
                 android:text="Hashtag" />
         </com.google.android.material.tabs.TabLayout>
-    </androidx.viewpager.widget.ViewPager>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/activity_nativesearch_RecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
+    <!--</androidx.viewpager.widget.ViewPager>-->
 
 
 </LinearLayout>
