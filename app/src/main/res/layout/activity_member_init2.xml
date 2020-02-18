@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:gravity="left"
-            android:text="이름"
+            android:text="닉네임"
             android:textSize="20dp"
             />
 

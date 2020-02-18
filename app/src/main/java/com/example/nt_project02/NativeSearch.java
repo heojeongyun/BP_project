@@ -45,8 +45,11 @@ public class NativeSearch extends AppCompatActivity {
 
     public EditText editText;
     private  NativeSearchRecyclerViewAdapter adapter;
+    private List<UserModel> userModels;
+    private List<UserModel> saveList;
     private String TAG="NativeSearch";
     private String S;
+    private int pos=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +57,18 @@ public class NativeSearch extends AppCompatActivity {
         setContentView(R.layout.activity_nativesearch);
 
 
+
         TabLayout tabLayout = (TabLayout) findViewById(R.id.activity_ns_tab);
         editText = (EditText) findViewById(R.id.activity_ns_txt);
 
 
 
+
+
+
+        //검색창 쓴 글자 저장하기
         editText.addTextChangedListener(new TextWatcher() {
+
             @Override
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -69,11 +78,21 @@ public class NativeSearch extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+                adapter.searchUser_name(s.toString());
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+
                 S=s.toString();
+
+                if (editText.getText().toString().equals("")) {
+                    adapter.clear();
+                    Log.d(TAG, "빈칸:" + userModels);
+                    adapter.notifyDataSetChanged();
+                }
+
 
             }
         });
@@ -81,40 +100,59 @@ public class NativeSearch extends AppCompatActivity {
 
 
 
+        //탭 선택했을 때
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                final int pos=tab.getPosition();  // 탭 위치 받아오기
-                Log.d(TAG,"pos:"+pos);
-                if(pos==0){
-                    editText.addTextChangedListener(new TextWatcher() {
-                        @Override
-
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                        }
-
-                        @Override
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {
-                            adapter.searchUser_name(s.toString());
-                            Log.d(TAG,"s:"+s);
-
-                        }
-
-                        @Override
-                        public void afterTextChanged(Editable s) {
+                pos= tab.getPosition();  // 탭 위치 받아오기
+                Log.d(TAG, "pos:" + pos);
+                //인기 탭
 
 
-                        }
-                    });
+                editText.addTextChangedListener(new TextWatcher() {
+                    @Override
 
-                    if(S!=null){
-                        adapter.searchUser_name(S);
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
                     }
 
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        adapter.searchUser_name(s.toString());
+
+                        Log.d(TAG, "s:" + s);
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        //빈칸일 시 유저 안뜨게
+                        if (editText.getText().toString().equals("")) {
+                            adapter.clear();
+                            Log.d(TAG, "빈칸:" + userModels);
+                            adapter.notifyDataSetChanged();
+                        }
+
+                    }
+                });
+
+                if (S != null) {
+
+                    adapter.searchUser_name(S);
                 }
+
+                //빈칸일 시 유저 안뜨게
+                if (editText.getText().toString().equals("")) {
+                    adapter.clear();
+                    Log.d(TAG, "빈칸:" + userModels);
+                    adapter.notifyDataSetChanged();
+                }
+
+                //계정 탭
                 if(pos==1){
 
+
+
                     editText.addTextChangedListener(new TextWatcher() {
                         @Override
 
@@ -133,14 +171,26 @@ public class NativeSearch extends AppCompatActivity {
                         public void afterTextChanged(Editable s) {
 
 
+
                         }
                     });
+
                     if(S!=null){
+
                         adapter.searchUser_name(S);
                     }
 
+                    //빈칸일 시 유저 안뜨게
+                    if (editText.getText().toString().equals("")) {
+                        adapter.clear();
+                        Log.d(TAG, "빈칸:" + userModels);
+                        adapter.notifyDataSetChanged();
+                    }
+
                 }
+                //지역 탭
                 if(pos==2){
+
 
                     editText.addTextChangedListener(new TextWatcher() {
                         @Override
@@ -167,8 +217,18 @@ public class NativeSearch extends AppCompatActivity {
                         adapter.searchUser_region(S);
                     }
 
+                    //빈칸일 시 유저 안뜨게
+                    if (editText.getText().toString().equals("")) {
+                        adapter.clear();
+                        Log.d(TAG, "빈칸:" + userModels);
+                        adapter.notifyDataSetChanged();
+                    }
+
                 }
+                //HashTag 탭
                 if(pos==3){
+
+
 
                     editText.addTextChangedListener(new TextWatcher() {
                         @Override
@@ -193,6 +253,12 @@ public class NativeSearch extends AppCompatActivity {
 
                     if(S!=null){
                         adapter.searchUser_hashtag(S);
+                    }
+                    //빈칸일 시 유저 안뜨게
+                    if (editText.getText().toString().equals("")) {
+                        adapter.clear();
+                        Log.d(TAG, "빈칸:" + userModels);
+                        adapter.notifyDataSetChanged();
                     }
 
                 }
@@ -224,6 +290,7 @@ public class NativeSearch extends AppCompatActivity {
 
 
 
+
     }
 
     class NativeSearchRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -234,8 +301,7 @@ public class NativeSearch extends AppCompatActivity {
 
 
 
-        List<UserModel> userModels;
-        List<UserModel> saveList;
+
         public NativeSearchRecyclerViewAdapter() {
 
 
@@ -244,50 +310,23 @@ public class NativeSearch extends AppCompatActivity {
             userModels = new ArrayList<>();
             saveList=new ArrayList<>();
 
-            db.collection("users")
-                    .whereEqualTo("user_kind", "현지인")
-                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable QuerySnapshot value,
-                                            @Nullable FirebaseFirestoreException e) {
-                            if (e != null) {
-                                Log.w(TAG, "Listen failed.", e);
-                                return;
-                            }
-
-                            userModels.clear();
-                            for (QueryDocumentSnapshot doc : value) {
-                                if (doc != null) {
+            Intent intent=getIntent();
 
 
-                                    userModels.add(doc.toObject(UserModel.class));
-                                    saveList.add(doc.toObject(UserModel.class));
-
-                                }
-                            }
-                            notifyDataSetChanged();
-                            Log.d(TAG, "Current data: " + userModels);
-                        }
-                    });
-
-        }
+            userModels=intent.getParcelableArrayListExtra("UserModels");
+            saveList=intent.getParcelableArrayListExtra("SaveList");
 
 
-        public void filter(String charText) {
-            charText = charText.toLowerCase(Locale.getDefault());
-            userModels.clear();
-            if (charText.length() == 0) {
-                userModels.addAll(saveList);
-            } else {
-                for (UserModel user : saveList) {
-                    String name = user.getName();
-                    if (name.toLowerCase().contains(charText)) {
-                        userModels.add(user);
-                    }
-                }
+
+            //초기에 유저 안뜨게
+            if(editText.getText().toString().length()==0){
+                userModels.clear();
             }
-            notifyDataSetChanged();
+
+
+
         }
+
 
 
 
@@ -295,12 +334,15 @@ public class NativeSearch extends AppCompatActivity {
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friend, parent, false);
 
-            return new CustomViewHolder(view);
+
+                return new CustomViewHolder(view);
+
 
         }
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+
             Integer bookmarks_number;
             //색 가져오기
             Integer Gold = ContextCompat.getColor(getApplicationContext(), R.color.Gold);
@@ -337,7 +379,7 @@ public class NativeSearch extends AppCompatActivity {
             }
             ((CustomViewHolder) holder).Nick_textView.setText(userModels.get(position).name);
             ((CustomViewHolder) holder).Region_textView.setText(userModels.get(position).region);
-            //((CustomViewHolder) holder).Hash_textView.setText(userModels.get(position).hash);
+            ((CustomViewHolder) holder).Hash_textView.setText(userModels.get(position).hashtag);
 
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -366,7 +408,9 @@ public class NativeSearch extends AppCompatActivity {
         }
 
 
+        //이름 검색 필터메서드
         public  void searchUser_name(String search){
+
 
             userModels.clear();
 
@@ -384,6 +428,7 @@ public class NativeSearch extends AppCompatActivity {
 
 
         }
+        //지역 검색 필터메서드
         public  void searchUser_region(String search){
 
             userModels.clear();
@@ -403,6 +448,7 @@ public class NativeSearch extends AppCompatActivity {
 
         }
 
+        //해시태그 검색 필터메서드
         public  void searchUser_hashtag(String search){
 
             userModels.clear();
@@ -422,6 +468,11 @@ public class NativeSearch extends AppCompatActivity {
 
         }
 
+        //유저 안뜨게 하는 메서드
+        public void clear(){
+            userModels.clear();
+            adapter.notifyDataSetChanged();
+        }
     }
 
 

@@ -527,6 +527,7 @@ public class MessageActivity extends AppCompatActivity {
 
                     //상대방이 보낸 메세지
                 }else
+
                 {
 
                 Glide.with(holder.itemView.getContext())

@@ -149,8 +149,9 @@ public class Setting_Fragment extends Fragment {
                                             .load(register_ImageURL)
                                             .apply(new RequestOptions().circleCrop())
                                             .into(ivUser);
-                                    nick_textview.setText(userModel.getName());
                                 }
+                                    nick_textview.setText(userModel.getName());
+
 
                             }
                         }
