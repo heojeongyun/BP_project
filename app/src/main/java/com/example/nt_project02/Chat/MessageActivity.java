@@ -3,6 +3,7 @@ package com.example.nt_project02.Chat;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
@@ -20,12 +21,16 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.nt_project02.Fragment.Chatting_Fragment;
 import com.example.nt_project02.GoogleMap_Fragment;
+import com.example.nt_project02.MainActivity;
+import com.example.nt_project02.NativeSearch;
 import com.example.nt_project02.Native_Register;
 import com.example.nt_project02.NotificationModel;
 import com.example.nt_project02.R;
@@ -99,9 +104,7 @@ public class MessageActivity extends AppCompatActivity {
 
     //지도 프래그먼트 선언
     private GoogleMap_Fragment googleMap_fragment;
-
-
-
+    private Chatting_Fragment Chatting_Fragment;
 
 
     @Override
@@ -115,9 +118,6 @@ public class MessageActivity extends AppCompatActivity {
 
         uid=FirebaseAuth.getInstance().getCurrentUser().getUid();//어플 현재 이용자 아이디
         destinationUid=data.getStringExtra("destination_Uid"); // 상대방 아이디
-
-
-
 
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -165,7 +165,8 @@ public class MessageActivity extends AppCompatActivity {
                  });
 
 
-             }else{
+             }
+             else{
 
                  ChatModel.Comment comment=new ChatModel.Comment();
                  comment.uid=uid;
@@ -193,7 +194,6 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.container,googleMap_fragment).commit();
-
             }
         });
 
@@ -546,6 +546,7 @@ public class MessageActivity extends AppCompatActivity {
                 }
 
             }else if(comments.get(position).IsImage){
+
                 //내가 보내 사진
                 ImageViewHolder imageViewHolder=((ImageViewHolder)holder);
                 imageViewHolder.textView_timestamp.setText(time);
@@ -690,10 +691,24 @@ public class MessageActivity extends AppCompatActivity {
 
         if(valueEventListener!=null) {
             databaseReference.removeEventListener(valueEventListener);
-
         }
         finish();
         overridePendingTransition(R.anim.fromleft,R.anim.toright);
+
+    }
+
+    private void MystartActivity(Class c){
+        Intent intent=new Intent(this,c);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+
+    }
+
+    public void replaseFragment(Fragment fragment, String tag){
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container,fragment,tag)
+                .addToBackStack(null)
+                .commit();
 
     }
 }

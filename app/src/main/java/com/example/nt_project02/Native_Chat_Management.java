@@ -1,6 +1,7 @@
 package com.example.nt_project02;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,8 +35,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -59,13 +62,12 @@ public class Native_Chat_Management extends AppCompatActivity {
     private FirebaseFirestore db;
     private DocumentReference destination_Ref;
     private DocumentReference Ref;
+    private String TAG="Native_Chat_Management";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_native__chat__management);
-
-
 
         adapter=new NativeChatManagementRecyclerViewAdapter();
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView_ncm);
@@ -104,52 +106,49 @@ public class Native_Chat_Management extends AppCompatActivity {
 
             db.collection("users")
                     .whereEqualTo("uid",uid)
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    userModel=document.toObject(UserModel.class);
-                                    requests_array=userModel.getRequests();
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot value,
+                                    @Nullable FirebaseFirestoreException e) {
+                    if (e != null) {
+      //                   Log.w(TAG, "Listen failed.", e);
+                        return;
+                    }
+                                for (QueryDocumentSnapshot document : value) {
+                                    userModel = document.toObject(UserModel.class);
+                                    requests_array = userModel.getRequests();
                                     //여행자가 요청한 요청 목록 적재
                                     Log.d("Requests", document.getId() + " => " + document.getData());
-
-                                    if(requests_array !=null) {
+                                    if (requests_array != null) {
                                         for (int i = 0; i < requests_array.size(); i++) {
                                             db.collection("users")
                                                     .whereEqualTo("uid", requests_array.get(i))
-                                                    .get()
-                                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
                                                         @Override
-                                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                            if (task.isSuccessful()) {
-                                                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                                                    userModels.add(document.toObject(UserModel.class));
-                                                                }
-                                                                notifyDataSetChanged();
-                                                            } else {
-
+                                                        public void onEvent(@Nullable QuerySnapshot value,
+                                                                            @Nullable FirebaseFirestoreException e) {
+                                                            if (e != null) {
+//                                                              Log.w(TAG, "Listen failed.", e);
+                                                                return;
                                                             }
+                                                            userModels.clear();
+                                                            for (QueryDocumentSnapshot document : value) {
+                                                                userModels.add(document.toObject(UserModel.class));
+                                                            }
+                                                            notifyDataSetChanged();
+
                                                         }
                                                     });
                                         }
                                     }
                                 }
-                            } else {
-                                Log.d("Requests", "Error getting documents: ", task.getException());
+
+
                             }
-                        }
+
                     });
 
             //startToast(userModel.getBookmarks().get(0));
-
-
-
-
-
-
-
 
 
 
@@ -167,6 +166,21 @@ public class Native_Chat_Management extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+
+            Intent data=getIntent();
+
+            // Firebase db로 부터 저장된 현지인의 정보들을 불러오는 작업
+
+            uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+            //문서 위치 선언
+            db=FirebaseFirestore.getInstance();
+            //현재 여행자 정보 파이어스토어 경로
+            Ref=db.collection("users").document(FirebaseAuth.getInstance().getUid());
+            //현재 현지인 정보 파이어스토어경로
+            destination_Ref=db.collection("users").document(userModels.get(position).getUid());
+
+
 
             if(userModels.get(position).imageurl != null) {
                 Glide.with
@@ -195,20 +209,29 @@ public class Native_Chat_Management extends AppCompatActivity {
                 }
             });
 
-//            ((CustomViewHolder) holder).accept_btn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    MystartActivity(MessageActivity.class);
-//                }
-//            });
-//
-//
-//            ((CustomViewHolder) holder).reject_btn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                }0
-//            });
+            ((CustomViewHolder) holder).accept_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) { // 수락 버튼 클릭시 1:1 대화창으로 이동
+                    Intent intent = new Intent(getApplicationContext(), MessageActivity.class);
+                    intent.putExtra("destination_Uid", requests_array.get(position));//누구랑 대화할지
+                    startActivity(intent);
+                    Ref.update("requests",FieldValue.arrayRemove(userModels.get(position).getUid())); // 현지인 관리목록에서 삭제
+                    destination_Ref.update("requests",FieldValue.arrayRemove(uid)); // 여행자 관리목록에서 삭제
+                }
+            });
+
+
+            ((CustomViewHolder) holder).reject_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                    Ref.update("requests",FieldValue.arrayRemove(userModels.get(position).getUid()));
+                    destination_Ref.update("requests",FieldValue.arrayRemove(uid));
+
+
+                }
+            });
 
         }
 

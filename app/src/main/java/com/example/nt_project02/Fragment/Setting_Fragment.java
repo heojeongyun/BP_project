@@ -118,8 +118,6 @@ public class Setting_Fragment extends Fragment {
                             return;
                         }
 
-
-
                         for (QueryDocumentSnapshot doc : value) {
                             if (doc != null) {
 

@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.nt_project02.Fragment.Chatting_Fragment;
@@ -38,6 +39,7 @@ import devlight.io.library.ntb.NavigationTabBar;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG="Main";
     ViewPager viewPager;
+    private Integer navigationTabBar_position;
 
 
     @Override
@@ -47,6 +49,11 @@ public class MainActivity extends AppCompatActivity {
 
         //파이어 베이스 유저 가져오기
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+
+
+
+
 
         //유저가 없다면 회원가입으로 돌아가게 하기
         if(user==null){

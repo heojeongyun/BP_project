@@ -188,15 +188,14 @@ public class Chatting_Fragment extends Fragment {
 
             // 일일이 챗방에 있는 유저를 체크
             for(String user:chatModels.get(position).users.keySet()){
-                if(!user.equals(uid)){//내가 아닌 사람을 뽑아옴
+
+                if(!user.equals(uid)) {//내가 아닌 사람을 뽑아옴
                     destinationUid = user;
-                }
-                if(!destinationUsers.contains(destinationUid)) {
+                    if (!destinationUsers.contains(destinationUid)) {
 
+                        destinationUsers.add(destinationUid);
 
-                    destinationUsers.add(destinationUid);
-
-
+                    }
                 }
             }
 
