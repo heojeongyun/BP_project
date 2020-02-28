@@ -13,7 +13,7 @@
         android:layout_marginTop="25dp"
         android:gravity="center_vertical"
         android:text="Chatting List"
-        android:textColor="#5DA4BE"
+        android:textColor="#4472C4"
         android:textSize="35dp"
         android:textStyle="bold" />
 

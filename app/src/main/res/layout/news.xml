@@ -14,7 +14,7 @@
         android:layout_marginTop="25dp"
         android:gravity="center_vertical"
         android:text="Home"
-        android:textColor="#5DA4BE"
+        android:textColor="#4472C4"
         android:textSize="35dp"
         android:textStyle="bold"/>
     <!--test-->
@@ -43,7 +43,8 @@
                 android:layout_weight="1"
                 android:text="데이트코스"
                 android:background="@drawable/btn_bg"
-                android:layout_marginRight="3dp"/>
+                android:layout_marginRight="3dp"
+                />
 
             <Button
                 android:id="@+id/자연관광"
@@ -154,7 +155,7 @@
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#00BCD4"
+                android:background="#4472C4"
                 />
 
         </LinearLayout>

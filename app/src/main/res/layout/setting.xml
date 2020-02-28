@@ -12,8 +12,8 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="25dp"
         android:gravity="center_vertical"
-        android:text="Setting"
-        android:textColor="#5DA4BE"
+        android:text="설정"
+        android:textColor="#4472C4"
         android:textSize="35dp"
         android:textStyle="bold" />
 
@@ -46,45 +46,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             android:orientation="horizontal"
             >
 
             <Button
-                android:id="@+id/activity_setting_TravelerManager"
+                android:id="@+id/activity_setting_profileManger"
                 android:layout_width="120dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="#00ff0000"
-                android:text="여행자 관리"
-                android:textColor="#5DA4BE"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/activity_setting_ProfileManager"
-                android:layout_width="120dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="#00ff0000"
-                android:text="내 프로필 관리"
-                android:textColor="#5DA4BE"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-
-
-            <Button
-                android:id="@+id/native_register_Button"
-                android:layout_width="120dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="#00ff0000"
-                android:text="현지인 등록 신청"
-                android:textColor="#5DA4BE"
-                android:textSize="20dp"
+                android:text="프로필 관리"
+                android:textColor="#4472C4"
+                android:textSize="15dp"
                 android:textStyle="bold" />
 
             <Button
@@ -94,12 +69,24 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="#00ff0000"
-                android:textColor="#5DA4BE"
-                android:textSize="20dp"
+                android:textColor="#4472C4"
+                android:textSize="15dp"
                 android:textStyle="bold"
                 android:text="즐겨찾기"/>
 
 
+
+            <Button
+                android:id="@+id/native_register_Button"
+                android:layout_width="120dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="#00ff0000"
+                android:text="현지인 등록"
+                android:textColor="#4472C4"
+                android:textSize="15dp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/LogoutButton"
@@ -109,11 +96,23 @@
                 android:layout_weight="1"
                 android:background="#00ff0000"
                 android:text="로그아웃"
-                android:textColor="#5DA4BE"
-                android:textSize="20dp"
+                android:textColor="#4472C4"
+                android:textSize="15dp"
                 android:textStyle="bold" />
 
+
         </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
     </LinearLayout>
 
 

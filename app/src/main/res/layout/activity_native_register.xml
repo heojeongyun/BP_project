@@ -15,7 +15,7 @@
             android:layout_marginTop="25dp"
             android:gravity="center_vertical"
             android:text="현지인 등록 신청"
-            android:textColor="#5DA4BE"
+            android:textColor="#4472C4"
             android:textSize="35dp"
             android:textStyle="bold" />
         <TextView
@@ -26,7 +26,7 @@
             android:layout_marginTop="0dp"
             android:gravity="center_vertical"
             android:text="현지인은 여행자들에게 정보를 제공하는 역할을 합니다. 여행자를 위해 최선을 다해주세요!"
-            android:textColor="#5DA4BE"
+            android:textColor="#4472C4"
             android:textSize="15dp"
             android:textStyle="bold" />
     </LinearLayout>

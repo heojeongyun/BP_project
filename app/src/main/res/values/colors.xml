@@ -3,8 +3,8 @@
     <color name="Bronze">#c49c48</color>
     <color name="Gold">#ffd700</color>
     <color name="Silver">#c0c0c0</color>
-    <color name="colorPrimary">#5DA4BE</color>
-    <color name="colorPrimaryDark">#A1CDE1</color>
+    <color name="colorPrimary">#4472C4</color>
+    <color name="colorPrimaryDark">#4472C4</color>
     <color name="colorAccent">#3F51B5</color>
     <color name="statusBarColor">#A1CDE1</color>
     <color name="button">#7C5DA4BE</color>

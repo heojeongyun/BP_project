@@ -14,8 +14,6 @@
         android:layout_weight="0.5"
         android:orientation="horizontal">
 
-
-
         <LinearLayout
             android:layout_width="10dp"
             android:layout_height="match_parent"
@@ -25,8 +23,8 @@
 
             <CheckBox
                 android:id="@+id/activity_profile_BookMark"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_gravity="right"
                 android:background="@drawable/btn_star"
                 android:button="@null" />
@@ -37,14 +35,15 @@
                 android:layout_height="wrap_content"
                 android:text="별명"
                 android:textAlignment="center"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:layout_marginTop="25dp"/>
 
             <ImageView
                 android:id="@+id/profile_Image"
                 android:layout_width="match_parent"
-                android:layout_height="106dp"
-                android:layout_marginTop="30dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="20dp"
                 android:src="@drawable/user"/>
             <!--app:srcCompat="@drawable/travel"--> />
 
@@ -52,14 +51,14 @@
 
             <Button
                 android:id="@+id/profile_chat_button"
-                android:layout_width="100dp"
+                android:layout_width="115dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="23dp"
                 android:background="@drawable/button_selector"
-                android:text="매칭요청"
+                android:text="매칭 요청"
                 android:textColor="@android:color/background_light"
-                android:textSize="17dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
 
@@ -81,14 +80,22 @@
             android:layout_height="wrap_content"
             android:id="@+id/tab_layout">
 
-            <com.google.android.material.tabs.TabItem android:text="소개글"
+            <com.google.android.material.tabs.TabItem
+                android:text="소개글"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
                 />
 
-            <com.google.android.material.tabs.TabItem android:text="추천코스" />
+            <com.google.android.material.tabs.TabItem
+                android:text="추천코스"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
             <com.google.android.material.tabs.TabItem
                 android:text="Review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 />
         </com.google.android.material.tabs.TabLayout>
 

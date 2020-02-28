@@ -17,7 +17,7 @@
             android:layout_marginTop="25dp"
             android:gravity="center_vertical"
             android:text="Welcome to Naravel"
-            android:textColor="#5DA4BE"
+            android:textColor="#4472C4"
             android:textSize="35dp"
             android:textStyle="bold" />
 
@@ -29,7 +29,7 @@
             android:layout_marginTop="0dp"
             android:gravity="center_vertical"
             android:text="TIP : Narabel에서 현지인으로 등록해 내가 사는 지역의 가이드가 되어보세요!"
-            android:textColor="#5DA4BE"
+            android:textColor="#4472C4"
             android:textSize="15dp"
             android:textStyle="bold" />
 

@@ -17,7 +17,7 @@
             android:layout_marginTop="50dp"
             android:gravity="center_vertical"
             android:text="이메일로 시작하기"
-            android:textColor="#5DA4BE"
+            android:textColor="#4472C4"
             android:textSize="35dp"
             android:textStyle="bold" />
 

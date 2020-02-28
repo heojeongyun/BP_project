@@ -146,7 +146,7 @@ public class BookmarkActivity extends AppCompatActivity {
         public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
 
-            if(userModel.getImageurl()!=null) {
+            if(userModels.get(position).imageurl!=null) {
                 Glide.with
                         (holder.itemView.getContext())
                         .load(userModels.get(position).imageurl)

@@ -22,7 +22,7 @@
         android:layout_weight="0.3"
         android:textSize="16dp"
         android:id="@+id/priceInfoTextView1"
-        android:text="광안리 신라횟집 물회 : 15,000원 \n대연동 유일한식탁 치즈돈까지 : 11,000원 \n부산대 카메:7,900원"
+        android:text="광안리 신라횟집 물회 : 15,000원 \n대연동 유일한식탁 치즈돈까스 : 11,000원 \n부산대 카메:7,900원"
         android:layout_marginLeft="20dp"/>
 
     <TextView
