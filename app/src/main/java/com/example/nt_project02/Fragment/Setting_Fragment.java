@@ -26,6 +26,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.nt_project02.BookmarkActivity;
 import com.example.nt_project02.Chat.UserModel;
 import com.example.nt_project02.LoginActivity;
+import com.example.nt_project02.Native_Profile.Profile;
 import com.example.nt_project02.Native_Register;
 import com.example.nt_project02.R;
 import com.example.nt_project02.Sign_UpActivity;
@@ -65,6 +66,8 @@ public class Setting_Fragment extends Fragment {
     private String TAG = "Setting_Fragment";
     private String user_kind;
     private Button NativeRegisterButton;
+    private TextView profile_textview;
+    private ImageView bluepeopleImageView;
 
 
     @Override
@@ -74,6 +77,9 @@ public class Setting_Fragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.setting, container, false);
         // setting.xml의 nick_textview 객체 생성
         nick_textview = (TextView) rootView.findViewById(R.id.nick_TextView);
+        profile_textview=(TextView) rootView.findViewById(R.id.fragment_setting_Profile);
+        bluepeopleImageView=(ImageView) rootView.findViewById(R.id.fragment_setting_BluePeopleImageView);
+
 
         // Firebase db로 부터 사용자 정보 불러오기
         /*db.collection("users")
@@ -105,7 +111,7 @@ public class Setting_Fragment extends Fragment {
                     }
                 });*/
 
-        NativeRegisterButton = (Button) rootView.findViewById(R.id.native_register_Button);
+        NativeRegisterButton = (Button) rootView.findViewById(R.id.fragment_setting_native_register_Button);
 
         db.collection("users")
                 .whereEqualTo("uid", user_uid)
@@ -126,9 +132,24 @@ public class Setting_Fragment extends Fragment {
                                 userModel = doc.toObject(UserModel.class);
                                 user_kind = userModel.getUser_kind();
                                 if (user_kind != null) {
-                                    if (user_kind.equals("현지인")) { //현지인이면 등록 버튼 안 보이게
+                                    if (user_kind.equals("현지인")) {
+                                        //현지인이면 등록 버튼 안 보이게
                                         NativeRegisterButton.setVisibility(View.GONE);
+                                        //프로필 보기 클릭 시 본인 프로필창으로 이
+                                        profile_textview.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                Intent intent = new Intent(getActivity(), Profile.class);
+                                                intent.putExtra("destination_UserModels", userModel);
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                startActivity(intent);
+                                            }
+                                        });
+
                                     } else {
+                                        profile_textview.setText("여행자");
+                                        //로고 안보이게
+                                        bluepeopleImageView.setVisibility(View.GONE);
                                         NativeRegisterButton.setOnClickListener(new View.OnClickListener() { //현지인 등록 버튼
                                             @Override
                                             public void onClick(View v) {
@@ -136,6 +157,7 @@ public class Setting_Fragment extends Fragment {
                                                 //intent.putExtra("user_kind", "여행자");
                                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                 startActivity(intent);
+
 
                                             }
                                         });
@@ -208,7 +230,7 @@ public class Setting_Fragment extends Fragment {
             }
         });*/
 
-        Button LogoutButton = (Button) rootView.findViewById(R.id.LogoutButton);
+        Button LogoutButton = (Button) rootView.findViewById(R.id.fragment_setting_LogoutButton);
         //LogoutButton 클릭시 LoginActivity 화면으로 넘어가게 하는 부분
         LogoutButton.setOnClickListener(new View.OnClickListener() {
             @Override

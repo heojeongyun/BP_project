@@ -218,10 +218,13 @@ public class Chatting_Fragment extends Fragment {
 
                                     DocumentSnapshot document = task.getResult();
                                     UserModel userModel = document.toObject(UserModel.class);
-                                    Glide.with(customViewHolder.itemView.getContext())
+
+                                    if(userModel.imageurl!=null) {
+                                        Glide.with(customViewHolder.itemView.getContext())
                                                 .load(userModel.getImageurl())//userModel에서 이미지를 가져온다
                                                 .apply(new RequestOptions().circleCrop())
                                                 .into(customViewHolder.imageView);
+                                    }
                                     customViewHolder.textView_title.setText(userModel.getName());//채팅방 타이틀을 상대방 이름으로
 
 

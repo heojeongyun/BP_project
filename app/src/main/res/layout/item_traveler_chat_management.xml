@@ -39,7 +39,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:background="@drawable/button_selector"
-            android:text="요청중"
+            android:text="요청취소"
             android:textColor="@android:color/background_light"
             android:textSize="17dp"
             android:textStyle="bold" />

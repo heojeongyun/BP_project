@@ -18,87 +18,168 @@
         android:textStyle="bold" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        >
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/ivUser"
-            android:layout_width="170dp"
-            android:layout_height="150dp"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
             android:src="@drawable/user"
             android:layout_gravity="center"
             />
-
-        <TextView
-            android:id="@+id/nick_TextView"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="별명"
-            android:textSize="25dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:textStyle="bold"
-            />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:id="@+id/nick_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="별명"
+                android:textSize="20dp"
+                android:layout_gravity="left"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/fragment_setting_Profile"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="프로필 보기"
+                android:textSize="18dp"
+                android:layout_gravity="left"
+                android:layout_marginTop="2dp"
+                android:textColor="#4472C4"
+                />
+
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/fragment_setting_BluePeopleImageView"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:src="@drawable/bluepeople"
+            android:layout_marginLeft="50dp"/>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="5dp">
+
+    </LinearLayout>
+
+
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:layout_margin="20dp"
             >
 
             <Button
                 android:id="@+id/activity_setting_profileManger"
-                android:layout_width="120dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="left"
                 android:layout_weight="1"
                 android:background="#00ff0000"
                 android:text="프로필 관리"
-                android:textColor="#4472C4"
-                android:textSize="15dp"
-                android:textStyle="bold" />
+                android:textColor="#000000"
+                android:textAlignment="viewStart"
+                android:textSize="20dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@android:color/darker_gray"
+                android:layout_marginTop="10dp">
+
+            </LinearLayout>
+
 
             <Button
                 android:id="@+id/fragment_setting_BookmarkButton"
-                android:layout_width="120dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="left"
                 android:layout_weight="1"
                 android:background="#00ff0000"
-                android:textColor="#4472C4"
-                android:textSize="15dp"
-                android:textStyle="bold"
-                android:text="즐겨찾기"/>
+                android:text="즐겨찾기"
+                android:textColor="#000000"
+                android:textAlignment="viewStart"
+                android:textSize="20dp"
+                 />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@android:color/darker_gray"
+                android:layout_marginTop="10dp">
 
+            </LinearLayout>
 
             <Button
-                android:id="@+id/native_register_Button"
-                android:layout_width="120dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
+                android:id="@+id/fragment_setting_native_register_Button"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="left"
                 android:layout_weight="1"
                 android:background="#00ff0000"
                 android:text="현지인 등록"
-                android:textColor="#4472C4"
-                android:textSize="15dp"
-                android:textStyle="bold" />
+                android:textColor="#000000"
+                android:textAlignment="viewStart"
+                android:textSize="20dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@android:color/darker_gray"
+                android:layout_marginTop="10dp">
+
+            </LinearLayout>
+
 
             <Button
-                android:id="@+id/LogoutButton"
-                android:layout_width="120dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
+                android:id="@+id/fragment_setting_LogoutButton"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="left"
                 android:layout_weight="1"
                 android:background="#00ff0000"
                 android:text="로그아웃"
-                android:textColor="#4472C4"
-                android:textSize="15dp"
-                android:textStyle="bold" />
+                android:textColor="#000000"
+                android:textAlignment="viewStart"
+                android:textSize="20dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@android:color/darker_gray"
+                android:layout_marginTop="10dp">
+
+            </LinearLayout>
+
+
 
 
         </LinearLayout>
@@ -113,7 +194,7 @@
 
 
 
-    </LinearLayout>
+
 
 
 </LinearLayout>

@@ -6,12 +6,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +26,8 @@ import com.example.nt_project02.Native_Profile.Profile;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -36,6 +41,8 @@ public class BookmarkActivity extends AppCompatActivity {
     private UserModel userModel;
     private List<String> bookmarks_array;
     private FirebaseFirestore db;
+    private DocumentReference destination_Ref;
+    private DocumentReference Ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +143,7 @@ public class BookmarkActivity extends AppCompatActivity {
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friend, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bookmark_item_friend, parent, false);
 
             return new CustomViewHolder(view);
 
@@ -144,6 +151,10 @@ public class BookmarkActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+
+            //현재 여행자 정보 파이어스토어 경로
+            Ref=db.collection("users").document(FirebaseAuth.getInstance().getUid());
+
 
 
             if(userModels.get(position).imageurl!=null) {
@@ -176,6 +187,37 @@ public class BookmarkActivity extends AppCompatActivity {
                 }
             });
 
+            ((CustomViewHolder)holder).DeleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    //알림메세지
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(BookmarkActivity.this);
+                    builder.setTitle("요청취소");
+                    builder.setMessage("해당 현지인 매칭요청을 취하시겠습니까?");
+                    builder.setPositiveButton("예",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //현재 현지인 정보 파이어스토어경로
+                                    destination_Ref=db.collection("users").document(userModels.get(position).getUid());
+
+                                    //즐겨찾기 리스트 항목 제거
+                                    Ref.update("bookmarks",FieldValue.arrayRemove(userModels.get(position).getUid()));
+                                    destination_Ref.update("bookmarks_number", FieldValue.increment(-1));//현지인 즐겨찾기 수
+                                    userModels.remove(position);
+                                    notifyDataSetChanged();
+                                }
+                            });
+                    builder.setNegativeButton("아니오",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                    builder.show();
+                }
+            });
+
         }
 
         @Override
@@ -197,6 +239,7 @@ public class BookmarkActivity extends AppCompatActivity {
         public TextView Nick_textView;
         public TextView Region_textView;
         public TextView Hash_textView;
+        public Button DeleteButton;
 
         public CustomViewHolder(View view) {
 
@@ -205,6 +248,7 @@ public class BookmarkActivity extends AppCompatActivity {
             Nick_textView = (TextView) view.findViewById(R.id.frienditem_nick);
             Region_textView=(TextView) view.findViewById(R.id.frienditem_region);
             Hash_textView=(TextView) view.findViewById(R.id.frienditem_hash);
+            DeleteButton=(Button) view.findViewById(R.id.frienditem_DeleteButton);
 
         }
     }

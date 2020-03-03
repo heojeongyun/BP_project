@@ -175,6 +175,7 @@ public class Native_Chat_Management extends AppCompatActivity {
 
             //문서 위치 선언
             db=FirebaseFirestore.getInstance();
+
             //현재 여행자 정보 파이어스토어 경로
             Ref=db.collection("users").document(FirebaseAuth.getInstance().getUid());
             //현재 현지인 정보 파이어스토어경로

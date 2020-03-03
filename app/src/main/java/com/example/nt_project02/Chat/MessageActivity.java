@@ -106,6 +106,8 @@ public class MessageActivity extends AppCompatActivity {
     private GoogleMap_Fragment googleMap_fragment;
     private Chatting_Fragment Chatting_Fragment;
 
+    private String TAG="MessageActivity";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +125,10 @@ public class MessageActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         frameLayout=(FrameLayout)findViewById(R.id.container);
 
+        Log.d(TAG,"deuid:"+destinationUid);
+        Log.d(TAG,"uid:"+uid);
+
+
 
 
 
@@ -134,6 +140,10 @@ public class MessageActivity extends AppCompatActivity {
         button=(Button)findViewById(R.id.messageActivity_Button);
         editText=(EditText)findViewById(R.id.messageActivity_editText);
         Image_Button=(Button)findViewById(R.id.messageActivity_picture);
+
+
+
+
 
         Image_Button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,12 +191,14 @@ public class MessageActivity extends AppCompatActivity {
 
                      }
                  });
+
              }
 
 
 
             }
         });
+
 
         Button activtiy_message_MapButton=(Button)findViewById(R.id.activity_message_MapButton);
 
@@ -197,7 +209,7 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
-        checkChatRoom();
+
 
 
 

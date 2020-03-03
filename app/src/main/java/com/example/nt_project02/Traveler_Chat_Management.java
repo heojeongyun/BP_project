@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +25,8 @@ import com.example.nt_project02.Native_Profile.Profile;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -36,6 +40,10 @@ public class Traveler_Chat_Management extends AppCompatActivity {
     private UserModel userModel;
     private List<String> requests_array;
     private FirebaseFirestore db;
+    private DocumentReference destination_Ref;
+    private DocumentReference Ref;
+    private String TAG="Travele_Chat_Management";
+    private String destinationUid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +138,7 @@ public class Traveler_Chat_Management extends AppCompatActivity {
 
 
 
+
         }
 
         @Override
@@ -143,6 +152,20 @@ public class Traveler_Chat_Management extends AppCompatActivity {
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
+
+            Log.d(TAG,"usermodel:"+userModels.get(position));
+
+
+            //현재 여행자 정보 파이어스토어 경로
+
+            Ref=db.collection("users").document(FirebaseAuth.getInstance().getUid());
+
+            Log.d(TAG,"def:"+userModels.get(position).getUid());
+
+
+
+
+
             if(userModels.get(position).imageurl != null) {
                 Glide.with
                         (holder.itemView.getContext())
@@ -152,14 +175,45 @@ public class Traveler_Chat_Management extends AppCompatActivity {
             }
             ((CustomViewHolder) holder).Nick_textView.setText(userModels.get(position).name);
 
+            ((CustomViewHolder)holder).request_cancel_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
 
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(Traveler_Chat_Management.this);
+                    builder.setTitle("요청취소");
+                    builder.setMessage("해당 현지인 매칭요청을 취하시겠습니까?");
+                    builder.setPositiveButton("예",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //현재 현지인 정보 파이어스토어경로
+                                    destination_Ref=db.collection("users").document(userModels.get(position).getUid());
+                                    Ref.update("requests", FieldValue.arrayRemove(userModels.get(position).getUid())); // 현지인 관리목록에서 삭제
+                                    destination_Ref.update("requests",FieldValue.arrayRemove(uid));// 여행자 관리목록에서 삭제
+                                    userModels.remove(position);
+                                    notifyDataSetChanged();
+                                }
+                            });
+                    builder.setNegativeButton("아니오",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                    builder.show();
+
+
+                }
+            });
+
+
+
+            /*holder.itemView.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
                     if (position != RecyclerView.NO_POSITION) {
-                        /*Toast.makeText(getContext(),position+"",Toast.LENGTH_LONG).show();*/
+                        *//*Toast.makeText(getContext(),position+"",Toast.LENGTH_LONG).show();*//*
                         Intent intent = new Intent(getApplicationContext(), Traveler_Chat_Management.class);
                         intent.putExtra("destination_UserModels", userModels.get(position));
                         startActivity(intent);
@@ -168,7 +222,7 @@ public class Traveler_Chat_Management extends AppCompatActivity {
                     }
 
                 }
-            });
+            });*/
 
         }
 
@@ -189,14 +243,14 @@ public class Traveler_Chat_Management extends AppCompatActivity {
 
         public ImageView imageView;
         public TextView Nick_textView;
-        public Button request_btn;
+        public Button request_cancel_btn;
 
         public CustomViewHolder(View view) {
 
             super(view);
             imageView = (ImageView) view.findViewById(R.id.activity_tcm_image);
             Nick_textView = (TextView) view.findViewById(R.id.activity_tcm_nickname);
-            request_btn = (Button) view.findViewById(R.id.activity_tcm_btn);
+            request_cancel_btn = (Button) view.findViewById(R.id.activity_tcm_btn);
 
         }
     }
