@@ -210,6 +210,9 @@ public class MessageActivity extends AppCompatActivity {
         });
 
 
+        checkChatRoom();
+
+
 
 
 
@@ -539,13 +542,14 @@ public class MessageActivity extends AppCompatActivity {
 
                     //상대방이 보낸 메세지
                 }else
-
                 {
+                    if(destinationUserModel.imageurl !=null){
+                        Glide.with(holder.itemView.getContext())
+                                .load(destinationUserModel.imageurl)
+                                .apply(new RequestOptions().circleCrop())
+                                .into(messageViewHolder.imageView_profile);
+                    }
 
-                Glide.with(holder.itemView.getContext())
-                        .load(destinationUserModel.imageurl)
-                        .apply(new RequestOptions().circleCrop())
-                        .into(messageViewHolder.imageView_profile);
                     messageViewHolder.textView_name.setText(destinationUserModel.getName());
                     messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
                     messageViewHolder.textView_message.setBackgroundResource(R.drawable.lastleftbubble);
@@ -578,10 +582,12 @@ public class MessageActivity extends AppCompatActivity {
                 }else
                 {
 
-                Glide.with(holder.itemView.getContext())
-                        .load(destinationUserModel.imageurl)
-                        .apply(new RequestOptions().circleCrop())
-                        .into(imageViewHolder.imageView_profile);
+                    if(destinationUserModel.imageurl !=null){
+                        Glide.with(holder.itemView.getContext())
+                                .load(destinationUserModel.imageurl)
+                                .apply(new RequestOptions().circleCrop())
+                                .into(imageViewHolder.imageView_profile);
+                    }
                     imageViewHolder.textView_name.setText(destinationUserModel.getName());
                     imageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
                     imageViewHolder.linearLayout_main.setGravity(Gravity.LEFT);
