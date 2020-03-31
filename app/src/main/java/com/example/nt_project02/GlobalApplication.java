@@ -40,8 +40,7 @@ public class GlobalApplication extends Application {
         instance = null;
     }
 
-    //브랜치
-    //브랜치브랜치브랜치
+
 
 }
 
