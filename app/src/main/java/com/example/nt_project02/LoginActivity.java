@@ -1,9 +1,11 @@
 package com.example.nt_project02;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,16 +20,39 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.kakao.auth.ISessionCallback;
+import com.kakao.auth.Session;
+import com.kakao.usermgmt.LoginButton;
+import com.kakao.util.exception.KakaoException;
+import com.kakao.util.helper.log.Logger;
 
 public class LoginActivity extends AppCompatActivity {
+    private Button custom_login;
+    private LoginButton kakao_login;
+    private Context mContext;
 
 
     private FirebaseAuth mAuth;
+    private SessionCallback callback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        mContext = LoginActivity.this;
+
+        callback = new SessionCallback();
+        Session.getCurrentSession().addCallback(callback);
+        Session.getCurrentSession().checkAndImplicitOpen();
+
+        custom_login = (Button) findViewById(R.id.activity_login_customkakaologin);
+        custom_login.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                kakao_login.performClick();
+            }
+        });
+        kakao_login = (LoginButton) findViewById(R.id.activity_login_kakaologin);
 
         // 초기화 Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -39,6 +64,35 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.activity_login_TemporaryTravelerButton).setOnClickListener(onClickListener);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
+            return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Session.getCurrentSession().removeCallback(callback);
+    }
+
+    private class SessionCallback implements ISessionCallback {
+
+        @Override
+        public void onSessionOpened() {
+            /*            redirectSignupActivity();*/
+        }
+
+        @Override
+        public void onSessionOpenFailed(KakaoException exception) {
+            if (exception != null) {
+                Logger.e(exception);
+            }
+        }
+    }
+
     public void onBackPressed() {
         super.onBackPressed();
         moveTaskToBack(true);
@@ -46,6 +100,12 @@ public class LoginActivity extends AppCompatActivity {
         System.exit(1);
     }
 
+
+/*    public void redirectSignupActivity() {
+        final Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }*/
 
     View.OnClickListener onClickListener =   new View.OnClickListener() {
         @Override
@@ -74,6 +134,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         }
+
 
 
     };
@@ -319,4 +380,6 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
+
+
 }
