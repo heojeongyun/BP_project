@@ -27,7 +27,6 @@ import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
 
 public class LoginActivity extends AppCompatActivity {
-    private Button custom_login;
     private LoginButton kakao_login;
     private Context mContext;
 
@@ -44,14 +43,6 @@ public class LoginActivity extends AppCompatActivity {
         callback = new SessionCallback();
         Session.getCurrentSession().addCallback(callback);
         Session.getCurrentSession().checkAndImplicitOpen();
-
-        custom_login = (Button) findViewById(R.id.activity_login_customkakaologin);
-        custom_login.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                kakao_login.performClick();
-            }
-        });
         kakao_login = (LoginButton) findViewById(R.id.activity_login_kakaologin);
 
         // 초기화 Firebase Auth
@@ -83,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void onSessionOpened() {
             /*            redirectSignupActivity();*/
+            Log.i("KAKAO_SESSION", "로그인 성공");
         }
 
         @Override
@@ -128,6 +120,10 @@ public class LoginActivity extends AppCompatActivity {
 
                 case R.id.activity_login_TemporaryTravelerButton:
                     Temporary_traveler_login();
+                    break;
+
+                case R.id.activity_login_kakaologin:
+                    login();
                     break;
 
             }

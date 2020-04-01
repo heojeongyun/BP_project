@@ -89,7 +89,7 @@
 
     </LinearLayout>
 
-    <Button
+<!--    <Button
         android:id="@+id/activity_login_customkakaologin"
         android:layout_width="360dp"
         android:layout_gravity="center"
@@ -99,13 +99,14 @@
         android:text="카카오톡으로 로그인"
         android:textColor="@android:color/background_light"
         android:textSize="21dp"
-        android:textStyle="normal" />
+        android:textStyle="normal" />-->
 
     <com.kakao.usermgmt.LoginButton
         android:id="@+id/activity_login_kakaologin"
         android:layout_width="360dp"
+        android:layout_gravity="center"
         android:layout_height="wrap_content"
-        android:visibility="gone"/>
+      />
 
     <Button
         android:id="@+id/activity_login_TemporaryNativeButton"
