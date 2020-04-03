@@ -316,6 +316,9 @@ public class NativeSearch extends AppCompatActivity {
             userModels=intent.getParcelableArrayListExtra("UserModels");
             saveList=intent.getParcelableArrayListExtra("SaveList");
 
+            Log.d(TAG,"userModels:"+userModels.size());
+            Log.d(TAG,"saveList:"+saveList.size());
+
 
 
             //초기에 유저 안뜨게
