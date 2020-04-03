@@ -185,6 +185,7 @@ public class PeopleFragment extends Fragment {
                             }
 
                             userModels.clear();
+                            saveList.clear();  //파이어 스토어 데이터 변경 시 중복으로 쌓이는 데이터 방지
                             for (QueryDocumentSnapshot doc : value) {
                                 if (doc != null) {
 
@@ -202,7 +203,8 @@ public class PeopleFragment extends Fragment {
 
 
 
-                            Log.d(TAG, "Current data: " + userModels);
+                            Log.d(TAG, "Current data: " + userModels.size());
+                            Log.d(TAG, "Current data: " + saveList.size());
                         }
 
                     });
