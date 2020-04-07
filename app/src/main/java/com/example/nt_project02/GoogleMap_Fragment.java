@@ -1,49 +1,63 @@
 package com.example.nt_project02;
 
-        import android.Manifest;
-        import android.app.AlertDialog;
-        import android.content.Context;
-        import android.content.DialogInterface;
-        import android.content.Intent;
-        import android.content.pm.PackageManager;
-        import android.location.Location;
-        import android.location.LocationListener;
-        import android.location.LocationManager;
-        import android.media.audiofx.PresetReverb;
-        import android.net.Uri;
-        import android.os.Build;
-        import android.os.Bundle;
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.media.audiofx.PresetReverb;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
 
-        import androidx.annotation.NonNull;
-        import androidx.annotation.Nullable;
-        import androidx.core.app.ActivityCompat;
-        import androidx.fragment.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
-        import android.provider.Settings;
-        import android.util.Log;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
+import android.provider.Settings;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
-        import com.google.android.gms.common.ConnectionResult;
-        import com.google.android.gms.common.api.GoogleApiClient;
-        import com.google.android.gms.common.api.Status;
-        import com.google.android.gms.location.LocationRequest;
-        import com.google.android.gms.location.LocationServices;
-        import com.google.android.gms.location.places.Place;
-        import com.google.android.gms.location.places.Places;
-        import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
-        import com.google.android.gms.location.places.ui.PlaceSelectionListener;
-        import com.google.android.gms.maps.CameraUpdate;
-        import com.google.android.gms.maps.CameraUpdateFactory;
-        import com.google.android.gms.maps.GoogleMap;
-        import com.google.android.gms.maps.MapView;
-        import com.google.android.gms.maps.MapsInitializer;
-        import com.google.android.gms.maps.OnMapReadyCallback;
-        import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-        import com.google.android.gms.maps.model.LatLng;
-        import com.google.android.gms.maps.model.Marker;
-        import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
 
 
 public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -55,12 +69,15 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION=2002;
     private static final int UPDATE_INTERVAL_MS=15000;
     private static final int FASTEST_UPDATE_INTERVAL_MS=15000;
+    private static final int AUTOCOMPLETE_REQUEST_CODE =1 ;
 
-    private GoogleMap googleMap=null;
+    private GoogleMap mMap=null;
     private MapView mapView = null;
     private GoogleApiClient googleApiClient=null;
     private Marker currentMarker=null;
     private LatLng s;
+    private Place place;
+    private Location location=new Location("");
 
 
 
@@ -91,9 +108,10 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
             markerOptions.snippet(markerSnippet);
             markerOptions.draggable(true);
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-            currentMarker=this.googleMap.addMarker(markerOptions);
+            currentMarker=mMap.addMarker(markerOptions);
 
-            this.googleMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
             return;
         }
     }
@@ -115,28 +133,36 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
         mapView = (MapView)layout.findViewById(R.id.map);
         mapView.getMapAsync(this);
 
-        PlaceAutocompleteFragment autocompleteFragment=(PlaceAutocompleteFragment)
-                getActivity().getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+        Places.initialize(getContext(), "AIzaSyA7YlrC4J7fuD4VCTkCNgoQzg8zTVJytsg");
+        PlacesClient placesClient = Places.createClient(getContext());
 
-        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+        Button button=(Button) layout.findViewById(R.id.button);
+
+
+
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onPlaceSelected(Place place) {
-                /*Location location= new Location("");
-                location.setLatitude(place.getLatLng().latitude);
-                location.setLongitude(place.getLatLng().longitude);
+            public void onClick(View v) {
 
-                setCurrentLocation(location, place.getName().toString(),place.getAddress().toString());*/
-                s=place.getLatLng();
+                if (!Places.isInitialized()) {
+                    Places.initialize(getContext(), "AIzaSyA7YlrC4J7fuD4VCTkCNgoQzg8zTVJytsg");
+                }
 
 
 
-            }
+                // Set the fields to specify which types of place data to return.
+                List<Place.Field> fields = Arrays.asList(Place.Field.LAT_LNG, Place.Field.NAME, Place.Field.ADDRESS,Place.Field.ID);
 
-            @Override
-            public void onError(Status status) {
-                Log.i(TAG,"An error occurred:"+status);
+                // Start the autocomplete intent.
+                Intent intent = new Autocomplete.IntentBuilder(
+                        AutocompleteActivityMode.FULLSCREEN, fields)
+                        .build(getContext());
+                startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
+
             }
         });
+
+
 
 
         return layout;
@@ -201,40 +227,55 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+
+                place = Autocomplete.getPlaceFromIntent(data);
+
+
+                location.setLatitude(place.getLatLng().latitude);
+                location.setLongitude(place.getLatLng().longitude);
+                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId()+ ", "+place.getLatLng());
 
 
 
-    private void buildGoogleApiClient(){
-        googleApiClient =new GoogleApiClient.Builder(getActivity())
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .addApi(Places.GEO_DATA_API)
-                .addApi(Places.PLACE_DETECTION_API)
-                .enableAutoManage(getActivity(),this)
-                .build();
+                setCurrentLocation(location,place.getName(),place.getAddress());
 
-        googleApiClient.connect();
+
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                // TODO: Handle the error.
+                Status status = Autocomplete.getStatusFromIntent(data);
+                Log.i(TAG, status.getStatusMessage());
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
     }
+
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        s=new LatLng(34.56, 126.97);
         LatLng SEOUL = new LatLng(37.56, 126.97);
 
         LatLng pknu = new LatLng(35.134023, 129.104697);
 
+        mMap=googleMap;
+
         MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(s);
+        markerOptions.position(SEOUL);
         markerOptions.title("부경대");
         markerOptions.snippet("가온관");
-        googleMap.addMarker(markerOptions);
+        mMap.addMarker(markerOptions);
 
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(pknu));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(SEOUL));
 
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
 
-        buildGoogleApiClient();
+
+
 
     }
 
