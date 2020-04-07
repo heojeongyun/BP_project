@@ -19,7 +19,8 @@
             android:text="이메일로 시작하기"
             android:textColor="#4472C4"
             android:textSize="35dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:fontFamily="@font/hangeulnurib"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,7 +38,8 @@
                 android:ems="10"
                 android:hint="이메일"
                 android:textSize="20dp"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:fontFamily="@font/hangeulnurib"/>/>
 
             <EditText
                 android:id="@+id/passwordEditText"
@@ -48,7 +50,8 @@
                 android:ems="10"
                 android:hint="비밀번호"
                 android:textSize="20dp"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:fontFamily="@font/hangeulnurib"/>/>
 
             <Button
                 android:id="@+id/CheckButton"
@@ -60,7 +63,8 @@
                 android:text="로그인"
                 android:textColor="@android:color/background_light"
                 android:textSize="21dp"
-                android:textStyle="normal" />
+                android:textStyle="normal"
+                android:fontFamily="@font/hangeulnurib"/>/>
 
             <Button
                 android:id="@+id/signUp_Activity_Button"
@@ -72,7 +76,8 @@
                 android:layout_marginTop="10dp"
                 android:textSize="21dp"
                 android:textColor="@android:color/background_light"
-                android:textStyle="normal"/>
+                android:textStyle="normal"
+                android:fontFamily="@font/hangeulnurib"/>/>
 
             <Button
                 android:id="@+id/gotoPasswordResetbutton"
@@ -83,7 +88,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:text="비밀번호 찾기"
-                android:background="#00ff0000"/>
+                android:background="#00ff0000"
+                android:fontFamily="@font/hangeulnurib"/>/>
 
         </LinearLayout>
 
@@ -99,7 +105,8 @@
         android:text="현지인 빠른 로그인"
         android:textColor="@android:color/background_light"
         android:textSize="21dp"
-        android:textStyle="normal" />
+        android:textStyle="normal"
+        android:fontFamily="@font/hangeulnurib"/>/>
 
     <Button
         android:id="@+id/activity_login_TemporaryTravelerButton"
@@ -111,6 +118,7 @@
         android:text="여행자 빠른 로그인"
         android:textColor="@android:color/background_light"
         android:textSize="21dp"
-        android:textStyle="normal" />
+        android:textStyle="normal"
+        android:fontFamily="@font/hangeulnurib"/>/>
 
 </LinearLayout>

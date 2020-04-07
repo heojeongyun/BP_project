@@ -10,10 +10,11 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="25dp"
         android:gravity="center_vertical"
-        android:text="현지인 프로필"
+        android:text="현지인 리스트"
         android:textColor="#4472C4"
         android:textSize="35dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:fontFamily="@font/hangeulnurib"/>
 
 
     <EditText
@@ -27,7 +28,8 @@
         android:layout_marginRight="5dp"
         android:hint="현지인 검색하기"
         android:singleLine="true"
-        android:textSize="17dp" />
+        android:textSize="17dp"
+        android:fontFamily="@font/hangeulnurib"/>
 
 
     <FrameLayout

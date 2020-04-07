@@ -15,7 +15,8 @@
         android:text="Sing up List"
         android:textColor="#4472C4"
         android:textSize="35dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:fontFamily="@font/hangeulnurib"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

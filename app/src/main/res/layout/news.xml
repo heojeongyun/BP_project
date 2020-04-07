@@ -13,10 +13,11 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="25dp"
         android:gravity="center_vertical"
-        android:text="Home"
+        android:text="HOME"
         android:textColor="#4472C4"
         android:textSize="35dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:fontFamily="@font/hangeulnurib"/>
     <!--test-->
 
 
@@ -44,6 +45,7 @@
                 android:text="데이트코스"
                 android:background="@drawable/btn_bg"
                 android:layout_marginRight="3dp"
+                android:fontFamily="@font/hangeulnurib"
                 />
 
             <Button
@@ -53,7 +55,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/btn_bg"
                 android:text="자연관광"
-                android:layout_marginRight="3dp"/>
+                android:layout_marginRight="3dp"
+                android:fontFamily="@font/hangeulnurib"/>
 
             <Button
                 android:id="@+id/나홀로여행"
@@ -62,7 +65,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/btn_bg"
                 android:text="나홀로여행"
-                android:layout_marginRight="3dp"/>
+                android:layout_marginRight="3dp"
+                android:fontFamily="@font/hangeulnurib"/>
 
 
             <Button
@@ -71,7 +75,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/btn_bg"
-                android:text="엑티비티" />
+                android:text="엑티비티"
+                android:fontFamily="@font/hangeulnurib"/>
 
         </LinearLayout>
 
@@ -90,7 +95,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/btn_bg"
                 android:text="맛집탐방"
-                android:layout_marginRight="3dp"/>
+                android:layout_marginRight="3dp"
+                android:fontFamily="@font/hangeulnurib"/>
 
             <Button
                 android:id="@+id/쇼핑"
@@ -99,7 +105,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/btn_bg"
                 android:text="쇼핑"
-                android:layout_marginRight="3dp"/>
+                android:layout_marginRight="3dp"
+                android:fontFamily="@font/hangeulnurib"/>
 
             <Button
                 android:id="@+id/랜드마크"
@@ -108,7 +115,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/btn_bg"
                 android:text="랜드마크"
-                android:layout_marginRight="3dp"/>
+                android:layout_marginRight="3dp"
+                android:fontFamily="@font/hangeulnurib"/>
 
             <Button
                 android:id="@+id/문화생활"
@@ -116,7 +124,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/btn_bg"
-                android:text="문화생활" />
+                android:text="문화생활"
+                android:fontFamily="@font/hangeulnurib"/>
 
 
         </LinearLayout>
@@ -134,7 +143,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:entries="@array/랭킹" />
+                android:entries="@array/랭킹">
+
+            </Spinner>
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/activity_news_list"
