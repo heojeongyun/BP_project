@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+<TextView
+    android:id="@+id/textView"
+    android:layout_width="wrap_content"
+    android:layout_height="60dp"
+    android:layout_marginTop="25dp"
+    android:gravity="center_vertical"
+    android:text="리뷰 작성하기"
+    android:textColor="#4472C4"
+    android:textSize="35dp"
+    android:textStyle="bold"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="10dp"/>
+
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/search_popular_recyclerview"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/textView2"
+    android:layout_marginTop="20dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"/>
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="10dp"
+    android:text="평점을 매겨주세요."
+    android:textSize="20dp"
+    android:layout_gravity="center"
+    android:layout_marginTop="20dp"
+    android:layout_marginLeft="10dp"/>
+
+<RatingBar
+    android:id="@+id/ratingBar1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:isIndicator="false"
+    android:numStars="5"
+    android:rating="3.5"
+    android:stepSize="0.5"
+    android:max="5"
+    android:layout_gravity="center"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"/>
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="여행은 즐거우셨나요? 만족하셨다면 여행 리뷰를 남겨주세요."
+    android:textSize="15dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginRight="10dp"
+    />
+
+<EditText
+    android:id="@+id/NameEditText"
+    android:layout_width="380dp"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="10dp"
+    android:ems="10"
+    android:hint="여행후기 작성"
+    android:textSize="15dp" />
+
+<Button
+    android:id="@+id/signUp_Activity_Button"
+    android:layout_width="360dp"
+    android:layout_gravity="center"
+    android:layout_height="wrap_content"
+    android:text="등록하기"
+    android:background="@drawable/button_selector"
+    android:layout_marginTop="10dp"
+    android:textSize="20dp"
+    android:textColor="@android:color/background_light"
+    android:textStyle="normal"/>
+
+
+
+
+</LinearLayout>

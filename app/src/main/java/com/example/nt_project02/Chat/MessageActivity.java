@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,6 +35,7 @@ import com.example.nt_project02.NativeSearch;
 import com.example.nt_project02.Native_Register;
 import com.example.nt_project02.NotificationModel;
 import com.example.nt_project02.R;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -208,6 +210,9 @@ public class MessageActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.container,googleMap_fragment).commit();
             }
         });
+
+
+        checkChatRoom();
 
 
 
@@ -539,13 +544,14 @@ public class MessageActivity extends AppCompatActivity {
 
                     //상대방이 보낸 메세지
                 }else
-
                 {
+                    if(destinationUserModel.imageurl !=null){
+                        Glide.with(holder.itemView.getContext())
+                                .load(destinationUserModel.imageurl)
+                                .apply(new RequestOptions().circleCrop())
+                                .into(messageViewHolder.imageView_profile);
+                    }
 
-                Glide.with(holder.itemView.getContext())
-                        .load(destinationUserModel.imageurl)
-                        .apply(new RequestOptions().circleCrop())
-                        .into(messageViewHolder.imageView_profile);
                     messageViewHolder.textView_name.setText(destinationUserModel.getName());
                     messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
                     messageViewHolder.textView_message.setBackgroundResource(R.drawable.lastleftbubble);
@@ -578,10 +584,12 @@ public class MessageActivity extends AppCompatActivity {
                 }else
                 {
 
-                Glide.with(holder.itemView.getContext())
-                        .load(destinationUserModel.imageurl)
-                        .apply(new RequestOptions().circleCrop())
-                        .into(imageViewHolder.imageView_profile);
+                    if(destinationUserModel.imageurl !=null){
+                        Glide.with(holder.itemView.getContext())
+                                .load(destinationUserModel.imageurl)
+                                .apply(new RequestOptions().circleCrop())
+                                .into(imageViewHolder.imageView_profile);
+                    }
                     imageViewHolder.textView_name.setText(destinationUserModel.getName());
                     imageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
                     imageViewHolder.linearLayout_main.setGravity(Gravity.LEFT);

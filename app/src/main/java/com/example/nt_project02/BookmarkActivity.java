@@ -194,7 +194,7 @@ public class BookmarkActivity extends AppCompatActivity {
                     //알림메세지
                     final AlertDialog.Builder builder = new AlertDialog.Builder(BookmarkActivity.this);
                     builder.setTitle("요청취소");
-                    builder.setMessage("해당 현지인 매칭요청을 취하시겠습니까?");
+                    builder.setMessage("해당 현지인 즐겨찾기를 취소 하시겠습니까?");
                     builder.setPositiveButton("예",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {

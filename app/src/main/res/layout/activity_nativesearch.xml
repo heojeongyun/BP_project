@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Name" />
+        android:hint="Name"
+        android:fontFamily="@font/hangeulnurib"/>
 
     <!-- <androidx.viewpager.widget.ViewPager
          android:id="@+id/activity_nativesearch_vp"
@@ -30,22 +31,27 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="인기" />
+            android:text="인기"
+            android:fontFamily="@font/hangeulnurib"/>
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="계정" />
+            android:text="계정"
+            android:fontFamily="@font/hangeulnurib"/>
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="지역" />
+            android:text="지역"
+            android:fontFamily="@font/hangeulnurib"/>
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hashtag" />
+            android:text="Hashtag"
+            android:fontFamily="@font/hangeulnurib"/>
+
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.recyclerview.widget.RecyclerView

@@ -52,11 +52,6 @@ public class PeopleFragment extends Fragment {
 
     @Nullable
 
-
-
-
-
-
     private List<UserModel> userModels;
     private List<UserModel> saveList;
     private EditText editText;
@@ -175,37 +170,38 @@ public class PeopleFragment extends Fragment {
 
            /*db.collection("users")
                     .whereEqualTo("user_kind", "현지인")*/
-                    postOrder.addSnapshotListener(new EventListener<QuerySnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable QuerySnapshot value,
-                                            @Nullable FirebaseFirestoreException e) {
-                            if (e != null) {
-                                Log.w(TAG, "Listen failed.", e);
-                                return;
-                            }
+            postOrder.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot value,
+                                    @Nullable FirebaseFirestoreException e) {
+                    if (e != null) {
+                        Log.w(TAG, "Listen failed.", e);
+                        return;
+                    }
 
-                            userModels.clear();
-                            for (QueryDocumentSnapshot doc : value) {
-                                if (doc != null) {
-
-
-                                    userModels.add(doc.toObject(UserModel.class));
-                                    saveList.add(doc.toObject(UserModel.class));
+                    userModels.clear();
+                    saveList.clear();  //파이어 스토어 데이터 변경 시 중복으로 쌓이는 데이터 방
+                    for (QueryDocumentSnapshot doc : value) {
+                        if (doc != null) {
 
 
-
-                                }
-
-                            }
-                            notifyDataSetChanged();
+                            userModels.add(doc.toObject(UserModel.class));
+                            saveList.add(doc.toObject(UserModel.class));
 
 
 
-
-                            Log.d(TAG, "Current data: " + userModels);
                         }
 
-                    });
+                    }
+                    notifyDataSetChanged();
+
+
+
+
+                    Log.d(TAG, "Current data: " + userModels);
+                }
+
+            });
 
 
 
@@ -249,7 +245,7 @@ public class PeopleFragment extends Fragment {
 
             //초기화
             ((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(White);
-            ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.chick);
+            ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.medal3);
             ((CustomViewHolder)holder).imageView.setImageResource(R.drawable.user);
 
             bookmarks_number=userModels.get(position).bookmarks_number;
@@ -257,10 +253,10 @@ public class PeopleFragment extends Fragment {
             if((bookmarks_number !=null)&& (bookmarks_number!=0)){
                 if(bookmarks_number>=2){
                     ((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(Gold);
-                    ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.peacock);
+                    ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.medal1);
                 }else{
                     ((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(Silver);
-                    ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.chicken);
+                    ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.medal2);
                 }
 
 
@@ -275,9 +271,9 @@ public class PeopleFragment extends Fragment {
                         .apply(new RequestOptions().circleCrop())
                         .into(((CustomViewHolder) holder).imageView);
             }
-                ((CustomViewHolder) holder).Nick_textView.setText(userModels.get(position).name);
-                ((CustomViewHolder) holder).Region_textView.setText(userModels.get(position).region);
-                ((CustomViewHolder) holder).Hash_textView.setText(userModels.get(position).hashtag);
+            ((CustomViewHolder) holder).Nick_textView.setText(userModels.get(position).name);
+            ((CustomViewHolder) holder).Region_textView.setText(userModels.get(position).region);
+            ((CustomViewHolder) holder).Hash_textView.setText(userModels.get(position).hashtag);
 
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -330,25 +326,25 @@ public class PeopleFragment extends Fragment {
 
 
 
-        private class CustomViewHolder extends RecyclerView.ViewHolder {
+    private class CustomViewHolder extends RecyclerView.ViewHolder {
 
-            public  ImageView imageView;
-            public TextView Nick_textView;
-            public TextView Region_textView;
-            public TextView Hash_textView;
-            public LinearLayout fragment_people_ItemLayout;
-            public ImageView item_friend_RankImage;
+        public  ImageView imageView;
+        public TextView Nick_textView;
+        public TextView Region_textView;
+        public TextView Hash_textView;
+        public LinearLayout fragment_people_ItemLayout;
+        public ImageView item_friend_RankImage;
 
-            public CustomViewHolder(View view) {
-                super(view);
-                fragment_people_ItemLayout=(LinearLayout) view.findViewById(R.id.fragment_people_itemLayout);
-                imageView = (ImageView) view.findViewById(R.id.frienditem_imageview);
-                Nick_textView = (TextView) view.findViewById(R.id.frienditem_nick);
-                Region_textView=(TextView) view.findViewById(R.id.frienditem_region);
-                Hash_textView=(TextView) view.findViewById(R.id.frienditem_hash);
-                item_friend_RankImage=(ImageView) view.findViewById(R.id.item_friend_RankImage);
-            }
+        public CustomViewHolder(View view) {
+            super(view);
+            fragment_people_ItemLayout=(LinearLayout) view.findViewById(R.id.fragment_people_itemLayout);
+            imageView = (ImageView) view.findViewById(R.id.frienditem_imageview);
+            Nick_textView = (TextView) view.findViewById(R.id.frienditem_nick);
+            Region_textView=(TextView) view.findViewById(R.id.frienditem_region);
+            Hash_textView=(TextView) view.findViewById(R.id.frienditem_hash);
+            item_friend_RankImage=(ImageView) view.findViewById(R.id.item_friend_RankImage);
         }
+    }
 
     private void startToast(String msg){
 
@@ -357,9 +353,3 @@ public class PeopleFragment extends Fragment {
     }
 
 }
-
-
-
-
-
-

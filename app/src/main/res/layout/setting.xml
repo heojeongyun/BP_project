@@ -15,7 +15,8 @@
         android:text="설정"
         android:textColor="#4472C4"
         android:textSize="35dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:fontFamily="@font/hangeulnurib"/>/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -45,6 +46,7 @@
                 android:layout_gravity="left"
                 android:layout_marginTop="5dp"
                 android:textStyle="bold"
+                android:fontFamily="@font/hangeulnurib"/>
                 />
 
             <TextView
@@ -56,6 +58,7 @@
                 android:layout_gravity="left"
                 android:layout_marginTop="2dp"
                 android:textColor="#4472C4"
+                android:fontFamily="@font/hangeulnurib"/>
                 />
 
 
@@ -82,9 +85,6 @@
     </LinearLayout>
 
 
-
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -97,13 +97,13 @@
                 android:id="@+id/activity_setting_profileManger"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_gravity="left"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="#00ff0000"
                 android:text="프로필 관리"
                 android:textColor="#000000"
-                android:textAlignment="viewStart"
                 android:textSize="20dp"
+                android:fontFamily="@font/hangeulnurib"
                 />
 
             <LinearLayout
@@ -119,13 +119,13 @@
                 android:id="@+id/fragment_setting_BookmarkButton"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_gravity="left"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="#00ff0000"
                 android:text="즐겨찾기"
                 android:textColor="#000000"
-                android:textAlignment="viewStart"
                 android:textSize="20dp"
+                android:fontFamily="@font/hangeulnurib"
                  />
 
             <LinearLayout
@@ -140,13 +140,13 @@
                 android:id="@+id/fragment_setting_native_register_Button"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_gravity="left"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="#00ff0000"
                 android:text="현지인 등록"
                 android:textColor="#000000"
-                android:textAlignment="viewStart"
                 android:textSize="20dp"
+                android:fontFamily="@font/hangeulnurib"
                 />
 
             <LinearLayout
@@ -162,12 +162,12 @@
                 android:id="@+id/fragment_setting_LogoutButton"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_gravity="left"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="#00ff0000"
                 android:text="로그아웃"
                 android:textColor="#000000"
-                android:textAlignment="viewStart"
+                android:fontFamily="@font/hangeulnurib"
                 android:textSize="20dp"
                 />
 

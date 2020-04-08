@@ -12,10 +12,11 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="25dp"
         android:gravity="center_vertical"
-        android:text="Chatting List"
+        android:text="채팅 리스트"
         android:textColor="#4472C4"
         android:textSize="35dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:fontFamily="@font/hangeulnurib"/>
 
     <ImageButton
         android:id="@+id/btn_traveler_chat_management"
