@@ -47,8 +47,6 @@ import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.kakao.usermgmt.UserManagement;
-import com.kakao.usermgmt.callback.LogoutResponseCallback;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -238,14 +236,7 @@ public class Setting_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                UserManagement.getInstance()
-                        .requestLogout(new LogoutResponseCallback() {
-                            @Override
-                            public void onCompleteLogout() {
-                                Log.i("KAKAO_API", "로그아웃 완료");
-                            }
-                        });
-
+                FirebaseAuth.getInstance().signOut();
                 MystartActivity(LoginActivity.class);
             }
         });

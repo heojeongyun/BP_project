@@ -40,10 +40,11 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG="Main";
     ViewPager viewPager;
     private Integer navigationTabBar_position;
-
+    private FirebaseAuth mAuth ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mAuth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
