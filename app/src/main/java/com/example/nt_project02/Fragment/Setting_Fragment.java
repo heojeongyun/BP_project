@@ -74,6 +74,8 @@ public class Setting_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
+
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.setting, container, false);
         // setting.xml의 nick_textview 객체 생성
         nick_textview = (TextView) rootView.findViewById(R.id.nick_TextView);
