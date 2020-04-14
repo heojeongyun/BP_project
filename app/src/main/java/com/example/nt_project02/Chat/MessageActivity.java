@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -77,6 +78,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class MessageActivity extends AppCompatActivity {
+    private static final int REQUEST_CONTENT =101 ;
     private String destinationUid;
     private Button button;
     private EditText editText;
@@ -109,6 +111,8 @@ public class MessageActivity extends AppCompatActivity {
     private Chatting_Fragment Chatting_Fragment;
 
     private String TAG="MessageActivity";
+    public  String Content;
+
 
 
     @Override
@@ -129,6 +133,7 @@ public class MessageActivity extends AppCompatActivity {
 
         Log.d(TAG,"deuid:"+destinationUid);
         Log.d(TAG,"uid:"+uid);
+
 
 
 
@@ -231,6 +236,7 @@ public class MessageActivity extends AppCompatActivity {
 
 
 
+
         if(requestCode==GALLERY_PICK && resultCode==RESULT_OK){
             final Uri imageUri=data.getData();
 
@@ -298,6 +304,19 @@ public class MessageActivity extends AppCompatActivity {
 
 
         }
+
+        if(requestCode == REQUEST_CONTENT){
+            if(resultCode== RESULT_OK){
+
+                /*Content=data.getStringExtra("Content");
+                Log.d(TAG,"확인:"+ Content);*/
+
+                googleMap_fragment.onActivityResult(REQUEST_CONTENT,RESULT_OK,data);
+            }
+
+        }
+
+
     }
 
     void sendGcm(){
@@ -731,4 +750,6 @@ public class MessageActivity extends AppCompatActivity {
                 .commit();
 
     }
+
+
 }

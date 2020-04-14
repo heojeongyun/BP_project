@@ -74,6 +74,8 @@ public class Setting_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
+
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.setting, container, false);
 
         // setting.xml의 nick_textview 객체 생성
@@ -236,6 +238,8 @@ public class Setting_Fragment extends Fragment {
         LogoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                FirebaseAuth.getInstance().signOut();
                 MystartActivity(LoginActivity.class);
             }
         });

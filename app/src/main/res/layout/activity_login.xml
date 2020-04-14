@@ -94,6 +94,31 @@
         </LinearLayout>
 
     </LinearLayout>
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/signInButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_centerHorizontal="true" />
+
+<!--    <Button
+        android:id="@+id/activity_login_customkakaologin"
+        android:layout_width="360dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_selector"
+        android:layout_marginTop="10dp"
+        android:text="카카오톡으로 로그인"
+        android:textColor="@android:color/background_light"
+        android:textSize="21dp"
+        android:textStyle="normal" />-->
+<!--
+    <com.kakao.usermgmt.LoginButton
+        android:id="@+id/activity_login_kakaologin"
+        android:layout_width="360dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+      />-->
 
     <Button
         android:id="@+id/activity_login_TemporaryNativeButton"

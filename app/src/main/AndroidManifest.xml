@@ -4,7 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_foreground_native"
@@ -12,11 +13,16 @@
         android:roundIcon="@mipmap/ic_launcher_foreground_native"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Chat.GoogleMapActivity"></activity>
+        <activity android:name=".InfoWindow_Edit"></activity>
+        <activity android:name=".Chat.GoogleMapActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyA7YlrC4J7fuD4VCTkCNgoQzg8zTVJytsg" />
+
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/kakao_app_key" />
 
         <activity android:name=".BookmarkActivity" />
         <activity android:name=".MemberTypeActivity" />
@@ -35,9 +41,9 @@
         <activity android:name=".MemberActivity" />
         <activity android:name=".Native_Register" />
         <activity android:name=".Native_Profile.Profile" />
-        <activity android:name=".NativeSearch"/>
-        <activity android:name=".Traveler_Chat_Management"/>
-        <activity android:name=".Native_Chat_Management"/>
+        <activity android:name=".NativeSearch" />
+        <activity android:name=".Traveler_Chat_Management" />
+        <activity android:name=".Native_Chat_Management" />
 
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
@@ -54,8 +60,7 @@
 
         <uses-library
             android:name="org.apache.http.legacy"
-            android:required="false"/>
-
+            android:required="false" />
     </application>
 
 </manifest>
