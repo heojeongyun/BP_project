@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.nt_project02.Chat.UserModel;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -59,6 +60,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .enableAutoManage(this,this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
                 .build();
+
 
 
         // 초기화 Firebase Auth
@@ -107,131 +109,98 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){//구글로그인이 성공했으면
+                        if (task.isSuccessful()) {//구글로그인이 성공했으면
                             Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(), MemberActivity.class);
-                            intent.putExtra("email",account.getEmail());
-                            intent.putExtra("photourl",String.valueOf(account.getPhotoUrl()));//photoUrl을 String 형태로 바꿈
-                            startActivity(intent);
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            String uid = user.getUid();
+                            // 파이어스토어 객체선언
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            //파이어스토어에서 해당 유저의 uid를 이용하여 정보 가져오기
+                            final DocumentReference docRef = db.collection("users").document(uid);
+                            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                //정보 가져오는 것이 성공적일 때
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
 
-                        } else { //로그인 실패했으면
-                            Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
+                                        //DocumentSnapshot에 정보를 담아둠
+
+                                        DocumentSnapshot document = task.getResult();
+
+                                        //document가 null이 아닐 때
+
+                                        if (document != null) {
+
+                                            //재차 확인
+                                            if (document.exists()) {
+
+
+                                                MystartActivity(MainActivity.class);
+                                            } else {
+
+//                                                    //로그인은 됐는데, 상세정보가 등록되어 있지 않으면 MemberActivity클래스로 이동
+                                                MystartActivity(MemberActivity.class);
+                                            }
+                                        }
+
+/*                            if(유저모델에 있는 닉네임이 널이라면 멤버액티비티로 가게) {
+                                Intent intent = new Intent(getApplicationContext(), MemberActivity.class);
+                                intent.putExtra("email", account.getEmail());
+                                intent.putExtra("photourl", String.valueOf(account.getPhotoUrl()));//photoUrl을 String 형태로 바꿈
+                                startActivity(intent);
+                            } else {
+                                닉네임이 있다면 메인액티비티로 가게
+                                MystartActivity(MainActivity.class);
+                            }*/
+                                    } else { //로그인 실패했으면
+                                        Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+
+
                         }
                     }
-                });
+                }
+                );}
 
 
-
-    }
-
-
-    //    public void onStart() {
-//        super.onStart();
-//        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        updateUI(currentUser);
-//    }
-//
-//
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-//        if (requestCode == RC_SIGN_IN) {
-//            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-//            try {
-//                // Google Sign In was successful, authenticate with Firebase
-//                GoogleSignInAccount account = task.getResult(ApiException.class);
-//                firebaseAuthWithGoogle(account);
-//            } catch (ApiException e) {
-//                // Google Sign In failed, update UI appropriately
-//                Log.w(TAG, "Google sign in failed", e);
-//                // [START_EXCLUDE]
-//                updateUI(null);
-//                // [END_EXCLUDE]
-//            }
-//        }
-//    }
-//
-//    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-//
-//        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-//        mAuth.signInWithCredential(credential)
-//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if (task.isSuccessful()) {
-//                            // Sign in success, update UI with the signed-in user's information
-//                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                            startActivity(intent);
-//                            finish();
-//                            FirebaseUser user = mAuth.getCurrentUser();
-//                            updateUI(user);
-//                        } else {
-//                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-//                                    Toast.LENGTH_SHORT).show();
-//                            // If sign in fails, display a message to the user.
-//                            updateUI(null);
-//                        }
-//                    }
-//                });
-//    }
-
-//    private void updateUI(FirebaseUser user) { //update ui code here
-//        if (user != null) {
-//            MystartActivity(MainActivity.class);
-//            finish();
-//        }
-//    }
+                    public void onBackPressed() {
+                        super.onBackPressed();
+                        moveTaskToBack(true);
+                        android.os.Process.killProcess(android.os.Process.myPid());
+                        System.exit(1);
+                    }
 
 
-    public void onBackPressed() {
-        super.onBackPressed();
-        moveTaskToBack(true);
-        android.os.Process.killProcess(android.os.Process.myPid());
-        System.exit(1);
-    }
+                    View.OnClickListener onClickListener = new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            switch (v.getId()) {
+                                case R.id.CheckButton:
+                                    login();
+                                    break;
+
+                                case R.id.gotoPasswordResetbutton:
+                                    MystartActivity(PasswordResetActivity.class);
+                                    break;
+
+                                case R.id.signUp_Activity_Button:
+                                    MystartActivity(Sign_UpActivity.class);
+                                    break;
+
+                                case R.id.activity_login_TemporaryNativeButton:
+                                    Temporary_native_login();
+                                    break;
+
+                                case R.id.activity_login_TemporaryTravelerButton:
+                                    Temporary_traveler_login();
+                                    break;
+
+                            }
 
 
-/*    public void redirectSignupActivity() {
-        final Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }*/
-
-    View.OnClickListener onClickListener =   new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.CheckButton:
-                    login();
-                    break;
-
-                case R.id.gotoPasswordResetbutton:
-                    MystartActivity(PasswordResetActivity.class);
-                    break;
-
-                case R.id.signUp_Activity_Button:
-                    MystartActivity(Sign_UpActivity.class);
-                    break;
-
-      /*          case R.id.signInButton:
-                    signIn();*/
-
-
-                case R.id.activity_login_TemporaryNativeButton:
-                    Temporary_native_login();
-                    break;
-
-                case R.id.activity_login_TemporaryTravelerButton:
-                    Temporary_traveler_login();
-                    break;
-
-            }
-
-
-
-        }
+                        }
 /*        private void signIn() {
             
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -240,254 +209,244 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }*/
 
 
+                    };
 
-    };
+                        private void login () {
 
-    private void login() {
-
-        String email = ((EditText) findViewById(R.id.NameEditText)).getText().toString();
-        String password = ((EditText) findViewById(R.id.passwordEditText)).getText().toString();
-
-
-        if (email.length() > 0 && password.length() > 0) {
-
-            mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                startToast("로그인 성공");
-                                String uid=user.getUid();
-                                // 파이어스토어 객체선언
-                                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                //파이어스토어에서 해당 유저의 uid를 이용하여 정보 가져오기
-                                final DocumentReference docRef = db.collection("users").document(uid);
-                                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                    @Override
-                                    //정보 가져오는 것이 성공적일 때
-                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                        if (task.isSuccessful()) {
-
-                                            //DocumentSnapshot에 정보를 담아둠
-
-                                            DocumentSnapshot document = task.getResult();
-
-                                            //document가 null이 아닐 때
-
-                                            if(document!=null){
-
-                                                //재차 확인
-                                                if (document.exists()) {
+                            String email = ((EditText) findViewById(R.id.NameEditText)).getText().toString();
+                            String password = ((EditText) findViewById(R.id.passwordEditText)).getText().toString();
 
 
-                                                    MystartActivity(MainActivity.class);
-                                                } else {
+                            if (email.length() > 0 && password.length() > 0) {
+
+                                mAuth.signInWithEmailAndPassword(email, password)
+                                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                if (task.isSuccessful()) {
+                                                    // Sign in success, update UI with the signed-in user's information
+                                                    FirebaseUser user = mAuth.getCurrentUser();
+                                                    startToast("로그인 성공");
+                                                    String uid = user.getUid();
+                                                    // 파이어스토어 객체선언
+                                                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                                    //파이어스토어에서 해당 유저의 uid를 이용하여 정보 가져오기
+                                                    final DocumentReference docRef = db.collection("users").document(uid);
+                                                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                        @Override
+                                                        //정보 가져오는 것이 성공적일 때
+                                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                            if (task.isSuccessful()) {
+
+                                                                //DocumentSnapshot에 정보를 담아둠
+
+                                                                DocumentSnapshot document = task.getResult();
+
+                                                                //document가 null이 아닐 때
+
+                                                                if (document != null) {
+
+                                                                    //재차 확인
+                                                                    if (document.exists()) {
+
+
+                                                                        MystartActivity(MainActivity.class);
+                                                                    } else {
 
 //                                                    //로그인은 됐는데, 상세정보가 등록되어 있지 않으면 MemberActivity클래스로 이동
-                                                    MystartActivity(MemberActivity.class);
-                                                }
-                                            }
-                                            //아예 오류떠서 실패했을 때
-                                        } else {
-                                            Log.d("login", "get failed with ", task.getException());
-                                        }
-                                    }
-                                });
+                                                                        MystartActivity(MemberActivity.class);
+                                                                    }
+                                                                }
+                                                                //아예 오류떠서 실패했을 때
+                                                            } else {
+                                                                Log.d("login", "get failed with ", task.getException());
+                                                            }
+                                                        }
+                                                    });
 
 
-
-                            } else {
-
-                                if (task.getException() != null) {
-                                    startToast(task.getException().toString());
-                                }
-                            }
-
-                            // ...
-                        }
-                    });
-
-        } else {
-
-
-            startToast("이메일 또는 비밀번호를 입력해주세요.");
-        }
-
-
-    }
-
-    private void Temporary_native_login() {
-
-        String email = "native@naver.com";
-        String password = "123456";
-
-
-        if (email.length() > 0 && password.length() > 0) {
-
-            mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                startToast("로그인 성공");
-                                String uid=user.getUid();
-                                // 파이어스토어 객체선언
-                                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                //파이어스토어에서 해당 유저의 uid를 이용하여 정보 가져오기
-                                final DocumentReference docRef = db.collection("users").document(uid);
-                                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                    @Override
-                                    //정보 가져오는 것이 성공적일 때
-                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                        if (task.isSuccessful()) {
-
-                                            //DocumentSnapshot에 정보를 담아둠
-
-                                            DocumentSnapshot document = task.getResult();
-
-                                            //document가 null이 아닐 때
-
-                                            if(document!=null){
-
-                                                //재차 확인
-                                                if (document.exists()) {
-
-
-                                                    MystartActivity(MainActivity.class);
                                                 } else {
 
-                                                    //로그인은 됐는데, 상세정보가 등록되어 있지 않으면 MemberActivity클래스로 이동
-                                                    MystartActivity(MemberTypeActivity.class);
+                                                    if (task.getException() != null) {
+                                                        startToast(task.getException().toString());
+                                                    }
                                                 }
+
                                             }
-                                            //아예 오류떠서 실패했을 때
-                                        } else {
-                                            Log.d("login", "get failed with ", task.getException());
-                                        }
-                                    }
-                                });
-
-
-
+                                        });
                             } else {
 
-                                if (task.getException() != null) {
-                                    startToast(task.getException().toString());
-                                }
+
+                                startToast("이메일 또는 비밀번호를 입력해주세요.");
                             }
 
-                            // ...
+
                         }
-                    });
 
-        } else {
+                        private void Temporary_native_login () {
 
-
-            startToast("이메일 또는 비밀번호를 입력해주세요.");
-        }
+                            String email = "native@naver.com";
+                            String password = "123456";
 
 
-    }
+                            if (email.length() > 0 && password.length() > 0) {
 
-    private void Temporary_traveler_login() {
+                                mAuth.signInWithEmailAndPassword(email, password)
+                                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                if (task.isSuccessful()) {
+                                                    // Sign in success, update UI with the signed-in user's information
+                                                    FirebaseUser user = mAuth.getCurrentUser();
+                                                    startToast("로그인 성공");
+                                                    String uid = user.getUid();
+                                                    // 파이어스토어 객체선언
+                                                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                                    //파이어스토어에서 해당 유저의 uid를 이용하여 정보 가져오기
+                                                    final DocumentReference docRef = db.collection("users").document(uid);
+                                                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                        @Override
+                                                        //정보 가져오는 것이 성공적일 때
+                                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                            if (task.isSuccessful()) {
 
-        String email = "traveler@naver.com";
-        String password = "123456";
+                                                                //DocumentSnapshot에 정보를 담아둠
 
+                                                                DocumentSnapshot document = task.getResult();
 
-        if (email.length() > 0 && password.length() > 0) {
+                                                                //document가 null이 아닐 때
 
-            mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                startToast("로그인 성공");
-                                String uid=user.getUid();
-                                // 파이어스토어 객체선언
-                                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                //파이어스토어에서 해당 유저의 uid를 이용하여 정보 가져오기
-                                final DocumentReference docRef = db.collection("users").document(uid);
-                                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                    @Override
-                                    //정보 가져오는 것이 성공적일 때
-                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                        if (task.isSuccessful()) {
+                                                                if (document != null) {
 
-                                            //DocumentSnapshot에 정보를 담아둠
-
-                                            DocumentSnapshot document = task.getResult();
-
-                                            //document가 null이 아닐 때
-
-                                            if(document!=null){
-
-                                                //재차 확인
-                                                if (document.exists()) {
+                                                                    //재차 확인
+                                                                    if (document.exists()) {
 
 
-                                                    MystartActivity(MainActivity.class);
+                                                                        MystartActivity(MainActivity.class);
+                                                                    } else {
+
+                                                                        //로그인은 됐는데, 상세정보가 등록되어 있지 않으면 MemberActivity클래스로 이동
+                                                                        MystartActivity(MemberTypeActivity.class);
+                                                                    }
+                                                                }
+                                                                //아예 오류떠서 실패했을 때
+                                                            } else {
+                                                                Log.d("login", "get failed with ", task.getException());
+                                                            }
+                                                        }
+                                                    });
+
+
                                                 } else {
 
-                                                    //로그인은 됐는데, 상세정보가 등록되어 있지 않으면 MemberActivity클래스로 이동
-                                                    MystartActivity(MemberTypeActivity.class);
+                                                    if (task.getException() != null) {
+                                                        startToast(task.getException().toString());
+                                                    }
                                                 }
+
+                                                // ...
                                             }
-                                            //아예 오류떠서 실패했을 때
-                                        } else {
-                                            Log.d("login", "get failed with ", task.getException());
-                                        }
-                                    }
-                                });
-
-
+                                        });
 
                             } else {
 
-                                if (task.getException() != null) {
-                                    startToast(task.getException().toString());
-                                }
+
+                                startToast("이메일 또는 비밀번호를 입력해주세요.");
                             }
 
-                            // ...
+
                         }
-                    });
 
-        } else {
+                        private void Temporary_traveler_login () {
 
-
-            startToast("이메일 또는 비밀번호를 입력해주세요.");
-        }
+                            String email = "traveler@naver.com";
+                            String password = "123456";
 
 
-    }
+                            if (email.length() > 0 && password.length() > 0) {
+
+                                mAuth.signInWithEmailAndPassword(email, password)
+                                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                if (task.isSuccessful()) {
+                                                    // Sign in success, update UI with the signed-in user's information
+                                                    FirebaseUser user = mAuth.getCurrentUser();
+                                                    startToast("로그인 성공");
+                                                    String uid = user.getUid();
+                                                    // 파이어스토어 객체선언
+                                                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                                    //파이어스토어에서 해당 유저의 uid를 이용하여 정보 가져오기
+                                                    final DocumentReference docRef = db.collection("users").document(uid);
+                                                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                        @Override
+                                                        //정보 가져오는 것이 성공적일 때
+                                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                            if (task.isSuccessful()) {
+
+                                                                //DocumentSnapshot에 정보를 담아둠
+
+                                                                DocumentSnapshot document = task.getResult();
+
+                                                                //document가 null이 아닐 때
+
+                                                                if (document != null) {
+
+                                                                    //재차 확인
+                                                                    if (document.exists()) {
 
 
+                                                                        MystartActivity(MainActivity.class);
+                                                                    } else {
+
+                                                                        //로그인은 됐는데, 상세정보가 등록되어 있지 않으면 MemberActivity클래스로 이동
+                                                                        MystartActivity(MemberTypeActivity.class);
+                                                                    }
+                                                                }
+                                                                //아예 오류떠서 실패했을 때
+                                                            } else {
+                                                                Log.d("login", "get failed with ", task.getException());
+                                                            }
+                                                        }
+                                                    });
 
 
+                                                } else {
+
+                                                    if (task.getException() != null) {
+                                                        startToast(task.getException().toString());
+                                                    }
+                                                }
+
+                                                // ...
+                                            }
+                                        });
+
+                            } else {
 
 
-    private void startToast(String msg){
-
-        Toast.makeText(LoginActivity.this, msg,
-                Toast.LENGTH_SHORT).show();
-    }
-    private void MystartActivity(Class c){
-        Intent intent=new Intent(this,c);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-
-    }
+                                startToast("이메일 또는 비밀번호를 입력해주세요.");
+                            }
 
 
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+                        }
 
-    }
-}
+
+                        private void startToast (String msg){
+
+                            Toast.makeText(LoginActivity.this, msg,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        private void MystartActivity (Class c){
+                            Intent intent = new Intent(this, c);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+
+                        }
+
+
+                        @Override
+                        public void onConnectionFailed (@NonNull ConnectionResult connectionResult){
+
+                        }
+                    }
