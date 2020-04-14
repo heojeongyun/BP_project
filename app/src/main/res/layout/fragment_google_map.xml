@@ -14,6 +14,7 @@
         />
 
     <androidx.cardview.widget.CardView
+
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:name="@+id/card_view"
         android:layout_width="400dp"
@@ -27,6 +28,7 @@
             android:layout_height="wrap_content"
             android:text="검색"
             android:id="@+id/button"/>
+
         <fragment
             android:id="@+id/place_autocomplete_fragment"
             android:layout_width="match_parent"
