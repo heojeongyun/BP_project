@@ -48,9 +48,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = getIntent();
-        String nickname = intent.getStringExtra("nickname"); //LoginActivity로부터 닉네임 전달받음
-        String photourl = intent.getStringExtra("photourl"); //LoginActivity로부터 프로필사진 Url 전달받음
 
 
 
