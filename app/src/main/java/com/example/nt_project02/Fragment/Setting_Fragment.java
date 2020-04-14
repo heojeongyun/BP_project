@@ -75,10 +75,11 @@ public class Setting_Fragment extends Fragment {
                              Bundle savedInstanceState) {
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.setting, container, false);
+
         // setting.xml의 nick_textview 객체 생성
         nick_textview = (TextView) rootView.findViewById(R.id.nick_TextView);
         profile_textview=(TextView) rootView.findViewById(R.id.fragment_setting_Profile);
-        bluepeopleImageView=(ImageView) rootView.findViewById(R.id.fragment_setting_BluePeopleImageView);
+        // bluepeopleImageView=(ImageView) rootView.findViewById(R.id.fragment_setting_BluePeopleImageView);
 
 
         // Firebase db로 부터 사용자 정보 불러오기
@@ -146,22 +147,22 @@ public class Setting_Fragment extends Fragment {
                                             }
                                         });
 
-                                    } else {
-                                        profile_textview.setText("여행자");
-                                        //로고 안보이게
-                                        bluepeopleImageView.setVisibility(View.GONE);
-                                        NativeRegisterButton.setOnClickListener(new View.OnClickListener() { //현지인 등록 버튼
-                                            @Override
-                                            public void onClick(View v) {
-                                                Intent intent = new Intent(getActivity(), Native_Register.class);
-                                                //intent.putExtra("user_kind", "여행자");
-                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                startActivity(intent);
-
-
-                                            }
-                                        });
-                                    }
+                                    }  //else {
+//                                        profile_textview.setText("여행자");
+//                                        //로고 안보이게
+//                                        bluepeopleImageView.setVisibility(View.GONE);
+//                                        NativeRegisterButton.setOnClickListener(new View.OnClickListener() { //현지인 등록 버튼
+//                                            @Override
+//                                            public void onClick(View v) {
+//                                                Intent intent = new Intent(getActivity(), Native_Register.class);
+//                                                //intent.putExtra("user_kind", "여행자");
+//                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                                                startActivity(intent);
+//
+//
+//                                            }
+//                                        });
+//                                    }
                                 }
                                 if (userModel.getImageurl() != null) { // 이미지의 URL값이 존재할 경우에만 사진을 가져온다
                                     register_ImageURL = userModel.getImageurl();
