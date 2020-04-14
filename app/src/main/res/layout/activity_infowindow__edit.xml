@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="260dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="25dp"
+            android:gravity="center_vertical"
+            android:text="마커 정보 등록"
+            android:textColor="#4472C4"
+            android:textSize="35dp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/native_explain"
+            android:layout_width="351dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
+            android:gravity="center_vertical"
+            android:text="지도 마커에 여러분들의 정보를 담아주세요!"
+            android:textColor="#4472C4"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <LinearLayout
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/activity_infowindow_edit_PlaceName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:gravity="left"
+            android:text="장소 이름"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+        <TextView
+            android:id="@+id/activity_infowindow_edit_PlaceAdress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:gravity="left"
+            android:text="장소 주소"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:background="@drawable/border"
+            android:id="@+id/activity_infowindow_edit_Content_EditText"
+            android:layout_width="match_parent"
+            android:gravity="top|left"
+            android:layout_height="200dp"
+            android:inputType="textMultiLine" >
+        </EditText>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/activity_infowindow_edit_Register_Button"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/button_selector"
+        android:text="등록"
+        android:textColor="@android:color/background_light"
+        android:textSize="17dp"
+        android:textStyle="normal" />
+</LinearLayout>
