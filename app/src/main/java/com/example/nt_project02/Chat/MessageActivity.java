@@ -278,6 +278,7 @@ public class MessageActivity extends AppCompatActivity {
                             });
 
 
+
                         }else{
 
                             ChatModel.Comment comment=new ChatModel.Comment();
@@ -410,6 +411,7 @@ public class MessageActivity extends AppCompatActivity {
                             checkChatRoom();
                         }
                     });
+
                     return;
                 }
 

@@ -32,6 +32,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.nt_project02.CustomData.InfoWindowData;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -68,6 +69,7 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -87,14 +89,13 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
     private static final int AUTOCOMPLETE_REQUEST_CODE =1 ;
     private static final int REQUEST_CONTENT = 101;
 
-    private GoogleMap mMap=null;
+    public static GoogleMap mMap=null;
     private MapView mapView = null;
     private GoogleApiClient googleApiClient=null;
     private Marker currentMarker=null;
     private LatLng s;
     private Place place;
     private Location location=new Location("");
-    private String Content;
     private PlacesClient placesClient;
     private Bitmap bitmap;
 
@@ -116,8 +117,8 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
 
     //파리미터 위치로 마크를 찍고 카메라 이동해주는 메서드
     public void setCurrentLocation(Location location, String markerTitle, String markerSnippet, String Content, Bitmap bitmap){
-        if( currentMarker !=null)
-            currentMarker.remove();
+
+
 
         if(location !=null){
             //현재위치의 위도 경도 가져옴
@@ -125,19 +126,32 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
             
             LatLng currentLocation =new LatLng(location.getLatitude(),location.getLongitude());
 
+            // 마커 설정
+             Marker Search_Marker= mMap.addMarker(new MarkerOptions()
+                            .position(currentLocation)
+                            .title(markerTitle)
+                            .snippet(markerSnippet)
+                            .draggable(true)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+
             //마커 설정
-            MarkerOptions markerOptions=new MarkerOptions();
+            /*MarkerOptions markerOptions=new MarkerOptions();
             markerOptions.position(currentLocation);
             markerOptions.title(markerTitle);
             markerOptions.snippet(markerSnippet);
             markerOptions.draggable(true);
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-            currentMarker=mMap.addMarker(markerOptions);
+            mMap.addMarker(markerOptions);*/
 
-            //CustomWindow 설정
-            View infoWindow = getLayoutInflater().inflate(R.layout.googlemap_custom_infowindow, null);
-            CustomInfoAdapter customInfoAdapter = new CustomInfoAdapter(infoWindow, markerTitle,markerSnippet, Content, bitmap);
-            mMap.setInfoWindowAdapter(customInfoAdapter);
+            InfoWindowData info=new InfoWindowData();
+            info.setMarker_Bitmap(bitmap);
+            info.setMarker_Content(Content);
+
+            Search_Marker.setTag(info);
+
+
+
+
 
             //지도 카메라 이동
             mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
@@ -324,13 +338,9 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
 
 
 
-
-
-
-
-
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 // TODO: Handle the error.
+
                 Status status = Autocomplete.getStatusFromIntent(data);
                 Log.i(TAG, status.getStatusMessage());
             } else if (resultCode == RESULT_CANCELED) {
@@ -343,7 +353,8 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
             if(resultCode== RESULT_OK){ //결과가 정상적이라면
 
 
-                Content=data.getStringExtra("Content"); // InfoWindow_Edit Activity 데이터 가져오기
+                String Content=data.getStringExtra("Content"); // InfoWindow_Edit Activity 데이터 가져오기
+                Log.d(TAG,"Content:"+Content);
                 setCurrentLocation(location,place.getName(),place.getAddress(),Content,bitmap); //마커 정보 다시 설정
                 Log.d(TAG,"확인");
             }
@@ -360,18 +371,18 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
         LatLng pknu = new LatLng(35.134023, 129.104697);
 
         mMap=googleMap;
+        Log.e(TAG,"GoogleMap:"+mMap);
 
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(pknu);
-        markerOptions.title("부경대");
-        markerOptions.snippet("가온관");
-        mMap.addMarker(markerOptions);
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(pknu));
 
         mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
 
         mMap.setOnInfoWindowClickListener(this);
+
+        //CustomWindow 설정
+        CustomInfoAdapter customInfoAdapter = new CustomInfoAdapter(getActivity());
+        mMap.setInfoWindowAdapter(customInfoAdapter);
 
 
 
