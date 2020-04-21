@@ -6,8 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -16,6 +20,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
+
+import java.security.MessageDigest;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -56,6 +62,8 @@ public class SplashActivity extends AppCompatActivity {
 
 
                 });
+
+
     }
     void displayWelcomeMessage(){
         String splash_background=mFirebaseRemoteConfig.getString("splash_background");
@@ -88,4 +96,6 @@ public class SplashActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
+
+
 }

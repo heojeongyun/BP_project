@@ -2,8 +2,12 @@ package com.example.nt_project02;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -30,6 +34,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.lang.reflect.Member;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
 
 
         //파이어 베이스 유저 가져오기
@@ -126,10 +130,12 @@ public class MainActivity extends AppCompatActivity {
         //해당 단말기 토큰을 가져온다(푸시 메세지 등등 전용)
         passPushTokenToServer();
 
-
     }
 
-    ;
+
+
+
+
 
     @Override
     //뒤로가기 버튼 비활성화 (로그아웃 해야 처음 로그인 화면으로 가게끔)

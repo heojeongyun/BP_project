@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -13,8 +12,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide;
-import com.example.nt_project02.Chat.UserModel;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -27,8 +33,10 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
@@ -36,133 +44,193 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Arrays;
+
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private static final String TAG = "LoginActivity";
     private Context mContext;
     private FirebaseAuth mAuth; //파이어베이스 인증객체
-    private GoogleApiClient googleApiClient; //구글 API 클라이언트 객체
+    private GoogleSignInClient mGoogleSignInClient; //구글 API 클라이언트 객체
     private static final int REO_SIGN_GOOGLE = 100; //구글 로그인 결과 코드
     private SignInButton signInButton; //구글로그인 버튼
+    private CallbackManager callbackManager; //페북로그인응답처리할 콜백관리자
+    private LoginButton facebookloginbutton; //페북로그인 버튼
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        mContext = LoginActivity.this;
 
-        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-
-        googleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this,this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
-                .build();
+        callbackManager = CallbackManager.Factory.create(); //페북 콜백 등록
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
 
 
-
-        // 초기화 Firebase Auth
-
-/*        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);*/
-
+        signInButton = findViewById(R.id.activity_login_googlesignInButton);
         mAuth = FirebaseAuth.getInstance(); // 파이어베이스 인증 객체 초기화
+
+        //구글로그인
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
 
         findViewById(R.id.CheckButton).setOnClickListener(onClickListener);
         findViewById(R.id.gotoPasswordResetbutton).setOnClickListener(onClickListener);
         findViewById(R.id.signUp_Activity_Button).setOnClickListener(onClickListener);
         findViewById(R.id.activity_login_TemporaryNativeButton).setOnClickListener(onClickListener);
         findViewById(R.id.activity_login_TemporaryTravelerButton).setOnClickListener(onClickListener);
-        signInButton = findViewById(R.id.signInButton);
-        signInButton.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.activity_login_googlesignInButton).setOnClickListener(onClickListener);
+
+        facebookloginbutton = findViewById(R.id.activity_login_facebookloginbutton);
+        facebookloginbutton.setReadPermissions("email", "public_profile");
+
+        facebookloginbutton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
-            public void onClick(View v) {
-                Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient); //구글에서 제공하는 인증 액티비티 같은 것이 있음
-                startActivityForResult(intent, REO_SIGN_GOOGLE);
+            public void onSuccess(LoginResult loginResult) {
+                //성공하면
+                handleFacebookAccessToken(loginResult.getAccessToken());
+
             }
+            private void handleFacebookAccessToken(AccessToken accessToken) {
+                AuthCredential credential =FacebookAuthProvider.getCredential(accessToken.getToken());
+                mAuth.signInWithCredential(credential).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            //로그인 성공
+                            Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
+                            loginandRegister();
+
+                        } else {
+                            Toast.makeText(LoginActivity.this, "로그인실패", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+
+
+            @Override
+            public void onCancel() {
+                //실패하면
+                Toast.makeText(LoginActivity.this, "onCancel로그인실패", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                //걍에러
+                Toast.makeText(LoginActivity.this, "걍에러", Toast.LENGTH_SHORT).show();
+            }
+
+
         });
+
+
     }
+
+    private void SignIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, REO_SIGN_GOOGLE);
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) { //구글로그인인증을요청했을때 결과값을 되돌려받는곳임
+        callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == REO_SIGN_GOOGLE) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if(result.isSuccess()) { //인증결과가 성공적이면
-                GoogleSignInAccount account = result.getSignInAccount();// account라는 데이터는 구글로그인 정보를 담고있다 (닉, 프사Url, 이메일주소등)
-                resultLogin(account); //로그인 결과 값 출력 수행하라는 메소드
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account);
+            } catch (ApiException e) {
             }
         }
     }
 
-    private void resultLogin(final GoogleSignInAccount account) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(),null);
+    private void firebaseAuthWithGoogle(final GoogleSignInAccount acct) {
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {//구글로그인이 성공했으면
-                            Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            String uid = user.getUid();
-                            // 파이어스토어 객체선언
-                            FirebaseFirestore db = FirebaseFirestore.getInstance();
-                            //파이어스토어에서 해당 유저의 uid를 이용하여 정보 가져오기
-                            final DocumentReference docRef = db.collection("users").document(uid);
-                            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                //정보 가져오는 것이 성공적일 때
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    if (task.isSuccessful()) {
-
-                                        //DocumentSnapshot에 정보를 담아둠
-
-                                        DocumentSnapshot document = task.getResult();
-
-                                        //document가 null이 아닐 때
-
-                                        if (document != null) {
-
-                                            //재차 확인
-                                            if (document.exists()) {
-
-
-                                                MystartActivity(MainActivity.class);
-                                            } else {
-
-//                                                    //로그인은 됐는데, 상세정보가 등록되어 있지 않으면 MemberActivity클래스로 이동
-                                                MystartActivity(MemberActivity.class);
-                                            }
-                                        }
-
-/*                            if(유저모델에 있는 닉네임이 널이라면 멤버액티비티로 가게) {
-                                Intent intent = new Intent(getApplicationContext(), MemberActivity.class);
-                                intent.putExtra("email", account.getEmail());
-                                intent.putExtra("photourl", String.valueOf(account.getPhotoUrl()));//photoUrl을 String 형태로 바꿈
-                                startActivity(intent);
-                            } else {
-                                닉네임이 있다면 메인액티비티로 가게
-                                MystartActivity(MainActivity.class);
-                            }*/
-                                    } else { //로그인 실패했으면
-                                        Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
-                                    }
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    updateUI(acct);
+                                } else {
+                    
+                                    updateUI(null);
                                 }
+
+
+                            }
                             });
+    }
 
 
+
+        private void updateUI(final GoogleSignInAccount account) {
+            AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(),null);
+            mAuth.signInWithCredential(credential)
+                    .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {//구글로그인이 성공했으면
+                                loginandRegister();
+
+
+                            }
                         }
                     }
-                }
-                );}
+                    );}
 
+                    public void loginandRegister(){
+                        Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        String uid = user.getUid();
+                        // 파이어스토어 객체선언
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        //파이어스토어에서 해당 유저의 uid를 이용하여 정보 가져오기
+                        final DocumentReference docRef = db.collection("users").document(uid);
+                        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            //정보 가져오는 것이 성공적일 때
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+
+                                    //DocumentSnapshot에 정보를 담아둠
+
+                                    DocumentSnapshot document = task.getResult();
+
+                                    //document가 null이 아닐 때
+
+                                    if (document != null) {
+
+                                        //재차 확인
+                                        if (document.exists()) {
+
+
+                                            MystartActivity(MainActivity.class);
+                                        } else {
+                                            //로그인은 됐는데, 상세정보가 등록되어 있지 않으면 MemberActivity클래스로 이동
+                                            MystartActivity(MemberActivity.class);
+                                        }
+                                    }
+
+                                } else { //로그인 실패했으면
+                                    Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
 
                     public void onBackPressed() {
                         super.onBackPressed();
@@ -196,16 +264,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                     Temporary_traveler_login();
                                     break;
 
+                                case R.id.activity_login_googlesignInButton:
+                                    SignIn();
+                                    break;
+
                             }
 
 
                         }
-/*        private void signIn() {
-            
-            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-            startActivityForResult(signInIntent, RC_SIGN_IN);
 
-        }*/
 
 
                     };
@@ -223,47 +290,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                             @Override
                                             public void onComplete(@NonNull Task<AuthResult> task) {
                                                 if (task.isSuccessful()) {
-                                                    // Sign in success, update UI with the signed-in user's information
-                                                    FirebaseUser user = mAuth.getCurrentUser();
-                                                    startToast("로그인 성공");
-                                                    String uid = user.getUid();
-                                                    // 파이어스토어 객체선언
-                                                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                                    //파이어스토어에서 해당 유저의 uid를 이용하여 정보 가져오기
-                                                    final DocumentReference docRef = db.collection("users").document(uid);
-                                                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                        @Override
-                                                        //정보 가져오는 것이 성공적일 때
-                                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                            if (task.isSuccessful()) {
-
-                                                                //DocumentSnapshot에 정보를 담아둠
-
-                                                                DocumentSnapshot document = task.getResult();
-
-                                                                //document가 null이 아닐 때
-
-                                                                if (document != null) {
-
-                                                                    //재차 확인
-                                                                    if (document.exists()) {
-
-
-                                                                        MystartActivity(MainActivity.class);
-                                                                    } else {
-
-//                                                    //로그인은 됐는데, 상세정보가 등록되어 있지 않으면 MemberActivity클래스로 이동
-                                                                        MystartActivity(MemberActivity.class);
-                                                                    }
-                                                                }
-                                                                //아예 오류떠서 실패했을 때
-                                                            } else {
-                                                                Log.d("login", "get failed with ", task.getException());
-                                                            }
-                                                        }
-                                                    });
-
-
+                                                    loginandRegister();
                                                 } else {
 
                                                     if (task.getException() != null) {
@@ -295,47 +322,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                             @Override
                                             public void onComplete(@NonNull Task<AuthResult> task) {
                                                 if (task.isSuccessful()) {
-                                                    // Sign in success, update UI with the signed-in user's information
-                                                    FirebaseUser user = mAuth.getCurrentUser();
-                                                    startToast("로그인 성공");
-                                                    String uid = user.getUid();
-                                                    // 파이어스토어 객체선언
-                                                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                                    //파이어스토어에서 해당 유저의 uid를 이용하여 정보 가져오기
-                                                    final DocumentReference docRef = db.collection("users").document(uid);
-                                                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                        @Override
-                                                        //정보 가져오는 것이 성공적일 때
-                                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                            if (task.isSuccessful()) {
-
-                                                                //DocumentSnapshot에 정보를 담아둠
-
-                                                                DocumentSnapshot document = task.getResult();
-
-                                                                //document가 null이 아닐 때
-
-                                                                if (document != null) {
-
-                                                                    //재차 확인
-                                                                    if (document.exists()) {
-
-
-                                                                        MystartActivity(MainActivity.class);
-                                                                    } else {
-
-                                                                        //로그인은 됐는데, 상세정보가 등록되어 있지 않으면 MemberActivity클래스로 이동
-                                                                        MystartActivity(MemberTypeActivity.class);
-                                                                    }
-                                                                }
-                                                                //아예 오류떠서 실패했을 때
-                                                            } else {
-                                                                Log.d("login", "get failed with ", task.getException());
-                                                            }
-                                                        }
-                                                    });
-
-
+                                                    loginandRegister();
                                                 } else {
 
                                                     if (task.getException() != null) {
@@ -369,46 +356,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                             @Override
                                             public void onComplete(@NonNull Task<AuthResult> task) {
                                                 if (task.isSuccessful()) {
-                                                    // Sign in success, update UI with the signed-in user's information
-                                                    FirebaseUser user = mAuth.getCurrentUser();
-                                                    startToast("로그인 성공");
-                                                    String uid = user.getUid();
-                                                    // 파이어스토어 객체선언
-                                                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                                    //파이어스토어에서 해당 유저의 uid를 이용하여 정보 가져오기
-                                                    final DocumentReference docRef = db.collection("users").document(uid);
-                                                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                        @Override
-                                                        //정보 가져오는 것이 성공적일 때
-                                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                            if (task.isSuccessful()) {
-
-                                                                //DocumentSnapshot에 정보를 담아둠
-
-                                                                DocumentSnapshot document = task.getResult();
-
-                                                                //document가 null이 아닐 때
-
-                                                                if (document != null) {
-
-                                                                    //재차 확인
-                                                                    if (document.exists()) {
-
-
-                                                                        MystartActivity(MainActivity.class);
-                                                                    } else {
-
-                                                                        //로그인은 됐는데, 상세정보가 등록되어 있지 않으면 MemberActivity클래스로 이동
-                                                                        MystartActivity(MemberTypeActivity.class);
-                                                                    }
-                                                                }
-                                                                //아예 오류떠서 실패했을 때
-                                                            } else {
-                                                                Log.d("login", "get failed with ", task.getException());
-                                                            }
-                                                        }
-                                                    });
-
+                                                    loginandRegister();
 
                                                 } else {
 
