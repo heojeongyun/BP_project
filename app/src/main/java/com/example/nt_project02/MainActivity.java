@@ -37,10 +37,10 @@ import java.util.Map;
 import devlight.io.library.ntb.NavigationTabBar;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG="Main";
+    private static final String TAG = "Main";
     ViewPager viewPager;
     private Integer navigationTabBar_position;
-    private FirebaseAuth mAuth ;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,20 +49,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
-
         //파이어 베이스 유저 가져오기
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
 
-
-
-
-
         //유저가 없다면 회원가입으로 돌아가게 하기
-        if(user==null){
+        if (user == null) {
             MystartActivity(Sign_UpActivity.class);
-        }else{// 회원가입 로그인 성공
+        } else {// 회원가입 로그인 성공
 
             // 파이어스토어 객체선언
             FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -76,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                         //DocumentSnapshot에 정보를 담아둠
                         DocumentSnapshot document = task.getResult();
                         //document가 null이 아닐 때
-                        if(document!=null){
+                        if (document != null) {
                             //재차 확인
                             if (document.exists()) {
                                 //LogCat에 출력
@@ -97,24 +91,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
-
-        viewPager=(ViewPager) findViewById(R.id.vp_horizontal_ntb);
+        viewPager = (ViewPager) findViewById(R.id.vp_horizontal_ntb);
 
         viewPager.setOffscreenPageLimit(4);
 
-        PagerAdapter adapter=new PagerAdapter(getSupportFragmentManager());
+        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
 
-        News_Fragment news_fragment =new News_Fragment();
+        News_Fragment news_fragment = new News_Fragment();
         adapter.addItem(news_fragment);
 
-        PeopleFragment peopleFragment =new PeopleFragment();
+        PeopleFragment peopleFragment = new PeopleFragment();
         adapter.addItem(peopleFragment);
 
-        Chatting_Fragment chatting_fragment =new Chatting_Fragment();
+        Chatting_Fragment chatting_fragment = new Chatting_Fragment();
         adapter.addItem(chatting_fragment);
 
-        Setting_Fragment setting_fragment =new Setting_Fragment();
+        Setting_Fragment setting_fragment = new Setting_Fragment();
         adapter.addItem(setting_fragment);
 
         viewPager.setAdapter(adapter);
@@ -137,9 +129,10 @@ public class MainActivity extends AppCompatActivity {
 
         //super.onBackPressed();
     }
+
     //액티비티 이동 메서드
-    private void MystartActivity(Class c){
-        Intent intent=new Intent(this,c);
+    private void MystartActivity(Class c) {
+        Intent intent = new Intent(this, c);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 
@@ -215,14 +208,14 @@ public class MainActivity extends AppCompatActivity {
     class PagerAdapter extends FragmentStatePagerAdapter {
 
 
-        ArrayList<Fragment> items=new ArrayList<Fragment>();
+        ArrayList<Fragment> items = new ArrayList<Fragment>();
 
         public PagerAdapter(FragmentManager fm) {
 
             super(fm);
         }
 
-        public void addItem(Fragment item){
+        public void addItem(Fragment item) {
             items.add(item);
         }
 
@@ -238,12 +231,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //토큰 가져오는 메소드
-    void passPushTokenToServer(){
+    void passPushTokenToServer() {
 
-        String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String token = FirebaseInstanceId.getInstance().getToken();
-        Map<String,Object> map=new HashMap<>();
-        map.put("pushToken",token);
+        Map<String, Object> map = new HashMap<>();
+        map.put("pushToken", token);
 
         //파이어베이스의 해당하는 아이디에 토큰을 업데이트
         FirebaseFirestore.getInstance().collection("users").document(uid).update(map);

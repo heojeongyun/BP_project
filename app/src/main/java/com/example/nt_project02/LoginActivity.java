@@ -242,6 +242,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                                                                 DocumentSnapshot document = task.getResult();
 
+
+
+
+
+
                                                                 //document가 null이 아닐 때
 
                                                                 if (document != null) {

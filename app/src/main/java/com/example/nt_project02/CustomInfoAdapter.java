@@ -68,6 +68,7 @@ public class CustomInfoAdapter extends Fragment implements GoogleMap.InfoWindowA
 
 
 
+
         return infoWindow;
     }
 }

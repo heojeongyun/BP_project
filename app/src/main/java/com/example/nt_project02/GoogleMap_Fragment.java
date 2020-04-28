@@ -24,6 +24,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.os.Parcelable;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -76,6 +77,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -83,6 +85,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -106,17 +109,20 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
     private static final int AUTOCOMPLETE_REQUEST_CODE =1 ;
     private static final int REQUEST_CONTENT = 101;
 
-    public static GoogleMap mMap=null;
+    private GoogleMap mMap=null;
     private MapView mapView = null;
     private GoogleApiClient googleApiClient=null;
-    private Marker currentMarker=null;
-    private LatLng s;
+    public static Marker currentMarker=null;
+
     private Place place;
     private Location location=new Location("");
-    private PlacesClient placesClient;
+    public static PlacesClient placesClient;
     private Bitmap bitmap;
-    private DatabaseReference mDatabase;
+
     private StorageReference MapImageref;
+    private ArrayList<MarkerModel.MarkerData> markerModels;
+    private  DatabaseReference mMarkerDatabase;
+    private  ValueEventListener postListener;
 
 
     private SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy.MM.dd HH:mm");
@@ -124,8 +130,11 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
 
 
 
+
     public GoogleMap_Fragment() {
-        mDatabase=FirebaseDatabase.getInstance().getReference();
+
+        markerModels=new ArrayList<MarkerModel.MarkerData>();
+
 
 
     }
@@ -144,7 +153,9 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
     public void setCurrentLocation(Location location, String markerTitle, String markerSnippet, String Content, Bitmap bitmap){
 
 
-
+        if(currentMarker !=null){
+            currentMarker.remove();
+        }
 
         if(location !=null) {
             //현재위치의 위도 경도 가져옴
@@ -153,88 +164,24 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
             final LatLng[] currentLocation = {new LatLng(location.getLatitude(), location.getLongitude())};
 
             // 마커 설정
-            Marker Search_Marker = mMap.addMarker(new MarkerOptions()
+            currentMarker = mMap.addMarker(new MarkerOptions()
                     .position(currentLocation[0])
                     .title(markerTitle)
                     .snippet(markerSnippet)
                     .draggable(true)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
 
-            //마커 설정
-            /*MarkerOptions markerOptions=new MarkerOptions();
-            markerOptions.position(currentLocation);
-            markerOptions.title(markerTitle);
-            markerOptions.snippet(markerSnippet);
-            markerOptions.draggable(true);
-            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-            mMap.addMarker(markerOptions);*/
 
             InfoWindowData info = new InfoWindowData();
             info.setMarker_Content(Content);
 
-            Search_Marker.setTag(info);
+            currentMarker.setTag(info);
 
-            // Get the data from an ImageView as bytes
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            byte[] data = baos.toByteArray();
-
-
-
-
-
-
-
-
-            final MarkerModel.MarkerData makrer=new MarkerModel.MarkerData();
-
-            //마커 정보 설정
-            makrer.Content= Content;
-            makrer.Latitude=location.getLatitude();
-            makrer.Longitude=location.getLongitude();
-            makrer.markerTitle=markerTitle;
-            makrer.markerSnippet=markerSnippet;
-            makrer.uid= FirebaseAuth.getInstance().getCurrentUser().getUid(); //어플 현재 이용자 아이디
-            makrer.timestamp= ServerValue.TIMESTAMP; //시간정보 설정;
-
-            //스토리지에 사진 업로드
-            final StorageReference ref=FirebaseStorage.getInstance().getReference().child("GoogleMapImages").child(data.toString());
-            UploadTask uploadTask = ref.putBytes(data);
-
-            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-
-                    // Continue with the task to get the download URL
-                    return ref.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-
-
-                        //Url 정보 가져오기
-                        String ImageUrl = task.getResult().toString();
-                        makrer.ImageUrl=ImageUrl;
-
-                        //데이터베이스에 마커 정보 추가
-                        mDatabase.child("chatrooms").child(MessageActivity.chatRoomUid).child("CustomMarker").push().setValue(makrer).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(getActivity(),"성공!",Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    }
-                }
-            });
 
             //지도 카메라 이동
             mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation[0]));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+
             return;
         }
     }
@@ -257,12 +204,14 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
         mapView.getMapAsync(this);
 
 
+
+
+        Button button=(Button) layout.findViewById(R.id.button);
+
         //Google Places Api 초기 설튼 설정
 
         Places.initialize(getContext(), "AIzaSyA7YlrC4J7fuD4VCTkCNgoQzg8zTVJytsg");
         placesClient = Places.createClient(getContext());
-
-        Button button=(Button) layout.findViewById(R.id.button);
 
 
 
@@ -328,7 +277,12 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
     @Override
     public void onResume() {
         super.onResume();
-        mapView.onResume();
+
+       /* if(mMap != null){ //prevent crashing if the map doesn't exist yet (eg. on starting activity)
+            mMap.clear();
+            mMarkerDatabase.addValueEventListener(postListener);
+
+        }*/
     }
 
     @Override
@@ -373,6 +327,8 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
                 Log.i(TAG, "Place: " + place.getName() + ", " + place.getId()+ ", "+place.getLatLng());
 
 
+
+
                 if(place.getPhotoMetadatas() !=null) {
                     PhotoMetadata photoMetadata = place.getPhotoMetadatas().get(0);
 
@@ -380,8 +336,8 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
 
                     // Create a FetchPhotoRequest.
                     FetchPhotoRequest photoRequest = FetchPhotoRequest.builder(photoMetadata)
-                            .setMaxWidth(500) // Optional.
-                            .setMaxHeight(300) // Optional.
+                            .setMaxWidth(1000) // Optional.
+                            .setMaxHeight(500) // Optional.
                             .build();
 
                     placesClient.fetchPhoto(photoRequest).addOnSuccessListener(new OnSuccessListener<FetchPhotoResponse>() {
@@ -392,6 +348,7 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
                             //검색 된 위치 설정
                             setCurrentLocation(location, place.getName(), place.getAddress(), "장소를 설명해주세요!", bitmap);
                         }
+
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
@@ -406,11 +363,11 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
 
                     //장소 사진 정보가 없을 때
                 }else{
+
                     bitmap= BitmapFactory.decodeResource(getContext().getResources(), R.drawable.bluepeople_logo);
                     setCurrentLocation(location, place.getName(), place.getAddress(), "장소를 설명해주세요!", bitmap);
+
                 }
-
-
 
 
 
@@ -432,11 +389,9 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
 
         if(requestCode == REQUEST_CONTENT){ //구글 맵 InfoWindow 클릭 시
             if(resultCode== RESULT_OK){ //결과가 정상적이라면
-
-
                 String Content=data.getStringExtra("Content"); // InfoWindow_Edit Activity 데이터 가져오기
                 Log.d(TAG,"Content:"+Content);
-                setCurrentLocation(location,place.getName(),place.getAddress(),Content,bitmap); //마커 정보 다시 설정
+                //setCurrentLocation(location,place.getName(),place.getAddress(),Content,bitmap); //마커 정보 다시 설정
                 Log.d(TAG,"확인");
             }
 
@@ -455,13 +410,24 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
 
         mMap=googleMap;
 
-       DatabaseReference mMarkerDatabase=FirebaseDatabase.getInstance().getReference().child("chatrooms").child(MessageActivity.chatRoomUid).child("CustomMarker");;
 
-        ValueEventListener postListener = new ValueEventListener() {
+        mMarkerDatabase =FirebaseDatabase.getInstance().getReference().child("chatrooms").child(MessageActivity.chatRoomUid).child("CustomMarker");
+
+
+
+         postListener= new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                mMap.clear();
                 // Get Post object and use the values to update the UI
                 for(DataSnapshot snapshot: dataSnapshot.getChildren()){
+
+
+                    Log.e(TAG,"변경");
+                    Log.e(TAG,"snapshot:"+ snapshot);
+
                     MarkerModel.MarkerData markerModel=snapshot.getValue(MarkerModel.MarkerData.class);
 
                     LatLng currentLocation =new LatLng(markerModel.Latitude,markerModel.Longitude);
@@ -473,16 +439,18 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
                             .position(currentLocation)
                             .title(markerModel.markerTitle)
                             .snippet(markerModel.markerSnippet)
-                            .draggable(true)
+                            .draggable(false)
                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
 
-                    Log.e(TAG,"ImageUrl:"+markerModel.ImageUrl);
 
                     InfoWindowData info=new InfoWindowData();
                     info.setMarker_Content(markerModel.Content);
 
                     Marker.setTag(info);
+
+
                 }
+
                 // ...
             }
 
@@ -499,20 +467,16 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
 
 
 
-
-
         mMap.moveCamera(CameraUpdateFactory.newLatLng(pknu));
 
         mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
 
         mMap.setOnInfoWindowClickListener(this);
 
+
         //CustomWindow 설정
         CustomInfoAdapter customInfoAdapter = new CustomInfoAdapter(getActivity());
         mMap.setInfoWindowAdapter(customInfoAdapter);
-
-
-
 
 
 
@@ -539,12 +503,34 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
 
     //Custom InfoWindow 클릭 시 마커정보 수정 액티비티로 이동
     @Override
-    public void onInfoWindowClick(Marker marker) {
+    public void onInfoWindowClick(final Marker marker) {
         Toast.makeText(getContext(), "Info window clicked",Toast.LENGTH_SHORT).show();
-        Intent intent=new Intent(getContext(),InfoWindow_Edit.class);
-        intent.putExtra("Place_Name",marker.getTitle());
-        intent.putExtra("Place_Adress",marker.getSnippet());
-        getActivity().startActivityForResult(intent,REQUEST_CONTENT);
+
+        //검색 마커 클릭 (빨간색)
+        if(marker.isDraggable()){
+            Intent intent=new Intent(getContext(),InfoWindow_Edit.class);
+            intent.putExtra("Place",place);
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            intent.putExtra("image",byteArray);
+
+            //intent.putExtra("Bitmap",bitmap);
+            //intent.putExtra("Place_Name",marker.getTitle());
+            //intent.putExtra("Place_Adress",marker.getSnippet());
+            getActivity().startActivityForResult(intent,REQUEST_CONTENT);
+
+
+        }else //등록 마커 클릭 시(파란색)
+            {
+
+                Intent intent=new Intent(getContext(),InfoWindow_Edit.class);
+                intent.putExtra("MarkerAdress",marker.getSnippet());
+                getActivity().startActivityForResult(intent,REQUEST_CONTENT);
+
+        }
+
 
     }
 
