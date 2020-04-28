@@ -2,9 +2,7 @@ package com.example.nt_project02.Fragment;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,11 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.nt_project02.Chat.ChatModel;
+import com.example.nt_project02.CustomData.ChatModel;
 import com.example.nt_project02.Chat.MessageActivity;
 import com.example.nt_project02.Chat.UserModel;
 import com.example.nt_project02.Native_Chat_Management;
-import com.example.nt_project02.Native_Register;
 import com.example.nt_project02.R;
 import com.example.nt_project02.Traveler_Chat_Management;
 import com.google.android.gms.tasks.OnCompleteListener;

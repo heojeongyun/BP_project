@@ -149,22 +149,24 @@ public class Setting_Fragment extends Fragment {
                                             }
                                         });
 
-                                    }  //else {
-//                                        profile_textview.setText("여행자");
+                                    }  else {
+                                        profile_textview.setText("여행자");
+
 //                                        //로고 안보이게
 //                                        bluepeopleImageView.setVisibility(View.GONE);
-//                                        NativeRegisterButton.setOnClickListener(new View.OnClickListener() { //현지인 등록 버튼
-//                                            @Override
-//                                            public void onClick(View v) {
-//                                                Intent intent = new Intent(getActivity(), Native_Register.class);
-//                                                //intent.putExtra("user_kind", "여행자");
-//                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                                                startActivity(intent);
-//
-//
-//                                            }
-//                                        });
-//                                    }
+
+                                       NativeRegisterButton.setOnClickListener(new View.OnClickListener() { //현지인 등록 버튼
+                                            @Override
+                                            public void onClick(View v) {
+                                                Intent intent = new Intent(getActivity(), Native_Register.class);
+                                                //intent.putExtra("user_kind", "여행자");
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                startActivity(intent);
+
+
+                                            }
+                                        });
+                                    }
                                 }
                                 if (userModel.getImageurl() != null) { // 이미지의 URL값이 존재할 경우에만 사진을 가져온다
                                     register_ImageURL = userModel.getImageurl();
@@ -291,9 +293,10 @@ public class Setting_Fragment extends Fragment {
 
                 // Firebase storage로부터 이미지 URL을 통해 이미지 파일을 가져온다
                 final StorageReference ref = FirebaseStorage.getInstance().getReference().child("UserImages").child(user.getUid());
+                // 등록한 사진의 URL을 Firebase storage에 업로드 하는 부분
                 UploadTask uploadTask = ref.putFile(imageUri);
 
-                // 등록한 사진의 URL을 Firebase storage에 업로드 하는 부분
+
                 Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                     @Override
                     public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {

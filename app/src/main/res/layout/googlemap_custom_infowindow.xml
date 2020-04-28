@@ -19,13 +19,13 @@
         android:layout_height="100dp"
         android:orientation="horizontal">
 
-        <ImageView
+       <!-- <ImageView
             android:id="@+id/googlemap_custom_infowindow_PlaceImage_ImageView"
             android:layout_marginLeft="10dp"
             android:layout_gravity="center"
             android:layout_width="100dp"
             android:layout_height="80dp"
-            android:src="@drawable/travel"/>
+            android:src="@drawable/travel"/>-->
 
 
         <LinearLayout

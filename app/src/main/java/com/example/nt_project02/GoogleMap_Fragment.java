@@ -24,6 +24,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.os.Parcelable;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,7 +33,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.nt_project02.Chat.MessageActivity;
 import com.example.nt_project02.CustomData.InfoWindowData;
+import com.example.nt_project02.CustomData.MarkerModel;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -53,6 +56,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -68,10 +72,26 @@ import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
@@ -89,20 +109,33 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
     private static final int AUTOCOMPLETE_REQUEST_CODE =1 ;
     private static final int REQUEST_CONTENT = 101;
 
-    public static GoogleMap mMap=null;
+    private GoogleMap mMap=null;
     private MapView mapView = null;
     private GoogleApiClient googleApiClient=null;
-    private Marker currentMarker=null;
-    private LatLng s;
+    public static Marker currentMarker=null;
+
     private Place place;
     private Location location=new Location("");
-    private PlacesClient placesClient;
+    public static PlacesClient placesClient;
     private Bitmap bitmap;
+
+    private StorageReference MapImageref;
+    private ArrayList<MarkerModel.MarkerData> markerModels;
+    private  DatabaseReference mMarkerDatabase;
+    private  ValueEventListener postListener;
+
+
+    private SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy.MM.dd HH:mm");
+
 
 
 
 
     public GoogleMap_Fragment() {
+
+        markerModels=new ArrayList<MarkerModel.MarkerData>();
+
+
 
     }
 
@@ -115,47 +148,40 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
 
     }
 
+
     //파리미터 위치로 마크를 찍고 카메라 이동해주는 메서드
     public void setCurrentLocation(Location location, String markerTitle, String markerSnippet, String Content, Bitmap bitmap){
 
 
+        if(currentMarker !=null){
+            currentMarker.remove();
+        }
 
-        if(location !=null){
+        if(location !=null) {
             //현재위치의 위도 경도 가져옴
 
-            
-            LatLng currentLocation =new LatLng(location.getLatitude(),location.getLongitude());
+
+            final LatLng[] currentLocation = {new LatLng(location.getLatitude(), location.getLongitude())};
 
             // 마커 설정
-             Marker Search_Marker= mMap.addMarker(new MarkerOptions()
-                            .position(currentLocation)
-                            .title(markerTitle)
-                            .snippet(markerSnippet)
-                            .draggable(true)
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+            currentMarker = mMap.addMarker(new MarkerOptions()
+                    .position(currentLocation[0])
+                    .title(markerTitle)
+                    .snippet(markerSnippet)
+                    .draggable(true)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
 
-            //마커 설정
-            /*MarkerOptions markerOptions=new MarkerOptions();
-            markerOptions.position(currentLocation);
-            markerOptions.title(markerTitle);
-            markerOptions.snippet(markerSnippet);
-            markerOptions.draggable(true);
-            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-            mMap.addMarker(markerOptions);*/
 
-            InfoWindowData info=new InfoWindowData();
-            info.setMarker_Bitmap(bitmap);
+            InfoWindowData info = new InfoWindowData();
             info.setMarker_Content(Content);
 
-            Search_Marker.setTag(info);
-
-
-
+            currentMarker.setTag(info);
 
 
             //지도 카메라 이동
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation[0]));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+
             return;
         }
     }
@@ -178,12 +204,14 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
         mapView.getMapAsync(this);
 
 
+
+
+        Button button=(Button) layout.findViewById(R.id.button);
+
         //Google Places Api 초기 설튼 설정
 
         Places.initialize(getContext(), "AIzaSyA7YlrC4J7fuD4VCTkCNgoQzg8zTVJytsg");
         placesClient = Places.createClient(getContext());
-
-        Button button=(Button) layout.findViewById(R.id.button);
 
 
 
@@ -249,7 +277,12 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
     @Override
     public void onResume() {
         super.onResume();
-        mapView.onResume();
+
+       /* if(mMap != null){ //prevent crashing if the map doesn't exist yet (eg. on starting activity)
+            mMap.clear();
+            mMarkerDatabase.addValueEventListener(postListener);
+
+        }*/
     }
 
     @Override
@@ -294,25 +327,28 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
                 Log.i(TAG, "Place: " + place.getName() + ", " + place.getId()+ ", "+place.getLatLng());
 
 
+
+
                 if(place.getPhotoMetadatas() !=null) {
                     PhotoMetadata photoMetadata = place.getPhotoMetadatas().get(0);
 
 
+
                     // Create a FetchPhotoRequest.
                     FetchPhotoRequest photoRequest = FetchPhotoRequest.builder(photoMetadata)
-                            .setMaxWidth(500) // Optional.
-                            .setMaxHeight(300) // Optional.
+                            .setMaxWidth(1000) // Optional.
+                            .setMaxHeight(500) // Optional.
                             .build();
 
                     placesClient.fetchPhoto(photoRequest).addOnSuccessListener(new OnSuccessListener<FetchPhotoResponse>() {
                         @Override
                         public void onSuccess(FetchPhotoResponse fetchPhotoResponse) {
 
-
                             bitmap = fetchPhotoResponse.getBitmap();
                             //검색 된 위치 설정
                             setCurrentLocation(location, place.getName(), place.getAddress(), "장소를 설명해주세요!", bitmap);
                         }
+
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
@@ -327,8 +363,10 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
 
                     //장소 사진 정보가 없을 때
                 }else{
+
                     bitmap= BitmapFactory.decodeResource(getContext().getResources(), R.drawable.bluepeople_logo);
                     setCurrentLocation(location, place.getName(), place.getAddress(), "장소를 설명해주세요!", bitmap);
+
                 }
 
 
@@ -351,11 +389,9 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
 
         if(requestCode == REQUEST_CONTENT){ //구글 맵 InfoWindow 클릭 시
             if(resultCode== RESULT_OK){ //결과가 정상적이라면
-
-
                 String Content=data.getStringExtra("Content"); // InfoWindow_Edit Activity 데이터 가져오기
                 Log.d(TAG,"Content:"+Content);
-                setCurrentLocation(location,place.getName(),place.getAddress(),Content,bitmap); //마커 정보 다시 설정
+                //setCurrentLocation(location,place.getName(),place.getAddress(),Content,bitmap); //마커 정보 다시 설정
                 Log.d(TAG,"확인");
             }
 
@@ -370,8 +406,65 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
 
         LatLng pknu = new LatLng(35.134023, 129.104697);
 
+
+
         mMap=googleMap;
-        Log.e(TAG,"GoogleMap:"+mMap);
+
+
+        mMarkerDatabase =FirebaseDatabase.getInstance().getReference().child("chatrooms").child(MessageActivity.chatRoomUid).child("CustomMarker");
+
+
+
+         postListener= new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                mMap.clear();
+                // Get Post object and use the values to update the UI
+                for(DataSnapshot snapshot: dataSnapshot.getChildren()){
+
+
+                    Log.e(TAG,"변경");
+                    Log.e(TAG,"snapshot:"+ snapshot);
+
+                    MarkerModel.MarkerData markerModel=snapshot.getValue(MarkerModel.MarkerData.class);
+
+                    LatLng currentLocation =new LatLng(markerModel.Latitude,markerModel.Longitude);
+
+
+
+                    // 마커 설정
+                    Marker Marker= mMap.addMarker(new MarkerOptions()
+                            .position(currentLocation)
+                            .title(markerModel.markerTitle)
+                            .snippet(markerModel.markerSnippet)
+                            .draggable(false)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+
+
+                    InfoWindowData info=new InfoWindowData();
+                    info.setMarker_Content(markerModel.Content);
+
+                    Marker.setTag(info);
+
+
+                }
+
+                // ...
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                // ...
+            }
+        };
+        mMarkerDatabase.addValueEventListener(postListener);
+
+
+
 
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(pknu));
@@ -380,12 +473,10 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
 
         mMap.setOnInfoWindowClickListener(this);
 
+
         //CustomWindow 설정
         CustomInfoAdapter customInfoAdapter = new CustomInfoAdapter(getActivity());
         mMap.setInfoWindowAdapter(customInfoAdapter);
-
-
-
 
 
 
@@ -412,12 +503,34 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
 
     //Custom InfoWindow 클릭 시 마커정보 수정 액티비티로 이동
     @Override
-    public void onInfoWindowClick(Marker marker) {
+    public void onInfoWindowClick(final Marker marker) {
         Toast.makeText(getContext(), "Info window clicked",Toast.LENGTH_SHORT).show();
-        Intent intent=new Intent(getContext(),InfoWindow_Edit.class);
-        intent.putExtra("Place_Name",place.getName());
-        intent.putExtra("Place_Adress",place.getAddress());
-        getActivity().startActivityForResult(intent,REQUEST_CONTENT);
+
+        //검색 마커 클릭 (빨간색)
+        if(marker.isDraggable()){
+            Intent intent=new Intent(getContext(),InfoWindow_Edit.class);
+            intent.putExtra("Place",place);
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            intent.putExtra("image",byteArray);
+
+            //intent.putExtra("Bitmap",bitmap);
+            //intent.putExtra("Place_Name",marker.getTitle());
+            //intent.putExtra("Place_Adress",marker.getSnippet());
+            getActivity().startActivityForResult(intent,REQUEST_CONTENT);
+
+
+        }else //등록 마커 클릭 시(파란색)
+            {
+
+                Intent intent=new Intent(getContext(),InfoWindow_Edit.class);
+                intent.putExtra("MarkerAdress",marker.getSnippet());
+                getActivity().startActivityForResult(intent,REQUEST_CONTENT);
+
+        }
+
 
     }
 
