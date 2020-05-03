@@ -3,7 +3,6 @@ package com.example.nt_project02.Chat;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
@@ -16,28 +15,21 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.nt_project02.CustomData.ChatModel;
 import com.example.nt_project02.Fragment.Chatting_Fragment;
 import com.example.nt_project02.GoogleMap_Fragment;
-import com.example.nt_project02.MainActivity;
-import com.example.nt_project02.NativeSearch;
-import com.example.nt_project02.Native_Register;
 import com.example.nt_project02.NotificationModel;
 import com.example.nt_project02.R;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -51,8 +43,6 @@ import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -94,7 +84,7 @@ public class MessageActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private String uid;
-    private String chatRoomUid;
+    public static String chatRoomUid;
     private String ImageUrl;
     private FirebaseDatabase database;
     private DatabaseReference myRef;
@@ -124,7 +114,7 @@ public class MessageActivity extends AppCompatActivity {
 
         Intent data=getIntent();
 
-        uid=FirebaseAuth.getInstance().getCurrentUser().getUid();//어플 현재 이용자 아이디
+        uid=FirebaseAuth.getInstance().getCurrentUser().getUid(); //어플 현재 이용자 아이디
         destinationUid=data.getStringExtra("destination_Uid"); // 상대방 아이디
 
 
@@ -198,6 +188,7 @@ public class MessageActivity extends AppCompatActivity {
 
                      }
                  });
+
 
              }
 

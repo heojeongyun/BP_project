@@ -112,10 +112,12 @@ public class PeopleFragment extends Fragment {
 
 
         return rootView;
+
     }
 
 
     private void MystartActivity(Class c) {
+
         Intent intent = new Intent(getActivity(), c);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // 로그아웃시 초기화하는 부분
         startActivity(intent);

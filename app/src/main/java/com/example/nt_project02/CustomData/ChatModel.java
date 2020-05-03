@@ -1,4 +1,4 @@
-package com.example.nt_project02.Chat;
+package com.example.nt_project02.CustomData;
 
 import java.util.HashMap;
 import java.util.Map;
