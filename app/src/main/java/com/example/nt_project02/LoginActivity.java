@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
 
     private void userLogin(){
-        //구글로그인이 성공했으면
+        //로그인이 성공했으면
             Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
             FirebaseUser user = mAuth.getCurrentUser();
             String uid = user.getUid();
