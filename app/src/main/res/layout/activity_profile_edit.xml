@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:orientation="horizontal"
+        android:background="#448AFF">
+
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayout01"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+
+            <Button
+                android:id="@+id/add_btn"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:text="저장"
+                android:layout_alignParentRight="true"
+                android:textSize="15dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/hangeulnurib"
+                />
+
+
+            <TextView
+                android:id="@+id/nick_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="이름"
+                android:textSize="20dp"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:fontFamily="@font/hangeulnurib"
+                android:textColor="@color/white"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="130dp"
+                />
+
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:id="@+id/ivUser"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:src="@drawable/user"
+                android:layout_gravity="center"
+                android:layout_centerInParent="true" />
+
+            <EditText
+                android:id = "@+id/introduction_EditText"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="상세프로필에 등록될 소개글을 50자 내로 작성해 주세요."
+                android:textSize="15dp"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:fontFamily="@font/hangeulnurib"
+                android:layout_centerInParent="true"
+                android:layout_below="@+id/ivUser"
+                android:maxLength="50"
+                android:maxLines="3"
+                />
+
+            <TextView
+                android:layout_marginTop="300dp"
+                android:gravity="right"
+                android:id="@+id/tv_input_length"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:text="0글자"
+                android:layout_marginHorizontal="8dp" />
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="추천 코스 등록하기" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_margin="20dp"
+        android:scaleType="fitStart"
+        app:srcCompat="@drawable/course" />
+
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/reviewListView">
+
+    </ListView>
+
+
+</LinearLayout>

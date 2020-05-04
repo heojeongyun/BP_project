@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,6 +69,8 @@ public class Setting_Fragment extends Fragment {
     private Button NativeRegisterButton;
     private TextView profile_textview;
     private ImageView bluepeopleImageView;
+    LinearLayout fragment_setting_native_register;
+    LinearLayout native_register_line;
 
 
     @Override
@@ -115,6 +118,10 @@ public class Setting_Fragment extends Fragment {
                 });*/
 
         NativeRegisterButton = (Button) rootView.findViewById(R.id.fragment_setting_native_register_Button);
+        fragment_setting_native_register = (LinearLayout) rootView.findViewById(R.id.fragment_setting_native_register);
+        native_register_line = (LinearLayout) rootView.findViewById(R.id.native_register_line);
+
+        출처: https://kdsoft-zeros.tistory.com/102 [삽질하는 개발자...]
 
         db.collection("users")
                 .whereEqualTo("uid", user_uid)
@@ -137,7 +144,8 @@ public class Setting_Fragment extends Fragment {
                                 if (user_kind != null) {
                                     if (user_kind.equals("현지인")) {
                                         //현지인이면 등록 버튼 안 보이게
-                                        NativeRegisterButton.setVisibility(View.GONE);
+                                        fragment_setting_native_register.setVisibility(View.GONE);
+                                        native_register_line.setVisibility(View.GONE);
                                         //프로필 보기 클릭 시 본인 프로필창으로 이
                                         profile_textview.setOnClickListener(new View.OnClickListener() {
                                             @Override
