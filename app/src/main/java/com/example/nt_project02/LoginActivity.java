@@ -50,17 +50,18 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mContext = LoginActivity.this;
+        mAuth = FirebaseAuth.getInstance(); // 파이어베이스 인증 객체 초기화
 
-        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        // Configure Google Sign In
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
         googleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this,this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-
 
 
         // 초기화 Firebase Auth
@@ -72,7 +73,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);*/
 
-        mAuth = FirebaseAuth.getInstance(); // 파이어베이스 인증 객체 초기화
+
 
         findViewById(R.id.CheckButton).setOnClickListener(onClickListener);
         findViewById(R.id.gotoPasswordResetbutton).setOnClickListener(onClickListener);
@@ -94,13 +95,37 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == REO_SIGN_GOOGLE) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if(result.isSuccess()) { //인증결과가 성공적이면
-                GoogleSignInAccount account = result.getSignInAccount();// account라는 데이터는 구글로그인 정보를 담고있다 (닉, 프사Url, 이메일주소등)
-                GoogleLogin(account); //로그인 결과 값 출력 수행하라는 메소드
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account);
+            } catch (ApiException e) {
+                // Google Sign In failed, update UI appropriately
+                Log.w(TAG, "Google sign in failed", e);
             }
         }
     }
+
+    private void firebaseAuthWithGoogle(final GoogleSignInAccount acct) {
+        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(),null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {//구글로그인이 성공했으면
+                                    userLogin();
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Log.w(TAG, "signInWithCredential:failure", task.getException());
+                                    updateUI(null);//이부분에뭘넣을지생각해봐
+                                }
+                            }
+                        }
+                );
+    }
+
 
 
     private void userLogin(){
@@ -157,19 +182,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     }
 
-    private void GoogleLogin(final GoogleSignInAccount account) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(),null);
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {//구글로그인이 성공했으면
-                            userLogin();
-                        }
-                    }
-                }
-                );
-    }
+
 
 
 
