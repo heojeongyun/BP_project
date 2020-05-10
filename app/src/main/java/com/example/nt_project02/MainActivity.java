@@ -1,6 +1,7 @@
 package com.example.nt_project02;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -237,6 +238,7 @@ public class MainActivity extends AppCompatActivity {
             return items.size();
         }
     }
+
 
     //토큰 가져오는 메소드
     void passPushTokenToServer() {

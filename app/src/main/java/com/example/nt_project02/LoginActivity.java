@@ -13,6 +13,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -25,6 +33,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
@@ -37,9 +46,10 @@ public class LoginActivity extends AppCompatActivity  {
     private static final String TAG = "LoginActivity";
     private Context mContext;
     private FirebaseAuth mAuth; //파이어베이스 인증객체
+    private CallbackManager mCallbackManager;
     private GoogleSignInClient mGoogleSignInClient; //구글 API 클라이언트 객체
     private static final int REO_SIGN_GOOGLE = 100; //구글 로그인 결과 코드
-    private SignInButton signInButton; //구글로그인 버튼
+    private LoginButton facebookloginButton; //페북로그인버튼
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +57,7 @@ public class LoginActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_login);
         mContext = LoginActivity.this;
         mAuth = FirebaseAuth.getInstance(); // 파이어베이스 인증 객체 초기화
+        mCallbackManager = CallbackManager.Factory.create();
 
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -57,19 +68,61 @@ public class LoginActivity extends AppCompatActivity  {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
 
+        LoginButton facebookloginButton = findViewById(R.id.activity_login_facebookloginbutton);
+        facebookloginButton.setReadPermissions("email");
+        facebookloginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        Log.d(TAG, "facebook:onSuccess:" + loginResult);
+                        handleFacebookAccessToken(loginResult.getAccessToken());
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Log.d(TAG, "facebook:onCancel");
+                        // ...
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+                        Log.d(TAG, "facebook:onError", error);
+                        // ...
+                    }
+                });
+
+
         findViewById(R.id.CheckButton).setOnClickListener(onClickListener);
         findViewById(R.id.gotoPasswordResetbutton).setOnClickListener(onClickListener);
         findViewById(R.id.signUp_Activity_Button).setOnClickListener(onClickListener);
         findViewById(R.id.activity_login_TemporaryNativeButton).setOnClickListener(onClickListener);
         findViewById(R.id.activity_login_TemporaryTravelerButton).setOnClickListener(onClickListener);
-        signInButton = findViewById(R.id.activity_login_googlesignInButton);
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signIn();
-            }
-        });
+        findViewById(R.id.activity_login_googlesignInButton).setOnClickListener(onClickListener);
 
+
+    }
+
+    private void handleFacebookAccessToken(AccessToken token) {
+        Log.d(TAG, "handleFacebookAccessToken:" + token);
+
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithCredential:success");
+                            userLogin();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        // ...
+                    }
+                });
     }
 
 
@@ -105,7 +158,6 @@ public class LoginActivity extends AppCompatActivity  {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {//구글로그인이 성공했으면
-//                                    FirebaseUser user = mAuth.getCurrentUser();
                                     userLogin();
                                 } else {
                                     // If sign in fails, display a message to the user.
@@ -193,6 +245,10 @@ public class LoginActivity extends AppCompatActivity  {
 
                 case R.id.activity_login_TemporaryTravelerButton:
                     Temporary_traveler_login();
+                    break;
+
+                case R.id.activity_login_googlesignInButton:
+                    signIn();
                     break;
 
             }
