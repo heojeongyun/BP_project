@@ -17,18 +17,13 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -69,27 +64,27 @@ public class LoginActivity extends AppCompatActivity  {
         revokeAccess();
 
 
-        LoginButton facebookloginButton = findViewById(R.id.activity_login_facebookloginbutton);
+        facebookloginButton.findViewById(R.id.activity_login_facebookloginbutton);
         facebookloginButton.setReadPermissions("email");
         facebookloginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        Log.d(TAG, "facebook:onSuccess:" + loginResult);
-                        handleFacebookAccessToken(loginResult.getAccessToken());
-                    }
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d(TAG, "facebook:onSuccess:" + loginResult);
+                handleFacebookAccessToken(loginResult.getAccessToken());
+            }
 
-                    @Override
-                    public void onCancel() {
-                        Log.d(TAG, "facebook:onCancel");
-                        // ...
-                    }
+            @Override
+            public void onCancel() {
+                Log.d(TAG, "facebook:onCancel");
 
-                    @Override
-                    public void onError(FacebookException error) {
-                        Log.d(TAG, "facebook:onError", error);
-                        // ...
-                    }
-                });
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.d(TAG, "facebook:onError", error);
+
+            }
+        });
 
 
         findViewById(R.id.CheckButton).setOnClickListener(onClickListener);
@@ -101,6 +96,19 @@ public class LoginActivity extends AppCompatActivity  {
 
 
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            userLogin();
+         } else {
+            Toast.makeText(LoginActivity.this, "로그인 실패",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     private void handleFacebookAccessToken(AccessToken token) {
         Log.d(TAG, "handleFacebookAccessToken:" + token);
@@ -137,6 +145,7 @@ public class LoginActivity extends AppCompatActivity  {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) { //구글로그인인증을요청했을때 결과값을 되돌려받는곳임
         super.onActivityResult(requestCode, resultCode, data);
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == REO_SIGN_GOOGLE) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);

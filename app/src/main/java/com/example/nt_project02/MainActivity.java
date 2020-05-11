@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         //파이어 베이스 유저 가져오기
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -125,8 +124,31 @@ public class MainActivity extends AppCompatActivity {
         //해당 단말기 토큰을 가져온다(푸시 메세지 등등 전용)
         passPushTokenToServer();
 
-    }
+        //해시키
+        getHashKey();
 
+    }
+    //해시키 구하는 메서드
+    private void getHashKey(){
+        PackageInfo packageInfo = null;
+        try {
+            packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        if (packageInfo == null)
+            Log.e("KeyHash", "KeyHash:null");
+
+        for (Signature signature : packageInfo.signatures) {
+            try {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            } catch (NoSuchAlgorithmException e) {
+                Log.e("KeyHash", "Unable to get MessageDigest. signature=" + signature, e);
+            }
+        }
+    }
 
 
 
