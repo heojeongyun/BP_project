@@ -45,7 +45,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class Profile extends AppCompatActivity implements ViewPager.OnPageChangeListener {
+public class Profile extends AppCompatActivity {
 
     private ViewPager mViewPager;
     private String destinationUid;
@@ -67,42 +67,9 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
     private String TAG="Profile";
 
 
-    private void initializeViewPager() {
-        // 각 review 의 내용들을 표시관련
-        mViewPager = (ViewPager) findViewById
-                ( R.id.viewPager);
-        mPagerAdapter = new MyPagerAdapter(this);
-
-        mViewPager.setAdapter(mPagerAdapter);
-        mViewPager.setCurrentItem(0);
-
-        mViewPager.addOnPageChangeListener(this);
-    }
-
-    private void initializeTabLayout() {
-        // 각 review tab 관련 tab이 선택되었을 때 선택된  tab의 내용으로 변경
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
 
 
-                int position = tab.getPosition();
-                mViewPager.setCurrentItem(position);
-            }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,8 +78,9 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
 
 
 
-        initializeViewPager();
-        initializeTabLayout();
+
+
+
 
         Intent data=getIntent();
 
@@ -230,25 +198,11 @@ public class Profile extends AppCompatActivity implements ViewPager.OnPageChange
 
 
     }
-    // Profile Scroll 부분을 관리하는 부분
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-        //mViewPager.setCurrentItem(position);
-    }
 
-    @Override // 탭 슬라이드(분홍색)
-    public void onPageSelected(int position) {
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout) ;
-        TabLayout.Tab tab = tabLayout.getTabAt(position);
-        tab.select();
-    }
 
-    @Override
-    public void onPageScrollStateChanged(int state) {
 
-    }
 
     private void startToast(String msg){
 
