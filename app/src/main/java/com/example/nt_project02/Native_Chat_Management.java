@@ -51,7 +51,7 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.TreeMap;
 
-public class Native_Chat_Management extends AppCompatActivity {
+public class  Native_Chat_Management extends AppCompatActivity {
 
     private String destinationUid;
     private UserModel destination_userModel;

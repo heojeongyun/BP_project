@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -53,15 +54,24 @@
                 android:id="@+id/profile_chat_button"
                 android:layout_width="115dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="23dp"
+                android:layout_marginLeft="50dp"
                 android:background="@drawable/button_selector"
                 android:text="매칭 요청"
                 android:textColor="@android:color/background_light"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
-
+            <Button
+                android:id="@+id/Writing_Review_btn"
+                android:layout_width="115dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="200dp"
+                android:layout_marginTop="-48dp"
+                android:background="@drawable/button_selector"
+                android:fontFamily="@font/hangeulnurib"
+                android:text="리뷰쓰기"
+                android:textColor="@android:color/background_light"
+                android:textSize="20dp" />
 
         </LinearLayout>
 
