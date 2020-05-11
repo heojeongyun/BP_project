@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fragment_people_itemLayout">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/count"
+                android:layout_width="50dp"
+                android:layout_height="34dp"
+                android:text="DAY 1" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/increase"
+                android:layout_width="38dp"
+                android:layout_height="36dp"
+                android:background="@drawable/up"
+                />
+
+            <Button
+                android:id="@+id/decrease"
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:background="@drawable/down"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/label"
+            android:layout_width="191dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:layout_weight="1"
+            android:paddingLeft="5dp"
+            android:text="목적지를 입력하세요"
+            android:textColor="#000000" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
+
+
+
+    <Button
+            android:id="@+id/walker1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/walker123"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/subway1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/subway123"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/car1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/car123"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/bus1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/bus123"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/bycicle1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/bike123"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/plus"
+        android:layout_width="38dp"
+        android:layout_height="34dp"
+        android:layout_marginLeft="360dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/plusb" />
+
+</LinearLayout>

@@ -1,9 +1,12 @@
 package com.example.nt_project02.Native_Profile;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -18,11 +21,13 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.nt_project02.BookmarkActivity;
 import com.example.nt_project02.Chat.MessageActivity;
 import com.example.nt_project02.Chat.UserModel;
 import com.example.nt_project02.Fragment.PeopleFragment;
 import com.example.nt_project02.Native_Register;
 import com.example.nt_project02.R;
+import com.example.nt_project02.ReviewActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -71,6 +76,7 @@ public class Profile extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,8 +119,10 @@ public class Profile extends AppCompatActivity {
                     .into(profile_image);
         }
 
-
-
+   
+            
+               
+            
 
         // 현지인과 채팅을 하기 위해 매칭요청 하는 버튼
         Button chat_button=(Button) findViewById(R.id.profile_chat_button);
@@ -176,7 +184,7 @@ public class Profile extends AppCompatActivity {
 
 
 
-        //즐겨찾기 체크박스 클릭 시
+            //즐겨찾기 체크박스 클릭 시
         activity_profile_BookMark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -198,6 +206,8 @@ public class Profile extends AppCompatActivity {
 
 
     }
+
+
 
 
 

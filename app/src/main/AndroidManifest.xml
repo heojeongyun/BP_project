@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.nt_project02">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -14,13 +15,13 @@
         android:supportsRtl="true"
         android:largeHeap="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".InfoWindow_Edit"></activity>
+        <activity android:name=".ReviewActivity"></activity>
+        <activity android:name=".InfoWindow_Edit" />
         <activity android:name=".Chat.GoogleMapActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyA7YlrC4J7fuD4VCTkCNgoQzg8zTVJytsg" />
-
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>

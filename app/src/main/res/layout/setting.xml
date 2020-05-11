@@ -163,7 +163,6 @@
 
         <LinearLayout
             android:orientation="horizontal"
-            android:id="@+id/native_register_line"
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:background="#E3E0E0"
@@ -207,7 +206,6 @@
                 android:layout_gravity="center_vertical"/>
 
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="5dp"
@@ -215,6 +213,7 @@
             android:layout_marginTop="10dp">
 
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -247,6 +246,8 @@
                 android:src="@drawable/next"
                 android:layout_marginLeft="218dp"
                 android:layout_gravity="center_vertical"/>
+
+
 
         </LinearLayout>
 
