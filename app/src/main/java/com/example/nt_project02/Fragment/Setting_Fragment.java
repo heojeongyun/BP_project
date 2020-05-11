@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +29,7 @@ import com.example.nt_project02.Chat.UserModel;
 import com.example.nt_project02.LoginActivity;
 import com.example.nt_project02.MainActivity;
 import com.example.nt_project02.Native_Profile.Profile;
-import com.example.nt_project02.Native_Profile.ReviewClass;
+import com.example.nt_project02.Native_Profile_Management.All_Register;
 import com.example.nt_project02.Native_Register;
 import com.example.nt_project02.R;
 import com.example.nt_project02.ReviewActivity;
@@ -71,6 +72,8 @@ public class Setting_Fragment extends Fragment {
     private Button NativeRegisterButton;
     private TextView profile_textview;
     private ImageView bluepeopleImageView;
+    LinearLayout fragment_setting_native_register;
+    LinearLayout native_register_line;
 
 
     @Override
@@ -117,6 +120,10 @@ public class Setting_Fragment extends Fragment {
                 });*/
 
         NativeRegisterButton = (Button) rootView.findViewById(R.id.fragment_setting_native_register_Button);
+        fragment_setting_native_register = (LinearLayout) rootView.findViewById(R.id.fragment_setting_native_register);
+        native_register_line = (LinearLayout) rootView.findViewById(R.id.native_register_line);
+
+        출처: https://kdsoft-zeros.tistory.com/102 [삽질하는 개발자...]
 
         db.collection("users")
                 .whereEqualTo("uid", user_uid)
@@ -138,7 +145,8 @@ public class Setting_Fragment extends Fragment {
                                 if (user_kind != null) {
                                     if (user_kind.equals("현지인")) {
                                         //현지인이면 등록 버튼 안 보이게
-                                        NativeRegisterButton.setVisibility(View.GONE);
+                                        fragment_setting_native_register.setVisibility(View.GONE);
+                                        native_register_line.setVisibility(View.GONE);
                                         //프로필 보기 클릭 시 본인 프로필창으로 이
                                         profile_textview.setOnClickListener(new View.OnClickListener() {
                                             @Override
@@ -150,22 +158,24 @@ public class Setting_Fragment extends Fragment {
                                             }
                                         });
 
-                                    }  //else {
-//                                        profile_textview.setText("여행자");
+                                    }  else {
+                                        profile_textview.setText("여행자");
+
 //                                        //로고 안보이게
 //                                        bluepeopleImageView.setVisibility(View.GONE);
-//                                        NativeRegisterButton.setOnClickListener(new View.OnClickListener() { //현지인 등록 버튼
-//                                            @Override
-//                                            public void onClick(View v) {
-//                                                Intent intent = new Intent(getActivity(), Native_Register.class);
-//                                                //intent.putExtra("user_kind", "여행자");
-//                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                                                startActivity(intent);
-//
-//
-//                                            }
-//                                        });
-//                                    }
+
+                                       NativeRegisterButton.setOnClickListener(new View.OnClickListener() { //현지인 등록 버튼
+                                            @Override
+                                            public void onClick(View v) {
+                                                Intent intent = new Intent(getActivity(), Native_Register.class);
+                                                //intent.putExtra("user_kind", "여행자");
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                startActivity(intent);
+
+
+                                            }
+                                        });
+                                    }
                                 }
                                 if (userModel.getImageurl() != null) { // 이미지의 URL값이 존재할 경우에만 사진을 가져온다
                                     register_ImageURL = userModel.getImageurl();
@@ -253,6 +263,14 @@ public class Setting_Fragment extends Fragment {
             }
         });
 
+        Button activity_setting_profileManger = (Button) rootView.findViewById(R.id.activity_setting_profileManger);
+        activity_setting_profileManger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MystartActivity( All_Register.class);
+            }
+        });
+
 
         return rootView;
     }
@@ -289,9 +307,10 @@ public class Setting_Fragment extends Fragment {
 
                 // Firebase storage로부터 이미지 URL을 통해 이미지 파일을 가져온다
                 final StorageReference ref = FirebaseStorage.getInstance().getReference().child("UserImages").child(user.getUid());
+                // 등록한 사진의 URL을 Firebase storage에 업로드 하는 부분
                 UploadTask uploadTask = ref.putFile(imageUri);
 
-                // 등록한 사진의 URL을 Firebase storage에 업로드 하는 부분
+
                 Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                     @Override
                     public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {

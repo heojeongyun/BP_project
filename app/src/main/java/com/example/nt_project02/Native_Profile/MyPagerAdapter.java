@@ -35,7 +35,7 @@ public class MyPagerAdapter extends PagerAdapter {
         } else if (mCurrentIndex == 1) {
 
             TextView textView1 = mCurrentView.findViewById(R.id.priceInfoTextView1);
-            //textView1.setText("텍스트 입력");
+            textView1.setText("부산 2박3일 추천 코스");
             TextView textView2 = mCurrentView.findViewById(R.id.priceInfoTextView2);
             //textView1.setText("텍스트 입력");
         } else if (mCurrentIndex == 2) {

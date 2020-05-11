@@ -5,6 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/travelPreviewText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_margin="20dp"
+        android:textSize="15dp"
+        android:layout_marginLeft="20dp"
+        android:text=""/>
+    //MyPagerAdapter에서 텍스트 입력
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="260dp"
@@ -12,15 +23,6 @@
         android:scaleType="fitStart"
         app:srcCompat="@drawable/course" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"
-        android:layout_margin="20dp"
-        android:textSize="16sp"
-        android:layout_marginLeft="20dp"
-        android:id="@+id/travelPreviewText"
-        android:text=""/>
-        //MyPagerAdapter에서 텍스트 입력
+
 
 </LinearLayout>
