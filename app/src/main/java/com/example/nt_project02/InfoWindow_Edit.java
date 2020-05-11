@@ -136,6 +136,7 @@ public class InfoWindow_Edit extends AppCompatActivity {
                     final MarkerModel.MarkerData makrer = new MarkerModel.MarkerData();
 
                     //마커 정보 설정
+
                     makrer.Content = Content;
                     makrer.Latitude = location.getLatitude();
                     makrer.Longitude = location.getLongitude();

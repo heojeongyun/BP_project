@@ -90,7 +90,9 @@
                 android:layout_marginLeft="17dp"
                 android:background="@drawable/map" />
 
+
             <Button
+                android:id="@+id/activtiy_message_Map_Drawing_Button"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="17dp"

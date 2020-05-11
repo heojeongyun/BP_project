@@ -25,6 +25,7 @@ public class MarkerModel {
         public String markerSnippet;
         public String ImageUrl;
 
+
         // [START post_to_map]
         @Exclude
         public Map<String, Object> toMap() {

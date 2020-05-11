@@ -1,66 +1,47 @@
 package com.example.nt_project02;
 
-import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.media.audiofx.PresetReverb;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
-import android.os.Parcelable;
-import android.provider.Settings;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.nt_project02.Chat.MessageActivity;
 import com.example.nt_project02.CustomData.InfoWindowData;
+import com.example.nt_project02.CustomData.MarkerItem;
 import com.example.nt_project02.CustomData.MarkerModel;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-
-import com.google.android.gms.location.places.PlacePhotoMetadata;
-import com.google.android.gms.location.places.PlacePhotoResponse;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.JointType;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.PhotoMetadata;
 import com.google.android.libraries.places.api.model.Place;
@@ -69,35 +50,26 @@ import com.google.android.libraries.places.api.net.FetchPhotoResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
-import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.io.Serializable;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
 
-public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnInfoWindowClickListener {
+public class GoogleMap_Drawing_Fragment extends Fragment implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnInfoWindowClickListener {
 
 
     private static final LatLng DEFAULT_LOCATION=new LatLng(37.56,126.97);
@@ -124,10 +96,13 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
     private  DatabaseReference mMarkerDatabase;
     private  ValueEventListener postListener;
 
+    private View marker_root_view;
+    private TextView tv_marker;
+
 
     private SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy.MM.dd HH:mm");
 
-    public GoogleMap_Fragment() {
+    public GoogleMap_Drawing_Fragment() {
 
         markerModels=new ArrayList<MarkerModel.MarkerData>();
 
@@ -402,6 +377,8 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
 
 
         mMap=googleMap;
+        setCustomMarkerView();
+
 
 
 
@@ -414,7 +391,12 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
             public void onDataChange(DataSnapshot dataSnapshot) {
 
 
+
+
+
                 mMap.clear();
+                int i=1;
+                PolygonOptions polygonOptions = new PolygonOptions();
                 // Get Post object and use the values to update the UI
                 for(DataSnapshot snapshot: dataSnapshot.getChildren()){
 
@@ -428,14 +410,21 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
 
 
 
+                    tv_marker.setText(Integer.toString(i));
+                    i+=1;
+
                     // 마커 설정
                     Marker Marker= mMap.addMarker(new MarkerOptions()
                             .position(currentLocation)
                             .title(markerModel.markerTitle)
                             .snippet(markerModel.markerSnippet)
                             .draggable(false)
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                            .icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getActivity(),marker_root_view))));
 
+                   /* MarkerOptions markerOptions = new MarkerOptions();
+                    markerOptions.title(price);
+                    markerOptions.position(position);
+                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getActivity(), marker_root_view)));*/
 
                     InfoWindowData info=new InfoWindowData();
                     info.setMarker_Content(markerModel.Content);
@@ -443,7 +432,19 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
                     Marker.setTag(info);
 
 
+                    polygonOptions.add(currentLocation);
+                    polygonOptions.strokeJointType(JointType.ROUND);
+                    polygonOptions.strokeColor(Color.RED);
+                    polygonOptions.strokeWidth(10);
+
+                    mMap.addPolygon(polygonOptions);
+                    /*MarkerItem markerItem=new MarkerItem(35.134023, 129.104697, "1");
+                    addMarker(markerItem,false);*/
+
+
                 }
+
+
 
                 // ...
             }
@@ -527,6 +528,72 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
 
 
     }
+
+    private void setCustomMarkerView() {
+
+        marker_root_view = LayoutInflater.from(getActivity()).inflate(R.layout.custom_marker, null);
+        tv_marker = (TextView) marker_root_view.findViewById(R.id.tv_marker);
+    }
+
+    private Marker addMarker(MarkerItem markerItem, boolean isSelectedMarker) {
+
+
+        LatLng position = new LatLng(markerItem.getLat(), markerItem.getLon());
+        String price = markerItem.getPrice();
+
+
+
+        tv_marker.setText(price);
+
+        if (isSelectedMarker) {
+            tv_marker.setBackgroundResource(R.drawable.ic_marker_phone_blue);
+            tv_marker.setTextColor(Color.WHITE);
+        } else {
+            tv_marker.setBackgroundResource(R.drawable.ic_marker_phone);
+            tv_marker.setTextColor(Color.BLACK);
+        }
+
+
+
+
+
+
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.title(price);
+        markerOptions.position(position);
+        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getActivity(), marker_root_view)));
+
+
+
+        return mMap.addMarker(markerOptions);
+
+    }
+
+    // View를 Bitmap으로 변환
+    private Bitmap createDrawableFromView(Context context, View view) {
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        view.measure(displayMetrics.widthPixels, displayMetrics.heightPixels);
+        view.layout(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels);
+        view.buildDrawingCache();
+        Bitmap bitmap = Bitmap.createBitmap(view.getMeasuredWidth(), view.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+
+        return bitmap;
+    }
+
+
+
+
+
+
+
+
+
 
 
 

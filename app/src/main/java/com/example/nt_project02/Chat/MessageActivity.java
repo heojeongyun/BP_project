@@ -27,6 +27,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.nt_project02.CustomData.ChatModel;
 import com.example.nt_project02.Fragment.Chatting_Fragment;
+import com.example.nt_project02.GoogleMap_Drawing_Fragment;
 import com.example.nt_project02.GoogleMap_Fragment;
 import com.example.nt_project02.NotificationModel;
 import com.example.nt_project02.R;
@@ -98,6 +99,7 @@ public class MessageActivity extends AppCompatActivity {
 
     //지도 프래그먼트 선언
     private GoogleMap_Fragment googleMap_fragment;
+    private GoogleMap_Drawing_Fragment googleMap_drawing_fragment;
     private Chatting_Fragment Chatting_Fragment;
 
     private String TAG="MessageActivity";
@@ -111,6 +113,7 @@ public class MessageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_message);
 
         googleMap_fragment=new GoogleMap_Fragment();
+        googleMap_drawing_fragment=new GoogleMap_Drawing_Fragment();
 
         Intent data=getIntent();
 
@@ -204,6 +207,15 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.container,googleMap_fragment).commit();
+            }
+        });
+
+        Button activtiy_message_Map_Drawing_Button=(Button)findViewById(R.id.activtiy_message_Map_Drawing_Button);
+
+        activtiy_message_Map_Drawing_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.container,googleMap_drawing_fragment).commit();
             }
         });
 
