@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity  {
         revokeAccess();
 
 
-        facebookloginButton.findViewById(R.id.activity_login_facebookloginbutton);
+        facebookloginButton=findViewById(R.id.activity_login_facebookloginbutton);
         facebookloginButton.setReadPermissions("email");
         facebookloginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override

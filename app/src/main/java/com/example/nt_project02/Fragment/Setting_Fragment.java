@@ -146,7 +146,8 @@ public class Setting_Fragment extends Fragment {
                                     if (user_kind.equals("현지인")) {
                                         //현지인이면 등록 버튼 안 보이게
                                         fragment_setting_native_register.setVisibility(View.GONE);
-                                        native_register_line.setVisibility(View.GONE);
+
+                                        //native_register_line.setVisibility(View.GONE);
                                         //프로필 보기 클릭 시 본인 프로필창으로 이
                                         profile_textview.setOnClickListener(new View.OnClickListener() {
                                             @Override
