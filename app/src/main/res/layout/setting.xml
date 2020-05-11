@@ -126,6 +126,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/fragment_setting_native_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -160,12 +161,14 @@
 
         </LinearLayout>
 
-
         <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/native_register_line"
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:background="#E3E0E0"
             android:layout_marginTop="10dp">
+
         </LinearLayout>
 
         <LinearLayout
@@ -250,10 +253,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="700dp"
             android:background="#E3E0E0"
             android:layout_marginTop="10dp">
-
         </LinearLayout>
 
 
