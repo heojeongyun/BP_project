@@ -121,9 +121,9 @@ public class Setting_Fragment extends Fragment {
 
         NativeRegisterButton = (Button) rootView.findViewById(R.id.fragment_setting_native_register_Button);
         fragment_setting_native_register = (LinearLayout) rootView.findViewById(R.id.fragment_setting_native_register);
-        native_register_line = (LinearLayout) rootView.findViewById(R.id.native_register_line);
 
-        출처: https://kdsoft-zeros.tistory.com/102 [삽질하는 개발자...]
+
+
 
         db.collection("users")
                 .whereEqualTo("uid", user_uid)

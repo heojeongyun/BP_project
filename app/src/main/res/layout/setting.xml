@@ -163,7 +163,6 @@
 
         <LinearLayout
             android:orientation="horizontal"
-            android:id="@+id/native_register_line"
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:background="#E3E0E0"

@@ -178,14 +178,7 @@ public class Profile extends AppCompatActivity {
                 });
 
 
-            Button Writing_Review_btn =(Button) findViewById(R.id.Writing_Review_btn);
-            Writing_Review_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MystartActivity(ReviewActivity.class);
-                }
-           
-                                                  });
+
 
 
 
