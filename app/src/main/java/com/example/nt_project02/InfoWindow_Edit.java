@@ -1,6 +1,7 @@
 package com.example.nt_project02;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -21,8 +22,10 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.nt_project02.Chat.MessageActivity;
+import com.example.nt_project02.Chat.UserModel;
 import com.example.nt_project02.CustomData.MarkerModel;
 import com.example.nt_project02.Fragment.PeopleFragment;
+import com.example.nt_project02.Native_Profile.Profile;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -45,6 +48,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -69,10 +77,15 @@ public class InfoWindow_Edit extends AppCompatActivity {
     private TextView PlaceAdress_TextView;
     private ImageView PlaceImage_ImageView;
     private EditText Content_EditText;
+    private Button Register_Button;
 
     private View.OnClickListener mResiterListener;
     private MarkerModel.MarkerData markerData;
     private String Key;
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private String user_uid;
+    private UserModel userModel;
 
 
 
@@ -85,7 +98,9 @@ public class InfoWindow_Edit extends AppCompatActivity {
         PlaceAdress_TextView = (TextView) findViewById(R.id.activity_infowindow_edit_PlaceAdress);
         PlaceImage_ImageView = (ImageView) findViewById(R.id.activity_infowindow_edit_PlaceImage);
         Content_EditText = (EditText) findViewById(R.id.activity_infowindow_edit_Content_EditText);
-        final Button Register_Button = (Button) findViewById(R.id.activity_infowindow_edit_Register_Button);
+
+
+        Register_Button = (Button) findViewById(R.id.activity_infowindow_edit_Register_Button);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -96,6 +111,50 @@ public class InfoWindow_Edit extends AppCompatActivity {
 
         // 등록된 마커 주소 가져오기
         ClickMarkerAdress = data.getStringExtra("MarkerAdress");
+
+        user_uid=FirebaseAuth.getInstance().getUid();
+
+
+        db.collection("users")
+                .whereEqualTo("uid", user_uid)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(TAG, "Listen failed.", e);
+                            return;
+                        }
+
+                        for (QueryDocumentSnapshot doc : value) {
+                            if (doc != null) {
+
+
+
+                                userModel = doc.toObject(UserModel.class);
+                                String user_kind = userModel.getUser_kind();
+                                if (user_kind != null) {
+                                    if (user_kind.equals("현지인")) {
+                                        //현지인 일시 수정가능 하도록 view 활성화
+                                        activate_view();
+                                    }else{
+                                        //입력창 비활성
+                                        Content_EditText.setClickable(false);
+                                        Content_EditText.setFocusable(false);
+                                    }
+                                }
+
+                            }
+                        }
+
+                        Log.d(TAG, "Current data: " + userModel);
+                    }
+                });
+
+
+
+
+
 
 
         // 지도 위치 검색시
@@ -213,6 +272,7 @@ public class InfoWindow_Edit extends AppCompatActivity {
 
                         Log.e(TAG, "QueryMarkerData:" + markerData.markerTitle);
 
+
                         Place_Name = markerData.markerTitle;
                         Place_Adress = markerData.markerSnippet;
 
@@ -285,11 +345,10 @@ public class InfoWindow_Edit extends AppCompatActivity {
 
 
 
-
-
-
-
-
+    }
+    private void activate_view(){
+        //버튼 활성
+        Register_Button.setVisibility(View.VISIBLE);
     }
 
 }

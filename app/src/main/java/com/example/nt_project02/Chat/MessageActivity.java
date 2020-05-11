@@ -91,11 +91,11 @@ public class MessageActivity extends AppCompatActivity {
     private DatabaseReference myRef;
 
     private SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy.MM.dd HH:mm");
-
     private UserModel destinationUserModel;
     private DatabaseReference databaseReference;
     private ValueEventListener valueEventListener;
     int peopleCount=0;
+
 
     //지도 프래그먼트 선언
     private GoogleMap_Fragment googleMap_fragment;
