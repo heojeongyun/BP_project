@@ -32,7 +32,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Native_Chat_Management extends AppCompatActivity {
+public class  Native_Chat_Management extends AppCompatActivity {
 
     private String destinationUid;
     private UserModel destination_userModel;

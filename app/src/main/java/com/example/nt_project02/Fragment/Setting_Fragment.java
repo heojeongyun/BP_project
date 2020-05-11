@@ -27,10 +27,12 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.nt_project02.BookmarkActivity;
 import com.example.nt_project02.Chat.UserModel;
 import com.example.nt_project02.LoginActivity;
+import com.example.nt_project02.MainActivity;
 import com.example.nt_project02.Native_Profile.Profile;
 import com.example.nt_project02.Native_Profile_Management.All_Register;
 import com.example.nt_project02.Native_Register;
 import com.example.nt_project02.R;
+import com.example.nt_project02.ReviewActivity;
 import com.example.nt_project02.Sign_UpActivity;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -79,12 +81,11 @@ public class Setting_Fragment extends Fragment {
                              Bundle savedInstanceState) {
 
 
-
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.setting, container, false);
 
         // setting.xml의 nick_textview 객체 생성
         nick_textview = (TextView) rootView.findViewById(R.id.nick_TextView);
-        profile_textview=(TextView) rootView.findViewById(R.id.fragment_setting_Profile);
+        profile_textview = (TextView) rootView.findViewById(R.id.fragment_setting_Profile);
         // bluepeopleImageView=(ImageView) rootView.findViewById(R.id.fragment_setting_BluePeopleImageView);
 
 
@@ -139,7 +140,6 @@ public class Setting_Fragment extends Fragment {
                             if (doc != null) {
 
 
-                                
                                 userModel = doc.toObject(UserModel.class);
                                 user_kind = userModel.getUser_kind();
                                 if (user_kind != null) {
@@ -184,7 +184,7 @@ public class Setting_Fragment extends Fragment {
                                             .apply(new RequestOptions().circleCrop())
                                             .into(ivUser);
                                 }
-                                    nick_textview.setText(userModel.getName());
+                                nick_textview.setText(userModel.getName());
 
 
                             }
@@ -273,10 +273,7 @@ public class Setting_Fragment extends Fragment {
 
 
         return rootView;
-        }
-
-
-
+    }
 
 
     private void MystartActivity(Class c) {
@@ -364,10 +361,8 @@ public class Setting_Fragment extends Fragment {
             }
 
 
-
         }
     }
-
 
 
 
