@@ -33,6 +33,8 @@ import com.example.nt_project02.Sign_UpActivity;
 import com.facebook.AccessToken;
 import com.facebook.login.DeviceLoginManager;
 import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -71,6 +73,8 @@ public class Setting_Fragment extends Fragment {
     private Button NativeRegisterButton;
     private TextView profile_textview;
     private ImageView bluepeopleImageView;
+    private FirebaseAuth mAuth;
+    private GoogleSignInClient mGoogleSignInClient;
 
 
     @Override
@@ -243,8 +247,8 @@ public class Setting_Fragment extends Fragment {
         LogoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                     FirebaseAuth.getInstance().signOut();
+
                     MystartActivity(LoginActivity.class);
 
             }

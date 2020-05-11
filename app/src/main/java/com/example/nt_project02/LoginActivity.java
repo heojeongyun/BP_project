@@ -66,6 +66,7 @@ public class LoginActivity extends AppCompatActivity  {
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        revokeAccess();
 
 
         LoginButton facebookloginButton = findViewById(R.id.activity_login_facebookloginbutton);
@@ -146,6 +147,7 @@ public class LoginActivity extends AppCompatActivity  {
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);
+                Toast.makeText(LoginActivity.this,"로그인 실패",Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -363,4 +365,13 @@ public class LoginActivity extends AppCompatActivity  {
         startActivity(intent);
     }
 
+    private void revokeAccess() {
+        mGoogleSignInClient.revokeAccess()
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // ...
+                    }
+                });
+    }
 }
