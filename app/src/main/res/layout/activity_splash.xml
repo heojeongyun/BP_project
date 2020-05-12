@@ -12,16 +12,27 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="블루피플"
+        android:text="BluePeople"
+        android:textColor="#0070C0"
         android:textSize="30dp"
         android:textStyle="bold"
-        android:textColor="@color/colorPrimary"
         android:fontFamily="@font/hangeulnurib"/>
 
     <ImageView
-        android:src="@drawable/loding_icon"
+        android:src="@drawable/loding_icons"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="당신의 여행을 블루밍 하세요."
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:fontFamily="@font/hangeulnurib"
+        android:layout_marginTop="10dp"
+        />
 
 
 

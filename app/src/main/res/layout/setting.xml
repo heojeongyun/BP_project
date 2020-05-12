@@ -13,23 +13,23 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="67dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="15dp"
             android:fontFamily="@font/hangeulnurib"
             android:gravity="center_vertical"
             android:text="설정"
             android:textColor="@color/white"
-            android:textSize="35dp"
-            android:textStyle="bold" />
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:layout_marginTop="40dp"/>
 
         <LinearLayout
             android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="30dp">
 
             <TextView
                 android:id="@+id/nick_TextView"
@@ -44,7 +44,7 @@
             />
 
             <ImageView
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:id="@+id/ivUser"
                 android:layout_width="110dp"
                 android:layout_height="110dp"
