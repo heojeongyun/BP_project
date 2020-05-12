@@ -7,86 +7,114 @@
     android:orientation="vertical"
     tools:context="com.example.nt_project02.Native_Profile.ReviewClass">
 
-
-
-    <TextView
-    android:id="@+id/textView"
-    android:layout_width="wrap_content"
-    android:layout_height="60dp"
-    android:layout_marginTop="25dp"
-
-    android:gravity="center_vertical"
-    android:text="리뷰 작성하기"
-    android:textColor="#4472C4"
-    android:textSize="35dp"
-    android:textStyle="bold"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="10dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
-        android:text="평점을 매겨주세요!"
-        android:textSize="25dp" />
-
-<RatingBar
-    android:id="@+id/ratingBar1"
-    android:layout_marginTop="10dp"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:isIndicator="false"
-    android:numStars="5"
-    android:rating="3.5"
-    android:stepSize="0.5"
-    android:max="5"
-    android:layout_gravity="center"
-    android:layout_marginRight="10dp"
-    android:layout_marginLeft="10dp"
-    />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
-        android:text="여행은 즐거우셨나요? 만족하셨다면 여행 리뷰를 남겨주세요."
-        android:textSize="15dp" />
-
-    <EditText
-        android:id="@+id/NameEditText"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/back"
-        android:hint="
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical"
+            android:text="리뷰 작성하기"
+            android:textColor="#4472C4"
+            android:textSize="35dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/review_nickTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="별명"
+            android:textAlignment="center"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:layout_marginTop="25dp"
+            android:textColor="@color/quantum_black_text"
+            android:fontFamily="@font/hangeulnurib"/>
+
+        <ImageView
+            android:id="@+id/review_profile_Image"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/user"/>
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:text="평점을 매겨주세요!"
+            android:textSize="25dp" />
+
+
+        <RatingBar
+            android:id="@+id/ratingBar1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:isIndicator="false"
+            android:max="5"
+            android:numStars="5"
+            android:rating="3.5"
+            android:stepSize="0.5" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:text="여행은 즐거우셨나요? 만족하셨다면 여행 리뷰를 남겨주세요."
+            android:textSize="15dp" />
+
+        <EditText
+            android:id="@+id/review_edit"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/back"
+            android:gravity="top"
+            android:hint="
     \n    여행후기를 자유롭게 작성해주세요."
-        android:inputType="textMultiLine"
-        android:gravity="top"
-        android:textSize="15dp" />
+            android:inputType="textMultiLine"
+            android:textSize="15dp" />
 
-    <Button
-    android:id="@+id/signUp_Activity_Button"
-    android:layout_width="360dp"
-    android:layout_gravity="center"
-    android:layout_height="wrap_content"
-    android:onClick="onButton1Clicked"
-    android:text="등록하기"
-    android:background="@drawable/button_selector"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp"
-    android:textSize="20dp"
-    android:textColor="@android:color/background_light"
-    android:textStyle="normal"
-    tools:ignore="OnClick" />
-
-
+        <Button
+            android:id="@+id/register_button"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/button_selector"
+            android:onClick="onButton1Clicked"
+            android:text="등록하기"
+            android:textColor="@android:color/background_light"
+            android:textSize="20dp"
+            android:textStyle="normal"
+            tools:ignore="OnClick" />
+        </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>
