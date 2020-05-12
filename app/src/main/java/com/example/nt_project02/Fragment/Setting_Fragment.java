@@ -34,6 +34,7 @@ import com.example.nt_project02.Native_Register;
 import com.example.nt_project02.R;
 import com.example.nt_project02.ReviewActivity;
 import com.example.nt_project02.Sign_UpActivity;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -251,6 +252,7 @@ public class Setting_Fragment extends Fragment {
             public void onClick(View v) {
 
                 FirebaseAuth.getInstance().signOut();
+                LoginManager.getInstance().logOut();
                 MystartActivity(LoginActivity.class);
             }
         });

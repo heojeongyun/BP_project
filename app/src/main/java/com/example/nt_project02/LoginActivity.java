@@ -17,6 +17,7 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -30,6 +31,7 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentReference;
@@ -64,7 +66,7 @@ public class LoginActivity extends AppCompatActivity  {
         revokeAccess();
 
 
-        facebookloginButton.findViewById(R.id.activity_login_facebookloginbutton);
+        facebookloginButton=findViewById(R.id.activity_login_facebookloginbutton);
         facebookloginButton.setReadPermissions("email");
         facebookloginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -92,22 +94,19 @@ public class LoginActivity extends AppCompatActivity  {
         findViewById(R.id.signUp_Activity_Button).setOnClickListener(onClickListener);
         findViewById(R.id.activity_login_TemporaryNativeButton).setOnClickListener(onClickListener);
         findViewById(R.id.activity_login_TemporaryTravelerButton).setOnClickListener(onClickListener);
-        findViewById(R.id.activity_login_googlesignInButton).setOnClickListener(onClickListener);
+        findViewById(R.id.activity_login_googlelogInButton).setOnClickListener(onClickListener);
 
 
     }
+
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            userLogin();
-         } else {
-            Toast.makeText(LoginActivity.this, "로그인 실패",
-                    Toast.LENGTH_SHORT).show();
-        }
+        LoginManager.getInstance().logOut();
+        // 어플이 정상적으로 종료되지 않았을 때 타 플랫폼 로그아웃 시키기. 나중에 어플 로그인 유지시키고 싶으면 수정 가능
     }
+
+
 
 
     private void handleFacebookAccessToken(AccessToken token) {
@@ -118,18 +117,22 @@ public class LoginActivity extends AppCompatActivity  {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
+                        if (!task.isSuccessful()) { //페이스북 로그인 실패했을 때
+                            Log.w(TAG, "signInWithCredential", task.getException());
+                            Toast.makeText(getApplicationContext(), "페이스북 로그인 실패",
+                                    Toast.LENGTH_SHORT).show();
+                            LoginManager.getInstance().logOut();
+
+                            if(task.getException() instanceof FirebaseAuthUserCollisionException) {
+                                //유저 충돌로 인한 로그인 실패일 경우(이미 같은 이메일로 다른 계정이 존재하는 경우)
+                                Toast.makeText(getApplicationContext(), "이 이메일로 다른 계정이 이미 존재합니다.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                            LoginManager.getInstance().logOut();
+                        } else { //페이스북 로그인 성공
                             Log.d(TAG, "signInWithCredential:success");
                             userLogin();
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
                         }
-
-                        // ...
                     }
                 });
     }
@@ -258,7 +261,7 @@ public class LoginActivity extends AppCompatActivity  {
                     Temporary_traveler_login();
                     break;
 
-                case R.id.activity_login_googlesignInButton:
+                case R.id.activity_login_googlelogInButton:
                     signIn();
                     break;
 
