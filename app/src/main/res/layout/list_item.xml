@@ -11,32 +11,57 @@
         android:layout_weight="0.2"
         android:orientation="horizontal">
 
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/reviewImage"
+                android:layout_width="50dp"
+                android:layout_height="61dp"
+                android:layout_margin="20dp"
+                android:layout_weight="0.2"
+                android:scaleType="fitStart"
+                android:src="@drawable/user" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-30dp"
+                android:fontFamily="@font/hangeulnurib"
+                android:gravity="center"
+                android:text="닉네임"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
         <ImageView
-            android:id="@+id/reviewImage"
-            android:layout_width="5dp"
-            android:layout_height="70dp"
-            android:layout_margin="20dp"
-            android:layout_weight="0.2"
-            android:scaleType="fitStart"
-            android:src="@drawable/user" />
+            android:id="@+id/imageView"
+            android:layout_width="109dp"
+            android:layout_height="27dp"
+            android:layout_margin="10dp" />
 
         <TextView
             android:id="@+id/reviewText"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_margin="44dp"
-            android:layout_weight="0.8"
+            android:layout_width="305dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="-120dp"
+            android:layout_marginTop="50dp"
             android:text="여행자 후기 업데이트"
             android:textAlignment="center"
             android:textSize="16dp" />
+
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@android:color/darker_gray">
-
+        android:background="#E3E0E0">
     </LinearLayout>
 
 

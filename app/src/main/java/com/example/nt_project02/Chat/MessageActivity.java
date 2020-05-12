@@ -1,6 +1,7 @@
 package com.example.nt_project02.Chat;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -558,7 +559,7 @@ public class MessageActivity extends AppCompatActivity {
                     messageViewHolder.linearLayout_destination.setVisibility(View.INVISIBLE);
                     messageViewHolder.textView_message.setBackgroundResource(R.drawable.lastrightbubble);
                     messageViewHolder.textView_message.setText(comments.get(position).message);
-                    messageViewHolder.textView_message.setTextSize(25);
+                    messageViewHolder.textView_message.setTextSize(17);
                     messageViewHolder.linearLayout_main.setGravity(Gravity.RIGHT);
                     //messageViewHolder.textView_message.setGravity(Gravity.RIGHT);
                     //messageViewHolder.message_image.setVisibility(View.INVISIBLE);
@@ -580,7 +581,7 @@ public class MessageActivity extends AppCompatActivity {
                     messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
                     messageViewHolder.textView_message.setBackgroundResource(R.drawable.lastleftbubble);
                     messageViewHolder.textView_message.setText(comments.get(position).message);
-                    messageViewHolder.textView_message.setTextSize(25);
+                    messageViewHolder.textView_message.setTextSize(17);
                     messageViewHolder.linearLayout_main.setGravity(Gravity.LEFT);
                     //setReadCounter(position,messageViewHolder.textView_readCounter_right);
 

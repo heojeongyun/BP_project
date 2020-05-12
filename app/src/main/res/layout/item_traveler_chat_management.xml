@@ -2,51 +2,60 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="100dp">
 
-
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="20dp"
-        android:layout_weight="0.5"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
 
-
-        <TextView
-            android:id="@+id/activity_tcm_nickname"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="별명"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/activity_tcm_image"
-            android:layout_width="match_parent"
-            android:layout_height="106dp"
-            android:layout_marginTop="30dp"
-            android:src="@drawable/user"/>
-        <!--app:srcCompat="@drawable/travel"--> />
+            <ImageView
+                android:id="@+id/activity_tcm_image"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_marginLeft="18dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/user"/>
 
+            <TextView
+                android:id="@+id/activity_tcm_nickname"
+                android:layout_width="65dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:text="별명"
+                android:textAlignment="center"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="5dp"/>
 
+        </LinearLayout>
 
         <Button
             android:id="@+id/activity_tcm_btn"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_width="85dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
             android:background="@drawable/button_selector"
             android:text="요청취소"
             android:textColor="@android:color/background_light"
             android:textSize="17dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginLeft="150dp"/>
+    </FrameLayout>
 
-
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#E3E0E0">
     </LinearLayout>
+
 
 </LinearLayout>
 
