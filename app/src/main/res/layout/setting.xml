@@ -7,29 +7,28 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="260dp"
-        android:orientation="horizontal"
-        android:background="#448AFF">
+        android:layout_height="280dp"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="67dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="15dp"
             android:fontFamily="@font/hangeulnurib"
             android:gravity="center_vertical"
             android:text="설정"
-            android:textColor="@color/white"
-            android:textSize="35dp"
-            android:textStyle="bold" />
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:layout_marginTop="40dp"
+            android:textColor="#0070C0"/>
 
         <LinearLayout
             android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="30dp">
 
             <TextView
                 android:id="@+id/nick_TextView"
@@ -40,11 +39,11 @@
                 android:layout_gravity="center"
                 android:textStyle="bold"
                 android:fontFamily="@font/hangeulnurib"
-                android:textColor="@color/white"/>
-            />
+                />
+
 
             <ImageView
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:id="@+id/ivUser"
                 android:layout_width="110dp"
                 android:layout_height="110dp"
@@ -59,8 +58,7 @@
                     android:text="프로필 보기"
                     android:textSize="18dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
-                    android:textColor="@color/white"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/hangeulnurib"/>
                 />
 
@@ -71,7 +69,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="5dp"
+        android:layout_height="2dp"
         android:background="#E3E0E0">
 
     </LinearLayout>
@@ -106,7 +104,7 @@
                 android:fontFamily="@font/hangeulnurib"
                 android:text="프로필 관리"
                 android:textColor="#000000"
-                android:textSize="20dp" />
+                android:textSize="15dp" />
 
             <ImageView
                 android:layout_width="28dp"
@@ -120,7 +118,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="5dp"
+            android:layout_height="2dp"
             android:background="#E3E0E0"
             android:layout_marginTop="5dp">
         </LinearLayout>
@@ -148,7 +146,7 @@
                 android:background="#00ff0000"
                 android:text="현지인 등록"
                 android:textColor="#000000"
-                android:textSize="20dp"
+                android:textSize="15dp"
                 android:fontFamily="@font/hangeulnurib"
                 />
 
@@ -164,7 +162,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="5dp"
+            android:layout_height="2dp"
             android:background="#E3E0E0"
             android:layout_marginTop="10dp">
 
@@ -193,7 +191,7 @@
                 android:background="#00ff0000"
                 android:text="즐겨찾기 관리"
                 android:textColor="#000000"
-                android:textSize="20dp"
+                android:textSize="15dp"
                 android:fontFamily="@font/hangeulnurib"
                 />
 
@@ -202,13 +200,13 @@
                 android:layout_width="28dp"
                 android:layout_height="20dp"
                 android:src="@drawable/next"
-                android:layout_marginLeft="190dp"
+                android:layout_marginLeft="210dp"
                 android:layout_gravity="center_vertical"/>
 
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="5dp"
+            android:layout_height="2dp"
             android:background="#E3E0E0"
             android:layout_marginTop="10dp">
 
@@ -226,19 +224,19 @@
                 android:layout_width="28dp"
                 android:layout_height="50dp"
                 android:src="@drawable/logout"
-                android:layout_marginLeft="20dp"/>
+                android:layout_marginLeft="23dp"/>
 
             <Button
                 android:id="@+id/fragment_setting_LogoutButton"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
+
                 android:layout_weight="1"
                 android:background="#00ff0000"
                 android:fontFamily="@font/hangeulnurib"
                 android:text="로그아웃"
                 android:textColor="#000000"
-                android:textSize="20dp" />
+                android:textSize="15dp" />
 
             <ImageView
                 android:layout_width="28dp"
@@ -249,12 +247,22 @@
 
 
 
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#E3E0E0"
+            android:layout_marginTop="10dp">
+
         </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="700dp"
+            android:layout_height="match_parent"
             android:background="#E3E0E0"
             android:layout_marginTop="10dp">
         </LinearLayout>

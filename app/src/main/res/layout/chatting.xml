@@ -5,25 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="212dp"
-        android:layout_height="60dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="25dp"
-        android:gravity="center_vertical"
-        android:text="채팅 리스트"
-        android:textColor="#4472C4"
-        android:textSize="35dp"
-        android:textStyle="bold"
-        android:fontFamily="@font/hangeulnurib"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp">
 
-    <ImageButton
-        android:id="@+id/btn_traveler_chat_management"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_gravity="right"
-        android:background="@drawable/traveler_chat_management"/>
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginLeft="15dp"
+            android:gravity="center_vertical"
+            android:textColor="#0070C0"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:text="채팅 리스트"
+            android:fontFamily="@font/hangeulnurib"
+            />
+
+        <ImageButton
+            android:id="@+id/btn_traveler_chat_management"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="230dp"
+            android:background="@drawable/traveler_chat_management"/>
+
+
+
+    </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

@@ -2,6 +2,7 @@ package com.example.nt_project02.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.Editable;
@@ -186,29 +187,37 @@ public class PeopleFragment extends Fragment {
 
         }
 
+
+
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
             Integer bookmarks_number;
+
+            //item 클릭시 선택효과
+            //int selectedPosition = -1;
+            //if(selectedPosition==position)
+               // holder.itemView.setBackgroundColor (Color.GRAY);
+
             //색 가져오기
-            Integer Gold = ContextCompat.getColor(getContext(), R.color.Gold);
-            Integer Silver = ContextCompat.getColor(getContext(), R.color.Silver);
-            Integer White = ContextCompat.getColor(getContext(), R.color.white);
+
+            //Integer Gold = ContextCompat.getColor(getContext(), R.color.Gold);
+            //Integer Silver=ContextCompat.getColor(getContext(), R.color.Silver);
+            //Integer White=ContextCompat.getColor(getContext(), R.color.white);
 
             //초기화
-            ((CustomViewHolder) holder).fragment_people_ItemLayout.setBackgroundColor(White);
-            ((CustomViewHolder) holder).item_friend_RankImage.setImageResource(R.drawable.medal3);
-            ((CustomViewHolder) holder).imageView.setImageResource(R.drawable.user);
+            //((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(White);
+            ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.medal3);
+            ((CustomViewHolder)holder).imageView.setImageResource(R.drawable.user);
 
-            bookmarks_number = userModels.get(position).bookmarks_number;
+            bookmarks_number=userModels.get(position).bookmarks_number;
 
-            if ((bookmarks_number != null) && (bookmarks_number != 0)) {
-                if (bookmarks_number >= 2) {
-                    ((CustomViewHolder) holder).fragment_people_ItemLayout.setBackgroundColor(Gold);
-                    ((CustomViewHolder) holder).item_friend_RankImage.setImageResource(R.drawable.medal1);
-                } else {
-                    ((CustomViewHolder) holder).fragment_people_ItemLayout.setBackgroundColor(Silver);
-                    ((CustomViewHolder) holder).item_friend_RankImage.setImageResource(R.drawable.medal2);
-                }
+            if((bookmarks_number !=null)&& (bookmarks_number!=0)){
+                if(bookmarks_number>=2){
+                    //((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(Gold);
+                    ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.medal1);
+                }else{
+                    //((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(Silver);
+                    ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.medal2);
 
 
             }
@@ -240,8 +249,14 @@ public class PeopleFragment extends Fragment {
 
                     }
 
+
+
                 }
             });
+
+
+
+
 
 
         }
@@ -300,5 +315,9 @@ public class PeopleFragment extends Fragment {
         Toast.makeText(getContext(), msg,
                 Toast.LENGTH_SHORT).show();
     }
+
+
+
+
 
 }
