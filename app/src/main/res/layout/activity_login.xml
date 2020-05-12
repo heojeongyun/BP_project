@@ -95,17 +95,18 @@
 
     </LinearLayout>
 
+
     <com.google.android.gms.common.SignInButton
-        android:id="@+id/activity_login_googlesignInButton"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
+        android:id="@+id/activity_login_googlelogInButton"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"/>
 
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/activity_login_facebookloginbutton"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"/>
 
 
