@@ -39,6 +39,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
+
 public class LoginActivity extends AppCompatActivity  {
     private static final String TAG = "LoginActivity";
     private Context mContext;
@@ -55,6 +56,8 @@ public class LoginActivity extends AppCompatActivity  {
         mContext = LoginActivity.this;
         mAuth = FirebaseAuth.getInstance(); // 파이어베이스 인증 객체 초기화
         mCallbackManager = CallbackManager.Factory.create();
+
+
 
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -386,5 +389,7 @@ public class LoginActivity extends AppCompatActivity  {
                     }
                 });
     }
+
+
 }
 
