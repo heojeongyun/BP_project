@@ -58,7 +58,7 @@ public class PeopleFragment extends Fragment {
     private EditText editText;
     private PeopleFragmentRecyclerViewAdapter adapter;
     private Context context;
-    private String TAG="PeopleFragment";
+    private String TAG = "PeopleFragment";
     private String name;
 
 
@@ -104,12 +104,11 @@ public class PeopleFragment extends Fragment {
 */
 
 
-        adapter=new PeopleFragmentRecyclerViewAdapter();
+        adapter = new PeopleFragmentRecyclerViewAdapter();
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.peoplefragment_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
 
         recyclerView.setAdapter(adapter);
-
 
 
         return rootView;
@@ -126,49 +125,19 @@ public class PeopleFragment extends Fragment {
     }
 
 
-
-
     class PeopleFragmentRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-
-
-
 
 
         public PeopleFragmentRecyclerViewAdapter() {
 
 
-
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             userModels = new ArrayList<>();
-            saveList=new ArrayList<>();
+            saveList = new ArrayList<>();
 
 
 
-        /*    db.collection("users")
-                    .whereEqualTo("user_kind", "현지인")
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-
-                                    userModels.add(document.toObject(UserModel.class));
-                                    saveList.add(document.toObject(UserModel.class));
-
-                                    Log.d(TAG, document.getId() + " => " + document.getData());
-                                }
-                                notifyDataSetChanged();
-                            } else {
-                                Log.d(TAG, "Error getting documents: ", task.getException());
-                            }
-
-                        }
-                    });*/
-
-
-            Query postOrder = FirebaseFirestore.getInstance().collection("users").orderBy("bookmarks_number",Query.Direction.DESCENDING);
+            Query postOrder = FirebaseFirestore.getInstance().collection("users").orderBy("bookmarks_number", Query.Direction.DESCENDING);
 
 
            /*db.collection("users")
@@ -192,14 +161,10 @@ public class PeopleFragment extends Fragment {
                             saveList.add(doc.toObject(UserModel.class));
 
 
-
                         }
 
                     }
                     notifyDataSetChanged();
-
-
-
 
                     Log.d(TAG, "Current data: " + userModels);
                 }
@@ -209,22 +174,6 @@ public class PeopleFragment extends Fragment {
 
 
 
-
-   /*         FirebaseDatabase.getInstance().getReference().child("users").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    userModels.clear();
-                    for(DataSnapshot snapshot :dataSnapshot.getChildren()){
-                        userModels.add(snapshot.getValue(UserModel.class));
-                    }
-                    notifyDataSetChanged();
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });*/
 
 
 
@@ -250,6 +199,7 @@ public class PeopleFragment extends Fragment {
                // holder.itemView.setBackgroundColor (Color.GRAY);
 
             //색 가져오기
+
             //Integer Gold = ContextCompat.getColor(getContext(), R.color.Gold);
             //Integer Silver=ContextCompat.getColor(getContext(), R.color.Silver);
             //Integer White=ContextCompat.getColor(getContext(), R.color.white);
@@ -268,14 +218,13 @@ public class PeopleFragment extends Fragment {
                 }else{
                     //((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(Silver);
                     ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.medal2);
-                }
 
 
             }
             //테스트
 
             //현지인 등록 이미지가 있을 경우 이미지 넣기
-            if(userModels.get(position).imageurl!=null) {
+            if (userModels.get(position).imageurl != null) {
                 Glide.with
                         (holder.itemView.getContext())
                         .load(userModels.get(position).imageurl)
@@ -293,7 +242,7 @@ public class PeopleFragment extends Fragment {
                     if (position != RecyclerView.NO_POSITION) {
                         /*Toast.makeText(getContext(),position+"",Toast.LENGTH_LONG).show();*/
                         Intent intent = new Intent(getContext(), Profile.class);
-                        Log.d(TAG,userModels.get(position).toString());
+                        Log.d(TAG, userModels.get(position).toString());
                         intent.putExtra("destination_UserModels", userModels.get(position));
                         startActivity(intent);
 
@@ -319,14 +268,13 @@ public class PeopleFragment extends Fragment {
         }
 
 
-
-        public void searchUser(String search){
+        public void searchUser(String search) {
 
             userModels.clear();
 
-            for(int i = 0; i < saveList.size(); i++){
+            for (int i = 0; i < saveList.size(); i++) {
 
-                if(saveList.get(i).getName() !=null &&saveList.get(i).getName().contains(search)){//contains메소드로 search 값이 있으면 true를 반환함
+                if (saveList.get(i).getName() != null && saveList.get(i).getName().contains(search)) {//contains메소드로 search 값이 있으면 true를 반환함
 
                     userModels.add(saveList.get(i));
 
@@ -342,10 +290,9 @@ public class PeopleFragment extends Fragment {
     }
 
 
-
     private class CustomViewHolder extends RecyclerView.ViewHolder {
 
-        public  ImageView imageView;
+        public ImageView imageView;
         public TextView Nick_textView;
         public TextView Region_textView;
         public TextView Hash_textView;
@@ -354,16 +301,16 @@ public class PeopleFragment extends Fragment {
 
         public CustomViewHolder(View view) {
             super(view);
-            fragment_people_ItemLayout=(LinearLayout) view.findViewById(R.id.fragment_people_itemLayout);
+            fragment_people_ItemLayout = (LinearLayout) view.findViewById(R.id.fragment_people_itemLayout);
             imageView = (ImageView) view.findViewById(R.id.frienditem_imageview);
             Nick_textView = (TextView) view.findViewById(R.id.frienditem_nick);
-            Region_textView=(TextView) view.findViewById(R.id.frienditem_region);
-            Hash_textView=(TextView) view.findViewById(R.id.frienditem_hash);
-            item_friend_RankImage=(ImageView) view.findViewById(R.id.item_friend_RankImage);
+            Region_textView = (TextView) view.findViewById(R.id.frienditem_region);
+            Hash_textView = (TextView) view.findViewById(R.id.frienditem_hash);
+            item_friend_RankImage = (ImageView) view.findViewById(R.id.item_friend_RankImage);
         }
     }
 
-    private void startToast(String msg){
+    private void startToast(String msg) {
 
         Toast.makeText(getContext(), msg,
                 Toast.LENGTH_SHORT).show();

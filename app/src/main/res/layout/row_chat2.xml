@@ -7,23 +7,25 @@
 
     <LinearLayout
         android:id="@+id/linearlayout_destination"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
-            android:src="@drawable/user"
             android:id="@+id/profile_Image"
             android:layout_width="50dp"
-            android:layout_height="50dp" />
+            android:layout_height="55dp"
+            android:src="@drawable/user" />
 
         <TextView
 
-            android:text="이름"
             android:id="@+id/TextView_nickname"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="이름"
+            android:fontFamily="@font/hangeulnurib"
+            />
 
     </LinearLayout>
 
@@ -40,7 +42,8 @@
         <ImageView
             android:id="@+id/message_image"
             android:layout_width="200dp"
-            android:layout_height="200dp"/>
+            android:layout_height="200dp"
+            android:layout_margin="2.5dp"/>
 
 
 
@@ -64,7 +67,9 @@
                 android:textColor="@android:color/darker_gray"
                 android:id="@+id/textview_timestamp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/hangeulnurib"
+                />
 
             <TextView
                 android:layout_width="wrap_content"

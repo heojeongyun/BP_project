@@ -248,64 +248,18 @@
                     android:textSize="27dp"
                     android:textStyle="bold" />
 
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:id="@+id/frame"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linear"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="#4CAF50"
-                        android:gravity="center"
-                        android:id="@+id/text1"
-                        android:text="TEXT 1" />
+                <androidx.recyclerview.widget.RecyclerView
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="#FF9800"
-                        android:gravity="center"
-                        android:id="@+id/text2"
-                        android:text="TEXT 2" />
+                    android:id="@+id/news_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="602dp"
+                    android:layout_below="@+id/txt_search"
+                    android:layout_marginTop="-1dp">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="#009688"
-                        android:gravity="center"
-                        android:id="@+id/text3"
-                        android:text="TEXT 3" />
+                </androidx.recyclerview.widget.RecyclerView>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="#009688"
-                        android:gravity="center"
-                        android:id="@+id/text4"
-                        android:text="TEXT 4" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="#009688"
-                        android:gravity="center"
-                        android:id="@+id/text5"
-                        android:text="TEXT 5" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="#009688"
-                        android:gravity="center"
-                        android:id="@+id/text6"
-                        android:text="TEXT 6" />
-
-                </FrameLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
