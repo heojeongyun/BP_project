@@ -136,7 +136,6 @@ public class PeopleFragment extends Fragment {
             saveList = new ArrayList<>();
 
 
-
             Query postOrder = FirebaseFirestore.getInstance().collection("users").orderBy("bookmarks_number", Query.Direction.DESCENDING);
 
 
@@ -172,11 +171,6 @@ public class PeopleFragment extends Fragment {
             });
 
 
-
-
-
-
-
         }
 
         @Override
@@ -188,7 +182,6 @@ public class PeopleFragment extends Fragment {
         }
 
 
-
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
             Integer bookmarks_number;
@@ -196,7 +189,7 @@ public class PeopleFragment extends Fragment {
             //item 클릭시 선택효과
             //int selectedPosition = -1;
             //if(selectedPosition==position)
-               // holder.itemView.setBackgroundColor (Color.GRAY);
+            // holder.itemView.setBackgroundColor (Color.GRAY);
 
             //색 가져오기
 
@@ -206,22 +199,24 @@ public class PeopleFragment extends Fragment {
 
             //초기화
             //((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(White);
-            ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.medal3);
-            ((CustomViewHolder)holder).imageView.setImageResource(R.drawable.user);
+            ((CustomViewHolder) holder).item_friend_RankImage.setImageResource(R.drawable.medal3);
+            ((CustomViewHolder) holder).imageView.setImageResource(R.drawable.user);
 
-            bookmarks_number=userModels.get(position).bookmarks_number;
+            bookmarks_number = userModels.get(position).bookmarks_number;
 
-            if((bookmarks_number !=null)&& (bookmarks_number!=0)){
-                if(bookmarks_number>=2){
+            if ((bookmarks_number != null) && (bookmarks_number != 0)) {
+
+                if (bookmarks_number >= 2) {
                     //((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(Gold);
-                    ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.medal1);
-                }else{
+                    ((CustomViewHolder) holder).item_friend_RankImage.setImageResource(R.drawable.medal1);
+                } else {
                     //((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(Silver);
-                    ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.medal2);
+                    ((CustomViewHolder) holder).item_friend_RankImage.setImageResource(R.drawable.medal2);
 
 
+                }
+                //테스트
             }
-            //테스트
 
             //현지인 등록 이미지가 있을 경우 이미지 넣기
             if (userModels.get(position).imageurl != null) {
@@ -250,23 +245,18 @@ public class PeopleFragment extends Fragment {
                     }
 
 
-
                 }
             });
 
 
-
-
-
-
         }
+
 
         @Override
         public int getItemCount() {
 
             return userModels.size();
         }
-
 
         public void searchUser(String search) {
 
@@ -315,9 +305,6 @@ public class PeopleFragment extends Fragment {
         Toast.makeText(getContext(), msg,
                 Toast.LENGTH_SHORT).show();
     }
-
-
-
 
 
 }
