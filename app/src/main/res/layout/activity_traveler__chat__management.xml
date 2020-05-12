@@ -7,15 +7,16 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="270dp"
-        android:layout_height="60dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginLeft="15dp"
+        android:fontFamily="@font/hangeulnurib"
         android:gravity="center_vertical"
-        android:text="매칭 확인 리스트"
-        android:textColor="#4472C4"
-        android:textSize="35dp"
-        android:textStyle="bold" />
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:layout_marginTop="40dp"
+        android:textColor="#0070C0"
+        android:text="매칭 확인 리스트" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
