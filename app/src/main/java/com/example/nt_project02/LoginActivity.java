@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity  {
     public void onStart() {
         super.onStart();
         LoginManager.getInstance().logOut();
-        // 어플이 정상적으로 종료되지 않았을 때 타 플랫폼 로그아웃 시키기. 나중에 어플 로그인 유지시키고 싶으면 수정 가능
+        // 어플이 정상적으로 종료되지 않았을 때 페이스북 로그아웃 시키기. 나중에 어플 로그인 유지시키고 싶으면 수정 가능
     }
 
 
@@ -160,7 +160,6 @@ public class LoginActivity extends AppCompatActivity  {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
-                // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);
                 Toast.makeText(LoginActivity.this,"로그인 실패",Toast.LENGTH_SHORT).show();
             }
@@ -381,6 +380,7 @@ public class LoginActivity extends AppCompatActivity  {
     }
 
     private void revokeAccess() {
+        //구글로그인 초기화 시키기(Access 해제시키기)
         mGoogleSignInClient.revokeAccess()
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
