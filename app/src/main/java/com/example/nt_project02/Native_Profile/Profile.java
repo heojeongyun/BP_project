@@ -3,6 +3,7 @@ package com.example.nt_project02.Native_Profile;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +12,16 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
@@ -24,6 +29,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.nt_project02.BookmarkActivity;
 import com.example.nt_project02.Chat.MessageActivity;
 import com.example.nt_project02.Chat.UserModel;
+import com.example.nt_project02.CustomData.ReviewData;
 import com.example.nt_project02.Fragment.PeopleFragment;
 import com.example.nt_project02.Native_Register;
 import com.example.nt_project02.R;
@@ -35,16 +41,20 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,6 +71,9 @@ public class Profile extends AppCompatActivity {
     private TextView nick_text;
     private TextView self_info_text;
     private ImageView profile_image;
+    private Button review_register_button;
+
+
     private String user_kind;
     private String user_uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private String uid;
@@ -70,6 +83,9 @@ public class Profile extends AppCompatActivity {
     private DocumentReference Ref;
     private List<String> bookmarks_array;
     private String TAG="Profile";
+
+    private ReviewRecyclerViewAdapter adapter;
+    private List<ReviewData> reviewDataList;
 
 
 
@@ -95,12 +111,21 @@ public class Profile extends AppCompatActivity {
         destinationUid=destination_userModel.getUid();
         uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+        adapter = new ReviewRecyclerViewAdapter();
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.profile_recyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+        recyclerView.setAdapter(adapter);
+
+
+
 
 
 
         nick_text=(TextView) findViewById(R.id.nickAgeTV);
         self_info_text=(TextView) findViewById(R.id.Self_info_TextView);
         profile_image=(ImageView) findViewById(R.id.profile_Image);
+        review_register_button=(Button) findViewById(R.id.actvity_profile_review_button);
 
         nick_text.setText(destination_userModel.getName());
 
@@ -118,6 +143,16 @@ public class Profile extends AppCompatActivity {
                     .apply(new RequestOptions().circleCrop())
                     .into(profile_image);
         }
+        //리뷰 쓰기 버튼 클릭 시
+        review_register_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ReviewActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("destination_UserModel", destination_userModel);
+                startActivity(intent);
+            }
+        });
 
    
             
@@ -132,7 +167,7 @@ public class Profile extends AppCompatActivity {
                 // 파이어베이스 requests 필드에 아이디 등록
                 Ref.update("requests",FieldValue.arrayUnion(destinationUid));
                 destination_Ref.update("requests",FieldValue.arrayUnion(uid));
-                startToast("매칭을 성공적으로 요청했습니다");
+                //startToast("매칭을 성공적으로 요청했습니다");
             }
         });
 
@@ -207,6 +242,90 @@ public class Profile extends AppCompatActivity {
 
     }
 
+   class ReviewRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+
+        public ReviewRecyclerViewAdapter() {
+
+            reviewDataList=new ArrayList<>();
+
+            Log.e(TAG,"start");
+
+
+
+
+            db=FirebaseFirestore.getInstance();
+            db.collection("review")
+                    .whereEqualTo("destination_Uid",destinationUid)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    reviewDataList.add(document.toObject(ReviewData.class));
+
+                                    Log.d("reviewDataList", document.getId() + " => " + document.getData());
+
+                                }
+                            } else {
+                                Log.d("reviewDataList", "Error getting documents: ", task.getException());
+                            }
+                        notifyDataSetChanged();
+                        }
+
+                    });
+
+
+
+
+
+
+        }
+
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
+
+            return new CustomViewHolder(view);
+
+        }
+
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+
+            //Log.e(TAG,reviewDataList.get(position).mContent);
+            ((CustomViewHolder) holder).reviewText.setText(reviewDataList.get(position).getmContent());
+
+
+        }
+
+        @Override
+        public int getItemCount() {
+
+            return reviewDataList.size();
+        }
+
+
+    }
+
+
+    private class CustomViewHolder extends RecyclerView.ViewHolder {
+
+        public ImageView reviewImage;
+        public TextView reviewText;
+
+
+        public CustomViewHolder(View view) {
+            super(view);
+
+            reviewImage=(ImageView) view.findViewById(R.id.reviewImage);
+            reviewText=(TextView) view.findViewById(R.id.reviewText);
+
+
+        }
+    }
+
 
 
 
@@ -219,6 +338,10 @@ public class Profile extends AppCompatActivity {
         Toast.makeText(Profile.this, msg,
                 Toast.LENGTH_SHORT).show();
     }
+
+
+
+
 
 
 
