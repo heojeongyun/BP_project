@@ -8,7 +8,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
 
         <ImageView
             android:id="@+id/frienditem_imageview"

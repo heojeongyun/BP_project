@@ -148,24 +148,24 @@ public class Search_Account extends Fragment {
         public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
             Integer bookmarks_number;
             //색 가져오기
-            Integer Gold = ContextCompat.getColor(getContext(), R.color.Gold);
-            Integer Silver=ContextCompat.getColor(getContext(), R.color.Silver);
-            Integer White=ContextCompat.getColor(getContext(), R.color.white);
+            //Integer Gold = ContextCompat.getColor(getContext(), R.color.Gold);
+            //Integer Silver=ContextCompat.getColor(getContext(), R.color.Silver);
+            //Integer White=ContextCompat.getColor(getContext(), R.color.white);
 
             //초기화
-            ((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(White);
-            ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.chick);
+            //((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(White);
+            ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.medal3);
             ((CustomViewHolder)holder).imageView.setImageResource(R.drawable.user);
 
             bookmarks_number=userModels.get(position).bookmarks_number;
 
             if((bookmarks_number !=null)&& (bookmarks_number!=0)){
                 if(bookmarks_number>=2){
-                    ((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(Gold);
-                    ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.peacock);
+                    //((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(Gold);
+                    ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.medal1);
                 }else{
-                    ((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(Silver);
-                    ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.chicken);
+                    //((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(Silver);
+                    ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.medal2);
                 }
 
 
