@@ -30,6 +30,7 @@ import com.example.nt_project02.CustomData.UserModel;
 import com.example.nt_project02.Fragment.Chatting_Fragment;
 import com.example.nt_project02.GoogleMap_Drawing_Fragment;
 import com.example.nt_project02.GoogleMap_Fragment;
+import com.example.nt_project02.MainActivity;
 import com.example.nt_project02.NotificationModel;
 import com.example.nt_project02.R;
 import com.google.android.gms.tasks.Continuation;
@@ -732,11 +733,10 @@ public class MessageActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-
         if(valueEventListener!=null) {
             databaseReference.removeEventListener(valueEventListener);
         }
-
+        super.onBackPressed();
         finish();
         overridePendingTransition(R.anim.fromleft,R.anim.toright);
 
@@ -746,14 +746,6 @@ public class MessageActivity extends AppCompatActivity {
         Intent intent=new Intent(this,c);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-
-    }
-
-    public void replaseFragment(Fragment fragment, String tag){
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container,fragment,tag)
-                .addToBackStack(null)
-                .commit();
 
     }
 

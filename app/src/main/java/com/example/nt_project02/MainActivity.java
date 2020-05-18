@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -57,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
+
+
+
         setContentView(R.layout.activity_main);
 
         //파이어 베이스 유저 가져오기
@@ -122,8 +126,10 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         initUI();
 
-        EditText editText = findViewById(R.id.txt_search);
-        TextView resultTextView = findViewById(R.id.textView);
+
+
+
+
 
         //해당 단말기 토큰을 가져온다(푸시 메세지 등등 전용)
         passPushTokenToServer();
@@ -224,6 +230,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(final int position) {
                 navigationTabBar.getModels().get(position).hideBadge();
+
             }
 
             @Override
@@ -279,7 +286,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
 
 }
 

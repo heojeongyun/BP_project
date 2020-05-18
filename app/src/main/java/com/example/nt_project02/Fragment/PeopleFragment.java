@@ -33,6 +33,8 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +45,7 @@ public class PeopleFragment extends Fragment {
 
     private List<UserModel> userModels;
     private List<UserModel> saveList;
-    private EditText editText;
+    private TextView textView;
     private PeopleFragmentRecyclerViewAdapter adapter;
     private Context context;
     private String TAG = "PeopleFragment";
@@ -54,9 +56,9 @@ public class PeopleFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_people, container,
                 false);
-        editText = rootView.findViewById(R.id.txt_search);
+        textView = rootView.findViewById(R.id.txt_search);
 
-        editText.setOnClickListener(new View.OnClickListener() {
+        textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), NativeSearch.class);

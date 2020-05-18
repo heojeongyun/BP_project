@@ -38,6 +38,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import static com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes.SIGN_IN_CANCELLED;
 
 
 public class LoginActivity extends AppCompatActivity  {
@@ -47,7 +48,6 @@ public class LoginActivity extends AppCompatActivity  {
     private CallbackManager mCallbackManager;
     private GoogleSignInClient mGoogleSignInClient; //구글 API 클라이언트 객체
     private static final int REO_SIGN_GOOGLE = 100; //구글 로그인 결과 코드
-    private LoginButton facebookloginButton; //페북로그인버튼
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +69,8 @@ public class LoginActivity extends AppCompatActivity  {
         revokeAccess();
 
 
-        facebookloginButton=findViewById(R.id.activity_login_facebookloginbutton);
+        //페북로그인버튼
+        LoginButton facebookloginButton = findViewById(R.id.activity_login_facebookloginbutton);
         facebookloginButton.setReadPermissions("email");
         facebookloginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override

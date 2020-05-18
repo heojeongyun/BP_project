@@ -52,6 +52,7 @@ public class  Native_Chat_Management extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_native__chat__management);
 
+
         adapter=new NativeChatManagementRecyclerViewAdapter();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_ncm);
         recyclerView.setLayoutManager(new LinearLayoutManager(Native_Chat_Management.this));
