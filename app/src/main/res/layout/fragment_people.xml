@@ -14,7 +14,7 @@
         android:textStyle="bold"
         android:text="현지인 리스트"
         android:fontFamily="@font/hangeulnurib"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="40dp"/>
 
 
     <EditText
