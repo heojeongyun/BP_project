@@ -3,12 +3,14 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" >
 
-    <TextView android:id="@+id/tv_marker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <TextView
+        android:id="@+id/tv_marker"
+        android:layout_width="40dp"
+        android:layout_height="43dp"
         android:background="@drawable/ic_marker_phone"
         android:gravity="center"
-        android:text="13.5만원"
-        android:textSize="15dp"/>
+        android:text="2"
+        android:textSize="15dp"
+        android:textStyle="bold" />
 </FrameLayout>
 
