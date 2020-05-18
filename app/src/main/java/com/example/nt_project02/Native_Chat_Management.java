@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.nt_project02.Chat.MessageActivity;
-import com.example.nt_project02.Chat.UserModel;
+import com.example.nt_project02.CustomData.UserModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;

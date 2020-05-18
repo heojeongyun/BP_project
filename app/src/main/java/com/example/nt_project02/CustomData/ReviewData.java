@@ -3,18 +3,22 @@ package com.example.nt_project02.CustomData;
 public class ReviewData {
     public String writer_Uid;
     public String destination_Uid;
-    public int rating;
+    public float rating;
     public String mContent;
+    public String name;
+    public String imageurl;
 
     public ReviewData() {
 
     }
 
-    public ReviewData(String writer_Uid, String destination_Uid, int rating, String mContent) {
+    public ReviewData(String writer_Uid, String destination_Uid, float rating, String mContent, String name, String imageurl) {
         this.writer_Uid = writer_Uid;
         this.destination_Uid = destination_Uid;
         this.rating = rating;
         this.mContent = mContent;
+        this.name = name;
+        this.imageurl = imageurl;
     }
 
     public String getWriter_Uid() {
@@ -33,11 +37,11 @@ public class ReviewData {
         this.destination_Uid = destination_Uid;
     }
 
-    public int getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 
@@ -47,5 +51,21 @@ public class ReviewData {
 
     public void setmContent(String mContent) {
         this.mContent = mContent;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getImageurl() {
+        return imageurl;
+    }
+
+    public void setImageurl(String imageurl) {
+        this.imageurl = imageurl;
     }
 }

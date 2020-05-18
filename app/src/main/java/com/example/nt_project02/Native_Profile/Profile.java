@@ -1,63 +1,41 @@
 package com.example.nt_project02.Native_Profile;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.nt_project02.BookmarkActivity;
-import com.example.nt_project02.Chat.MessageActivity;
-import com.example.nt_project02.Chat.UserModel;
+import com.example.nt_project02.CustomData.UserModel;
 import com.example.nt_project02.CustomData.ReviewData;
-import com.example.nt_project02.Fragment.PeopleFragment;
-import com.example.nt_project02.Native_Register;
 import com.example.nt_project02.R;
 import com.example.nt_project02.ReviewActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.SetOptions;
-import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class Profile extends AppCompatActivity {
@@ -66,10 +44,10 @@ public class Profile extends AppCompatActivity {
     private String destinationUid;
 
     private MyPagerAdapter mPagerAdapter;
-    private UserModel userModel;
+    private UserModel current_userModel;
     private UserModel destination_userModel;
     private TextView nick_text;
-    private TextView self_info_text;
+    private TextView introduction_Text;
     private ImageView profile_image;
     private Button review_register_button;
 
@@ -123,11 +101,12 @@ public class Profile extends AppCompatActivity {
 
 
         nick_text=(TextView) findViewById(R.id.nickAgeTV);
-        self_info_text=(TextView) findViewById(R.id.Self_info_TextView);
+        introduction_Text=(TextView) findViewById(R.id.introduction_Text);
         profile_image=(ImageView) findViewById(R.id.profile_Image);
         review_register_button=(Button) findViewById(R.id.actvity_profile_review_button);
 
         nick_text.setText(destination_userModel.getName());
+        introduction_Text.setText(destination_userModel.getIntroduction());
 
 
         //현재 현지인 정보 출력
@@ -143,16 +122,7 @@ public class Profile extends AppCompatActivity {
                     .apply(new RequestOptions().circleCrop())
                     .into(profile_image);
         }
-        //리뷰 쓰기 버튼 클릭 시
-        review_register_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ReviewActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra("destination_UserModel", destination_userModel);
-                startActivity(intent);
-            }
-        });
+
 
    
             
@@ -167,7 +137,7 @@ public class Profile extends AppCompatActivity {
                 // 파이어베이스 requests 필드에 아이디 등록
                 Ref.update("requests",FieldValue.arrayUnion(destinationUid));
                 destination_Ref.update("requests",FieldValue.arrayUnion(uid));
-                //startToast("매칭을 성공적으로 요청했습니다");
+                startToast("매칭을 성공적으로 요청했습니다");
             }
         });
 
@@ -191,8 +161,8 @@ public class Profile extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                userModel=document.toObject(UserModel.class);
-                                bookmarks_array=userModel.getBookmarks();
+                                current_userModel=document.toObject(UserModel.class);
+                                bookmarks_array=current_userModel.getBookmarks();
                                 //즐켜찾기 목록이 있을 시
                                 if(bookmarks_array !=null) {
                                     //현재 프로필 현지인이 포함되어 있으면
@@ -211,6 +181,17 @@ public class Profile extends AppCompatActivity {
                         }
                     }
                 });
+
+        //리뷰 쓰기 버튼 클릭 시
+        review_register_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ReviewActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("destination_UserModel", destination_userModel);
+                startActivity(intent);
+            }
+        });
 
 
 
@@ -296,7 +277,16 @@ public class Profile extends AppCompatActivity {
 
             //Log.e(TAG,reviewDataList.get(position).mContent);
             ((CustomViewHolder) holder).reviewText.setText(reviewDataList.get(position).getmContent());
+            ((CustomViewHolder) holder).name_tv.setText(reviewDataList.get(position).getName());
 
+            if(reviewDataList.get(position).getImageurl()!=null) {
+                Glide.with
+                        (getApplicationContext())
+                        .load(reviewDataList.get(position).getImageurl())
+                        .apply(new RequestOptions().circleCrop())
+                        .into(((CustomViewHolder) holder).reviewImage);
+            }
+            ((CustomViewHolder) holder).ratingBar.setRating(reviewDataList.get(position).getRating());
 
         }
 
@@ -314,11 +304,15 @@ public class Profile extends AppCompatActivity {
 
         public ImageView reviewImage;
         public TextView reviewText;
+        public TextView name_tv;
+        public RatingBar ratingBar;
 
 
         public CustomViewHolder(View view) {
             super(view);
 
+            ratingBar=(RatingBar) view.findViewById(R.id.list_ratingBar);
+            name_tv=(TextView) view.findViewById(R.id.list_name_tv);
             reviewImage=(ImageView) view.findViewById(R.id.reviewImage);
             reviewText=(TextView) view.findViewById(R.id.reviewText);
 

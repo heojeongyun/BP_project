@@ -1,7 +1,6 @@
 package com.example.nt_project02.Chat;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -27,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.nt_project02.CustomData.ChatModel;
+import com.example.nt_project02.CustomData.UserModel;
 import com.example.nt_project02.Fragment.Chatting_Fragment;
 import com.example.nt_project02.GoogleMap_Drawing_Fragment;
 import com.example.nt_project02.GoogleMap_Fragment;

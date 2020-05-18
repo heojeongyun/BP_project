@@ -1,8 +1,6 @@
 package com.example.nt_project02.Fragment;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -18,22 +16,17 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.nt_project02.BookmarkActivity;
-import com.example.nt_project02.Chat.UserModel;
+import com.example.nt_project02.CustomData.UserModel;
 import com.example.nt_project02.LoginActivity;
-import com.example.nt_project02.MainActivity;
 import com.example.nt_project02.Native_Profile.Profile;
-import com.example.nt_project02.Native_Profile_Management.All_Register;
+import com.example.nt_project02.Native_Profile_Management.profile_edit;
 import com.example.nt_project02.Native_Register;
 import com.example.nt_project02.R;
-import com.example.nt_project02.ReviewActivity;
-import com.example.nt_project02.Sign_UpActivity;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,7 +35,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -53,7 +45,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -159,6 +150,19 @@ public class Setting_Fragment extends Fragment {
                                                 startActivity(intent);
                                             }
                                         });
+
+                                        Button activity_setting_profileManger = (Button) rootView.findViewById(R.id.activity_setting_profileManger);
+
+                                        activity_setting_profileManger.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                Intent intent = new Intent(getActivity(), profile_edit.class);
+                                                intent.putExtra("destination_UserModels", userModel);
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                startActivity(intent);
+                                            }
+                                        });
+
 
                                     }  else {
                                         profile_textview.setText("여행자");
@@ -266,13 +270,6 @@ public class Setting_Fragment extends Fragment {
             }
         });
 
-        Button activity_setting_profileManger = (Button) rootView.findViewById(R.id.activity_setting_profileManger);
-        activity_setting_profileManger.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MystartActivity( All_Register.class);
-            }
-        });
 
 
         return rootView;
