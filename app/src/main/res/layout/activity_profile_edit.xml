@@ -20,7 +20,7 @@
             android:layout_weight="0">
 
 
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            <RelativeLayout
                 android:id="@+id/RelativeLayout01"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
@@ -38,7 +38,7 @@
 
 
                 <TextView
-                    android:id="@+id/nick_TextView"
+                    android:id="@+id/profile_edit_nick_TextView"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
@@ -50,7 +50,7 @@
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:id="@+id/ivUser"
+                    android:id="@+id/profile_edit_ivUser"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
                     android:layout_centerInParent="true"
@@ -61,10 +61,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/ivUser"
+                    android:layout_below="@+id/profile_edit_ivUser"
                     android:layout_marginTop="20dp"
                     android:orientation="vertical">
-
 
                     <EditText
                         android:id="@+id/introduction_EditText"
@@ -76,7 +75,6 @@
                         android:fontFamily="@font/hangeulnurib"
                         android:scrollHorizontally="false"
                         android:singleLine="true"
-                        android:textColor="@color/white"
                         android:textSize="15dp" />
 
 

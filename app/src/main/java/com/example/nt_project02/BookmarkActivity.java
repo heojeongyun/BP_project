@@ -1,7 +1,6 @@
 package com.example.nt_project02;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,7 +20,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.nt_project02.Chat.UserModel;
+import com.example.nt_project02.CustomData.UserModel;
+import com.example.nt_project02.Fragment.PeopleFragment;
 import com.example.nt_project02.Native_Profile.Profile;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -44,6 +44,7 @@ public class BookmarkActivity extends AppCompatActivity {
     private DocumentReference destination_Ref;
     private DocumentReference Ref;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -51,9 +52,12 @@ public class BookmarkActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookmark);
 
+
+
         adapter=new ActivityBookmarkRecyclerViewAdapter();
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.activity_bookmark_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(BookmarkActivity.this));
+
 
 
         recyclerView.setAdapter(adapter);
@@ -169,6 +173,23 @@ public class BookmarkActivity extends AppCompatActivity {
                 ((CustomViewHolder) holder).Hash_textView.setText(userModels.get(position).hashtag);
 
 
+            Integer bookmarks_number = userModels.get(position).bookmarks_number;
+
+            if ((bookmarks_number != null) && (bookmarks_number != 0)) {
+
+                if (bookmarks_number >= 2) {
+                    //((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(Gold);
+                    ((CustomViewHolder) holder).item_friend_RankImage.setImageResource(R.drawable.medal1);
+                } else {
+                    //((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(Silver);
+                    ((CustomViewHolder) holder).item_friend_RankImage.setImageResource(R.drawable.medal2);
+
+
+                }
+                //테스트
+            }
+
+
 
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -240,6 +261,7 @@ public class BookmarkActivity extends AppCompatActivity {
         public TextView Region_textView;
         public TextView Hash_textView;
         public Button DeleteButton;
+        public ImageView item_friend_RankImage;
 
         public CustomViewHolder(View view) {
 
@@ -249,6 +271,8 @@ public class BookmarkActivity extends AppCompatActivity {
             Region_textView=(TextView) view.findViewById(R.id.frienditem_region);
             Hash_textView=(TextView) view.findViewById(R.id.frienditem_hash);
             DeleteButton=(Button) view.findViewById(R.id.frienditem_DeleteButton);
+            item_friend_RankImage=(ImageView) view.findViewById(R.id.item_friend_RankImage);
+
 
         }
     }
