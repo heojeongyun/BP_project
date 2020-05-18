@@ -64,6 +64,8 @@ public class News_Fragment extends Fragment {
         recyclerView.setAdapter(adapter);
         news_items=new ArrayList<Integer>();
 
+        news_items.add(R.drawable.hashimage1);
+
 
 
         Button.OnClickListener onClickListener = new Button.OnClickListener() {

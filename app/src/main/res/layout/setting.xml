@@ -81,6 +81,7 @@
         android:orientation="vertical"
         >
         <LinearLayout
+            android:id="@+id/fragment_setting_profile_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -116,12 +117,14 @@
         </LinearLayout>
 
 
-        <LinearLayout
+        <!--<LinearLayout
+            android:id="@+id/register_line"
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="#E3E0E0"
             android:layout_marginTop="5dp">
-        </LinearLayout>
+        </LinearLayout>-->
+
 
         <LinearLayout
             android:id="@+id/fragment_setting_native_register"

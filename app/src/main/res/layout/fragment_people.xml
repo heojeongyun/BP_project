@@ -14,17 +14,17 @@
         android:textStyle="bold"
         android:text="현지인 리스트"
         android:fontFamily="@font/hangeulnurib"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="40dp"/>
 
 
     <TextView
         android:id="@+id/txt_search"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="70dp"
         android:layout_marginEnd="5dp"
-        android:hint="  현지인 검색하기"
+        android:hint="  검색할 내용을 입력하세요."
         android:singleLine="true"
         android:textSize="17dp"
         android:fontFamily="@font/hangeulnurib"/>

@@ -1,7 +1,6 @@
 package com.example.nt_project02.Chat;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -27,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.nt_project02.CustomData.ChatModel;
+import com.example.nt_project02.CustomData.UserModel;
 import com.example.nt_project02.Fragment.Chatting_Fragment;
 import com.example.nt_project02.GoogleMap_Drawing_Fragment;
 import com.example.nt_project02.GoogleMap_Fragment;
@@ -584,7 +584,7 @@ public class MessageActivity extends AppCompatActivity {
                     messageViewHolder.textView_message.setText(comments.get(position).message);
                     messageViewHolder.textView_message.setTextSize(17);
                     messageViewHolder.linearLayout_main.setGravity(Gravity.LEFT);
-                    //setReadCounter(position,messageViewHolder.textView_readCounter_right);
+                    setReadCounter(position,messageViewHolder.textView_readCounter_right);
 
 
                 }
@@ -640,7 +640,6 @@ public class MessageActivity extends AppCompatActivity {
 
         void setReadCounter(final int position, final TextView textView){
             if (peopleCount == 0) {
-
 
                 FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("users").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -734,7 +733,6 @@ public class MessageActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-
         if(valueEventListener!=null) {
             databaseReference.removeEventListener(valueEventListener);
         }
@@ -750,6 +748,7 @@ public class MessageActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
+
 
 
 }

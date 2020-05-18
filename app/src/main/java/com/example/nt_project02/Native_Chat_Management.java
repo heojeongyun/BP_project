@@ -19,7 +19,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.nt_project02.Chat.MessageActivity;
-import com.example.nt_project02.Chat.UserModel;
+import com.example.nt_project02.CustomData.UserModel;
+import com.example.nt_project02.Fragment.Chatting_Fragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
@@ -44,6 +45,7 @@ public class  Native_Chat_Management extends AppCompatActivity {
     private DocumentReference destination_Ref;
     private DocumentReference Ref;
     private String TAG="Native_Chat_Management";
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +54,7 @@ public class  Native_Chat_Management extends AppCompatActivity {
 
 
         adapter=new NativeChatManagementRecyclerViewAdapter();
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView_ncm);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView_ncm);
         recyclerView.setLayoutManager(new LinearLayoutManager(Native_Chat_Management.this));
 
 
@@ -261,5 +263,16 @@ public class  Native_Chat_Management extends AppCompatActivity {
 
         Toast.makeText(getApplicationContext(), msg,
                 Toast.LENGTH_SHORT).show();
+    }
+
+    public void onResume() {
+
+        //리사이클러뷰 초기화
+        adapter=new NativeChatManagementRecyclerViewAdapter();
+        recyclerView.setLayoutManager(new LinearLayoutManager(Native_Chat_Management.this));
+        recyclerView.setAdapter(adapter);
+
+        adapter.notifyDataSetChanged();
+        super.onResume();
     }
 }

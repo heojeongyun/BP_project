@@ -1,12 +1,10 @@
 package com.example.nt_project02;
 
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,21 +21,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.nt_project02.Chat.UserModel;
+import com.example.nt_project02.CustomData.UserModel;
 import com.example.nt_project02.Native_Profile.Profile;
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-
-import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
 public class NativeSearch extends AppCompatActivity {
 
@@ -348,24 +339,24 @@ public class NativeSearch extends AppCompatActivity {
 
             Integer bookmarks_number;
             //색 가져오기
-            Integer Gold = ContextCompat.getColor(getApplicationContext(), R.color.Gold);
-            Integer Silver=ContextCompat.getColor(getApplicationContext(), R.color.Silver);
-            Integer White=ContextCompat.getColor(getApplicationContext(), R.color.white);
+            //Integer Gold = ContextCompat.getColor(getApplicationContext(), R.color.Gold);
+            //Integer Silver=ContextCompat.getColor(getApplicationContext(), R.color.Silver);
+           // Integer White=ContextCompat.getColor(getApplicationContext(), R.color.white);
 
             //초기화
-            ((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(White);
-            ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.chick);
+           // ((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(White);
+            ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.medal3);
             ((CustomViewHolder)holder).imageView.setImageResource(R.drawable.user);
 
             bookmarks_number=userModels.get(position).bookmarks_number;
 
             if((bookmarks_number !=null)&& (bookmarks_number!=0)){
                 if(bookmarks_number>=2){
-                    ((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(Gold);
-                    ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.peacock);
+                    //((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(Gold);
+                    ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.medal1);
                 }else{
-                    ((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(Silver);
-                    ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.chicken);
+                    //((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(Silver);
+                    ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.medal2);
                 }
 
 
