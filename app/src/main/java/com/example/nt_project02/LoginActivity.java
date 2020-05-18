@@ -47,7 +47,6 @@ public class LoginActivity extends AppCompatActivity  {
     private CallbackManager mCallbackManager;
     private GoogleSignInClient mGoogleSignInClient; //구글 API 클라이언트 객체
     private static final int REO_SIGN_GOOGLE = 100; //구글 로그인 결과 코드
-    private LoginButton facebookloginButton; //페북로그인버튼
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +60,7 @@ public class LoginActivity extends AppCompatActivity  {
 
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestIdToken("737568200127-fpc92gko7a732cp31jb7db4fu5qcoeni.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
 
@@ -69,7 +68,8 @@ public class LoginActivity extends AppCompatActivity  {
         revokeAccess();
 
 
-        facebookloginButton=findViewById(R.id.activity_login_facebookloginbutton);
+        //페북로그인버튼
+        LoginButton facebookloginButton = findViewById(R.id.activity_login_facebookloginbutton);
         facebookloginButton.setReadPermissions("email");
         facebookloginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
