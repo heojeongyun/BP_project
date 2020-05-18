@@ -47,10 +47,10 @@ public class ReviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_sign_up);
 
-        review_nickTV=(TextView) findViewById(R.id.review_nickTV);
-        review_profile_Image=(ImageView) findViewById(R.id.review_profile_Image);
-        review_edit=(EditText) findViewById(R.id.review_edit);
-        register_button=(Button) findViewById(R.id.register_button);
+        review_nickTV = (TextView) findViewById(R.id.review_nickTV);
+        review_profile_Image = (ImageView) findViewById(R.id.review_profile_Image);
+        review_edit = (EditText) findViewById(R.id.review_edit);
+        register_button = (Button) findViewById(R.id.register_button);
 
 
 
@@ -79,13 +79,11 @@ public class ReviewActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
     }
 
+    public void onButton1Clicked(View view){
+        Toast.makeText(getApplicationContext(), "리뷰 등록이 되었습니다.", Toast.LENGTH_LONG).show();
+    }
     private void RegisterReview(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         //현재 여행자 UID 불러오기

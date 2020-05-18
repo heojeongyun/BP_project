@@ -1,6 +1,8 @@
 package com.example.nt_project02.Native_Profile;
 
 import android.graphics.drawable.Drawable;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,4 +31,10 @@ public class ReviewClass extends AppCompatActivity { // 후기를 담는 부분�
     public void setText(String text) {
         this.text = text;
     }
-}
+
+    public void onButton1Clicked(View view) {
+
+            Toast.makeText(getApplicationContext(), "리뷰 등록이 되었습니다.", Toast.LENGTH_LONG).show();
+        }
+    }
+
