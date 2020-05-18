@@ -9,6 +9,7 @@
     <color name="statusBarColor">#A1CDE1</color>
     <color name="button">#7C5DA4BE</color>
     <color name="white">#FFFFFF</color>
+    <color name="MainColor">#0070C0</color>
 
 
 </resources>

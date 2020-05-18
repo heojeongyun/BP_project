@@ -10,28 +10,30 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="25dp"
+            android:layout_width="386dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/hangeulnurib"
             android:gravity="center_vertical"
-            android:text="Welcome to Naravel"
-            android:textColor="#4472C4"
-            android:textSize="35dp"
+            android:text="BluePeople에 오신 것을              환영합니다!"
+            android:textColor="#0070C0"
+            android:textSize="25dp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/native_explain"
-            android:layout_width="340dp"
+            android:layout_width="372dp"
             android:layout_height="50dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="15dp"
             android:gravity="center_vertical"
-            android:text="TIP : Narabel에서 현지인으로 등록해 내가 사는 지역의 가이드가 되어보세요!"
-            android:textColor="#4472C4"
-            android:textSize="15dp"
-            android:textStyle="bold" />
+            android:text="TIP : BluePeople의 현지인이 되어 내가 사는 지역의 가이드가 되어보세요!"
+            android:textColor="#000000"
+            android:textSize="11.5dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/hangeulnurib"
+            />
 
     </LinearLayout>
 
@@ -40,6 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginTop="15dp"
         >
 
         <TextView
@@ -48,21 +51,27 @@
             android:layout_marginLeft="20dp"
             android:gravity="left"
             android:text="닉네임"
-            android:textSize="20dp"
+            android:textSize="18dp"
+            android:fontFamily="@font/hangeulnurib"
             />
 
         <EditText
             android:id="@+id/traveler_name"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:gravity="left"
-            android:textSize="20dp" />
+            android:layout_width="350dp"
+            android:layout_gravity="center"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:ems="10"
+            android:hint="닉네임을 입력하세요."
+            android:textSize="15dp"
+            android:inputType="text"
+            android:fontFamily="@font/hangeulnurib" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="97dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="8dp">
 
@@ -72,7 +81,8 @@
             android:layout_marginLeft="20dp"
             android:gravity="left"
             android:text="성별"
-            android:textSize="20dp" />
+            android:textSize="18dp"
+            android:fontFamily="@font/hangeulnurib"/>
 
         <RadioGroup
             android:id="@+id/sex_radioGroup"
@@ -87,13 +97,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="false"
-                android:text="남성" />
+                android:text="남성"
+                android:textSize="15dp"
+                android:fontFamily="@font/hangeulnurib"/>
 
             <RadioButton
                 android:id="@+id/woman_radio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="여성" />
+                android:text="여성"
+                android:textSize="15dp"
+                android:fontFamily="@font/hangeulnurib"/>
 
         </RadioGroup>
 
@@ -101,61 +115,71 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="97dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:layout_marginTop="5dp">
 
         <TextView
-            android:layout_width="89dp"
+            android:layout_width="111dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
+            android:fontFamily="@font/hangeulnurib"
             android:gravity="left"
             android:text="생년월일"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
 
         <EditText
             android:id="@+id/birthday_information"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:gravity="left"
-            android:textSize="20dp" />
+            android:layout_width="350dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:ems="10"
+            android:fontFamily="@font/hangeulnurib"
+            android:hint="생년월일을 입력하세요 ex)980101"
+            android:inputType="date"
+            android:textSize="15dp"
+            />
     </LinearLayout>
 
     <LinearLayout
-        android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        android:padding="8dp">
         <TextView
-            android:id="@+id/tv_region"
-            android:layout_width="87dp"
+            android:layout_width="111dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
+            android:fontFamily="@font/hangeulnurib"
             android:gravity="left"
-            android:text="거주지역"
-            android:textSize="20dp" />
+            android:text="거주 지역"
+            android:textSize="18dp" />
 
-        <Spinner
-            android:id="@+id/traveler_spinner"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
-            android:entries="@array/지역"
-            android:gravity="left" />
+    <Spinner
+        android:id="@+id/traveler_spinner"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:entries="@array/지역"
+        android:fontFamily="@font/hangeulnurib"
+        android:gravity="left" />
 
     </LinearLayout>
 
     <Button
         android:id="@+id/submit_button"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
+        android:layout_width="360dp"
         android:layout_gravity="center"
-        android:text="등록하기"
-        android:textSize="17dp"
-        android:textColor="@android:color/background_light"
-        android:textStyle="normal"
+        android:layout_height="wrap_content"
         android:background="@drawable/button_selector"
-        android:layout_marginTop="0dp"/>
+        android:layout_marginTop="10dp"
+        android:text="등록하기"
+        android:textColor="@android:color/background_light"
+        android:textSize="20dp"
+        android:textStyle="normal"
+        android:fontFamily="@font/hangeulnurib"/>/>
+
 </LinearLayout>
