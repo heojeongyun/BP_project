@@ -64,8 +64,10 @@ public class Setting_Fragment extends Fragment {
     private Button NativeRegisterButton;
     private TextView profile_textview;
     private ImageView bluepeopleImageView;
-    LinearLayout fragment_setting_native_register;
-    LinearLayout native_register_line;
+
+    private LinearLayout fragment_setting_profile_edit;
+    private LinearLayout fragment_setting_native_register;
+
 
 
     @Override
@@ -81,38 +83,10 @@ public class Setting_Fragment extends Fragment {
         // bluepeopleImageView=(ImageView) rootView.findViewById(R.id.fragment_setting_BluePeopleImageView);
 
 
-        // Firebase db로 부터 사용자 정보 불러오기
-        /*db.collection("users")
-                .whereEqualTo("uid", user_uid)
-                .get()// 사용자 정보 확인하기
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) { // 사용자 정보가 일치할 경우에 Firebase db로부터 사용자 사진과 별명을 가져온다
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-
-                                userModel=document.toObject(UserModel.class);
-                                if(userModel.getImageurl()!=null) { // 이미지의 URL값이 존재할 경우에만 사진을 가져온다
-                                    register_ImageURL = userModel.getImageurl();
-                                    Glide.with(getContext())
-                                            .load(register_ImageURL)
-                                            .apply(new RequestOptions().circleCrop())
-                                            .into(ivUser);
-                                    nick_textview.setText(userModel.getName());
-
-                                }
-
-
-                            }
-
-                        } else {
-
-                        }
-                    }
-                });*/
 
         NativeRegisterButton = (Button) rootView.findViewById(R.id.fragment_setting_native_register_Button);
         fragment_setting_native_register = (LinearLayout) rootView.findViewById(R.id.fragment_setting_native_register);
+        fragment_setting_profile_edit=(LinearLayout) rootView.findViewById(R.id.fragment_setting_profile_edit);
 
 
 
@@ -139,7 +113,7 @@ public class Setting_Fragment extends Fragment {
                                         //현지인이면 등록 버튼 안 보이게
                                         fragment_setting_native_register.setVisibility(View.GONE);
 
-                                        //native_register_line.setVisibility(View.GONE);
+
                                         //프로필 보기 클릭 시 본인 프로필창으로 이
                                         profile_textview.setOnClickListener(new View.OnClickListener() {
                                             @Override
@@ -167,8 +141,8 @@ public class Setting_Fragment extends Fragment {
                                     }  else {
                                         profile_textview.setText("여행자");
 
-//                                        //로고 안보이게
-//                                        bluepeopleImageView.setVisibility(View.GONE);
+                                        //여행자이면 프로필 관리 안보이게
+                                        fragment_setting_profile_edit.setVisibility(View.GONE);
 
                                        NativeRegisterButton.setOnClickListener(new View.OnClickListener() { //현지인 등록 버튼
                                             @Override
@@ -191,6 +165,7 @@ public class Setting_Fragment extends Fragment {
                                             .into(ivUser);
                                 }
                                 nick_textview.setText(userModel.getName());
+
 
 
                             }
