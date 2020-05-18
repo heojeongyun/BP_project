@@ -11,16 +11,16 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="163dp"
+            android:layout_width="227dp"
             android:layout_height="115dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/hangeulnurib"
             android:gravity="center_vertical"
-            android:text="이메일로 시작하기"
-            android:textColor="#4472C4"
+            android:text="BluePeople 시작하기"
+            android:textColor="#0070C0"
             android:textSize="35dp"
-            android:textStyle="bold"
-            android:fontFamily="@font/hangeulnurib"/>
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,7 +51,8 @@
                 android:hint="비밀번호"
                 android:textSize="20dp"
                 android:inputType="textPassword"
-                android:fontFamily="@font/hangeulnurib"/>/>
+                android:fontFamily="@font/hangeulnurib"
+                />
 
             <Button
                 android:id="@+id/CheckButton"
@@ -107,8 +108,8 @@
         android:id="@+id/activity_login_facebookloginbutton"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
-
+        android:layout_gravity="center"
+        android:background="@drawable/bannerimage2"/>
 
 
     <!--    <Button
