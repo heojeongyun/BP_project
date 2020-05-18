@@ -254,7 +254,6 @@ public class PeopleFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-
             return userModels.size();
         }
 
