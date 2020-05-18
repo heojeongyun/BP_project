@@ -10,10 +10,13 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,7 +24,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.nt_project02.CustomData.ChatModel;
 import com.example.nt_project02.Chat.MessageActivity;
-import com.example.nt_project02.Chat.UserModel;
+import com.example.nt_project02.CustomData.UserModel;
 import com.example.nt_project02.Native_Chat_Management;
 import com.example.nt_project02.R;
 import com.example.nt_project02.Traveler_Chat_Management;
@@ -61,14 +64,17 @@ public class Chatting_Fragment extends Fragment {
     private UserModel userModel;
     private String TAG = "Setting_Fragment";
     private String user_kind;
+    public ChatRecyclerViewAdapter adapter;
+    private RecyclerView recyclerView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.chatting, container, false);
 
-        RecyclerView recyclerView=rootView.findViewById(R.id.recyclerView_chat_Fragment);
-        recyclerView.setAdapter(new ChatRecyclerViewAdapter());
+        recyclerView=rootView.findViewById(R.id.recyclerView_chat_Fragment);
+        adapter=new ChatRecyclerViewAdapter();
+        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext())); //리스트로 보여줄 것이다
 
         final ImageButton traveler_management_btn = (ImageButton) rootView.findViewById(R.id.btn_traveler_chat_management);
@@ -115,13 +121,15 @@ public class Chatting_Fragment extends Fragment {
                     }
                 });
 
+        adapter.notifyDataSetChanged();
+
 
         return rootView;
 
     }
 
 
-    class ChatRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+    public  class ChatRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
         private String uid;
         private List<ChatModel> chatModels=new ArrayList<>();
@@ -131,6 +139,7 @@ public class Chatting_Fragment extends Fragment {
         private ArrayList<String> destinationUsers=new ArrayList<>();
         private String destinationUid=null;
         private String TAG="Chatting_Fragment";
+        private int num=0;
 
 
 
@@ -145,6 +154,7 @@ public class Chatting_Fragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                     chatModels.clear();//밑의 for문에서 데이터를 쌓아둘 거기 때문에 Clear해둠
+                    num=0;
                     for(DataSnapshot item:dataSnapshot.getChildren()){
 
                         chatModels.add(item.getValue(ChatModel.class));
@@ -239,15 +249,43 @@ public class Chatting_Fragment extends Fragment {
             Map<String,ChatModel.Comment> commentMap=new TreeMap<>(Collections. <String>reverseOrder());
             if(chatModels.get(position).comments.size()>=1) {//메시지가 있을 때에만 메시지를 읽어오도록 하는 if문
                 commentMap.putAll(chatModels.get(position).comments);
+
+
+                num=0;
                 lastMessageKey = (String) commentMap.keySet().toArray()[0];//마지막 메시지를 가져옴
 
+
+                String lastMessage_uid=chatModels.get(position).comments.get(lastMessageKey).uid;
+                //마지막 메세지가 내가 보낸게 아니라면
+                if(!lastMessage_uid.equals(uid)) {
+                    for (int i = 0; i < commentMap.keySet().size(); i++) {
+                        String key = (String) commentMap.keySet().toArray()[i];
+
+                        int readuser_size = chatModels.get(position).comments.get(key).readUsers.size();
+                        if (readuser_size == 2) {
+                            break;
+                        }else if(readuser_size==1){
+                             num+=1;
+                        }
+                    }
+                    if(num>0){
+                        customViewHolder.unread_num.setVisibility(View.VISIBLE);
+                        customViewHolder.unread_num.setText(String.valueOf(num));
+                    }
+
+                }
                 if (!chatModels.get(position).comments.get(lastMessageKey).IsImage) {//마지막 메시지가 사진이 아닐 때
-                    customViewHolder.textView_lastMessage.setText(chatModels.get(position).comments.get(lastMessageKey).message);
                     //마지막 메시지의 키를 가져와서 보이게 함
+                    customViewHolder.textView_lastMessage.setText(chatModels.get(position).comments.get(lastMessageKey).message);
+
+
                 } else {
                     customViewHolder.textView_lastMessage.setText("사진");//"사진"으로 표시
                 }
             }
+
+
+
 
 
 
@@ -262,7 +300,10 @@ public class Chatting_Fragment extends Fragment {
 
                     ActivityOptions activityOptions=ActivityOptions.makeCustomAnimation(view.getContext(),R.anim.fromright,R.anim.toleft);
                     //방 들어갈 때 애니메이션
+
+
                     startActivity(intent,activityOptions.toBundle()); //채팅방 액티비티 시작
+
 
                 }
             });
@@ -289,6 +330,7 @@ public class Chatting_Fragment extends Fragment {
             public TextView textView_title;
             public TextView textView_lastMessage;
             public TextView textView_timestamp;
+            public TextView unread_num;
 
             public CustomViewHolder(View view) {
                 super(view);
@@ -299,10 +341,24 @@ public class Chatting_Fragment extends Fragment {
                 textView_title=(TextView)view.findViewById(R.id.chatitem_textview_title);
                 textView_lastMessage=(TextView)view.findViewById(R.id.chatitem_textview_lastMessage);
                 textView_timestamp=(TextView)view.findViewById(R.id.chatitem_textview_tiemstamp);
+                unread_num=(TextView) view.findViewById(R.id.chatitem_unread_num);
             }
         }
     }
 
+    public void refresh(){
+        FragmentTransaction transaction=getFragmentManager().beginTransaction();
+        transaction.detach(this).attach(this).commit();
+    }
 
+    @Override
+    public void onResume() {
+        Toast.makeText(getContext(),"re",Toast.LENGTH_SHORT).show();
+        adapter=new ChatRecyclerViewAdapter();
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        adapter.notifyDataSetChanged();
+        super.onResume();
+    }
 }

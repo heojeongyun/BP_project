@@ -20,8 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.nt_project02.Chat.UserModel;
-import com.example.nt_project02.Fragment.PeopleFragment;
+import com.example.nt_project02.CustomData.UserModel;
 import com.example.nt_project02.Native_Profile.Profile;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;

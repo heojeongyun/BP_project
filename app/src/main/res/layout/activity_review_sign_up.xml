@@ -72,8 +72,11 @@
             android:layout_marginRight="10dp"
             android:isIndicator="false"
             android:max="5"
+            android:progressBackgroundTint="@color/quantum_grey"
+            android:progressTint="@color/Gold"
+            android:secondaryProgressTint="@color/quantum_grey"
             android:numStars="5"
-            android:rating="3.5"
+            android:rating="0"
             android:stepSize="0.5" />
 
         <TextView

@@ -1,11 +1,7 @@
-package com.example.nt_project02.Chat;
+package com.example.nt_project02.CustomData;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import androidx.annotation.NonNull;
-
-import com.example.nt_project02.CustomData.ReviewData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +20,7 @@ public class UserModel implements Parcelable {
     public String imageurl;
     public String hashtag;
     public List<String> requests;
+    public String introduction;
 
 
     public UserModel(Parcel parcel) {
@@ -42,6 +39,7 @@ public class UserModel implements Parcelable {
         hashtag = parcel.readString();
         requests = new ArrayList<String>();
         parcel.readList(requests, UserModel.class.getClassLoader());
+        introduction=parcel.readString();
 
     }
 
@@ -89,6 +87,7 @@ public class UserModel implements Parcelable {
         dest.writeString(this.imageurl);
         dest.writeString(this.hashtag);
         dest.writeList(this.requests);
+        dest.writeString(this.introduction);
     }
 
     @Override
@@ -204,6 +203,14 @@ public class UserModel implements Parcelable {
         return CREATOR;
     }
 
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
     @Override
     public String toString() {
         return "UserModel{" +
@@ -220,6 +227,7 @@ public class UserModel implements Parcelable {
                 ", imageurl='" + imageurl + '\'' +
                 ", hashtag='" + hashtag + '\'' +
                 ", requests=" + requests +
+                ", introduction='" + introduction + '\'' +
                 '}';
     }
 }
