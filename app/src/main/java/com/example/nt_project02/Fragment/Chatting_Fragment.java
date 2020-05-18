@@ -59,7 +59,7 @@ public class Chatting_Fragment extends Fragment {
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private String user_uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private UserModel userModel;
-    private String TAG = "Setting_Fragment";
+    private String TAG = "Chatting_Fragment";
     private String user_kind;
 
     @Nullable

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Name"
+        android:hint="현지인 검색"
         android:fontFamily="@font/hangeulnurib"/>
 
     <!-- <androidx.viewpager.widget.ViewPager
