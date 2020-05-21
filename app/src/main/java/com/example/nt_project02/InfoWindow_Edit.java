@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -35,6 +37,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -87,6 +90,10 @@ public class InfoWindow_Edit extends AppCompatActivity {
 
 
         Register_Button = (Button) findViewById(R.id.activity_infowindow_edit_Register_Button);
+
+
+
+
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -227,7 +234,7 @@ public class InfoWindow_Edit extends AppCompatActivity {
                                 mDatabase.child("chatrooms").child(MessageActivity.chatRoomUid).child("CustomMarker").push().setValue(makrer).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        Toast.makeText(getApplicationContext(), "성공!", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(), "등록 완료.", Toast.LENGTH_LONG).show();
 
                                         //검색한 마커 삭제
                                         if (GoogleMap_Fragment.currentMarker != null) {
@@ -287,29 +294,48 @@ public class InfoWindow_Edit extends AppCompatActivity {
                             public void onClick(View v) {
 
 
-                                MarkerModel.MarkerData NewMarKerData=new MarkerModel.MarkerData();
 
-                                //마커 정보 설정
-                                NewMarKerData.Content = Content_EditText.getText().toString();
-                                NewMarKerData.Latitude = markerData.Latitude;
-                                NewMarKerData.Longitude = markerData.Longitude;
-                                NewMarKerData.markerTitle = Place_Name;
-                                NewMarKerData.markerSnippet = Place_Adress;
-                                NewMarKerData.uid =FirebaseAuth.getInstance().getUid();  //어플 현재 이용자 아이디
-                                NewMarKerData.timestamp = ServerValue.TIMESTAMP; //시간정보 설정;
-                                NewMarKerData.ImageUrl=markerData.ImageUrl;
+                                //알림메세지
+                                final AlertDialog.Builder builder = new AlertDialog.Builder(InfoWindow_Edit.this);
+                                builder.setTitle("마커 정보 수정");
+                                builder.setMessage("해당 마커 정보를 수정 하시겠습니까?");
+                                builder.setPositiveButton("예",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
 
-                                Map<String,Object > postValues=NewMarKerData.toMap();
+                                                MarkerModel.MarkerData NewMarKerData=new MarkerModel.MarkerData();
+
+                                                //마커 정보 설정
+                                                NewMarKerData.Content = Content_EditText.getText().toString();
+                                                NewMarKerData.Latitude = markerData.Latitude;
+                                                NewMarKerData.Longitude = markerData.Longitude;
+                                                NewMarKerData.markerTitle = Place_Name;
+                                                NewMarKerData.markerSnippet = Place_Adress;
+                                                NewMarKerData.uid =FirebaseAuth.getInstance().getUid();  //어플 현재 이용자 아이디
+                                                NewMarKerData.timestamp = ServerValue.TIMESTAMP; //시간정보 설정;
+                                                NewMarKerData.ImageUrl=markerData.ImageUrl;
+
+                                                Map<String,Object > postValues=NewMarKerData.toMap();
 
 
-                                Map<String, Object> childUpdates = new HashMap<>();
-                                childUpdates.put(postSnapshot.getKey(),postValues);
+                                                Map<String, Object> childUpdates = new HashMap<>();
+                                                childUpdates.put(postSnapshot.getKey(),postValues);
 
 
-                                mDatabase.child("chatrooms").child(MessageActivity.chatRoomUid).child("CustomMarker").updateChildren(childUpdates);
-                                Toast.makeText(getApplicationContext(),"수정 완료!",Toast.LENGTH_LONG);
+                                                mDatabase.child("chatrooms").child(MessageActivity.chatRoomUid).child("CustomMarker").updateChildren(childUpdates);
+                                                finish();
 
-                                finish();
+                                            }
+                                        });
+                                builder.setNegativeButton("아니오",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.cancel();
+                                            }
+                                        });
+                                builder.show();
+
+
                             }
 
                         };
@@ -340,6 +366,7 @@ public class InfoWindow_Edit extends AppCompatActivity {
 
 
     }
+
     private void activate_view(){
         //버튼 활성
         Register_Button.setVisibility(View.VISIBLE);
