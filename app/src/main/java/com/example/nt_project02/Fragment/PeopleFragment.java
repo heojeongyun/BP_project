@@ -95,10 +95,12 @@ public class PeopleFragment extends Fragment {
 
 
         adapter = new PeopleFragmentRecyclerViewAdapter();
+
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.peoplefragment_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
 
         recyclerView.setAdapter(adapter);
+
 
 
         return rootView;
@@ -118,6 +120,21 @@ public class PeopleFragment extends Fragment {
     class PeopleFragmentRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
+
+/*        RecyclerView.ViewHolder(View itemView) {
+            super(itemView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION) {
+
+                        RecyclerItem item = mData.get(pos);
+                    }
+                }
+            });
+        }*/
         public PeopleFragmentRecyclerViewAdapter() {
 
 
@@ -169,12 +186,15 @@ public class PeopleFragment extends Fragment {
 
             return new CustomViewHolder(view);
 
+
+
         }
 
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
             Integer bookmarks_number;
+
 
             //item 클릭시 선택효과
             //int selectedPosition = -1;

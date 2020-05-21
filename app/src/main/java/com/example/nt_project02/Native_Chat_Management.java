@@ -46,11 +46,13 @@ public class  Native_Chat_Management extends AppCompatActivity {
     private DocumentReference Ref;
     private String TAG="Native_Chat_Management";
     private RecyclerView recyclerView;
+    private String user_kind;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_native__chat__management);
+
 
 
         adapter=new NativeChatManagementRecyclerViewAdapter();
@@ -178,22 +180,6 @@ public class  Native_Chat_Management extends AppCompatActivity {
 
 
 
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    if (position != RecyclerView.NO_POSITION) {
-                        /*Toast.makeText(getContext(),position+"",Toast.LENGTH_LONG).show();*/
-                        Intent intent = new Intent(getApplicationContext(), Native_Chat_Management.class);
-                        intent.putExtra("destination_UserModels", userModels.get(position));
-                        startActivity(intent);
-
-
-                    }
-
-                }
-            });
-
             ((CustomViewHolder) holder).accept_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) { // 수락 버튼 클릭시 1:1 대화창으로 이동
@@ -206,7 +192,7 @@ public class  Native_Chat_Management extends AppCompatActivity {
                     Ref.update("matching",FieldValue.arrayUnion(userModels.get(position).getUid())); //현지인 매칭 목록 데이터 추가
                     destination_Ref.update("matching",FieldValue.arrayUnion(uid)); //여행자 매칭 목록 데이터 추가
 
-                    startToast("매칭을 성공적으로 요청했습니다");
+
                 }
             });
 
