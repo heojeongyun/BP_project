@@ -28,6 +28,7 @@ import com.example.nt_project02.ReviewActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -42,7 +43,6 @@ public class Profile extends AppCompatActivity {
 
     private ViewPager mViewPager;
     private String destinationUid;
-
     private MyPagerAdapter mPagerAdapter;
     private UserModel current_userModel;
     private UserModel destination_userModel;
@@ -60,6 +60,8 @@ public class Profile extends AppCompatActivity {
     private DocumentReference destination_Ref;
     private DocumentReference Ref;
     private List<String> bookmarks_array;
+    private List<String> requests;
+    private List<String> matching;
     private String TAG="Profile";
 
     private ReviewRecyclerViewAdapter adapter;
@@ -75,8 +77,6 @@ public class Profile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
-
 
 
 
@@ -124,6 +124,8 @@ public class Profile extends AppCompatActivity {
         }
 
 
+
+
    
             
                
@@ -131,7 +133,15 @@ public class Profile extends AppCompatActivity {
 
         // 현지인과 채팅을 하기 위해 매칭요청 하는 버튼
         Button chat_button=(Button) findViewById(R.id.profile_chat_button);
-        chat_button.setOnClickListener(new View.OnClickListener() {
+
+        if(uid.equals(destinationUid)){
+            chat_button.setVisibility(View.GONE);
+            chat_button.setClickable(false);
+        } 
+
+        //현지인에게 매칭 요청 리스너
+        View.OnClickListener request =new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 // 파이어베이스 requests 필드에 아이디 등록
@@ -139,7 +149,18 @@ public class Profile extends AppCompatActivity {
                 destination_Ref.update("requests",FieldValue.arrayUnion(uid));
                 startToast("매칭을 성공적으로 요청했습니다");
             }
-        });
+
+        };
+
+        //요청 거절 리스너
+        View.OnClickListener Reject_Request =new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startToast("해당 현지인에게 이미 매칭 요청 하였습니다.");
+            }
+        };
+
+
 
         activity_profile_BookMark=(CheckBox) findViewById(R.id.activity_profile_BookMark);
 
@@ -163,8 +184,10 @@ public class Profile extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 current_userModel=document.toObject(UserModel.class);
                                 bookmarks_array=current_userModel.getBookmarks();
+                                requests=current_userModel.getRequests();
+                                matching=current_userModel.getMatching();
                                 //즐켜찾기 목록이 있을 시
-                                if(bookmarks_array !=null) {
+                                if(bookmarks_array != null) {
                                     //현재 프로필 현지인이 포함되어 있으면
                                     if(bookmarks_array.contains(destinationUid)){
                                         activity_profile_BookMark.setChecked(true);
@@ -175,7 +198,37 @@ public class Profile extends AppCompatActivity {
                                 }
                                 Log.d("Profile_Traver_data", document.getId() + " => " + document.getData());
 
+
+                                if(requests !=null){
+
+                                    if(!requests.contains(destinationUid)){
+                                        if(matching!=null){
+                                            if(!matching.contains(destinationUid)){
+                                                chat_button.setOnClickListener(request);
+                                            }else{
+                                                chat_button.setOnClickListener(Reject_Request);
+                                            }
+                                        }else{
+                                            chat_button.setOnClickListener(request);
+                                        }
+                                    }
+                                    else{
+                                        chat_button.setOnClickListener(Reject_Request);
+
+                                    }
+                                }else{
+                                    if(matching !=null){
+                                        if(!matching.contains(destinationUid)){
+                                            chat_button.setOnClickListener(request);
+                                        }else{
+                                            chat_button.setOnClickListener(Reject_Request);
+                                        }
+                                    }else {
+                                        chat_button.setOnClickListener(request);
+                                    }
+                                }
                             }
+
                         } else {
                             Log.d("Profile_Traver_data", "Error getting documents: ", task.getException());
                         }
@@ -183,15 +236,21 @@ public class Profile extends AppCompatActivity {
                 });
 
         //리뷰 쓰기 버튼 클릭 시
-        review_register_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ReviewActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra("destination_UserModel", destination_userModel);
-                startActivity(intent);
-            }
-        });
+        if(uid.equals(destinationUid)){
+            review_register_button.setVisibility(View.GONE);
+            review_register_button.setClickable(false);
+
+        } else {
+            review_register_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), ReviewActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.putExtra("destination_UserModel", destination_userModel);
+                    startActivity(intent);
+                }
+            });
+        }
 
 
 

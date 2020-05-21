@@ -24,9 +24,15 @@
         >
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="검색"
+            android:textAlignment="viewStart"
+            android:paddingLeft="20dp"
+            android:textSize="20dp"
+            android:textColor="@color/quantum_grey700"
+            android:textStyle="italic"
+            android:background="@color/white"
             android:id="@+id/button"/>
 
         <fragment

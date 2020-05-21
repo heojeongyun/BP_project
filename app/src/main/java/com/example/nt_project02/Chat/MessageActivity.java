@@ -1,5 +1,7 @@
 package com.example.nt_project02.Chat;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,24 +9,29 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.nt_project02.BookmarkActivity;
 import com.example.nt_project02.CustomData.ChatModel;
 import com.example.nt_project02.CustomData.UserModel;
 import com.example.nt_project02.Fragment.Chatting_Fragment;
@@ -44,7 +51,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -106,6 +115,8 @@ public class MessageActivity extends AppCompatActivity {
 
     private String TAG="MessageActivity";
     public  String Content;
+    private FragmentTransaction transaction;
+    private InputMethodManager imm;
 
 
 
@@ -138,14 +149,88 @@ public class MessageActivity extends AppCompatActivity {
 
 
 
-       // destinationUid=getIntent().getStringExtra("destinationUid");
+
         button=(Button)findViewById(R.id.messageActivity_Button);
         editText=(EditText)findViewById(R.id.messageActivity_editText);
         Image_Button=(Button)findViewById(R.id.messageActivity_picture);
+        Button FinishButton=(Button) findViewById(R.id.actvity_message_FinishButton);
+
+
+        //키보드
+        imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+
+
+        FinishButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+                //알림메세지
+                final AlertDialog.Builder builder = new AlertDialog.Builder(MessageActivity.this);
+                builder.setTitle("매칭 종료");
+                builder.setMessage("매칭을 종료 하시겠습니까?");
+                builder.setPositiveButton("예",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                DatabaseReference mDatabase=FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("users");
+                                Map<String, Object> childUpdates = new HashMap<>();
+
+                                //해당 채팅방 리스트에 보이지 않게 users 업데이트
+                                childUpdates.put(uid, false);
+                                childUpdates.put(destinationUid, false);
+                                mDatabase.updateChildren(childUpdates);
+
+                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                //현재 여행자 정보 파이어스토어 경로
+                                DocumentReference Ref=db.collection("users").document(uid);
+                                //현재 현지인 정보 파이어스토어경로
+                                DocumentReference destination_Ref=db.collection("users").document(destinationUid);
+
+                                //matching 리스트에서 삭제
+                                Ref.update("matching",FieldValue.arrayRemove(destinationUid));
+                                destination_Ref.update("matching",FieldValue.arrayRemove(uid));
+
+                                //액티비티 종료
+                                finish();
+                            }
+                        });
+                builder.setNegativeButton("아니오",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                builder.show();
+
+            }
+        });
 
 
 
 
+
+
+
+
+
+        View.OnTouchListener remove =new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch(event.getAction()) {
+                        case MotionEvent.ACTION_DOWN: {
+                            //터치했을 때 프래그먼트 화면 없애기
+                            removeFragment(googleMap_fragment);
+                            //키보드 숨기
+                            imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                            break;
+                        }
+                    }
+                    return false;
+                }
+
+        };
+        recyclerView.setOnTouchListener(remove);
+        editText.setOnTouchListener(remove);
 
         Image_Button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,7 +293,8 @@ public class MessageActivity extends AppCompatActivity {
         activtiy_message_MapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.container,googleMap_fragment).commit();
+                //getSupportFragmentManager().beginTransaction().replace(R.id.container,googleMap_fragment).commit();
+                attachFragment(googleMap_fragment);
             }
         });
 
@@ -217,7 +303,9 @@ public class MessageActivity extends AppCompatActivity {
         activtiy_message_Map_Drawing_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.container,googleMap_drawing_fragment).commit();
+                //getSupportFragmentManager().beginTransaction().replace(R.id.container,googleMap_drawing_fragment).commit();
+                //attachFragment(googleMap_drawing_fragment);
+                Toast.makeText(getApplicationContext(),"업데이트 예정 입니다.",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -747,6 +835,22 @@ public class MessageActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 
+    }
+
+    private void attachFragment(Fragment fragment) {
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, fragment);
+        transaction.addToBackStack(null);
+        //키보드 숨기
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        transaction.commit();
+    }
+
+    private void removeFragment(Fragment fragment) {
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.remove(fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
 

@@ -57,14 +57,26 @@
         android:padding="8dp"
         android:layout_marginTop="5dp">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:gravity="left"
+            android:text="현지인 코멘트"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/hangeulnurib"
+            android:layout_marginTop="10dp"/>
+
 
         <EditText
             android:background="@drawable/border"
             android:id="@+id/activity_infowindow_edit_Content_EditText"
             android:layout_width="match_parent"
             android:gravity="center"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
-            android:layout_height="200dp"
+            android:layout_height="100dp"
             android:inputType="textMultiLine"
             android:layout_marginRight="10dp"
             android:hint="  현 위치에 관한 정보를 입력하세요."
@@ -72,11 +84,14 @@
             >
         </EditText>
 
+
+
     </LinearLayout>
 
         <Button
             android:visibility="invisible"
             android:id="@+id/activity_infowindow_edit_Register_Button"
+            android:onClick="onButtonClick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

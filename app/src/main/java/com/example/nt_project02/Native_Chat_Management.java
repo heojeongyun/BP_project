@@ -202,6 +202,11 @@ public class  Native_Chat_Management extends AppCompatActivity {
                     startActivity(intent);
                     Ref.update("requests",FieldValue.arrayRemove(userModels.get(position).getUid())); // 현지인 관리목록에서 삭제
                     destination_Ref.update("requests",FieldValue.arrayRemove(uid)); // 여행자 관리목록에서 삭제
+
+                    Ref.update("matching",FieldValue.arrayUnion(userModels.get(position).getUid())); //현지인 매칭 목록 데이터 추가
+                    destination_Ref.update("matching",FieldValue.arrayUnion(uid)); //여행자 매칭 목록 데이터 추가
+
+                    startToast("매칭을 성공적으로 요청했습니다");
                 }
             });
 

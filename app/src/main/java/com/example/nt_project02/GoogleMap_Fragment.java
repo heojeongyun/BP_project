@@ -135,8 +135,6 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
 
     }
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -498,7 +496,7 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
     //Custom InfoWindow 클릭 시 마커정보 수정 액티비티로 이동
     @Override
     public void onInfoWindowClick(final Marker marker) {
-        Toast.makeText(getContext(), "Info window clicked",Toast.LENGTH_SHORT).show();
+       /* Toast.makeText(getContext(), "Info window clicked",Toast.LENGTH_SHORT).show();*/
 
         //검색 마커 클릭 (빨간색)
         if(marker.isDraggable()){
