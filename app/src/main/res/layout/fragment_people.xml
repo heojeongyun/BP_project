@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/textView"
@@ -22,12 +23,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="80dp"
         android:layout_marginEnd="5dp"
-        android:hint="  검색할 내용을 입력하세요."
+        android:hint="   검색할 내용을 입력하세요."
         android:singleLine="true"
         android:textSize="17dp"
-        android:fontFamily="@font/hangeulnurib"/>
+        android:fontFamily="@font/hangeulnurib"
+        android:layout_below="@+id/textView"
+        android:layout_marginTop="9dp"/>
+
+    <LinearLayout
+        android:id="@+id/txt_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#959393"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/txt_search"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/main_framelayout"
@@ -42,11 +55,12 @@
         android:id="@+id/peoplefragment_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="602dp"
-        android:layout_below="@+id/txt_search"
-        android:layout_marginTop="-1dp"
-        >
+
+        android:layout_below="@+id/txt_line"
+        android:layout_marginTop="-1dp">
+
 
     </androidx.recyclerview.widget.RecyclerView>
 
 
-</RelativeLayout>
+</LinearLayout>
