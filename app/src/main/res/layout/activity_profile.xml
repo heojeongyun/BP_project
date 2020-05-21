@@ -30,9 +30,8 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="310dp"
-                    android:orientation="vertical"
-                    android:background="@drawable/linear_border">
+                    android:layout_height="120dp"
+                    android:orientation="vertical">
 
                     <CheckBox
                         android:id="@+id/activity_profile_BookMark"
@@ -40,29 +39,80 @@
                         android:layout_height="20dp"
                         android:layout_gravity="right"
                         android:background="@drawable/btn_star"
-                        android:button="@null"
-                        android:layout_margin="7dp"/>
+                        android:button="@null" />
 
-
-                    <ImageView
-                        android:id="@+id/profile_Image"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="120dp"
-                        android:layout_marginTop="55dp"
-                        android:src="@drawable/user"/>
+                        android:layout_height="100dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/profile_Image"
+                            android:layout_width="90dp"
+                            android:layout_height="890dp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/user"
+                            android:layout_marginBottom="3dp"/>
+
+                        <ImageView
+                            android:id="@+id/item_friend_RankImage"
+                            android:layout_width="40dp"
+                            android:layout_height="35dp"
+                            android:layout_gravity="top"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginTop="3dp"
+                            android:src="@drawable/medal3"
+                            android:layout_marginBottom="3dp"/>
 
 
-                    <TextView
-                        android:id="@+id/nickAgeTV"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="별명"
-                        android:textAlignment="center"
-                        android:textSize="25dp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="10dp"
-                        android:textColor="#DD2E2E2E"
-                        android:fontFamily="@font/hangeulnurib"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginBottom="3dp"
+                            android:layout_marginLeft="120dp">
+
+                            <TextView
+                                android:id="@+id/nickAgeTV"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignTop="@id/frienditem_imageview"
+                                android:layout_toRightOf="@id/frienditem_imageview"
+                                android:text="닉네임"
+                                android:textSize="20dp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/hangeulnurib"/>
+
+                            <TextView
+                                android:id="@+id/frienditem_region"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignTop="@id/frienditem_imageview"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginRight="17dp"
+                                android:layout_toRightOf="@id/frienditem_imageview"
+                                android:text="지역"
+                                android:textSize="15dp"
+                                android:fontFamily="@font/hangeulnurib"/>
+
+                            <TextView
+                                android:id="@+id/frienditem_hash"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignTop="@id/frienditem_imageview"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginRight="16dp"
+                                android:layout_toRightOf="@id/frienditem_imageview"
+                                android:text="해시태그"
+                                android:textColor="#E91E63"
+                                android:textSize="15dp"
+                                android:fontFamily="@font/hangeulnurib"/>
+
+                        </LinearLayout>
+
+                    </FrameLayout>
 
                 </LinearLayout>
 
@@ -72,7 +122,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="70dp">
+                    android:layout_marginTop="40dp">
 
                     <ImageView
                         android:layout_width="25dp"
@@ -113,55 +163,14 @@
                     android:textStyle="bold"
                     android:text="안녕하세요! 처음 부산에 오셨다면 아름다운 남구로 오세요. 더위에 지친 당신을 위해 시원한 여름코스를 준비해 놨습니다. 망설이지말고 블루밍하세요~! "/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_below="@+id/introduction_Text"
-                    android:layout_marginTop="70dp">
 
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/sign"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="추천코스"
-                        android:textSize="20dp"
-                        android:textColor="@color/quantum_black_text"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/hangeulnurib"
-                        android:layout_marginLeft="10dp"/>
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#E3E0E0"
-                    android:layout_marginTop="5dp">
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:gravity="center"
-                    android:background="#DDE6E4E4"
-                    android:layout_marginTop="10dp"
-                    android:textSize="15dp"
-                    android:text="업데이트 준비중..."
-                    android:fontFamily="@font/hangeulnurib"
-                    android:id="@+id/update"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginTop="70dp"
-                    android:layout_below="@+id/update">
+                    android:layout_below="@+id/introduction_Text">
 
 
                     <ImageView
@@ -233,23 +242,64 @@
                     android:textStyle="bold"
                     android:background="@drawable/btn_plus"/>
 
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="70dp">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/sign"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="추천코스"
+                        android:textSize="20dp"
+                        android:textColor="@color/quantum_black_text"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/hangeulnurib"
+                        android:layout_marginLeft="10dp"/>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E3E0E0"
+                    android:layout_marginTop="5dp">
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:gravity="center"
+                    android:background="#DDE6E4E4"
+                    android:layout_marginTop="10dp"
+                    android:textSize="15dp"
+                    android:text="업데이트 준비중..."
+                    android:fontFamily="@font/hangeulnurib"
+                    android:id="@+id/update"/>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:fontFamily="@font/hangeulnurib"
                     android:textSize="12dp"
                     android:layout_marginLeft="3dp"
                     android:text="*매칭 시 욕설 및 비방을 금지합니다."/>
 
+
             </LinearLayout>
 
 
-
-
-
-
         </LinearLayout>
+
+
 
     </ScrollView>
 

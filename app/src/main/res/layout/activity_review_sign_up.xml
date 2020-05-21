@@ -12,43 +12,45 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginRight="10dp"
-            android:gravity="center_vertical"
-            android:text="리뷰 작성하기"
-            android:textColor="#4472C4"
-            android:textSize="35dp"
-            android:textStyle="bold" />
+            <TextView
+                android:layout_width="296dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="@font/hangeulnurib"
+                android:gravity="center_vertical"
+                android:text="리뷰 작성하기"
+                android:textColor="#0070C0"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:layout_marginTop="40dp"/>
 
-        <TextView
-            android:id="@+id/review_nickTV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="별명"
-            android:textAlignment="center"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:layout_marginTop="25dp"
-            android:textColor="@color/quantum_black_text"
-            android:fontFamily="@font/hangeulnurib"/>
 
-        <ImageView
-            android:id="@+id/review_profile_Image"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/user"/>
 
+
+            <ImageView
+                android:id="@+id/review_profile_Image"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/user"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/review_nickTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="별명"
+                android:textAlignment="center"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/hangeulnurib"/>
 
 
         <TextView
@@ -58,8 +60,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
-            android:text="평점을 매겨주세요!"
-            android:textSize="25dp" />
+            android:text="매칭 평점을 매겨주세요"
+            android:textSize="20dp" />
 
 
         <RatingBar
@@ -77,7 +79,8 @@
             android:secondaryProgressTint="@color/quantum_grey"
             android:numStars="5"
             android:rating="0"
-            android:stepSize="0.5" />
+            android:stepSize="0.5"
+            style="?android:attr/ratingBarStyle"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -85,7 +88,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
-            android:text="여행은 즐거우셨나요? 만족하셨다면 여행 리뷰를 남겨주세요."
+            android:text="여행은 즐거우셨나요? 여행 리뷰를 자유롭게 남겨주세요."
             android:textSize="15dp" />
 
         <EditText
@@ -93,6 +96,7 @@
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:background="@drawable/back"
