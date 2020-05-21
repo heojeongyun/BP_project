@@ -88,6 +88,10 @@ public class InfoWindow_Edit extends AppCompatActivity {
 
         Register_Button = (Button) findViewById(R.id.activity_infowindow_edit_Register_Button);
 
+
+
+
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         Intent data = getIntent();
@@ -332,6 +336,7 @@ public class InfoWindow_Edit extends AppCompatActivity {
 
 
     }
+
     private void activate_view(){
         //버튼 활성
         Register_Button.setVisibility(View.VISIBLE);
