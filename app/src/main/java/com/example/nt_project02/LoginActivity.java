@@ -3,11 +3,19 @@ package com.example.nt_project02;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.text.method.TransformationMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,6 +56,10 @@ public class LoginActivity extends AppCompatActivity  {
     private CallbackManager mCallbackManager;
     private GoogleSignInClient mGoogleSignInClient; //구글 API 클라이언트 객체
     private static final int REO_SIGN_GOOGLE = 100; //구글 로그인 결과 코드
+    EditText mEtPW;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +68,10 @@ public class LoginActivity extends AppCompatActivity  {
         mContext = LoginActivity.this;
         mAuth = FirebaseAuth.getInstance(); // 파이어베이스 인증 객체 초기화
         mCallbackManager = CallbackManager.Factory.create();
+
+        mEtPW = (EditText) findViewById(R.id.passwordEditText);
+        mEtPW.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
 
 
 
@@ -284,6 +300,10 @@ public class LoginActivity extends AppCompatActivity  {
 
         String email = ((EditText) findViewById(R.id.NameEditText)).getText().toString();
         String password = ((EditText) findViewById(R.id.passwordEditText)).getText().toString();
+
+
+
+
 
 
         if (email.length() > 0 && password.length() > 0) {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -52,7 +53,7 @@
                 android:textSize="20dp"
                 android:inputType="textPassword"
                 android:fontFamily="@font/hangeulnurib"
-                />
+              />
 
             <Button
                 android:id="@+id/CheckButton"
@@ -90,7 +91,9 @@
                 android:layout_marginTop="10dp"
                 android:text="비밀번호 찾기"
                 android:background="#00ff0000"
-                android:fontFamily="@font/hangeulnurib"/>/>
+                android:fontFamily="@font/hangeulnurib"/>
+
+
 
         </LinearLayout>
 
