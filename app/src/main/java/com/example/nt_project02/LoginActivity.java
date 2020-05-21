@@ -1,5 +1,6 @@
 package com.example.nt_project02;
 
+import android.app.MediaRouteButton;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +10,12 @@ import android.text.method.PasswordTransformationMethod;
 import android.text.method.TransformationMethod;
 import android.util.Log;
 import android.view.View;
+
+import android.widget.Button;
+
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+
 import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.CheckBox;
@@ -86,6 +91,8 @@ public class LoginActivity extends AppCompatActivity  {
 
 
         //페북로그인버튼
+        Button facebookcustomButton = findViewById(R.id.activity_login_customfacebooklogin);
+
         LoginButton facebookloginButton = findViewById(R.id.activity_login_facebookloginbutton);
         facebookloginButton.setReadPermissions("email");
         facebookloginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
@@ -114,8 +121,13 @@ public class LoginActivity extends AppCompatActivity  {
         findViewById(R.id.signUp_Activity_Button).setOnClickListener(onClickListener);
         findViewById(R.id.activity_login_TemporaryNativeButton).setOnClickListener(onClickListener);
         findViewById(R.id.activity_login_TemporaryTravelerButton).setOnClickListener(onClickListener);
-        findViewById(R.id.activity_login_googlelogInButton).setOnClickListener(onClickListener);
-
+        findViewById(R.id.activity_login_customGoogleLogin).setOnClickListener(onClickListener);
+        facebookcustomButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                facebookloginButton.performClick();
+            }
+        });
 
     }
 
@@ -280,7 +292,7 @@ public class LoginActivity extends AppCompatActivity  {
                     Temporary_traveler_login();
                     break;
 
-                case R.id.activity_login_googlelogInButton:
+                case R.id.activity_login_customGoogleLogin:
                     signIn();
                     break;
 

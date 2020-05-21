@@ -341,7 +341,9 @@ public class Chatting_Fragment extends Fragment {
         }
     }
 
+
     private void mSetAdapter(){
+
         adapter=new ChatRecyclerViewAdapter();
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

@@ -132,7 +132,15 @@ public class InfoWindow_Edit extends AppCompatActivity {
                                         activate_view();
                                     }else{
                                         //입력창 비활성
-                                        Content_EditText.setClickable(false);
+                                        Toast.makeText(getApplicationContext(),"현지인만 수정가능합니다.",Toast.LENGTH_SHORT)
+                                                .show();
+                                        Content_EditText.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                Toast.makeText(getApplicationContext(),"현지인만 수정가능합니다.",Toast.LENGTH_SHORT)
+                                                        .show();
+                                            }
+                                        });
                                         Content_EditText.setFocusable(false);
                                     }
                                 }

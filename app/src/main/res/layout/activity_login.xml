@@ -100,18 +100,38 @@
     </LinearLayout>
 
 
-    <com.google.android.gms.common.SignInButton
+    <Button
+        android:id="@+id/activity_login_customGoogleLogin"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:text="구글"
+        />
+
+    <!--<com.google.android.gms.common.SignInButton
         android:id="@+id/activity_login_googlelogInButton"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"/>-->
 
+
+    <Button
+        android:id="@+id/activity_login_customfacebooklogin"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:text="페북로그인"/>
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/activity_login_facebookloginbutton"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+
+
+
 
 
     <Button
