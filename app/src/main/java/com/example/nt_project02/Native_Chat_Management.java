@@ -48,11 +48,13 @@ public class  Native_Chat_Management extends AppCompatActivity {
     private DocumentReference Ref;
     private String TAG="Native_Chat_Management";
     private RecyclerView recyclerView;
+    private String user_kind;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_native__chat__management);
+
 
 
         adapter=new NativeChatManagementRecyclerViewAdapter();
@@ -178,7 +180,6 @@ public class  Native_Chat_Management extends AppCompatActivity {
             }
             ((CustomViewHolder) holder).Nick_textView.setText(userModels.get(position).name);
 
-            
 
             ((CustomViewHolder) holder).accept_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
