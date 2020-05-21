@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -176,23 +178,7 @@ public class  Native_Chat_Management extends AppCompatActivity {
             }
             ((CustomViewHolder) holder).Nick_textView.setText(userModels.get(position).name);
 
-
-
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    if (position != RecyclerView.NO_POSITION) {
-                        /*Toast.makeText(getContext(),position+"",Toast.LENGTH_LONG).show();*/
-                        Intent intent = new Intent(getApplicationContext(), Native_Chat_Management.class);
-                        intent.putExtra("destination_UserModels", userModels.get(position));
-                        startActivity(intent);
-
-
-                    }
-
-                }
-            });
+            
 
             ((CustomViewHolder) holder).accept_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -206,7 +192,7 @@ public class  Native_Chat_Management extends AppCompatActivity {
                     Ref.update("matching",FieldValue.arrayUnion(userModels.get(position).getUid())); //현지인 매칭 목록 데이터 추가
                     destination_Ref.update("matching",FieldValue.arrayUnion(uid)); //여행자 매칭 목록 데이터 추가
 
-                    startToast("매칭을 성공적으로 요청했습니다");
+
                 }
             });
 
@@ -215,9 +201,26 @@ public class  Native_Chat_Management extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-
-                    Ref.update("requests",FieldValue.arrayRemove(userModels.get(position).getUid()));
-                    destination_Ref.update("requests",FieldValue.arrayRemove(uid));
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(Native_Chat_Management.this);
+                    builder.setTitle("거절");
+                    builder.setMessage("해당 여행자 매칭요청을 취소 하시겠습니까?");
+                    builder.setPositiveButton("예",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Ref.update("requests",FieldValue.arrayRemove(userModels.get(position).getUid()));
+                                    destination_Ref.update("requests",FieldValue.arrayRemove(uid));
+                                    adapter=new NativeChatManagementRecyclerViewAdapter();
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(Native_Chat_Management.this));
+                                    recyclerView.setAdapter(adapter);
+                                }
+                            });
+                    builder.setNegativeButton("아니오",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                    builder.show();
 
 
                 }
