@@ -73,9 +73,8 @@ public class Chatting_Fragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.chatting, container, false);
 
         recyclerView=rootView.findViewById(R.id.recyclerView_chat_Fragment);
-        adapter=new ChatRecyclerViewAdapter();
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext())); //리스트로 보여줄 것이다
+        //리사이클러뷰 붙히기
+        mSetAdapter();
 
         final ImageButton traveler_management_btn = (ImageButton) rootView.findViewById(R.id.btn_traveler_chat_management);
 
@@ -285,10 +284,6 @@ public class Chatting_Fragment extends Fragment {
             }
 
 
-
-
-
-
             customViewHolder.itemView.setOnClickListener(new View.OnClickListener(){//클릭 이벤트
 
 
@@ -346,19 +341,16 @@ public class Chatting_Fragment extends Fragment {
         }
     }
 
-    public void refresh(){
-        FragmentTransaction transaction=getFragmentManager().beginTransaction();
-        transaction.detach(this).attach(this).commit();
+    private void mSetAdapter(){
+        adapter=new ChatRecyclerViewAdapter();
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     @Override
     public void onResume() {
-        Toast.makeText(getContext(),"re",Toast.LENGTH_SHORT).show();
-        adapter=new ChatRecyclerViewAdapter();
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        adapter.notifyDataSetChanged();
+        mSetAdapter();
         super.onResume();
     }
+
 }
