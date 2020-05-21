@@ -173,11 +173,9 @@ public class Traveler_Chat_Management extends AppCompatActivity {
                         .into(((CustomViewHolder) holder).imageView);
             }
             ((CustomViewHolder) holder).Nick_textView.setText(userModels.get(position).name);
-
             ((CustomViewHolder)holder).request_cancel_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
 
                     final AlertDialog.Builder builder = new AlertDialog.Builder(Traveler_Chat_Management.this);
                     builder.setTitle("요청취소");

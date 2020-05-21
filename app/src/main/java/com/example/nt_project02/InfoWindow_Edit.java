@@ -131,9 +131,6 @@ public class InfoWindow_Edit extends AppCompatActivity {
                                         //현지인 일시 수정가능 하도록 view 활성화
                                         activate_view();
                                     }else{
-                                        //입력창 비활성
-                                        Toast.makeText(getApplicationContext(),"현지인만 수정가능합니다.",Toast.LENGTH_SHORT)
-                                                .show();
                                         Content_EditText.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
