@@ -97,7 +97,16 @@
     </LinearLayout>
 
 
+    <Button
+        android:id="@+id/customGoogleLoginButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:text="버튼"
+        />
+
     <com.google.android.gms.common.SignInButton
+        android:visibility="gone"
         android:id="@+id/activity_login_googlelogInButton"
         android:layout_width="360dp"
         android:layout_height="wrap_content"

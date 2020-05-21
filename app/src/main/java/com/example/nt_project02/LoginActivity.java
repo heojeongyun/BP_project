@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -48,6 +50,8 @@ public class LoginActivity extends AppCompatActivity  {
     private CallbackManager mCallbackManager;
     private GoogleSignInClient mGoogleSignInClient; //구글 API 클라이언트 객체
     private static final int REO_SIGN_GOOGLE = 100; //구글 로그인 결과 코드
+    private SignInButton hideGoogleLoginButton;
+    private Button customGoogleLoginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +72,10 @@ public class LoginActivity extends AppCompatActivity  {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         revokeAccess();
 
+        hideGoogleLoginButton = findViewById(R.id.activity_login_googlelogInButton);
+        hideGoogleLoginButton.setOnClickListener(v -> signIn());
+        customGoogleLoginButton = findViewById(R.id.customGoogleLoginButton);
+        customGoogleLoginButton.setOnClickListener(v -> hideGoogleLoginButton.performClick());
 
         //페북로그인버튼
         LoginButton facebookloginButton = findViewById(R.id.activity_login_facebookloginbutton);
@@ -98,7 +106,7 @@ public class LoginActivity extends AppCompatActivity  {
         findViewById(R.id.signUp_Activity_Button).setOnClickListener(onClickListener);
         findViewById(R.id.activity_login_TemporaryNativeButton).setOnClickListener(onClickListener);
         findViewById(R.id.activity_login_TemporaryTravelerButton).setOnClickListener(onClickListener);
-        findViewById(R.id.activity_login_googlelogInButton).setOnClickListener(onClickListener);
+        /*findViewById(R.id.activity_login_googlelogInButton).setOnClickListener(onClickListener);*/
 
 
     }
@@ -262,10 +270,6 @@ public class LoginActivity extends AppCompatActivity  {
 
                 case R.id.activity_login_TemporaryTravelerButton:
                     Temporary_traveler_login();
-                    break;
-
-                case R.id.activity_login_googlelogInButton:
-                    signIn();
                     break;
 
             }

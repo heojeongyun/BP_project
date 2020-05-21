@@ -353,7 +353,7 @@ public class Chatting_Fragment extends Fragment {
 
     @Override
     public void onResume() {
-        Toast.makeText(getContext(),"re",Toast.LENGTH_SHORT).show();
+        /*Toast.makeText(getContext(),"re",Toast.LENGTH_SHORT).show();*/
         adapter=new ChatRecyclerViewAdapter();
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
