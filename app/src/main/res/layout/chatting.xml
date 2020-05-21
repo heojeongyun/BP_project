@@ -24,12 +24,25 @@
             android:fontFamily="@font/hangeulnurib"
             />
 
+        <TextView
+            android:visibility="invisible"
+            android:background="@drawable/magnitude_circle"
+            android:id="@+id/request_num"
+            android:text="0"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:layout_marginLeft="200dp"
+            android:textStyle="bold"
+            android:layout_gravity="right"/>
         <ImageButton
             android:id="@+id/btn_traveler_chat_management"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="240dp"
+            android:layout_marginLeft="-13dp"
             android:background="@drawable/traveler_chat_management"/>
 
 

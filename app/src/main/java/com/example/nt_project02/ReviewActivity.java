@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -118,7 +119,8 @@ public class ReviewActivity extends AppCompatActivity {
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-
+                                                Toast.makeText(getApplicationContext(),"리뷰 작성 완료",Toast.LENGTH_SHORT).show();
+                                                finish();
                                             }
                                         }).addOnFailureListener(new OnFailureListener() {
                                     @Override

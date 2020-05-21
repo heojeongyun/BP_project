@@ -212,6 +212,7 @@
 
 
                 <Button
+                    android:id="@+id/profile_detailbutton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#DD2E2E2E"

@@ -50,7 +50,7 @@ public class Profile extends AppCompatActivity {
     private TextView introduction_Text;
     private ImageView profile_image;
     private Button review_register_button;
-
+    private Button detailbutton;
 
     private String user_kind;
     private String user_uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -67,6 +67,8 @@ public class Profile extends AppCompatActivity {
     private ReviewRecyclerViewAdapter adapter;
     private List<ReviewData> reviewDataList;
 
+    private int Show_Size=3;
+
 
 
 
@@ -77,6 +79,8 @@ public class Profile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+
 
 
 
@@ -93,6 +97,7 @@ public class Profile extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.profile_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
+
         recyclerView.setAdapter(adapter);
 
 
@@ -104,6 +109,7 @@ public class Profile extends AppCompatActivity {
         introduction_Text=(TextView) findViewById(R.id.introduction_Text);
         profile_image=(ImageView) findViewById(R.id.profile_Image);
         review_register_button=(Button) findViewById(R.id.actvity_profile_review_button);
+        detailbutton=(Button) findViewById(R.id.profile_detailbutton);
 
         nick_text.setText(destination_userModel.getName());
         introduction_Text.setText(destination_userModel.getIntroduction());
@@ -122,6 +128,15 @@ public class Profile extends AppCompatActivity {
                     .apply(new RequestOptions().circleCrop())
                     .into(profile_image);
         }
+
+
+        detailbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Show_Size=10;
+                adapter.notifyDataSetChanged();
+            }
+        });
 
 
 
@@ -294,6 +309,7 @@ public class Profile extends AppCompatActivity {
 
 
 
+
             db=FirebaseFirestore.getInstance();
             db.collection("review")
                     .whereEqualTo("destination_Uid",destinationUid)
@@ -335,24 +351,32 @@ public class Profile extends AppCompatActivity {
         public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
             //Log.e(TAG,reviewDataList.get(position).mContent);
-            ((CustomViewHolder) holder).reviewText.setText(reviewDataList.get(position).getmContent());
-            ((CustomViewHolder) holder).name_tv.setText(reviewDataList.get(position).getName());
 
-            if(reviewDataList.get(position).getImageurl()!=null) {
-                Glide.with
-                        (getApplicationContext())
-                        .load(reviewDataList.get(position).getImageurl())
-                        .apply(new RequestOptions().circleCrop())
-                        .into(((CustomViewHolder) holder).reviewImage);
-            }
-            ((CustomViewHolder) holder).ratingBar.setRating(reviewDataList.get(position).getRating());
+                ((CustomViewHolder) holder).reviewText.setText(reviewDataList.get(position).getmContent());
+                ((CustomViewHolder) holder).name_tv.setText(reviewDataList.get(position).getName());
+
+                if (reviewDataList.get(position).getImageurl() != null) {
+                    Glide.with
+                            (getApplicationContext())
+                            .load(reviewDataList.get(position).getImageurl())
+                            .apply(new RequestOptions().circleCrop())
+                            .into(((CustomViewHolder) holder).reviewImage);
+                }
+                ((CustomViewHolder) holder).ratingBar.setRating(reviewDataList.get(position).getRating());
+
 
         }
 
         @Override
         public int getItemCount() {
 
-            return reviewDataList.size();
+            if(reviewDataList.size() > Show_Size){
+                return Show_Size;
+            }
+            else
+            {
+                return reviewDataList.size();
+            }
         }
 
 
@@ -392,12 +416,9 @@ public class Profile extends AppCompatActivity {
                 Toast.LENGTH_SHORT).show();
     }
 
-
-
-
-
-
-
-
-
+    @Override
+    protected void onResume() {
+        adapter.notifyDataSetChanged();
+        super.onResume();
+    }
 }

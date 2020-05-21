@@ -66,6 +66,8 @@ public class Chatting_Fragment extends Fragment {
     private String user_kind;
     public ChatRecyclerViewAdapter adapter;
     private RecyclerView recyclerView;
+    private List<String> requests;
+    private TextView request_num;
 
     @Nullable
     @Override
@@ -77,6 +79,7 @@ public class Chatting_Fragment extends Fragment {
         mSetAdapter();
 
         final ImageButton traveler_management_btn = (ImageButton) rootView.findViewById(R.id.btn_traveler_chat_management);
+        request_num=(TextView) rootView.findViewById(R.id.request_num);
 
         //파이어베이스에서 사용자를 불러온다음 설정버튼을 변경
         db.collection("users")
@@ -114,6 +117,13 @@ public class Chatting_Fragment extends Fragment {
                                         });
                                     }
                                 }
+                                requests=userModel.getRequests();
+                                int requests_size=requests.size();
+                                if(requests_size>0) {
+                                    request_num.setVisibility(View.VISIBLE);
+                                    request_num.setText(String.valueOf(requests_size));
+                                }
+
 
                             }
                         }
@@ -232,7 +242,6 @@ public class Chatting_Fragment extends Fragment {
                                                 .into(customViewHolder.imageView);
                                     }
                                     customViewHolder.textView_title.setText(userModel.getName());//채팅방 타이틀을 상대방 이름으로
-
 
 
                                 } else {
