@@ -21,6 +21,7 @@ public class UserModel implements Parcelable {
     public String hashtag;
     public List<String> requests;
     public String introduction;
+    public List<String> matching;
 
 
     public UserModel(Parcel parcel) {
@@ -40,26 +41,14 @@ public class UserModel implements Parcelable {
         requests = new ArrayList<String>();
         parcel.readList(requests, UserModel.class.getClassLoader());
         introduction=parcel.readString();
+        matching = new ArrayList<String>();
+        parcel.readList(matching, UserModel.class.getClassLoader());
 
     }
 
     public UserModel() {
     }
 
-    /*
-      public UserModel(String uid, String nick, String region, String hash, String self_info, String name, String sex, String phone, String city, String user_kind) {
-          this.uid = uid;
-          this.nick = nick;
-          this.region = region;
-          this.hash = hash;
-          this.self_info = self_info;
-          this.name = name;
-          this.sex = sex;
-          this.phone = phone;
-          this.city = city;
-          this.user_kind = user_kind;
-      }
-  */
     public static final Parcelable.Creator<UserModel> CREATOR = new Parcelable.Creator<UserModel>() {
         @Override
         public UserModel createFromParcel(Parcel parcel) {
@@ -88,6 +77,7 @@ public class UserModel implements Parcelable {
         dest.writeString(this.hashtag);
         dest.writeList(this.requests);
         dest.writeString(this.introduction);
+        dest.writeList(this.matching);
     }
 
     @Override
@@ -211,6 +201,14 @@ public class UserModel implements Parcelable {
         this.introduction = introduction;
     }
 
+    public List<String> getMatching() {
+        return matching;
+    }
+
+    public void setMatching(List<String> matching) {
+        this.matching = matching;
+    }
+
     @Override
     public String toString() {
         return "UserModel{" +
@@ -228,6 +226,7 @@ public class UserModel implements Parcelable {
                 ", hashtag='" + hashtag + '\'' +
                 ", requests=" + requests +
                 ", introduction='" + introduction + '\'' +
+                ", matching=" + matching +
                 '}';
     }
 }

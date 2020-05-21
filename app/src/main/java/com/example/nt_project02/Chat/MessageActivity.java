@@ -1,5 +1,7 @@
 package com.example.nt_project02.Chat;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.nt_project02.BookmarkActivity;
 import com.example.nt_project02.CustomData.ChatModel;
 import com.example.nt_project02.CustomData.UserModel;
 import com.example.nt_project02.Fragment.Chatting_Fragment;
@@ -48,7 +51,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -144,13 +149,62 @@ public class MessageActivity extends AppCompatActivity {
 
 
 
-       // destinationUid=getIntent().getStringExtra("destinationUid");
+
         button=(Button)findViewById(R.id.messageActivity_Button);
         editText=(EditText)findViewById(R.id.messageActivity_editText);
         Image_Button=(Button)findViewById(R.id.messageActivity_picture);
+        Button FinishButton=(Button) findViewById(R.id.actvity_message_FinishButton);
+
 
         //키보드
         imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+
+
+        FinishButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+                //알림메세지
+                final AlertDialog.Builder builder = new AlertDialog.Builder(MessageActivity.this);
+                builder.setTitle("매칭 종료");
+                builder.setMessage("매칭을 종료 하시겠습니까?");
+                builder.setPositiveButton("예",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                DatabaseReference mDatabase=FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("users");
+                                Map<String, Object> childUpdates = new HashMap<>();
+
+                                //해당 채팅방 리스트에 보이지 않게 users 업데이트
+                                childUpdates.put(uid, false);
+                                childUpdates.put(destinationUid, false);
+                                mDatabase.updateChildren(childUpdates);
+
+                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                //현재 여행자 정보 파이어스토어 경로
+                                DocumentReference Ref=db.collection("users").document(uid);
+                                //현재 현지인 정보 파이어스토어경로
+                                DocumentReference destination_Ref=db.collection("users").document(destinationUid);
+
+                                //matching 리스트에서 삭제
+                                Ref.update("matching",FieldValue.arrayRemove(destinationUid));
+                                destination_Ref.update("matching",FieldValue.arrayRemove(uid));
+
+                                //액티비티 종료
+                                finish();
+                            }
+                        });
+                builder.setNegativeButton("아니오",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                builder.show();
+
+            }
+        });
 
 
 
