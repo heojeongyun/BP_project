@@ -309,6 +309,15 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
+        Button activity_message_Camera_Button=(Button)findViewById(R.id.activity_message_Camera_Button);
+
+        activity_message_Camera_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"업데이트 예정 입니다.",Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         checkChatRoom();
 
