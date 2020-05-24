@@ -1,21 +1,19 @@
-package com.example.nt_project02;
+package com.example.nt_project02.CustomData;
 
 public class MemberInfo {
     //수정
     private String uid;
     private String name;
     private String sex;
-    private String birthday;
     private String city;
     private String user_kind;
 
 
 
-    public MemberInfo(String uid,String name, String sex, String phone, String city, String user_kind) {
+    public MemberInfo(String uid,String name, String sex, String city, String user_kind) {
         this.uid=uid;
         this.name = name;
         this.sex = sex;
-        this.birthday = phone;
         this.city = city;
         this.user_kind = user_kind;
     }
@@ -42,14 +40,6 @@ public class MemberInfo {
 
     public void setSex(String sex) {
         this.sex = sex;
-    }
-
-    public String getPhone() {
-        return birthday;
-    }
-
-    public void setPhone(String phone) {
-        this.birthday = phone;
     }
 
     public String getCity() {

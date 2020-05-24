@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity  {
     private CallbackManager mCallbackManager;
     private GoogleSignInClient mGoogleSignInClient; //구글 API 클라이언트 객체
     private static final int REO_SIGN_GOOGLE = 100; //구글 로그인 결과 코드
-    EditText mEtPW;
+    private EditText mEtPW;
 
 
 
@@ -76,6 +76,10 @@ public class LoginActivity extends AppCompatActivity  {
 
         mEtPW = (EditText) findViewById(R.id.passwordEditText);
         mEtPW.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        mEtPW.setSingleLine();
+
+        mEtPW.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
 
 
 

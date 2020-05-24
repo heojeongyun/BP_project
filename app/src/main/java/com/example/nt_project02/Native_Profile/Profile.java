@@ -133,7 +133,15 @@ public class Profile extends AppCompatActivity {
         detailbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Show_Size=10;
+
+                if(Show_Size==3){
+                    Show_Size=10;
+                    detailbutton.setText("접기");
+                }else if(Show_Size==10){
+                    Show_Size=3;
+                    detailbutton.setText("더보기");
+                }
+
                 adapter.notifyDataSetChanged();
             }
         });
