@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.nt_project02.CustomData.MemberInfo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -130,19 +131,19 @@ public class MemberActivity extends AppCompatActivity {
         //지역변수 선언
         String name = ((EditText) findViewById(R.id.traveler_name)).getText().toString();
         String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
-        String birthday_information = ((EditText) findViewById(R.id.birthday_information)).getText().toString();
+        //String birthday_information = ((EditText) findViewById(R.id.birthday_information)).getText().toString();
 
 
 
 
         //각각의 정보가 빈칸인지 아닌지 확인
-        if (name.length() > 0 && birthday_information.length()>0 && sex.length()>0 &&city.length()>0&&user_kind.length()>0) {
+        if (name.length() > 0  && sex.length()>0 &&city.length()>0&&user_kind.length()>0) {
             //현재 유저 정보 가져오기
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
             //MemberInfo 객체 선언
-            MemberInfo memberInfo = new MemberInfo(uid,name,sex,birthday_information,city,user_kind);
+            MemberInfo memberInfo = new MemberInfo(uid,name,sex,city,user_kind);
 
             //현재 유저가 있다면
             if (user != null) {
