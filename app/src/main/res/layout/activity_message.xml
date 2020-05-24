@@ -91,6 +91,7 @@
                 android:background="@drawable/picture" />
 
             <Button
+                android:id="@+id/activity_message_Camera_Button"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="17dp"
