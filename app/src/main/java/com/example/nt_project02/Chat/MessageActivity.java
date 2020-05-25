@@ -31,14 +31,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.nt_project02.BookmarkActivity;
 import com.example.nt_project02.CustomData.ChatModel;
 import com.example.nt_project02.CustomData.UserModel;
 import com.example.nt_project02.Fragment.Chatting_Fragment;
 import com.example.nt_project02.GoogleMap_Drawing_Fragment;
 import com.example.nt_project02.GoogleMap_Fragment;
-import com.example.nt_project02.MainActivity;
-import com.example.nt_project02.NotificationModel;
+import com.example.nt_project02.CustomData.NotificationModel;
 import com.example.nt_project02.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -197,6 +195,19 @@ public class MessageActivity extends AppCompatActivity {
                                 Ref.update("matching",FieldValue.arrayRemove(destinationUid));
                                 destination_Ref.update("matching",FieldValue.arrayRemove(uid));
 
+                                //매칭 종료 메세지
+                                ChatModel.Comment comment=new ChatModel.Comment();
+                                comment.uid=uid;
+                                comment.message="매칭을 종료했습니다.";
+                                comment.IsImage=false;
+                                comment.timestamp= ServerValue.TIMESTAMP;
+                                FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+
+                                    }
+                                });
+
                                 //액티비티 종료
                                 finish();
                             }
@@ -325,12 +336,6 @@ public class MessageActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
     }
 
     @Override
@@ -448,10 +453,11 @@ public class MessageActivity extends AppCompatActivity {
 
         NotificationModel notificationModel=new NotificationModel();
         notificationModel.to=destinationUserModel.getPushToken();
-        notificationModel.notification.title=username;
-        notificationModel.notification.text=editText.getText().toString();
+        //notificationModel.notification.title=username;
+        //notificationModel.notification.text=editText.getText().toString();
         notificationModel.data.title=username;
         notificationModel.data.text=editText.getText().toString();
+        notificationModel.data.send_uid=uid;
 
         RequestBody requestBody=RequestBody.create(MediaType.parse("application/json; charset=utf8"),gson.toJson(notificationModel));
 
@@ -477,25 +483,6 @@ public class MessageActivity extends AppCompatActivity {
         });
 
     }
-
-  /*  void sendFCM(){
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if(!task.isSuccessful()){
-                            Log.w("FCM Log","getInstanceID failed",task.getException());
-                            return;
-                        }
-
-                        //String token=task.getResult().getToken();
-                        String token=destinationUserModel.pushToken;
-                        Log.d("FCM Log","FCM 토큰:"+token);
-                        Toast.makeText(MessageActivity.this,token,Toast.LENGTH_LONG).show();
-                    }
-                });
-    }*/
-
 
 
 
@@ -523,12 +510,15 @@ public class MessageActivity extends AppCompatActivity {
 
                 for(DataSnapshot item : dataSnapshot.getChildren()){
                     ChatModel chatModel =item.getValue(ChatModel.class);
-                    if(chatModel.users.containsKey(destinationUid)&& chatModel.users.size()==2){
+                    //Log.e(TAG,"users:"+chatModel.users.values());
+                    if(chatModel.users.containsKey(destinationUid) && chatModel.users.size()==2 ){
                         chatRoomUid=item.getKey();
                         button.setEnabled(true);
                         recyclerView.setLayoutManager(new LinearLayoutManager(MessageActivity.this));
                         recyclerView.setAdapter(new RecyclerViewAdapter());
                     }
+
+
                 }
             }
 
@@ -556,11 +546,13 @@ public class MessageActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     destinationUserModel=document.toObject(UserModel.class);
                     getMessageList();
+                    getChatRoomState();
 
                 }
             });
 
         }
+
         void getMessageList(){
 
             databaseReference=FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments");
@@ -618,17 +610,56 @@ public class MessageActivity extends AppCompatActivity {
                 }
             });
 
+
+
+        }
+
+        void getChatRoomState(){
+
+            databaseReference=FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("users");
+
+            valueEventListener=databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+
+                    for(DataSnapshot item:dataSnapshot.getChildren()){
+
+                        Log.e(TAG,"users:"+item.getValue());
+                        if((Boolean) item.getValue()==false){
+                            button.setEnabled(false);
+                        }
+
+
+                    }
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+
+
         }
 
         public int getItemViewType(int position) {
+
             if(!comments.get(position).IsImage){
                 if(comments.get(position).uid.equals(uid)){
-                    return 3;
+                    //내가 보내 메세지
+                    return 2;
                 }else{
+                    //상대방이 보낸 메세지
                     return 0;
                 }
 
             }else{
+                //사진을 보냈을 때
                 return 1;
             }
 
