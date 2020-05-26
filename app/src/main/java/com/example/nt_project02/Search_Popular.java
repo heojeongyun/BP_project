@@ -217,4 +217,3 @@ public class Search_Popular extends Fragment {
     }
 
 }
-

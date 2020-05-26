@@ -14,36 +14,40 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="wrap_content"
             android:background="@color/ic_launcher_background_native"
             android:orientation="horizontal"
             android:layout_weight="0">
 
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/RelativeLayout01"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
 
                 <Button
                     android:id="@+id/buttonEvent"
                     android:layout_width="70dp"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="5dp"
                     android:fontFamily="@font/hangeulnurib"
                     android:text="저장"
-                    android:textSize="15dp" />
+                    android:textSize="17dp"
+                    android:layout_gravity="right"
+                    android:background="@drawable/button_selector"
+                    android:textColor="@android:color/background_light" />
 
 
                 <TextView
                     android:id="@+id/profile_edit_nick_TextView"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_gravity="center"
-                    android:layout_marginTop="130dp"
+                    android:layout_marginTop="20dp"
                     android:fontFamily="@font/hangeulnurib"
                     android:text="이름"
                     android:textSize="20dp"
@@ -56,25 +60,28 @@
                     android:layout_centerInParent="true"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
-                    android:src="@drawable/user" />
+                    android:src="@drawable/user"
+                    android:layout_below="@+id/profile_edit_nick_TextView"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/profile_edit_ivUser"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="15dp"
                     android:orientation="vertical">
 
                     <EditText
                         android:id="@+id/introduction_EditText"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_centerInParent="true"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:fontFamily="@font/hangeulnurib"
-                        android:scrollHorizontally="false"
-                        android:singleLine="true"
+                        android:layout_height="200dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/back"
+                        android:gravity="top"
+                        android:hint="   \n      상세프로필에 등록할 소개글을 작성해주세요."
+                        android:inputType="textMultiLine"
                         android:textSize="15dp" />
 
 
@@ -83,14 +90,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:layout_marginLeft="3dp"
+                        android:layout_marginLeft="12dp"
                         android:layout_marginRight="15dp"
-                        android:hint="0 / 50 글자 수" />
+                        android:hint="0 / 50 글자 수"
+                        android:layout_marginTop="5dp"/>
 
                 </LinearLayout>
 
 
-            </RelativeLayout>
+            </LinearLayout>
 
 
         </LinearLayout>
@@ -121,7 +129,7 @@
                 android:id="@+id/button2"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="13dp"
                 android:background="#00ff0000"
                 android:fontFamily="@font/hangeulnurib"
                 android:text="추천 코스 등록하기"
@@ -149,7 +157,7 @@
             android:layout_width="fill_parent"
             android:layout_height="250dp"
             android:gravity="center"
-            android:text="업데이트 준비중..."
+            android:text="업데이트 준비중"
             android:textSize="20dp"
             android:fontFamily="@font/hangeulnurib"/>
 
