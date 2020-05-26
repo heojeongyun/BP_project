@@ -8,7 +8,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="75dp"
         android:orientation="horizontal"
         android:layout_marginTop="5dp">
 
@@ -24,8 +24,8 @@
 
         <ImageView
             android:id="@+id/item_friend_RankImage"
-            android:layout_width="40dp"
-            android:layout_height="35dp"
+            android:layout_width="35dp"
+            android:layout_height="30dp"
             android:layout_gravity="top"
             android:layout_marginLeft="2dp"
             android:layout_marginTop="3dp"
