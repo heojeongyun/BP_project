@@ -119,6 +119,7 @@ public class MessageActivity extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -172,6 +173,8 @@ public class MessageActivity extends AppCompatActivity {
                 builder.setPositiveButton("예",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+
+                                databaseReference=FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments");
                                 DatabaseReference mDatabase=FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("users");
                                 Map<String, Object> childUpdates = new HashMap<>();
 
@@ -179,6 +182,8 @@ public class MessageActivity extends AppCompatActivity {
                                 childUpdates.put(uid, false);
                                 childUpdates.put(destinationUid, false);
                                 mDatabase.updateChildren(childUpdates);
+
+
 
                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                                 //현재 여행자 정보 파이어스토어 경로
@@ -499,6 +504,9 @@ public class MessageActivity extends AppCompatActivity {
 
                     return;
                 }
+
+
+
 
                 for(DataSnapshot item : dataSnapshot.getChildren()){
                     ChatModel chatModel =item.getValue(ChatModel.class);

@@ -35,7 +35,8 @@
         app:ntb_tinted="true"
         app:ntb_title_mode="all"
         app:ntb_titled="true"
-        app:ntb_bg_color="#0070C0"/>
+        app:ntb_bg_color="#0070C0"
+        android:fontFamily="@font/nanumbarungothic"/>
 
 
 

@@ -19,7 +19,7 @@
                 android:layout_width="296dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="15dp"
-                android:fontFamily="@font/hangeulnurib"
+                android:fontFamily="@font/nanumbarungothic"
                 android:gravity="center_vertical"
                 android:text="현지인 등록 신청하기"
                 android:textColor="#0070C0"
@@ -29,16 +29,15 @@
 
         <TextView
             android:layout_width="372dp"
-            android:layout_height="50dp"
+            android:layout_height="48dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="15dp"
+            android:fontFamily="@font/nanumbarungothic"
             android:gravity="center_vertical"
             android:text="현지인은 여행자들에게 실용적인 정보를 제공하는 역할을 합니다. 여행자를 위해 최선을 다해주세요!"
             android:textColor="#000000"
             android:textSize="11.5dp"
-            android:textStyle="bold"
-            android:fontFamily="@font/hangeulnurib"
-            />
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
@@ -55,7 +54,7 @@
             android:gravity="left"
             android:text="이름 (본명)"
             android:textSize="20dp"
-            android:fontFamily="@font/hangeulnurib"
+            android:fontFamily="@font/nanumbarungothic"
             />
         <EditText
             android:id="@+id/native_name"
@@ -64,7 +63,7 @@
             android:gravity="left"
             android:textSize="20dp"
             android:layout_gravity="center"
-            android:fontFamily="@font/hangeulnurib"
+            android:fontFamily="@font/nanumbarungothic"
             android:inputType="text"/>
     </LinearLayout>
 
@@ -82,7 +81,7 @@
             android:gravity="left"
             android:text="전화번호"
             android:textSize="20dp"
-            android:fontFamily="@font/hangeulnurib"
+            android:fontFamily="@font/nanumbarungothic"
             />
         <EditText
             android:id="@+id/phone_number"
@@ -91,7 +90,7 @@
             android:gravity="left"
             android:textSize="20dp"
             android:layout_gravity="center"
-            android:fontFamily="@font/hangeulnurib"
+            android:fontFamily="@font/nanumbarungothic"
             android:inputType="phone"/>
     </LinearLayout>
 
@@ -109,7 +108,7 @@
             android:gravity="left"
             android:text="해시태그"
             android:textSize="20dp"
-            android:fontFamily="@font/hangeulnurib"
+            android:fontFamily="@font/nanumbarungothic"
             />
         <EditText
             android:id="@+id/activity_nativeregister_hashtag_information"
@@ -117,7 +116,8 @@
             android:layout_height="wrap_content"
             android:gravity="left"
             android:textSize="20dp"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:fontFamily="@font/nanumbarungothic"/>
     </LinearLayout>
 
     <LinearLayout
@@ -133,7 +133,7 @@
             android:gravity="left"
             android:text="지역"
             android:textSize="20dp"
-            android:fontFamily="@font/hangeulnurib"/>
+            android:fontFamily="@font/nanumbarungothic"/>
 
         <Spinner
             android:id="@+id/native_spinner"
@@ -142,7 +142,7 @@
             android:layout_marginLeft="20dp"
             android:entries="@array/현지인지역구"
             android:gravity="left"
-            android:fontFamily="@font/hangeulnurib"/>
+            android:fontFamily="@font/nanumbarungothic"/>
     </LinearLayout>
     <Button
         android:id="@+id/submit_button"
@@ -154,6 +154,6 @@
         android:text="등록 신청하기"
         android:textColor="@android:color/background_light"
         android:textSize="17dp"
-        android:textStyle="normal"
-        android:fontFamily="@font/hangeulnurib"/>
+        android:textStyle="bold"
+        android:fontFamily="@font/nanumbarungothic"/>
 </LinearLayout>
