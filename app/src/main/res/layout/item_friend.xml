@@ -19,7 +19,8 @@
             android:layout_marginLeft="18dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/user"
-            android:layout_marginBottom="3dp"/>
+            android:layout_marginBottom="3dp"
+            android:fontFamily="@font/nanumbarungothic"/>
 
         <ImageView
             android:id="@+id/item_friend_RankImage"
@@ -49,7 +50,7 @@
                 android:text="닉네임"
                 android:textSize="16dp"
                 android:textStyle="bold"
-                android:fontFamily="@font/hangeulnurib"/>
+                android:fontFamily="@font/nanumbarungothic"/>
 
             <TextView
                 android:id="@+id/frienditem_region"
@@ -61,7 +62,7 @@
                 android:layout_toRightOf="@id/frienditem_imageview"
                 android:text="지역"
                 android:textSize="13dp"
-                android:fontFamily="@font/hangeulnurib"/>
+                android:fontFamily="@font/nanumbarungothic"/>
 
             <TextView
                 android:id="@+id/frienditem_hash"
@@ -74,7 +75,7 @@
                 android:text="해시태그"
                 android:textColor="#E91E63"
                 android:textSize="13dp"
-                android:fontFamily="@font/hangeulnurib"/>
+                android:fontFamily="@font/nanumbarungothic"/>
         </LinearLayout>
 
     </FrameLayout>

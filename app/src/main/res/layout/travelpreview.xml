@@ -13,7 +13,8 @@
         android:layout_margin="20dp"
         android:textSize="15dp"
         android:layout_marginLeft="20dp"
-        android:text=""/>
+        android:text=""
+        android:fontFamily="@font/nanumbarungothic"/>
     //MyPagerAdapter에서 텍스트 입력
 
     <ImageView

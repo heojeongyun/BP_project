@@ -52,69 +52,73 @@
                     android:textSize="20dp"
                     android:textStyle="bold"
                     android:layout_marginTop="10dp"
-                    android:fontFamily="@font/hangeulnurib"
+                    android:fontFamily="@font/nanumbarungothic"
                     android:layout_gravity="center"
                     />
 
             </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            android:text="매칭 평점을 자유롭게 매겨주세요."
-            android:textSize="15dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:text="매칭 평점을 자유롭게 매겨주세요."
+                android:textSize="15dp"
+                android:fontFamily="@font/nanumbarungothic"/>
 
 
-        <RatingBar
-            android:id="@+id/ratingBar1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:isIndicator="false"
-            android:max="5"
-            android:progressBackgroundTint="@color/quantum_grey400"
-            android:progressTint="@color/Gold"
-            android:secondaryProgressTint="@color/quantum_grey300"
-            android:numStars="5"
-            android:rating="0"
-            android:stepSize="0.5"
-            style="?android:attr/ratingBarStyle" />
+            <RatingBar
+                android:id="@+id/ratingBar1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:isIndicator="false"
+                android:max="5"
+                android:progressBackgroundTint="@color/quantum_grey400"
+                android:progressTint="@color/Gold"
+                android:secondaryProgressTint="@color/quantum_grey300"
+                android:numStars="5"
+                android:rating="0"
+                android:stepSize="0.5"
+                style="?android:attr/ratingBarStyle" />
 
 
-        <EditText
-            android:id="@+id/review_edit"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/back"
-            android:gravity="top"
-            android:hint="   \n    여행후기를 자유롭게 작성해주세요."
-            android:inputType="textMultiLine"
-            android:textSize="15dp" />
+            <EditText
+                android:id="@+id/review_edit"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/back"
+                android:gravity="top"
+                android:hint="여행후기를 자유롭게 작성해주세요."
+                android:inputType="textMultiLine"
+                android:fontFamily="@font/nanumbarungothic"
+                android:textSize="15dp"
+                android:padding="10dp"/>
 
-        <Button
-            android:id="@+id/register_button"
-            android:layout_width="390dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/button_selector"
-            android:onClick="onButton1Clicked"
-            android:text="등록하기"
-            android:textColor="@android:color/background_light"
-            android:textSize="20dp"
-            android:textStyle="normal"
-            tools:ignore="OnClick" />
+            <Button
+                android:id="@+id/register_button"
+                android:layout_width="390dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/button_selector"
+                android:onClick="onButton1Clicked"
+                android:text="등록하기"
+                android:textColor="@android:color/background_light"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                tools:ignore="OnClick"
+                android:fontFamily="@font/nanumbarungothic" />
         </LinearLayout>
     </ScrollView>
 
