@@ -30,13 +30,13 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
+                    android:layout_height="142dp"
                     android:orientation="vertical">
 
                     <CheckBox
                         android:id="@+id/activity_profile_BookMark"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
                         android:layout_gravity="right"
                         android:background="@drawable/btn_star"
                         android:button="@null" />
@@ -50,10 +50,10 @@
                             android:id="@+id/profile_Image"
                             android:layout_width="90dp"
                             android:layout_height="890dp"
-                            android:layout_marginLeft="18dp"
                             android:layout_gravity="center_vertical"
-                            android:src="@drawable/user"
-                            android:layout_marginBottom="3dp"/>
+                            android:layout_marginLeft="18dp"
+                            android:layout_marginBottom="3dp"
+                            android:src="@drawable/user" />
 
                         <ImageView
                             android:id="@+id/item_friend_RankImage"
@@ -62,17 +62,17 @@
                             android:layout_gravity="top"
                             android:layout_marginLeft="2dp"
                             android:layout_marginTop="3dp"
-                            android:src="@drawable/medal3"
-                            android:layout_marginBottom="3dp"/>
+                            android:layout_marginBottom="3dp"
+                            android:src="@drawable/medal3" />
 
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
                             android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="120dp"
                             android:layout_marginBottom="3dp"
-                            android:layout_marginLeft="120dp">
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/nickAgeTV"
@@ -80,10 +80,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignTop="@id/frienditem_imageview"
                                 android:layout_toRightOf="@id/frienditem_imageview"
+                                android:fontFamily="@font/hangeulnurib"
                                 android:text="닉네임"
                                 android:textSize="20dp"
-                                android:textStyle="bold"
-                                android:fontFamily="@font/hangeulnurib"/>
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/frienditem_region"
@@ -93,9 +93,9 @@
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="17dp"
                                 android:layout_toRightOf="@id/frienditem_imageview"
+                                android:fontFamily="@font/hangeulnurib"
                                 android:text="지역"
-                                android:textSize="15dp"
-                                android:fontFamily="@font/hangeulnurib"/>
+                                android:textSize="15dp" />
 
                             <TextView
                                 android:id="@+id/frienditem_hash"
@@ -105,10 +105,10 @@
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="16dp"
                                 android:layout_toRightOf="@id/frienditem_imageview"
+                                android:fontFamily="@font/hangeulnurib"
                                 android:text="해시태그"
                                 android:textColor="#E91E63"
-                                android:textSize="15dp"
-                                android:fontFamily="@font/hangeulnurib"/>
+                                android:textSize="15dp" />
 
                         </LinearLayout>
 
