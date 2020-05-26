@@ -123,8 +123,8 @@ public class LoginActivity extends AppCompatActivity  {
         findViewById(R.id.CheckButton).setOnClickListener(onClickListener);
         findViewById(R.id.gotoPasswordResetbutton).setOnClickListener(onClickListener);
         findViewById(R.id.signUp_Activity_Button).setOnClickListener(onClickListener);
-        findViewById(R.id.activity_login_TemporaryNativeButton).setOnClickListener(onClickListener);
-        findViewById(R.id.activity_login_TemporaryTravelerButton).setOnClickListener(onClickListener);
+        //findViewById(R.id.activity_login_TemporaryNativeButton).setOnClickListener(onClickListener);
+        //findViewById(R.id.activity_login_TemporaryTravelerButton).setOnClickListener(onClickListener);
         findViewById(R.id.activity_login_customGoogleLogin).setOnClickListener(onClickListener);
         facebookcustomButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -293,13 +293,13 @@ public class LoginActivity extends AppCompatActivity  {
                     MystartActivity(Sign_UpActivity.class);
                     break;
 
-                case R.id.activity_login_TemporaryNativeButton:
-                    Temporary_native_login();
+               /* case R.id.activity_login_TemporaryNativeButton:
+                    //Temporary_native_login();
                     break;
 
                 case R.id.activity_login_TemporaryTravelerButton:
-                    Temporary_traveler_login();
-                    break;
+                    //Temporary_traveler_login();
+                    break;*/
 
                 case R.id.activity_login_customGoogleLogin:
                     signIn();

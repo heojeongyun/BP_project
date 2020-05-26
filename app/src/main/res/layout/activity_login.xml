@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -182,7 +183,7 @@
 
 
 
-    <Button
+    <!--<Button
         android:id="@+id/activity_login_TemporaryNativeButton"
         android:layout_width="360dp"
         android:layout_gravity="center"
@@ -206,7 +207,7 @@
         android:textColor="@android:color/background_light"
         android:textSize="21dp"
         android:textStyle="normal"
-        android:fontFamily="@font/nanumbarungothic"/>
+        android:fontFamily="@font/nanumbarungothic"/>-->
 
 
 </LinearLayout>
