@@ -16,7 +16,7 @@
         android:textSize="25dp"
         android:textStyle="bold"
         android:text="현지인 리스트"
-        android:fontFamily="@font/hangeulnurib"
+        android:fontFamily="@font/nanumbarungothic"
         android:layout_marginTop="40dp"/>
 
     <EditText
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:hint="  검색할 내용을 입력하세요."
-        android:fontFamily="@font/hangeulnurib"
+        android:fontFamily="@font/nanumbarungothic"
         android:textSize="17dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"/>
@@ -47,25 +47,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="인기"
-            android:fontFamily="@font/hangeulnurib"/>
+            android:fontFamily="@font/nanumbarungothic"/>
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="계정"
-            android:fontFamily="@font/hangeulnurib"/>
+            android:fontFamily="@font/nanumbarungothic"/>
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="지역"
-            android:fontFamily="@font/hangeulnurib"/>
+            android:fontFamily="@font/nanumbarungothic"/>
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hashtag"
-            android:fontFamily="@font/hangeulnurib"/>
+            android:fontFamily="@font/nanumbarungothic"/>
 
     </com.google.android.material.tabs.TabLayout>
 
@@ -73,7 +73,8 @@
         android:id="@+id/activity_nativesearch_RecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/nanumbarungothic">
 
     </androidx.recyclerview.widget.RecyclerView>
     <!--</androidx.viewpager.widget.ViewPager>-->

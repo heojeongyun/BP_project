@@ -11,8 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:fontFamily="@font/hangeulnurib"
+        android:fontFamily="@font/nanumbarungothic"
         android:text="장소 이름"
+        android:textStyle="bold"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
@@ -48,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:fontFamily="@font/hangeulnurib"
+                android:fontFamily="@font/nanumbarungothic"
                 android:text="장소 주소"
                 android:layout_marginBottom="10dp"/>
 
@@ -59,7 +60,7 @@
                 android:layout_gravity="center_horizontal"
                 android:textColor="#4472C4"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:fontFamily="@font/hangeulnurib"
+                android:fontFamily="@font/nanumbarungothic"
                 android:layout_marginBottom="10dp"
 
 
@@ -70,13 +71,6 @@
 
         </LinearLayout>
 
-
-
     </LinearLayout>
-
-
-
-
-
 
 </LinearLayout>
