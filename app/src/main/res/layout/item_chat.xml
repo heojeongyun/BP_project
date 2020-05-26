@@ -70,6 +70,7 @@
                 android:id="@+id/chatitem_unread_num"
                 android:text="0"
                 android:textAlignment="center"
+                android:gravity="center"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

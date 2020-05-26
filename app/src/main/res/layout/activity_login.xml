@@ -112,7 +112,6 @@
         android:layout_marginLeft="10dp"
         android:fontFamily="@font/nanumbarungothic"
         android:text="  SNS 계정로그인"
-        android:layout_marginLeft="20dp"
         android:textSize="21dp"
         android:textStyle="bold" />
 
