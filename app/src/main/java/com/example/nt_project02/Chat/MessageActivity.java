@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -139,6 +140,7 @@ public class MessageActivity extends AppCompatActivity {
 
         Log.d(TAG,"deuid:"+destinationUid);
         Log.d(TAG,"uid:"+uid);
+
 
 
 

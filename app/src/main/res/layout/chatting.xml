@@ -33,6 +33,7 @@
             android:background="@drawable/magnitude_circle"
             android:text="0"
             android:textAlignment="center"
+            android:gravity="center"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:visibility="invisible" />
@@ -42,7 +43,7 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="-15dp"
+            android:layout_marginLeft="-9dp"
             android:background="@drawable/traveler_chat_management" />
 
 

@@ -49,6 +49,7 @@
         <activity android:name=".BookmarkActivity" />
         <activity android:name=".MemberTypeActivity" />
         <activity android:name=".Chat.MessageActivity" />
+
         <activity android:name=".MainActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
