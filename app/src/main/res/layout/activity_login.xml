@@ -59,44 +59,43 @@
               />
 
 
-
             <Button
                 android:id="@+id/CheckButton"
-                android:layout_width="294dp"
-                android:layout_height="wrap_content"
+                android:layout_width="350dp"
+                android:layout_height="38dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/button_selector"
                 android:fontFamily="@font/hangeulnurib"
                 android:text="로그인"
                 android:textColor="@android:color/background_light"
-                android:textSize="21dp"
+                android:textSize="20dp"
                 android:textStyle="normal" />/>
 
             <Button
                 android:id="@+id/signUp_Activity_Button"
-                android:layout_width="295dp"
-                android:layout_height="wrap_content"
+                android:layout_width="350dp"
+                android:layout_height="38dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/button_selector"
                 android:fontFamily="@font/hangeulnurib"
                 android:text="회원가입"
                 android:textColor="@android:color/background_light"
-                android:textSize="21dp"
+                android:textSize="20dp"
                 android:textStyle="normal" />/>
 
             <Button
                 android:id="@+id/gotoPasswordResetbutton"
                 android:layout_width="110dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="10dp"
+                android:layout_height="33dp"
                 android:layout_gravity="right"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:text="비밀번호 찾기"
+                android:layout_marginRight="10dp"
                 android:background="#00ff0000"
-                android:fontFamily="@font/hangeulnurib"/>
+                android:fontFamily="@font/hangeulnurib"
+                android:text="비밀번호 찾기" />
 
 
 
@@ -107,15 +106,16 @@
     <TextView
         android:id="@+id/textView4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="43dp"
         android:fontFamily="@font/hangeulnurib"
         android:text="  SNS 계정로그인"
+        android:layout_marginLeft="20dp"
         android:textSize="21dp"
         android:textStyle="normal" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="109dp"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -128,8 +128,8 @@
 
         <Button
             android:id="@+id/activity_login_customGoogleLogin"
-            android:layout_width="72dp"
-            android:layout_height="63dp"
+            android:layout_width="43dp"
+            android:layout_height="42dp"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:layout_marginRight="70dp"
@@ -139,11 +139,11 @@
 
         <Button
             android:id="@+id/activity_login_customfacebooklogin"
-            android:layout_width="72dp"
-            android:layout_height="68dp"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
             android:layout_gravity="center"
             android:layout_marginLeft="70dp"
-            android:layout_marginTop="-67dp"
+            android:layout_marginTop="-45dp"
             android:background="@drawable/facebook123" />
 
         <com.facebook.login.widget.LoginButton
