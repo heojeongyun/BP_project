@@ -51,6 +51,8 @@ public class Profile extends AppCompatActivity {
     private ImageView profile_image;
     private Button review_register_button;
     private Button detailbutton;
+    private TextView Profile_Region;
+    private TextView Profile_Hash;
 
     private String user_kind;
     private String user_uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -110,9 +112,14 @@ public class Profile extends AppCompatActivity {
         profile_image=(ImageView) findViewById(R.id.profile_Image);
         review_register_button=(Button) findViewById(R.id.actvity_profile_review_button);
         detailbutton=(Button) findViewById(R.id.profile_detailbutton);
+        Profile_Region=(TextView) findViewById(R.id.frienditem_region);
+        Profile_Hash=(TextView) findViewById(R.id.frienditem_hash);
 
+        //프로필 세팅
         nick_text.setText(destination_userModel.getName());
         introduction_Text.setText(destination_userModel.getIntroduction());
+        Profile_Region.setText(destination_userModel.getRegion());
+        Profile_Hash.setText(destination_userModel.getHashtag());
 
 
         //현재 현지인 정보 출력
@@ -130,26 +137,28 @@ public class Profile extends AppCompatActivity {
         }
 
 
-        detailbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                if(Show_Size==3){
-                    Show_Size=10;
-                    detailbutton.setText("접기");
-                }else if(Show_Size==10){
-                    Show_Size=3;
-                    detailbutton.setText("더보기");
+
+            detailbutton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (Show_Size == 3) {
+                        Show_Size = 10;
+                        detailbutton.setText("접기");
+                    } else if (Show_Size == 10) {
+                        Show_Size = 3;
+                        detailbutton.setText("더보기");
+                    }
+
+                    adapter.notifyDataSetChanged();
                 }
-
-                adapter.notifyDataSetChanged();
-            }
-        });
+            });
 
 
 
 
-   
+
             
                
             
@@ -329,8 +338,13 @@ public class Profile extends AppCompatActivity {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     reviewDataList.add(document.toObject(ReviewData.class));
 
+
                                     Log.d("reviewDataList", document.getId() + " => " + document.getData());
 
+                                }
+                                //리뷰 데이터가 3개 이상일 때 더 보기 버튼 보이게
+                                if(reviewDataList.size()>3){
+                                    detailbutton.setVisibility(View.VISIBLE);
                                 }
                             } else {
                                 Log.d("reviewDataList", "Error getting documents: ", task.getException());
