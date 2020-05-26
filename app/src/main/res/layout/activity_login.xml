@@ -14,7 +14,7 @@
         <TextView
             android:id="@+id/textView"
             android:layout_width="227dp"
-            android:layout_height="115dp"
+            android:layout_height="92dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="40dp"
             android:fontFamily="@font/hangeulnurib"
@@ -107,7 +107,7 @@
     <TextView
         android:id="@+id/textView4"
         android:layout_width="match_parent"
-        android:layout_height="39dp"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/hangeulnurib"
         android:text="  SNS 계정로그인"
         android:textSize="21dp"
@@ -115,7 +115,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="67dp"
+        android:layout_height="120dp"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -128,29 +128,23 @@
 
         <Button
             android:id="@+id/activity_login_customGoogleLogin"
-            android:layout_width="48dp"
-            android:layout_height="50dp"
-            android:layout_gravity="right"
+            android:layout_width="72dp"
+            android:layout_height="63dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="70dp"
-            android:background="@drawable/google_button"
+            android:background="@drawable/google123"
 
             />
 
-        <TextView
-            android:id="@+id/textView13"
-            android:layout_width="180dp"
-            android:layout_height="43dp"
-            android:layout_marginTop="-45dp"
-            android:fontFamily="@font/hangeulnurib"
-            android:text="구글이나 페이스북으로  손쉽게 가입이 가능합니다!" />
-
         <Button
             android:id="@+id/activity_login_customfacebooklogin"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="right"
-            android:layout_marginTop="-50dp"
-            android:background="@drawable/facebook_button" />
+            android:layout_width="72dp"
+            android:layout_height="68dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="-67dp"
+            android:background="@drawable/facebook123" />
 
         <com.facebook.login.widget.LoginButton
             android:id="@+id/activity_login_facebookloginbutton"
@@ -159,6 +153,26 @@
 
             android:layout_gravity="center"
             android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/hangeulnurib"
+            android:text="Facebook" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="-17dp"
+            android:layout_marginRight="70dp"
+            android:fontFamily="@font/hangeulnurib"
+            android:text="Google" />
 
     </LinearLayout>
 
@@ -188,6 +202,12 @@
         android:textColor="@android:color/background_light"
         android:textSize="21dp"
         android:textStyle="normal"
-        android:fontFamily="@font/hangeulnurib"/>/>
+        android:fontFamily="@font/hangeulnurib"/>
+
+    <Switch
+        android:id="@+id/switch2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Switch" />/>
 
 </LinearLayout>
