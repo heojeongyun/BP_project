@@ -56,11 +56,10 @@
                 android:id="@+id/chatitem_textview_tiemstamp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
                 android:layout_marginTop="13dp"
+                android:layout_gravity="right"
                 android:fontFamily="@font/nanumbarungothic"
-                android:text="2011.11.11 11:11"
+                android:text="11.11 11:11"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="15dp" />
 
