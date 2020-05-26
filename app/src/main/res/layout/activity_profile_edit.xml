@@ -82,7 +82,8 @@
                         android:gravity="top"
                         android:hint="   \n      상세프로필에 등록할 소개글을 작성해주세요."
                         android:inputType="textMultiLine"
-                        android:textSize="15dp" />
+                        android:textSize="15dp"
+                        android:padding="10dp"/>
 
 
                     <TextView

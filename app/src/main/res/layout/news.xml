@@ -112,7 +112,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/nanumbarungothic"
                         android:text="데이트코스"
-                        android:textColor="#000000"
+
                         android:textSize="12dp"
                         android:textStyle="bold" />
 
@@ -142,7 +142,6 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/nanumbarungothic"
                         android:text="나홀로여행"
-                        android:textColor="#000000"
                         android:textSize="12dp"
                         android:textStyle="bold" />
 
@@ -172,7 +171,6 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/nanumbarungothic"
                         android:text="액티비티"
-                        android:textColor="#000000"
                         android:textSize="12dp"
                         android:textStyle="bold" />
 
@@ -202,7 +200,6 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/nanumbarungothic"
                         android:text="맛집탐방"
-                        android:textColor="#000000"
                         android:textSize="12dp"
                         android:textStyle="bold" />
 
@@ -232,7 +229,6 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/nanumbarungothic"
                         android:text="쇼핑센터"
-                        android:textColor="#000000"
                         android:textSize="12dp"
                         android:textStyle="bold" />
 
@@ -260,7 +256,6 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/nanumbarungothic"
                         android:text="문화생활"
-                        android:textColor="#000000"
                         android:textSize="12dp"
                         android:textStyle="bold" />
 
