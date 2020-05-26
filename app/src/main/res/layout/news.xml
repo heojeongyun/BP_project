@@ -24,7 +24,7 @@
                 android:layout_width="296dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="15dp"
-                android:fontFamily="@font/nanumbarungothic"
+                android:fontFamily="@font/hangeulnurib"
                 android:gravity="center_vertical"
                 android:text="BluePeople"
                 android:textColor="#0070C0"
@@ -43,7 +43,7 @@
                 android:layout_width="296dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="15dp"
-                android:fontFamily="@font/nanumbarungothic"
+                android:fontFamily="@font/hangeulnurib"
                 android:gravity="center_vertical"
                 android:text="in Busan"
                 android:textColor="#0070C0"
@@ -279,7 +279,7 @@
 
                     android:id="@+id/news_recyclerview"
                     android:layout_width="match_parent"
-
+                    android:fontFamily="@font/nanumbarungothic"
                     android:layout_height="287dp"
                     android:layout_below="@+id/txt_search">
 

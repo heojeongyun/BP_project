@@ -33,7 +33,8 @@
             android:textColor="@color/quantum_grey700"
             android:textStyle="italic"
             android:background="@color/white"
-            android:id="@+id/button"/>
+            android:id="@+id/button"
+            android:fontFamily="@font/nanumbarungothic"/>
 
         <fragment
             android:id="@+id/place_autocomplete_fragment"

@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginLeft="15dp"
-            android:fontFamily="@font/hangeulnurib"
+            android:fontFamily="@font/nanumbarungothic"
             android:gravity="center_vertical"
             android:text="채팅 리스트"
             android:textColor="#0070C0"
@@ -52,7 +52,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recyclerView_chat_Fragment">
+        android:id="@+id/recyclerView_chat_Fragment"
+        android:fontFamily="@font/nanumbarungothic">
 
     </androidx.recyclerview.widget.RecyclerView>
 

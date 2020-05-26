@@ -22,7 +22,7 @@
                 android:layout_width="296dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="15dp"
-                android:fontFamily="@font/hangeulnurib"
+                android:fontFamily="@font/nanumbarungothic"
                 android:gravity="center_vertical"
                 android:text="리뷰 작성하기"
                 android:textColor="#0070C0"
@@ -33,6 +33,13 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+
+                android:text="별명"
+                android:textAlignment="center"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/nanumbarungothic"/>
                 android:orientation="vertical">
 
                 <ImageView
@@ -58,6 +65,7 @@
 
             </LinearLayout>
 
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -65,8 +73,11 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
-            android:text="매칭 평점을 자유롭게 매겨주세요."
-            android:textSize="15dp" />
+
+            android:text="매칭 평점을 매겨주세요"
+            android:textSize="20dp"
+            android:fontFamily="@font/nanumbarungothic"/>
+
 
 
         <RatingBar
@@ -87,6 +98,17 @@
             style="?android:attr/ratingBarStyle" />
 
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:text="여행은 즐거우셨나요? 여행 리뷰를 자유롭게 남겨주세요."
+            android:textSize="15dp"
+            android:fontFamily="@font/nanumbarungothic"/>
+
+
         <EditText
             android:id="@+id/review_edit"
             android:layout_width="match_parent"
@@ -99,6 +121,7 @@
             android:gravity="top"
             android:hint="   \n    여행후기를 자유롭게 작성해주세요."
             android:inputType="textMultiLine"
+            android:fontFamily="@font/nanumbarungothic"
             android:textSize="15dp" />
 
         <Button

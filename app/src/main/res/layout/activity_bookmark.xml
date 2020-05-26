@@ -9,7 +9,7 @@
         android:layout_width="296dp"
         android:layout_height="40dp"
         android:layout_marginLeft="15dp"
-        android:fontFamily="@font/hangeulnurib"
+        android:fontFamily="@font/nanumbarungothic"
         android:gravity="center_vertical"
         android:textColor="#0070C0"
         android:textSize="25dp"
@@ -22,7 +22,9 @@
         android:layout_width="match_parent"
         android:layout_height="602dp"
         android:layout_marginTop="90dp"
-        android:background="#00ff0000">
+        android:background="#00ff0000"
+        android:fontFamily="@font/nanumbarungothic"
+        android:textStyle="bold">
 
     </androidx.recyclerview.widget.RecyclerView>
 
