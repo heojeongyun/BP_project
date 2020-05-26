@@ -16,7 +16,7 @@
             android:layout_marginTop="40dp"
             android:fontFamily="@font/nanumbarungothic"
             android:gravity="center_vertical"
-            android:text="BluePeople에 오신 것을               환영합니다!"
+            android:text="BluePeople에 오신 것을\n환영합니다!"
             android:textColor="#0070C0"
             android:textSize="25dp"
             android:textStyle="bold" />
