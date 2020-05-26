@@ -109,8 +109,7 @@ public class Setting_Fragment extends Fragment {
                                 userModel = doc.toObject(UserModel.class);
                                 user_kind = userModel.getUser_kind();
                                 if (user_kind != null) {
-                                    fragment_setting_native_register.setVisibility(View.GONE);
-                                    //일단 현재 등록버튼 자체를 숨겨둔 상태.
+
                                     if (user_kind.equals("현지인")) {
                                         //현지인이면 등록 버튼 안 보이게
                                         fragment_setting_native_register.setVisibility(View.GONE);
