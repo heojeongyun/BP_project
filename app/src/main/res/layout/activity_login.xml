@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
@@ -13,7 +14,7 @@
         <TextView
             android:id="@+id/textView"
             android:layout_width="227dp"
-            android:layout_height="115dp"
+            android:layout_height="92dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="40dp"
             android:fontFamily="@font/hangeulnurib"
@@ -52,34 +53,38 @@
                 android:hint="비밀번호"
                 android:textSize="20dp"
                 android:inputType="textPassword"
+                android:password="true"
+                android:singleLine="true"
                 android:fontFamily="@font/hangeulnurib"
               />
 
+
+
             <Button
                 android:id="@+id/CheckButton"
-                android:layout_width="360dp"
-                android:layout_gravity="center"
+                android:layout_width="294dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_selector"
+                android:layout_gravity="center"
                 android:layout_marginTop="10dp"
+                android:background="@drawable/button_selector"
+                android:fontFamily="@font/hangeulnurib"
                 android:text="로그인"
                 android:textColor="@android:color/background_light"
                 android:textSize="21dp"
-                android:textStyle="normal"
-                android:fontFamily="@font/hangeulnurib"/>/>
+                android:textStyle="normal" />/>
 
             <Button
                 android:id="@+id/signUp_Activity_Button"
-                android:layout_width="360dp"
-                android:layout_gravity="center"
+                android:layout_width="295dp"
                 android:layout_height="wrap_content"
-                android:text="회원가입"
-                android:background="@drawable/button_selector"
+                android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:textSize="21dp"
+                android:background="@drawable/button_selector"
+                android:fontFamily="@font/hangeulnurib"
+                android:text="회원가입"
                 android:textColor="@android:color/background_light"
-                android:textStyle="normal"
-                android:fontFamily="@font/hangeulnurib"/>/>
+                android:textSize="21dp"
+                android:textStyle="normal" />/>
 
             <Button
                 android:id="@+id/gotoPasswordResetbutton"
@@ -99,38 +104,77 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/hangeulnurib"
+        android:text="  SNS 계정로그인"
+        android:textSize="21dp"
+        android:textStyle="normal" />
 
-    <Button
-        android:id="@+id/activity_login_customGoogleLogin"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:text="구글"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="vertical"
+        android:padding="10dp">
 
-    <!--<com.google.android.gms.common.SignInButton
+        <!--<com.google.android.gms.common.SignInButton
         android:id="@+id/activity_login_googlelogInButton"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>-->
 
 
-    <Button
-        android:id="@+id/activity_login_customfacebooklogin"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:text="페북로그인"/>
+        <Button
+            android:id="@+id/activity_login_customGoogleLogin"
+            android:layout_width="72dp"
+            android:layout_height="63dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="70dp"
+            android:background="@drawable/google123"
 
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/activity_login_facebookloginbutton"
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"
+            />
 
-        android:layout_gravity="center"
-        android:visibility="gone"/>
+        <Button
+            android:id="@+id/activity_login_customfacebooklogin"
+            android:layout_width="72dp"
+            android:layout_height="68dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="-67dp"
+            android:background="@drawable/facebook123" />
 
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/activity_login_facebookloginbutton"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
 
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/hangeulnurib"
+            android:text="Facebook" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="-17dp"
+            android:layout_marginRight="70dp"
+            android:fontFamily="@font/hangeulnurib"
+            android:text="Google" />
+
+    </LinearLayout>
 
 
 
@@ -158,6 +202,12 @@
         android:textColor="@android:color/background_light"
         android:textSize="21dp"
         android:textStyle="normal"
-        android:fontFamily="@font/hangeulnurib"/>/>
+        android:fontFamily="@font/hangeulnurib"/>
+
+    <Switch
+        android:id="@+id/switch2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Switch" />/>
 
 </LinearLayout>

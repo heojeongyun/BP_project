@@ -31,14 +31,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.nt_project02.BookmarkActivity;
 import com.example.nt_project02.CustomData.ChatModel;
 import com.example.nt_project02.CustomData.UserModel;
 import com.example.nt_project02.Fragment.Chatting_Fragment;
 import com.example.nt_project02.GoogleMap_Drawing_Fragment;
 import com.example.nt_project02.GoogleMap_Fragment;
-import com.example.nt_project02.MainActivity;
-import com.example.nt_project02.NotificationModel;
+import com.example.nt_project02.CustomData.NotificationModel;
 import com.example.nt_project02.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -101,7 +99,7 @@ public class MessageActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference myRef;
 
-    private SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy.MM.dd HH:mm");
+    private SimpleDateFormat simpleDateFormat=new SimpleDateFormat("MM.dd HH:mm");
     private UserModel destinationUserModel;
     private DatabaseReference databaseReference;
     private ValueEventListener valueEventListener;
@@ -117,6 +115,7 @@ public class MessageActivity extends AppCompatActivity {
     public  String Content;
     private FragmentTransaction transaction;
     private InputMethodManager imm;
+    public Button activtiy_message_MapButton;
 
 
 
@@ -191,6 +190,19 @@ public class MessageActivity extends AppCompatActivity {
                                 Ref.update("matching",FieldValue.arrayRemove(destinationUid));
                                 destination_Ref.update("matching",FieldValue.arrayRemove(uid));
 
+                                //매칭 종료 메세지
+                                ChatModel.Comment comment=new ChatModel.Comment();
+                                comment.uid=uid;
+                                comment.message="매칭을 종료했습니다.";
+                                comment.IsImage=false;
+                                comment.timestamp= ServerValue.TIMESTAMP;
+                                FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+
+                                    }
+                                });
+
                                 //액티비티 종료
                                 finish();
                             }
@@ -221,7 +233,7 @@ public class MessageActivity extends AppCompatActivity {
                             //터치했을 때 프래그먼트 화면 없애기
                             removeFragment(googleMap_fragment);
                             //키보드 숨기
-                            imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                            //imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                             break;
                         }
                     }
@@ -229,6 +241,7 @@ public class MessageActivity extends AppCompatActivity {
                 }
 
         };
+
         recyclerView.setOnTouchListener(remove);
         editText.setOnTouchListener(remove);
 
@@ -288,15 +301,9 @@ public class MessageActivity extends AppCompatActivity {
         });
 
 
-        Button activtiy_message_MapButton=(Button)findViewById(R.id.activity_message_MapButton);
+        activtiy_message_MapButton=(Button)findViewById(R.id.activity_message_MapButton);
 
-        activtiy_message_MapButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //getSupportFragmentManager().beginTransaction().replace(R.id.container,googleMap_fragment).commit();
-                attachFragment(googleMap_fragment);
-            }
-        });
+
 
         Button activtiy_message_Map_Drawing_Button=(Button)findViewById(R.id.activtiy_message_Map_Drawing_Button);
 
@@ -309,14 +316,17 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
+        Button activity_message_Camera_Button=(Button)findViewById(R.id.activity_message_Camera_Button);
+
+        activity_message_Camera_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"업데이트 예정 입니다.",Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         checkChatRoom();
-
-
-
-
-
-
 
 
 
@@ -438,10 +448,11 @@ public class MessageActivity extends AppCompatActivity {
 
         NotificationModel notificationModel=new NotificationModel();
         notificationModel.to=destinationUserModel.getPushToken();
-        notificationModel.notification.title=username;
-        notificationModel.notification.text=editText.getText().toString();
+        //notificationModel.notification.title=username;
+        //notificationModel.notification.text=editText.getText().toString();
         notificationModel.data.title=username;
         notificationModel.data.text=editText.getText().toString();
+        notificationModel.data.send_uid=uid;
 
         RequestBody requestBody=RequestBody.create(MediaType.parse("application/json; charset=utf8"),gson.toJson(notificationModel));
 
@@ -468,25 +479,6 @@ public class MessageActivity extends AppCompatActivity {
 
     }
 
-  /*  void sendFCM(){
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if(!task.isSuccessful()){
-                            Log.w("FCM Log","getInstanceID failed",task.getException());
-                            return;
-                        }
-
-                        //String token=task.getResult().getToken();
-                        String token=destinationUserModel.pushToken;
-                        Log.d("FCM Log","FCM 토큰:"+token);
-                        Toast.makeText(MessageActivity.this,token,Toast.LENGTH_LONG).show();
-                    }
-                });
-    }*/
-
-
 
 
     void checkChatRoom(){
@@ -510,12 +502,15 @@ public class MessageActivity extends AppCompatActivity {
 
                 for(DataSnapshot item : dataSnapshot.getChildren()){
                     ChatModel chatModel =item.getValue(ChatModel.class);
-                    if(chatModel.users.containsKey(destinationUid)&& chatModel.users.size()==2){
+                    //Log.e(TAG,"users:"+chatModel.users.values());
+                    if(chatModel.users.containsKey(destinationUid) && chatModel.users.size()==2 ){
                         chatRoomUid=item.getKey();
                         button.setEnabled(true);
                         recyclerView.setLayoutManager(new LinearLayoutManager(MessageActivity.this));
                         recyclerView.setAdapter(new RecyclerViewAdapter());
                     }
+
+
                 }
             }
 
@@ -543,11 +538,13 @@ public class MessageActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     destinationUserModel=document.toObject(UserModel.class);
                     getMessageList();
+                    getChatRoomState();
 
                 }
             });
 
         }
+
         void getMessageList(){
 
             databaseReference=FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments");
@@ -587,6 +584,15 @@ public class MessageActivity extends AppCompatActivity {
                         //메세지가 갱신
                     }
 
+                    activtiy_message_MapButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //getSupportFragmentManager().beginTransaction().replace(R.id.container,googleMap_fragment).commit();
+                            attachFragment(googleMap_fragment);
+                            recyclerView.scrollToPosition(comments.size() - 1);
+                        }
+                    });
+
 
                 }
 
@@ -596,12 +602,56 @@ public class MessageActivity extends AppCompatActivity {
                 }
             });
 
+
+
+        }
+
+        void getChatRoomState(){
+
+            databaseReference=FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("users");
+
+            valueEventListener=databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+
+                    for(DataSnapshot item:dataSnapshot.getChildren()){
+
+                        Log.e(TAG,"users:"+item.getValue());
+                        if((Boolean) item.getValue()==false){
+                            button.setEnabled(false);
+                        }
+
+
+                    }
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+
+
         }
 
         public int getItemViewType(int position) {
+
             if(!comments.get(position).IsImage){
-                return 0;
+                if(comments.get(position).uid.equals(uid)){
+                    //내가 보내 메세지
+                    return 2;
+                }else{
+                    //상대방이 보낸 메세지
+                    return 0;
+                }
+
             }else{
+                //사진을 보냈을 때
                 return 1;
             }
 
@@ -616,11 +666,17 @@ public class MessageActivity extends AppCompatActivity {
             if(viewType==0){
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_chat,parent,false);
 
-                return new MessageViewHolder(view);
-            }else{
+                return new dMessageViewHolder(view);
+
+            }else if(viewType==1){
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_chat2,parent,false);
 
                 return new ImageViewHolder(view);
+
+            }else{
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_chat3,parent,false);
+
+                return new mMessageViewHolder(view);
             }
 
 
@@ -639,40 +695,43 @@ public class MessageActivity extends AppCompatActivity {
             String time=simpleDateFormat.format(date);
 
             if (!comments.get(position).IsImage){
-                MessageViewHolder messageViewHolder=((MessageViewHolder)holder);
 
-                messageViewHolder.textView_timestamp.setText(time);
                 //내가 보낸 메세지
                 if(comments.get(position).uid.equals(uid)){
 
-                    messageViewHolder.linearLayout_destination.setVisibility(View.INVISIBLE);
-                    messageViewHolder.textView_message.setBackgroundResource(R.drawable.lastrightbubble);
-                    messageViewHolder.textView_message.setText(comments.get(position).message);
-                    messageViewHolder.textView_message.setTextSize(17);
-                    messageViewHolder.linearLayout_main.setGravity(Gravity.RIGHT);
-                    //messageViewHolder.textView_message.setGravity(Gravity.RIGHT);
-                    //messageViewHolder.message_image.setVisibility(View.INVISIBLE);
-                    setReadCounter(position,messageViewHolder.textView_readCounter_left);
+                    mMessageViewHolder m_messageViewHolder=((mMessageViewHolder) holder);
+
+                    m_messageViewHolder.textView_timestamp.setText(time);
+
+                    //messageViewHolder.linearLayout_destination.setVisibility(View.INVISIBLE);
+                    m_messageViewHolder.textView_message.setBackgroundResource(R.drawable.lastrightbubble);
+                    m_messageViewHolder.textView_message.setText(comments.get(position).message);
+                    m_messageViewHolder.textView_message.setTextSize(17);
+                    m_messageViewHolder.linearLayout_main.setGravity(Gravity.RIGHT);
+                    setReadCounter(position,m_messageViewHolder.textView_readCounter_left);
 
 
 
                     //상대방이 보낸 메세지
                 }else
                 {
+                    dMessageViewHolder d_messageViewHolder=((dMessageViewHolder)holder);
+
+                    d_messageViewHolder.textView_timestamp.setText(time);
                     if(destinationUserModel.imageurl !=null){
                         Glide.with(holder.itemView.getContext())
                                 .load(destinationUserModel.imageurl)
                                 .apply(new RequestOptions().circleCrop())
-                                .into(messageViewHolder.imageView_profile);
+                                .into(d_messageViewHolder.imageView_profile);
                     }
 
-                    messageViewHolder.textView_name.setText(destinationUserModel.getName());
-                    messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
-                    messageViewHolder.textView_message.setBackgroundResource(R.drawable.lastleftbubble);
-                    messageViewHolder.textView_message.setText(comments.get(position).message);
-                    messageViewHolder.textView_message.setTextSize(17);
-                    messageViewHolder.linearLayout_main.setGravity(Gravity.LEFT);
-                    setReadCounter(position,messageViewHolder.textView_readCounter_right);
+                    d_messageViewHolder.textView_name.setText(destinationUserModel.getName());
+                    d_messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
+                    d_messageViewHolder.textView_message.setBackgroundResource(R.drawable.lastleftbubble);
+                    d_messageViewHolder.textView_message.setText(comments.get(position).message);
+                    d_messageViewHolder.textView_message.setTextSize(17);
+                    d_messageViewHolder.linearLayout_main.setGravity(Gravity.LEFT);
+                    setReadCounter(position,d_messageViewHolder.textView_readCounter_right);
 
 
                 }
@@ -765,18 +824,18 @@ public class MessageActivity extends AppCompatActivity {
             return comments.size();
         }
 
-        private class MessageViewHolder extends RecyclerView.ViewHolder{
+        private class dMessageViewHolder extends RecyclerView.ViewHolder{
             public TextView textView_message;
             public TextView textView_name;
             public ImageView imageView_profile;
             public LinearLayout linearLayout_destination;
             public LinearLayout linearLayout_main;
             public TextView textView_timestamp;
-            public TextView textView_readCounter_left;
+            //public TextView textView_readCounter_left;
             public TextView textView_readCounter_right;
             //public ImageView message_image;
 
-            public MessageViewHolder(View view){
+            public dMessageViewHolder(View view){
 
                 super(view);
                 textView_message=view.findViewById(R.id.TextView_msg);
@@ -785,8 +844,34 @@ public class MessageActivity extends AppCompatActivity {
                 linearLayout_destination=(LinearLayout) view.findViewById(R.id.linearlayout_destination);
                 linearLayout_main=(LinearLayout)view.findViewById(R.id.linearlayout_main);
                 textView_timestamp=(TextView) view.findViewById(R.id.textview_timestamp);
-                textView_readCounter_left=(TextView) view.findViewById(R.id.messageItem_textview_readCounter_left);
+                //textView_readCounter_left=(TextView) view.findViewById(R.id.messageItem_textview_readCounter_left);
                 textView_readCounter_right=(TextView)view.findViewById(R.id.messageItem_textview_readCounter_right);
+                //message_image=(ImageView)view.findViewById(R.id.message_image);
+            }
+
+        }
+        private class mMessageViewHolder extends RecyclerView.ViewHolder{
+            public TextView textView_message;
+            public TextView textView_name;
+            public ImageView imageView_profile;
+            //public LinearLayout linearLayout_destination;
+            public LinearLayout linearLayout_main;
+            public TextView textView_timestamp;
+            public TextView textView_readCounter_left;
+            //public TextView textView_readCounter_right;
+            //public ImageView message_image;
+
+            public mMessageViewHolder(View view){
+
+                super(view);
+                textView_message=view.findViewById(R.id.TextView_msg);
+                textView_name=(TextView) view.findViewById(R.id.TextView_nickname);
+                imageView_profile=(ImageView) view.findViewById(R.id.profile_Image);
+                //linearLayout_destination=(LinearLayout) view.findViewById(R.id.linearlayout_destination);
+                linearLayout_main=(LinearLayout)view.findViewById(R.id.linearlayout_main);
+                textView_timestamp=(TextView) view.findViewById(R.id.textview_timestamp);
+                textView_readCounter_left=(TextView) view.findViewById(R.id.messageItem_textview_readCounter_left);
+                //textView_readCounter_right=(TextView)view.findViewById(R.id.messageItem_textview_readCounter_right);
                 //message_image=(ImageView)view.findViewById(R.id.message_image);
             }
 

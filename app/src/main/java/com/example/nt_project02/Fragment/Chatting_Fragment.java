@@ -57,7 +57,7 @@ public class Chatting_Fragment extends Fragment {
 
 
 
-    private SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy.MM.dd HH:mm"); //사람이 알아볼 수 있게 데이터 포맷을 정해 줌
+    private SimpleDateFormat simpleDateFormat=new SimpleDateFormat("MM.dd HH:mm"); //사람이 알아볼 수 있게 데이터 포맷을 정해 줌
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private String user_uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -95,9 +95,22 @@ public class Chatting_Fragment extends Fragment {
 
                         for (QueryDocumentSnapshot doc : value) {
                             if (doc != null) {
+                                //요청 숫자 뷰 초기화
+                                request_num.setVisibility(View.INVISIBLE);
 
                                 userModel = doc.toObject(UserModel.class);
                                 user_kind = userModel.getUser_kind();
+
+                                requests=userModel.getRequests();
+                                int requests_size=0;
+                                if(requests!=null){
+                                    requests_size=requests.size();
+                                    if(requests_size>0) {
+                                        request_num.setVisibility(View.VISIBLE);
+                                        request_num.setText(String.valueOf(requests_size));
+                                    }
+                                }
+
                                 if (user_kind != null) {
                                     if (user_kind.equals("현지인")) { //현지인인 경우 현지인 관리창 연결
                                         traveler_management_btn.setOnClickListener(new View.OnClickListener() {
@@ -117,12 +130,8 @@ public class Chatting_Fragment extends Fragment {
                                         });
                                     }
                                 }
-                                requests=userModel.getRequests();
-                                int requests_size=requests.size();
-                                if(requests_size>0) {
-                                    request_num.setVisibility(View.VISIBLE);
-                                    request_num.setText(String.valueOf(requests_size));
-                                }
+                                Log.e(TAG,"respone");
+
 
 
                             }
