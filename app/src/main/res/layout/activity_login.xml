@@ -7,9 +7,9 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:orientation="vertical">
 
         <TextView
@@ -29,41 +29,41 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="10dp"
+            android:layout_marginTop="15dp">
 
             <EditText
                 android:id="@+id/NameEditText"
                 android:layout_width="350dp"
-                android:layout_gravity="center"
                 android:layout_height="60dp"
+                android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:ems="10"
+                android:fontFamily="@font/nanumbarungothic"
                 android:hint="이메일"
-                android:textSize="20dp"
                 android:inputType="textEmailAddress"
-                android:fontFamily="@font/nanumbarungothic"/>
+                android:textSize="20dp" />
 
             <EditText
                 android:id="@+id/passwordEditText"
                 android:layout_width="350dp"
-                android:layout_gravity="center"
                 android:layout_height="60dp"
+                android:layout_gravity="center"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
+                android:fontFamily="@font/nanumbarungothic"
                 android:hint="비밀번호"
-                android:textSize="20dp"
                 android:inputType="textPassword"
                 android:password="true"
                 android:singleLine="true"
-                android:fontFamily="@font/nanumbarungothic"
-              />
+                android:textSize="20dp" />
 
 
             <Button
                 android:id="@+id/CheckButton"
                 android:layout_width="350dp"
-                android:layout_height="38dp"
+                android:layout_height="45dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/button_selector"
@@ -76,7 +76,7 @@
             <Button
                 android:id="@+id/signUp_Activity_Button"
                 android:layout_width="350dp"
-                android:layout_height="38dp"
+                android:layout_height="45dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/button_selector"
@@ -97,9 +97,7 @@
                 android:layout_marginRight="10dp"
                 android:background="#00ff0000"
                 android:text="비밀번호 찾기" />
-                android:fontFamily="@font/nanumbarungothic"/>
-
-
+            android:fontFamily="@font/nanumbarungothic"/>
 
 
         </LinearLayout>
@@ -111,6 +109,7 @@
         android:layout_width="match_parent"
         android:layout_height="43dp"
         android:layout_marginLeft="25dp"
+        android:layout_marginTop="15dp"
         android:fontFamily="@font/nanumbarungothic"
         android:text="  SNS 계정로그인"
         android:textSize="21dp"
@@ -120,7 +119,8 @@
         android:layout_width="match_parent"
         android:layout_height="109dp"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:layout_marginTop="10dp">
 
         <!--<com.google.android.gms.common.SignInButton
         android:id="@+id/activity_login_googlelogInButton"
@@ -174,8 +174,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="-17dp"
-            android:layout_marginRight="70dp"
+            android:layout_marginRight="68dp"
             android:fontFamily="@font/nanumbarungothic"
+            android:gravity="center"
             android:text="Google"
             android:textStyle="bold"/>
 

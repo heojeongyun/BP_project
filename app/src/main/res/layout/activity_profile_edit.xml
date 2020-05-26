@@ -28,8 +28,8 @@
 
                 <Button
                     android:id="@+id/buttonEvent"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="80dp"
+                    android:layout_height="45dp"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="5dp"
@@ -78,7 +78,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="10dp"
                         android:layout_weight="1"
-                        android:background="@drawable/back"
+                        android:background="@drawable/border"
                         android:gravity="top"
                         android:hint="   \n      상세프로필에 등록할 소개글을 작성해주세요."
                         android:inputType="textMultiLine"
