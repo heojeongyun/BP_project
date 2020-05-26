@@ -33,13 +33,12 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="5dp"
-                    android:fontFamily="@font/nanumbarungothic"
-                    android:background="@drawable/button_selector"
+                    android:fontFamily="@font/hangeulnurib"
                     android:text="저장"
-                    android:textColor="@android:color/background_light"
-                    android:textSize="15dp"
-                    android:textStyle="bold"/>
-
+                    android:textSize="17dp"
+                    android:layout_gravity="right"
+                    android:background="@drawable/button_selector"
+                    android:textColor="@android:color/background_light" />
 
 
                 <TextView
@@ -48,9 +47,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_gravity="center"
-
-                    android:layout_marginTop="130dp"
-                    android:fontFamily="@font/nanumbarungothic"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/hangeulnurib"
                     android:text="이름"
                     android:textSize="20dp"
                     android:textStyle="bold" />
@@ -84,9 +82,7 @@
                         android:gravity="top"
                         android:hint="   \n      상세프로필에 등록할 소개글을 작성해주세요."
                         android:inputType="textMultiLine"
-                        android:fontFamily="@font/nanumbarungothic"
                         android:textSize="15dp" />
-
 
 
                     <TextView
@@ -97,9 +93,7 @@
                         android:layout_marginLeft="12dp"
                         android:layout_marginRight="15dp"
                         android:hint="0 / 50 글자 수"
-                        android:fontFamily="@font/nanumbarungothic"/>
                         android:layout_marginTop="5dp"/>
-
 
                 </LinearLayout>
 
@@ -137,7 +131,7 @@
                 android:layout_height="60dp"
                 android:layout_marginLeft="13dp"
                 android:background="#00ff0000"
-                android:fontFamily="@font/nanumbarungothic"
+                android:fontFamily="@font/hangeulnurib"
                 android:text="추천 코스 등록하기"
                 android:textSize="20dp" />
 
@@ -165,7 +159,7 @@
             android:gravity="center"
             android:text="업데이트 준비중"
             android:textSize="20dp"
-            android:fontFamily="@font/nanumbarungothic"/>
+            android:fontFamily="@font/hangeulnurib"/>
 
 
     </LinearLayout>
