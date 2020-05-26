@@ -109,7 +109,7 @@
         android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="43dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="25dp"
         android:fontFamily="@font/nanumbarungothic"
         android:text="  SNS 계정로그인"
         android:textSize="21dp"
