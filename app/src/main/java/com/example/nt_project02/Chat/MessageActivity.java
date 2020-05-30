@@ -134,6 +134,23 @@ public class MessageActivity extends AppCompatActivity {
         uid=FirebaseAuth.getInstance().getCurrentUser().getUid(); //어플 현재 이용자 아이디
         destinationUid=data.getStringExtra("destination_Uid"); // 상대방 아이디
 
+        //보내는 사람 닉네임 가져오기
+        FirebaseFirestore.getInstance().collection("users").document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        username=document.get("name").toString();
+                    } else {
+
+                    }
+                } else {
+
+                }
+            }
+        });
+
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         frameLayout=(FrameLayout)findViewById(R.id.container);
@@ -144,18 +161,11 @@ public class MessageActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
-
         button=(Button)findViewById(R.id.messageActivity_Button);
         editText=(EditText)findViewById(R.id.messageActivity_editText);
         Image_Button=(Button)findViewById(R.id.messageActivity_picture);
         Button FinishButton=(Button) findViewById(R.id.actvity_message_FinishButton);
+        FinishButton.setVisibility(View.GONE);
 
 
         //키보드
@@ -434,27 +444,10 @@ public class MessageActivity extends AppCompatActivity {
         Gson gson=new Gson();
 
 
-
-
-        //보내는 사람 닉네임 가져오기
-        FirebaseFirestore.getInstance().collection("users").document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        username=document.get("name").toString();
-                    } else {
-
-                    }
-                } else {
-
-                }
-            }
-        });
-
         NotificationModel notificationModel=new NotificationModel();
-        notificationModel.to=destinationUserModel.getPushToken();
+        if(destinationUserModel.getPushToken()!=null) {
+            notificationModel.to = destinationUserModel.getPushToken();
+        }
         //notificationModel.notification.title=username;
         //notificationModel.notification.text=editText.getText().toString();
         notificationModel.data.title=username;
@@ -514,6 +507,9 @@ public class MessageActivity extends AppCompatActivity {
                     ChatModel chatModel =item.getValue(ChatModel.class);
                     //Log.e(TAG,"users:"+chatModel.users.values());
                     if(chatModel.users.containsKey(destinationUid) && chatModel.users.size()==2 ){
+                        if(chatRoomUid!=null) {
+                            Log.e(TAG, chatRoomUid);
+                        }
                         chatRoomUid=item.getKey();
                         button.setEnabled(true);
                         recyclerView.setLayoutManager(new LinearLayoutManager(MessageActivity.this));
@@ -548,8 +544,7 @@ public class MessageActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     destinationUserModel=document.toObject(UserModel.class);
                     getMessageList();
-                    getChatRoomState();
-
+                    //getChatRoomState();
                 }
             });
 
@@ -562,13 +557,16 @@ public class MessageActivity extends AppCompatActivity {
             valueEventListener=databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                     comments.clear();
                     Map<String,Object> readUsersMap=new HashMap<>();
 
                     for(DataSnapshot item:dataSnapshot.getChildren()){
                         String key=item.getKey();
+
                         ChatModel.Comment comment_origin = item.getValue(ChatModel.Comment.class);
                         ChatModel.Comment comment_motify = item.getValue(ChatModel.Comment.class);
+
                         comment_motify.readUsers.put(uid, true);
 
                         readUsersMap.put(key, comment_motify);
@@ -623,7 +621,6 @@ public class MessageActivity extends AppCompatActivity {
             valueEventListener=databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
 
 
                     for(DataSnapshot item:dataSnapshot.getChildren()){
