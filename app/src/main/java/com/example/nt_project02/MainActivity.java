@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
                         getResources().getDrawable(R.drawable.home),
                         Color.parseColor(colors[2]))
                         //.selectedIcon(getResources().getDrawable(R.drawable.ic_sixth))
-                        .title("소식")
+                        .title("홈")
                         .build()
         );
         models.add(

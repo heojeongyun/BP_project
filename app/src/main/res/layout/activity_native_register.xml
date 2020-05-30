@@ -102,11 +102,11 @@
         android:layout_marginTop="10dp"
         >
         <TextView
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="17dp"
             android:gravity="left"
-            android:text="해시태그"
+            android:text="해시태그 (작성 예시 : #맛집 #카페)"
             android:textSize="20dp"
             android:fontFamily="@font/nanumbarungothic"
             />
