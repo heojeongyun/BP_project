@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="40dp">
+
+            <TextView
+                android:layout_width="296dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="@font/nanumbarungothic"
+                android:gravity="center_vertical"
+                android:text="피드백 남기기"
+                android:textColor="#0070C0"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+
+        <TextView
+            android:layout_width="372dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/nanumbarungothic"
+            android:gravity="center_vertical"
+            android:text="'블루피플'은 아직 발전 중에 있습니다. 여러분들이 경험하시고 보내주신 \n 소중한 피드백들을 신속하게 반영하도록 하겠습니다."
+            android:textColor="#000000"
+            android:textSize="11.5dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:gravity="left"
+            android:text="종류"
+           android:textSize="20dp"
+            android:fontFamily="@font/nanumbarungothic"/>
+
+        <Spinner
+            android:id="@+id/feedback_spinner"
+            android:layout_width="357dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:entries="@array/feedback"
+            android:gravity="left"
+            android:fontFamily="@font/nanumbarungothic"/>
+
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/feedback_EditText"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/back"
+        android:gravity="top"
+        android:hint="어떤 문제가 있었나요? 어떤 과정을 거쳐 문제가 발생했는지 자세히 설명해주시면 도움이 됩니다."
+        android:inputType="textMultiLine"
+        android:textSize="15dp"
+        android:padding="10dp"/>
+
+
+
+
+    <Button
+        android:id="@+id/feedback_submit_button"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_selector"
+        android:text="등록"
+        android:textColor="@android:color/background_light"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        android:fontFamily="@font/nanumbarungothic"/>
+</LinearLayout>

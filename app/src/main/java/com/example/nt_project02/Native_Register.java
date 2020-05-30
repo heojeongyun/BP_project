@@ -65,7 +65,7 @@ public class Native_Register extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                startToast("현지인 정보 등록 성공.");
+                                startToast("현지인 등록 요청 성공.");
                                 finish();
                                 MystartActivity(MainActivity.class);
                             }

@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.nt_project02.BookmarkActivity;
 import com.example.nt_project02.CustomData.UserModel;
+import com.example.nt_project02.Feedback;
 import com.example.nt_project02.LoginActivity;
 import com.example.nt_project02.Native_Profile.Profile;
 import com.example.nt_project02.Native_Profile_Management.profile_edit;
@@ -64,6 +65,7 @@ public class Setting_Fragment extends Fragment {
     private Button NativeRegisterButton;
     private TextView profile_textview;
     private ImageView bluepeopleImageView;
+    private Button FeedbackButton;
 
     private LinearLayout fragment_setting_profile_edit;
     private LinearLayout fragment_setting_native_register;
@@ -85,6 +87,7 @@ public class Setting_Fragment extends Fragment {
 
 
         NativeRegisterButton = (Button) rootView.findViewById(R.id.fragment_setting_native_register_Button);
+        FeedbackButton =(Button) rootView.findViewById(R.id.fragment_setting_FeedbackButton);
         fragment_setting_native_register = (LinearLayout) rootView.findViewById(R.id.fragment_setting_native_register);
         fragment_setting_profile_edit=(LinearLayout) rootView.findViewById(R.id.fragment_setting_profile_edit);
 
@@ -243,6 +246,13 @@ public class Setting_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MystartActivity(BookmarkActivity.class);
+            }
+        });
+
+        FeedbackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MystartActivity(Feedback.class);
             }
         });
 
