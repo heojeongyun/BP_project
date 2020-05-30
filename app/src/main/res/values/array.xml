@@ -25,4 +25,13 @@
         <item>리뷰수순</item>
     </string-array>
 
+    <string-array name="feedback">
+        <item>피드백 종류를 선택해 주세요.</item>
+        <item>아이디어 제시</item>
+        <item>버그 신고</item>
+        <item>이용자 신고</item>
+        <item>기타</item>
+    </string-array>
+
+
 </resources>
