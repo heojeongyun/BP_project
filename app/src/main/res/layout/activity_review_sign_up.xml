@@ -96,7 +96,7 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/back"
+                android:background="@drawable/border"
                 android:gravity="top"
                 android:hint="여행후기를 자유롭게 작성해주세요."
                 android:inputType="textMultiLine"

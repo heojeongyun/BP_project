@@ -29,9 +29,9 @@
             android:layout_marginTop="15dp"
             android:gravity="center_vertical"
             android:text="TIP : BluePeople의 현지인이 되어 내가 사는 지역의 가이드가 되어보세요!"
-            android:textColor="#000000"
             android:textSize="11.5dp"
             android:textStyle="bold"
+            android:textColor="#6B6D73"
             android:fontFamily="@font/nanumbarungothic"
             />
 
