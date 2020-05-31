@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.example.nt_project02"
+        applicationId "com.native_code.bp_project02"
         minSdkVersion 26
         multiDexEnabled true
         targetSdkVersion 28

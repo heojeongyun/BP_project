@@ -245,7 +245,7 @@
             android:layout_marginLeft="10dp"
             android:textAlignment="textStart"
             android:paddingLeft="20dp"
-            android:text="피드백 보내기"
+            android:text="피드백 남기기"
             android:textColor="#6B6D73"
             android:textSize="15dp"
             android:textStyle="bold" />
