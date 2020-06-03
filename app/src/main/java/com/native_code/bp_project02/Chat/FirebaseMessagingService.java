@@ -35,7 +35,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         Log.d(TAG,getRunActivity());
         //메세지 액티비티 일 시 알림 메세지 보내지 않음
-        if(!getRunActivity().equals("com.example.nt_project02.Chat.MessageActivity")) {
+        if(!getRunActivity().equals("com.native_code.bp_project02.Chat.MessageActivity")) {
             sendNotification(remoteMessage);
         }
 
