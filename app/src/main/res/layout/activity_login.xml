@@ -1,214 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <LinearLayout
+
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:orientation="vertical">
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="70dp"
+        android:fontFamily="@font/hangeulnurib"
+        android:gravity="center_vertical"
+        android:text="BluePeople\n시작하기"
+        android:textColor="#0070C0"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="227dp"
-            android:layout_height="92dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="40dp"
-            android:fontFamily="@font/hangeulnurib"
-            android:gravity="center_vertical"
-            android:text="BluePeople 시작하기"
-            android:textColor="#0070C0"
-            android:textSize="35dp"
-            android:textStyle="bold" />
+    <EditText
+        android:id="@+id/NameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="20dp"
+        android:fontFamily="@font/nanumbarungothic"
+        android:hint="이메일"
+        android:inputType="textEmailAddress"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="10dp"
-            android:layout_marginTop="15dp">
-
-            <EditText
-                android:id="@+id/NameEditText"
-                android:layout_width="350dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:ems="10"
-                android:fontFamily="@font/nanumbarungothic"
-                android:hint="이메일"
-                android:inputType="textEmailAddress"
-                android:textSize="20dp" />
-
-            <EditText
-                android:id="@+id/passwordEditText"
-                android:layout_width="350dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="5dp"
-                android:ems="10"
-                android:fontFamily="@font/nanumbarungothic"
-                android:hint="비밀번호"
-                android:inputType="textPassword"
-                android:password="true"
-                android:singleLine="true"
-                android:textSize="20dp" />
+    <EditText
+        android:id="@+id/passwordEditText"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:fontFamily="@font/nanumbarungothic"
+        android:hint="비밀번호"
+        android:inputType="textPassword"
+        android:password="true"
+        android:singleLine="true"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NameEditText" />
 
 
-            <Button
-                android:id="@+id/CheckButton"
-                android:layout_width="350dp"
-                android:layout_height="45dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/button_selector"
-                android:fontFamily="@font/nanumbarungothic"
-                android:text="로그인"
-                android:textColor="@android:color/background_light"
-                android:textSize="21dp"
-                android:textStyle="bold" />/>
+    <Button
+        android:id="@+id/CheckButton"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/button_selector"
+        android:fontFamily="@font/nanumbarungothic"
+        android:text="로그인"
+        android:textColor="@android:color/background_light"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
 
-            <Button
-                android:id="@+id/signUp_Activity_Button"
-                android:layout_width="350dp"
-                android:layout_height="45dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/button_selector"
-                android:fontFamily="@font/nanumbarungothic"
-                android:text="회원가입"
-                android:textColor="@android:color/background_light"
-                android:textSize="21dp"
-                android:textStyle="bold" />/>
-
-
-            <Button
-                android:id="@+id/gotoPasswordResetbutton"
-                android:layout_width="110dp"
-                android:layout_height="33dp"
-                android:layout_gravity="right"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:background="#00ff0000"
-                android:text="비밀번호 찾기" />
-            android:fontFamily="@font/nanumbarungothic"/>
+    <Button
+        android:id="@+id/signUp_Activity_Button"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/button_selector"
+        android:fontFamily="@font/nanumbarungothic"
+        android:text="회원가입"
+        android:textColor="@android:color/background_light"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CheckButton" />
 
 
-        </LinearLayout>
-
-    </LinearLayout>
+    <Button
+        android:id="@+id/gotoPasswordResetbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:background="#00ff0000"
+        android:fontFamily="@font/nanumbarungothic"
+        android:text="비밀번호 찾기"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signUp_Activity_Button" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="43dp"
-        android:layout_marginLeft="25dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
         android:fontFamily="@font/nanumbarungothic"
         android:text="  SNS 계정로그인"
         android:textSize="21dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gotoPasswordResetbutton" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="109dp"
-        android:orientation="vertical"
-        android:padding="10dp"
-        android:layout_marginTop="10dp">
+    <Button
+        android:id="@+id/activity_login_customGoogleLogin"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/google123"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-        <!--<com.google.android.gms.common.SignInButton
+    <Button
+        android:id="@+id/activity_login_customfacebooklogin"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="100dp"
+        android:background="@drawable/facebook123"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/activity_login_customGoogleLogin"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/nanumbarungothic"
+        android:text="Google"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_login_customGoogleLogin" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="88dp"
+        android:fontFamily="@font/nanumbarungothic"
+        android:gravity="center"
+        android:text="Facebook"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/textView12"
+        app:layout_constraintTop_toBottomOf="@+id/activity_login_customfacebooklogin" />
+
+    <!--<com.google.android.gms.common.SignInButton
         android:id="@+id/activity_login_googlelogInButton"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>-->
 
-
-        <Button
-            android:id="@+id/activity_login_customGoogleLogin"
-            android:layout_width="43dp"
-            android:layout_height="42dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="70dp"
-            android:background="@drawable/google123"
-
-            />
-
-        <Button
-            android:id="@+id/activity_login_customfacebooklogin"
-            android:layout_width="46dp"
-            android:layout_height="46dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="70dp"
-            android:layout_marginTop="-45dp"
-            android:background="@drawable/facebook123" />
-
-        <com.facebook.login.widget.LoginButton
-            android:id="@+id/activity_login_facebookloginbutton"
-            android:layout_width="360dp"
-            android:layout_height="wrap_content"
-
-            android:layout_gravity="center"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="70dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/nanumbarungothic"
-            android:text="Facebook"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="-17dp"
-            android:layout_marginRight="68dp"
-            android:fontFamily="@font/nanumbarungothic"
-            android:gravity="center"
-            android:text="Google"
-            android:textStyle="bold"/>
-
-    </LinearLayout>
-
-
-
-    <!--<Button
-        android:id="@+id/activity_login_TemporaryNativeButton"
-        android:layout_width="360dp"
-        android:layout_gravity="center"
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/activity_login_facebookloginbutton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_selector"
-        android:layout_marginTop="10dp"
-        android:text="현지인 빠른 로그인"
-        android:textColor="@android:color/background_light"
-        android:textSize="21dp"
-        android:textStyle="normal"
-        android:fontFamily="@font/nanumbarungothic"/>/>
-
-    <Button
-        android:id="@+id/activity_login_TemporaryTravelerButton"
-        android:layout_width="360dp"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_selector"
-        android:layout_marginTop="10dp"
-        android:text="여행자 빠른 로그인"
-        android:textColor="@android:color/background_light"
-        android:textSize="21dp"
-        android:textStyle="normal"
-        android:fontFamily="@font/nanumbarungothic"/>-->
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
