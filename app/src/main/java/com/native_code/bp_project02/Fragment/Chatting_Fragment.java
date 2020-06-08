@@ -75,6 +75,7 @@ public class Chatting_Fragment extends Fragment {
         recyclerView=rootView.findViewById(R.id.recyclerView_chat_Fragment);
         //리사이클러뷰 붙히기
         mSetAdapter();
+        adapter.notifyDataSetChanged();
 
         final ImageButton traveler_management_btn = (ImageButton) rootView.findViewById(R.id.btn_traveler_chat_management);
         request_num=(TextView) rootView.findViewById(R.id.request_num);
@@ -158,6 +159,10 @@ public class Chatting_Fragment extends Fragment {
         private String TAG="Chatting_Fragment";
         private int num=0;
 
+        @Override
+        public int getItemViewType(int position) {
+            return position;
+        }
 
         public ChatRecyclerViewAdapter() { //채팅 목록 가져오기
 
@@ -176,7 +181,6 @@ public class Chatting_Fragment extends Fragment {
                     chatModels.clear();//밑의 for문에서 데이터를 쌓아둘 거기 때문에 Clear해둠
                     num=0;
                     for(DataSnapshot item:dataSnapshot.getChildren()){
-
                         chatModels.add(item.getValue(ChatModel.class));
                         //Clear된 것들을 다시 Add해줌
 
@@ -211,7 +215,7 @@ public class Chatting_Fragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-
+            /*holder.setIsRecyclable(false); //다른 해결방법 찾으면 삭제해야 함*/
 
 
             final CustomViewHolder customViewHolder=(CustomViewHolder)holder;
@@ -295,8 +299,12 @@ public class Chatting_Fragment extends Fragment {
 
                                                 }
                                             }
+
                                         if(num>0){
+
+
                                             Log.e(TAG,"Num:"+num);
+
                                             customViewHolder.unread_num.setVisibility(View.VISIBLE);
                                             customViewHolder.unread_num.setText(String.valueOf(num));
 
@@ -374,6 +382,7 @@ public class Chatting_Fragment extends Fragment {
             public TextView textView_timestamp;
             public TextView unread_num;
 
+
             public CustomViewHolder(View view) {
                 super(view);
 
@@ -384,6 +393,7 @@ public class Chatting_Fragment extends Fragment {
                 textView_lastMessage=(TextView)view.findViewById(R.id.chatitem_textview_lastMessage);
                 textView_timestamp=(TextView)view.findViewById(R.id.chatitem_textview_tiemstamp);
                 unread_num=(TextView) view.findViewById(R.id.chatitem_unread_num);
+
 
             }
         }
