@@ -55,6 +55,8 @@ public class PasswordResetActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 startToast("이메일을 보냈습니다.");
+                            } else {
+                                startToast("이메일 보내기에 실패했습니다. 이메일을 다시 입력해주세요.");
                             }
                         }
                     });
