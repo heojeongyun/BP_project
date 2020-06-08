@@ -129,6 +129,7 @@ public class MessageActivity extends AppCompatActivity {
         googleMap_drawing_fragment=new GoogleMap_Drawing_Fragment();
 
         Intent data=getIntent();
+        chatRoomUid=null;
 
         uid=FirebaseAuth.getInstance().getCurrentUser().getUid(); //어플 현재 이용자 아이디
         destinationUid=data.getStringExtra("destination_Uid"); // 상대방 아이디
@@ -444,9 +445,11 @@ public class MessageActivity extends AppCompatActivity {
 
 
         NotificationModel notificationModel=new NotificationModel();
-        if(destinationUserModel.getPushToken()!=null) {
+
+        if(destinationUserModel != null) {
             notificationModel.to = destinationUserModel.getPushToken();
         }
+
         //notificationModel.notification.title=username;
         //notificationModel.notification.text=editText.getText().toString();
         notificationModel.data.title=username;
@@ -506,10 +509,8 @@ public class MessageActivity extends AppCompatActivity {
                     ChatModel chatModel =item.getValue(ChatModel.class);
                     //Log.e(TAG,"users:"+chatModel.users.values());
                     if(chatModel.users.containsKey(destinationUid) && chatModel.users.size()==2 ){
-                        if(chatRoomUid!=null) {
-                            Log.e(TAG, chatRoomUid);
-                        }
                         chatRoomUid=item.getKey();
+                        Log.e(TAG,"chatRoomUid:"+chatRoomUid);
                         button.setEnabled(true);
                         recyclerView.setLayoutManager(new LinearLayoutManager(MessageActivity.this));
                         recyclerView.setAdapter(new RecyclerViewAdapter());
