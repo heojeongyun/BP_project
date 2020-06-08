@@ -1,5 +1,6 @@
 package com.native_code.bp_project02;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +21,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.native_code.bp_project02.Chat.MessageActivity;
 import com.native_code.bp_project02.CustomData.UserModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -102,16 +105,38 @@ public class  Native_Chat_Management extends AppCompatActivity {
                         return;
                     }
                                 for (QueryDocumentSnapshot document : value) {
+
                                     userModel = document.toObject(UserModel.class);
                                     requests_array = userModel.getRequests();
+
+                                    userModels.clear();
+                                    Log.e(TAG, "userModels:"+userModels);
+
                                     //여행자가 요청한 요청 목록 적재
                                     Log.d("Requests", document.getId() + " => " + document.getData());
                                     if (requests_array != null) {
-                                        userModels.clear();
+                                        Log.e(TAG,"requests_array_size"+requests_array.size());
+
                                         for (int i = 0; i < requests_array.size(); i++) {
+
                                             db.collection("users")
                                                     .whereEqualTo("uid", requests_array.get(i))
-                                                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                                    .get()
+                                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                            if (task.isSuccessful()) {
+                                                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                                                    userModels.add(document.toObject(UserModel.class));
+                                                                    Log.e(TAG,"Requests_usermodels"+userModels);
+                                                                }
+                                                                notifyDataSetChanged();
+                                                            } else {
+                                                                Log.d(TAG, "Error getting documents: ", task.getException());
+                                                            }
+                                                        }
+                                                    });
+                                                   /* .addSnapshotListener(new EventListener<QuerySnapshot>() {
                                                         @Override
                                                         public void onEvent(@Nullable QuerySnapshot value,
                                                                             @Nullable FirebaseFirestoreException e) {
@@ -123,11 +148,12 @@ public class  Native_Chat_Management extends AppCompatActivity {
 
                                                             for (QueryDocumentSnapshot document : value) {
                                                                 userModels.add(document.toObject(UserModel.class));
+                                                                Log.e(TAG,"Requests_usermodels"+userModels);
                                                             }
                                                             notifyDataSetChanged();
 
                                                         }
-                                                    });
+                                                    });*/
                                         }
                                     }
                                 }
@@ -188,6 +214,7 @@ public class  Native_Chat_Management extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), MessageActivity.class);
                     intent.putExtra("destination_Uid", requests_array.get(position));//누구랑 대화할지
                     startActivity(intent);
+
                     Ref.update("requests",FieldValue.arrayRemove(userModels.get(position).getUid())); // 현지인 관리목록에서 삭제
                     destination_Ref.update("requests",FieldValue.arrayRemove(uid)); // 여행자 관리목록에서 삭제
 

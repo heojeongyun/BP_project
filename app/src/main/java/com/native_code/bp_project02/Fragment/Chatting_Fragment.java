@@ -3,6 +3,7 @@ package com.native_code.bp_project02.Fragment;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -103,6 +104,7 @@ public class Chatting_Fragment extends Fragment {
                                 if(requests!=null){
                                     requests_size=requests.size();
                                     if(requests_size>0) {
+
                                         request_num.setVisibility(View.VISIBLE);
                                         request_num.setText(String.valueOf(requests_size));
                                     }
@@ -144,7 +146,7 @@ public class Chatting_Fragment extends Fragment {
     }
 
 
-    public  class ChatRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+    public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
         private String uid;
         private List<ChatModel> chatModels=new ArrayList<>();
@@ -157,14 +159,17 @@ public class Chatting_Fragment extends Fragment {
         private int num=0;
 
 
-
         public ChatRecyclerViewAdapter() { //채팅 목록 가져오기
 
+
             userModels=new ArrayList<>();
+
+
             uid= FirebaseAuth.getInstance().getCurrentUser().getUid();//uid는 파이어베이스에서 가져옴
             FirebaseDatabase.getInstance().getReference().child("chatrooms")
                     .orderByChild("users/"+uid).equalTo(true).addValueEventListener(new ValueEventListener() {
-                //파이어베이스의 chatrooms에 내가 소속된 방에 대해서 이벤트를 받음
+
+                        //파이어베이스의 chatrooms에 내가 소속된 방에 대해서 이벤트를 받음
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -179,6 +184,7 @@ public class Chatting_Fragment extends Fragment {
                     }
                     notifyDataSetChanged(); //새로고침
 
+
                 }
 
 
@@ -187,8 +193,10 @@ public class Chatting_Fragment extends Fragment {
 
                 }
 
+
             });
             Log.d(TAG,"chatModels:"+chatModels);
+
         }
 
         @NonNull
@@ -197,13 +205,20 @@ public class Chatting_Fragment extends Fragment {
             View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chat,parent,false);
 
 
+
             return new CustomViewHolder(view); //뷰 재사용
         }
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
 
+
+
             final CustomViewHolder customViewHolder=(CustomViewHolder)holder;
+
+
+
+
 
 
 
@@ -221,15 +236,18 @@ public class Chatting_Fragment extends Fragment {
                 }
             }
 
+
+            num=0;
+
+
+
             Log.d(TAG,"destinationUsers:"+destinationUsers);
 
 
 
 
-
-
-            if(destinationUid!=null) {//상대방이 있을 때
-                FirebaseFirestore.getInstance().collection("users").document(destinationUid).get()
+            if(destinationUsers.get(position)!=null) {//상대방이 있을 때
+                FirebaseFirestore.getInstance().collection("users").document(destinationUsers.get(position)).get()
                         .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {//users의 Uid를 가져와서 거기에 대해 리스너 대기
                             @Override
 
@@ -247,86 +265,100 @@ public class Chatting_Fragment extends Fragment {
                                                 .apply(new RequestOptions().circleCrop())
                                                 .into(customViewHolder.imageView);
                                     }
+
                                     customViewHolder.textView_title.setText(userModel.getName());//채팅방 타이틀을 상대방 이름으로
+
+
+                                    //메세지를 내림 차순으로 정렬 후 마지막 메세지의 키값을 가져옴
+                                    Map<String,ChatModel.Comment> commentMap=new TreeMap<>(Collections. <String>reverseOrder());
+                                    if(chatModels.get(position).comments.size()>=1) {//메시지가 있을 때에만 메시지를 읽어오도록 하는 if문
+                                        commentMap.putAll(chatModels.get(position).comments);
+
+
+                                        num=0;
+                                        lastMessageKey = (String) commentMap.keySet().toArray()[0];//마지막 메시지를 가져옴
+
+
+                                        String lastMessage_uid=chatModels.get(position).comments.get(lastMessageKey).uid;
+
+                                        //마지막 메세지가 내가 보낸게 아니라면
+                                        if(!lastMessage_uid.equals(uid)) {
+                                            for (int i = 0; i < commentMap.keySet().size(); i++) {
+                                                String key = (String) commentMap.keySet().toArray()[i];
+
+                                                int readuser_size = chatModels.get(position).comments.get(key).readUsers.size();
+                                                if (readuser_size == 2) {
+                                                    break;
+                                                }else if(readuser_size==1){
+                                                    num+=1;
+                                                }
+
+                                                }
+                                            }
+                                        if(num>0){
+                                            Log.e(TAG,"Num:"+num);
+                                            customViewHolder.unread_num.setVisibility(View.VISIBLE);
+                                            customViewHolder.unread_num.setText(String.valueOf(num));
+
+
+                                        }
+                                        if (!chatModels.get(position).comments.get(lastMessageKey).IsImage) {//마지막 메시지가 사진이 아닐 때
+                                            //마지막 메시지의 키를 가져와서 보이게 함
+                                            customViewHolder.textView_lastMessage.setText(chatModels.get(position).comments.get(lastMessageKey).message);
+
+                                        } else {
+                                            customViewHolder.textView_lastMessage.setText("사진");//"사진"으로 표시
+                                        }
+                                    }
+
+
+                                    customViewHolder.itemView.setOnClickListener(new View.OnClickListener(){//클릭 이벤트
+
+
+                                        @Override
+                                        public void onClick(View view){
+
+                                            Intent intent=new Intent(view.getContext(), MessageActivity.class); //채팅방 액티비티
+                                            intent.putExtra("destination_Uid", destinationUsers.get(position)); //누구랑 대화할지
+
+                                            ActivityOptions activityOptions=ActivityOptions.makeCustomAnimation(view.getContext(),R.anim.fromright,R.anim.toleft);
+                                            //방 들어갈 때 애니메이션
+
+
+                                            startActivity(intent,activityOptions.toBundle()); //채팅방 액티비티 시작
+
+                                        }
+
+                                    });
+
+
+                                    simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));//시간 지역 설정
+
+                                    if(chatModels.get(position).comments.size()>=1) {//메시지가 있다면
+                                        long unixTime = (long) chatModels.get(position).comments.get(lastMessageKey).timestamp;
+                                        //마지막 메시지의 시간을 받아온다.
+
+                                        Date date = new Date(unixTime);
+                                        customViewHolder.textView_timestamp.setText(simpleDateFormat.format(date));//포맷을 알아볼 수 있게 바꿔준다.
+                                    }
 
 
                                 } else {
 
 
                                 }
+
                             }
+
                         });
             }
 
 
-            //메세지를 내림 차순으로 정렬 후 마지막 메세지의 키값을 가져옴
-            Map<String,ChatModel.Comment> commentMap=new TreeMap<>(Collections. <String>reverseOrder());
-            if(chatModels.get(position).comments.size()>=1) {//메시지가 있을 때에만 메시지를 읽어오도록 하는 if문
-                commentMap.putAll(chatModels.get(position).comments);
 
 
-                num=0;
-                lastMessageKey = (String) commentMap.keySet().toArray()[0];//마지막 메시지를 가져옴
 
 
-                String lastMessage_uid=chatModels.get(position).comments.get(lastMessageKey).uid;
-                //마지막 메세지가 내가 보낸게 아니라면
-                if(!lastMessage_uid.equals(uid)) {
-                    for (int i = 0; i < commentMap.keySet().size(); i++) {
-                        String key = (String) commentMap.keySet().toArray()[i];
 
-                        int readuser_size = chatModels.get(position).comments.get(key).readUsers.size();
-                        if (readuser_size == 2) {
-                            break;
-                        }else if(readuser_size==1){
-                             num+=1;
-                        }
-                    }
-                    if(num>0){
-                        customViewHolder.unread_num.setVisibility(View.VISIBLE);
-                        customViewHolder.unread_num.setText(String.valueOf(num));
-                    }
-
-                }
-                if (!chatModels.get(position).comments.get(lastMessageKey).IsImage) {//마지막 메시지가 사진이 아닐 때
-                    //마지막 메시지의 키를 가져와서 보이게 함
-                    customViewHolder.textView_lastMessage.setText(chatModels.get(position).comments.get(lastMessageKey).message);
-
-
-                } else {
-                    customViewHolder.textView_lastMessage.setText("사진");//"사진"으로 표시
-                }
-            }
-
-
-            customViewHolder.itemView.setOnClickListener(new View.OnClickListener(){//클릭 이벤트
-
-
-                @Override
-                public void onClick(View view){
-
-                    Intent intent=new Intent(view.getContext(), MessageActivity.class); //채팅방 액티비티
-                    intent.putExtra("destination_Uid", destinationUsers.get(position));//누구랑 대화할지
-
-                    ActivityOptions activityOptions=ActivityOptions.makeCustomAnimation(view.getContext(),R.anim.fromright,R.anim.toleft);
-                    //방 들어갈 때 애니메이션
-
-
-                    startActivity(intent,activityOptions.toBundle()); //채팅방 액티비티 시작
-
-
-                }
-            });
-
-            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));//시간 지역 설정
-
-            if(chatModels.get(position).comments.size()>=1) {//메시지가 있다면
-                long unixTime = (long) chatModels.get(position).comments.get(lastMessageKey).timestamp;
-                //마지막 메시지의 시간을 받아온다.
-
-                Date date = new Date(unixTime);
-                customViewHolder.textView_timestamp.setText(simpleDateFormat.format(date));//포맷을 알아볼 수 있게 바꿔준다.
-            }
         }
 
         @Override
@@ -352,6 +384,7 @@ public class Chatting_Fragment extends Fragment {
                 textView_lastMessage=(TextView)view.findViewById(R.id.chatitem_textview_lastMessage);
                 textView_timestamp=(TextView)view.findViewById(R.id.chatitem_textview_tiemstamp);
                 unread_num=(TextView) view.findViewById(R.id.chatitem_unread_num);
+
             }
         }
     }
@@ -362,6 +395,7 @@ public class Chatting_Fragment extends Fragment {
         adapter=new ChatRecyclerViewAdapter();
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
     }
 
     @Override
