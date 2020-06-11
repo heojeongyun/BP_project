@@ -304,31 +304,25 @@ public class MessageActivity extends AppCompatActivity {
                      }
                  });
              }
-
-
-
-                else if(editText.getText().toString().equals("")) {
+             if(editText.getText().toString().equals("")) {
                  button.setEnabled(false);
              } else {
-                    ChatModel.Comment comment=new ChatModel.Comment();
-                    comment.uid=uid;
-                    comment.message=editText.getText().toString();
-                    comment.IsImage=false;
-                    comment.timestamp= ServerValue.TIMESTAMP;
-                    FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            sendGcm();
-                            editText.setText("");
+                 ChatModel.Comment comment=new ChatModel.Comment();
+                 comment.uid=uid;
+                 comment.message=editText.getText().toString();
+                 comment.IsImage=false;
+                 comment.timestamp= ServerValue.TIMESTAMP;
+                 FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment).addOnCompleteListener(new OnCompleteListener<Void>() {
+                     @Override
+                     public void onComplete(@NonNull Task<Void> task) {
+                         sendGcm();
+                         editText.setText("");
+                     }
+                 });
 
-                        }
-                    });
+             }
 
-
-                }
-                editText.setText("");
                 button.setEnabled(true);
-
             }
 
         });
@@ -631,7 +625,7 @@ public class MessageActivity extends AppCompatActivity {
                                                     user_kind = userModel.getUser_kind();
                                                     if (user_kind != null) {
                                                         if (user_kind.equals("여행자")) { //여행자인 경우 토스트 뜨게
-                                                            startToast("현지인이 생성한 파란색 핀을 터치해 상세정보를 확인하세요!");
+                                                            Toast.makeText(getApplicationContext(),"현지인이 생성한 파란색 핀을 터치해 상세정보를 확인하세요!",Toast.LENGTH_SHORT).show();
                                                         }
                                                     }
                                                     Log.e(TAG,"respone");
@@ -993,10 +987,5 @@ public class MessageActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    private void startToast (String msg){
-
-        Toast.makeText(MessageActivity.this, msg,
-                Toast.LENGTH_SHORT).show();
-    }
 
 }
