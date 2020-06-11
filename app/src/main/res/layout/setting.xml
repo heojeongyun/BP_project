@@ -1,106 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/selectableItemBackground">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="280dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView"
-            android:layout_width="67dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="15dp"
-            android:fontFamily="@font/nanumbarungothic"
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/hangeulnurib"
+            android:layout_marginStart="15dp"
             android:gravity="center_vertical"
             android:text="설정"
+            android:textColor="#0070C0"
             android:textSize="25dp"
             android:textStyle="bold"
-            android:layout_marginTop="40dp"
-            android:textColor="#0070C0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
+        <TextView
+            android:id="@+id/nick_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="별명"
+            android:textSize="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:fontFamily="@font/nanumbarungothic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView1"
             />
 
-        <LinearLayout
-            android:layout_width="240dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+
+        <ImageView
+            android:layout_marginTop="5dp"
+            android:id="@+id/ivUser"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:src="@drawable/user"
             android:layout_gravity="center"
-            android:layout_marginTop="30dp">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nick_TextView"
+            />
 
-            <TextView
-                android:id="@+id/nick_TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="별명"
-                android:textSize="20dp"
-                android:layout_gravity="center"
-                android:textStyle="bold"
-                android:fontFamily="@font/nanumbarungothic"
-                />
-
-
-            <ImageView
-                android:layout_marginTop="5dp"
-                android:id="@+id/ivUser"
-                android:layout_width="110dp"
-                android:layout_height="110dp"
-                android:src="@drawable/user"
-                android:layout_gravity="center"
-                />
-
-                <TextView
-                    android:id="@+id/fragment_setting_Profile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="프로필 보기"
-                    android:textSize="18dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/nanumbarungothic"/>
-                />
-
-    </LinearLayout>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#E3E0E0">
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
-        <LinearLayout
-            android:id="@+id/fragment_setting_profile_edit"
+        <TextView
+            android:id="@+id/fragment_setting_Profile"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            android:layout_height="match_parent"
+            android:text="프로필 보기"
+            android:textSize="18dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/nanumbarungothic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivUser"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="40dp"
+            android:id="@+id/fragment_setting_profile_edit"
+            app:layout_constraintTop_toBottomOf="@id/fragment_setting_Profile"
+            >
+
+            <LinearLayout
+                android:id="@+id/linear1"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#E3E0E0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/fragment_setting_profile_edit"
+                android:orientation="vertical">
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/User_edit"
                 android:layout_width="28dp"
-                android:layout_height="50dp"
-                android:src="@drawable/profile_edit"
+                android:layout_height="60dp"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="20dp"
-                android:layout_gravity="center_vertical"/>
+                android:src="@drawable/profile_edit"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/fragment_setting_profile_edit"/>
 
             <Button
                 android:id="@+id/activity_setting_profileManger"
-                android:layout_width="368dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="45dp"
                 android:textAlignment="textStart"
                 android:paddingLeft="20dp"
                 android:layout_weight="1"
@@ -109,16 +110,24 @@
                 android:text="프로필 관리"
                 android:textColor="#6B6D73"
                 android:textSize="15dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:layout_constraintLeft_toRightOf="@+id/User_edit"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/fragment_setting_profile_edit"
+                />
 
             <ImageView
                 android:layout_width="28dp"
                 android:layout_height="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/next" />
+                android:src="@drawable/next"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/fragment_setting_profile_edit"
+                />
 
-        </LinearLayout>
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!--<LinearLayout
             android:id="@+id/register_line"
@@ -128,204 +137,222 @@
             android:layout_marginTop="5dp">
         </LinearLayout>-->
 
-
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             android:id="@+id/fragment_setting_native_register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            app:layout_constraintTop_toBottomOf="@id/fragment_setting_profile_edit"
+            >
+
+            <LinearLayout
+                android:id="@+id/linear2"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#E3E0E0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/fragment_setting_native_register"
+                android:orientation="vertical">
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/localpeople"
                 android:layout_width="28dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
                 android:src="@drawable/local_register"
-                android:layout_marginLeft="20dp"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/fragment_setting_native_register" />
 
             <Button
                 android:id="@+id/fragment_setting_native_register_Button"
-                android:layout_width="373dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:background="#00ff0000"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="45dp"
                 android:textAlignment="textStart"
                 android:paddingLeft="20dp"
+                android:layout_weight="1"
+                android:background="#00ff0000"
                 android:fontFamily="@font/nanumbarungothic"
                 android:text="현지인 등록"
                 android:textColor="#6B6D73"
                 android:textSize="15dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:layout_constraintLeft_toRightOf="@+id/localpeople"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/fragment_setting_native_register"/>
 
             <ImageView
                 android:layout_width="28dp"
                 android:layout_height="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/next" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#E3E0E0"
-            android:layout_marginTop="10dp">
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
-
-            <ImageView
-                android:id="@+id/edit_starlist"
-                android:layout_width="28dp"
-                android:layout_height="50dp"
-                android:src="@drawable/edit_star"
-                android:layout_marginLeft="20dp"
-                android:layout_gravity="center_vertical"/>
-
-
-            <Button
-                android:id="@+id/fragment_setting_BookmarkButton"
-                android:layout_width="358dp"
-                android:layout_height="50dp"
-                android:textAlignment="textStart"
-                android:paddingLeft="20dp"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:background="#00ff0000"
-                android:fontFamily="@font/nanumbarungothic"
-                android:text="즐겨찾기 관리"
-                android:textColor="#6B6D73"
-                android:textSize="15dp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:layout_width="28dp"
-                android:layout_height="20dp"
                 android:src="@drawable/next"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/fragment_setting_native_register"/>
 
-                android:layout_gravity="center_vertical"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </LinearLayout>
         <LinearLayout
+            android:id="@+id/linear3"
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="#E3E0E0"
-            android:layout_marginTop="10dp">
-
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_setting_native_register"
+            android:orientation="vertical">
         </LinearLayout>
 
 
-        <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/feedback"
+            android:id="@+id/edit_starlist"
             android:layout_width="28dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="23dp"
-            android:src="@drawable/feedback" />
+            android:layout_height="60dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/edit_star"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linear3" />
 
         <Button
-            android:id="@+id/fragment_setting_FeedbackButton"
-            android:layout_width="315dp"
-            android:layout_height="50dp"
+            android:id="@+id/fragment_setting_BookmarkButton"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="45dp"
+            android:textAlignment="textStart"
+            android:paddingLeft="20dp"
             android:layout_weight="1"
             android:background="#00ff0000"
             android:fontFamily="@font/nanumbarungothic"
-            android:layout_marginLeft="10dp"
-            android:textAlignment="textStart"
-            android:paddingLeft="20dp"
-            android:text="피드백 남기기"
+            android:text="즐겨찾기 관리"
             android:textColor="#6B6D73"
             android:textSize="15dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="@+id/edit_starlist"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linear3"
+            />
 
         <ImageView
             android:layout_width="28dp"
             android:layout_height="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
             android:layout_gravity="center_vertical"
-
-            android:src="@drawable/next" />
-
-
-    </LinearLayout>
+            android:src="@drawable/next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linear3"/>
 
         <LinearLayout
+            android:id="@+id/linear4"
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="#E3E0E0"
-            android:layout_marginTop="10dp">
-
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_setting_BookmarkButton"
+            android:orientation="vertical">
         </LinearLayout>
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/feedback"
+            android:layout_width="28dp"
+            android:layout_height="56dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/feedback"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linear4" />
+
+        <Button
+            android:id="@+id/fragment_setting_FeedbackButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:layout_height="60dp"
+            android:layout_marginLeft="45dp"
+            android:textAlignment="textStart"
+            android:paddingLeft="20dp"
+            android:layout_weight="1"
+            android:background="#00ff0000"
+            android:fontFamily="@font/nanumbarungothic"
+            android:text="피드백 남기기"
+            android:textColor="#6B6D73"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="@+id/feedback"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linear4"
+            />
 
-            <ImageView
-                android:id="@+id/logout"
-                android:layout_width="28dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="23dp"
-                android:src="@drawable/logout" />
-
-            <Button
-                android:id="@+id/fragment_setting_LogoutButton"
-                android:layout_width="315dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="#00ff0000"
-                android:fontFamily="@font/nanumbarungothic"
-                android:layout_marginLeft="10dp"
-                android:textAlignment="textStart"
-                android:paddingLeft="20dp"
-                android:text="로그아웃"
-                android:textColor="#6B6D73"
-                android:textSize="15dp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:layout_width="28dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center_vertical"
-
-                android:src="@drawable/next" />
-
-
-        </LinearLayout>
-
-
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linear4"/>
 
         <LinearLayout
+            android:id="@+id/linear5"
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="#E3E0E0"
-            android:layout_marginTop="10dp">
-
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_setting_FeedbackButton"
+            android:orientation="vertical">
         </LinearLayout>
 
+        <ImageView
+            android:id="@+id/logout"
+            android:layout_width="28dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/logout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linear5" />
+
+        <Button
+            android:id="@+id/fragment_setting_LogoutButton"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="45dp"
+            android:textAlignment="textStart"
+            android:paddingLeft="20dp"
+            android:layout_weight="1"
+            android:background="#00ff0000"
+            android:fontFamily="@font/nanumbarungothic"
+            android:text="로그아웃"
+            android:textColor="#6B6D73"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="@+id/logout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linear5"
+            />
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linear5"/>
 
         <LinearLayout
+            android:id="@+id/linear6"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="2dp"
             android:background="#E3E0E0"
-            android:layout_marginTop="10dp">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_setting_LogoutButton"
+            android:orientation="vertical">
         </LinearLayout>
 
-
-    </LinearLayout>
-
-
-</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

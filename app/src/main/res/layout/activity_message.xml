@@ -1,120 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#00ff0000"
     android:orientation="vertical"
-    android:weightSum="1"
     tools:context=".Chat.MessageActivity">
 
-    <Button
-        android:id="@+id/actvity_message_FinishButton"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_gravity="right"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
-        android:background="@drawable/cancel"
-        android:fontFamily="@font/hangeulnurib"
-        android:textStyle="bold" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/actvity_message_FinishButton"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/cancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView
-
-
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-
-        <LinearLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/messageActivity_editText"
-                android:layout_width="330dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="5dp"
-                />
-
-            <Button
-                android:id="@+id/messageActivity_Button"
-                android:layout_width="60dp"
-                android:layout_height="42dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="3dp"
-                android:background="@drawable/send_button_selector" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/messageActivity_picture"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="17dp"
-                android:background="@drawable/picture" />
-
-            <Button
-                android:id="@+id/activity_message_Camera_Button"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="17dp"
-                android:background="@drawable/camera" />
-
-            <Button
-                android:id="@+id/activity_message_MapButton"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="17dp"
-                android:background="@drawable/map" />
-
-
-            <Button
-                android:id="@+id/activtiy_message_Map_Drawing_Button"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="17dp"
-                android:background="@drawable/drawing" />
-
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-
-    <FrameLayout
-        android:id="@+id/container"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="60dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-        >
+
+        <EditText
+            android:id="@+id/messageActivity_editText"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
+            app:layout_constraintEnd_toStartOf="@+id/messageActivity_Button"
+            app:layout_constraintHorizontal_weight="0.85"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/messageActivity_Button"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/send_button_selector"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="0.15"
+            app:layout_constraintStart_toEndOf="@+id/messageActivity_editText" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="30dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout1">
+
+        <Button
+            android:id="@+id/messageActivity_picture"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/picture"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/activity_message_Camera_Button"/>
+
+        <Button
+            android:id="@+id/activity_message_Camera_Button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/camera"
+            app:layout_constraintLeft_toRightOf="@+id/messageActivity_picture"
+            app:layout_constraintRight_toLeftOf="@+id/activity_message_MapButton"
+            />
+
+        <Button
+            android:id="@+id/activity_message_MapButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/map"
+            app:layout_constraintLeft_toRightOf="@+id/activity_message_Camera_Button"
+            app:layout_constraintRight_toLeftOf="@+id/activtiy_message_Map_Drawing_Button"/>
+
+
+        <Button
+            android:id="@+id/activtiy_message_Map_Drawing_Button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/drawing"
+            app:layout_constraintLeft_toRightOf="@+id/activity_message_MapButton"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/container">
 
     </FrameLayout>
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -67,8 +68,8 @@ public class Setting_Fragment extends Fragment {
     private ImageView bluepeopleImageView;
     private Button FeedbackButton;
 
-    private LinearLayout fragment_setting_profile_edit;
-    private LinearLayout fragment_setting_native_register;
+    private ConstraintLayout fragment_setting_profile_edit;
+    private ConstraintLayout fragment_setting_native_register;
 
 
 
@@ -88,8 +89,8 @@ public class Setting_Fragment extends Fragment {
 
         NativeRegisterButton = (Button) rootView.findViewById(R.id.fragment_setting_native_register_Button);
         FeedbackButton =(Button) rootView.findViewById(R.id.fragment_setting_FeedbackButton);
-        fragment_setting_native_register = (LinearLayout) rootView.findViewById(R.id.fragment_setting_native_register);
-        fragment_setting_profile_edit=(LinearLayout) rootView.findViewById(R.id.fragment_setting_profile_edit);
+        fragment_setting_native_register = (ConstraintLayout) rootView.findViewById(R.id.fragment_setting_native_register);
+        fragment_setting_profile_edit=(ConstraintLayout) rootView.findViewById(R.id.fragment_setting_profile_edit);
 
 
 
@@ -148,7 +149,7 @@ public class Setting_Fragment extends Fragment {
                                         //여행자이면 프로필 관리 안보이게
                                         fragment_setting_profile_edit.setVisibility(View.GONE);
 
-                                       NativeRegisterButton.setOnClickListener(new View.OnClickListener() { //현지인 등록 버튼
+                                        NativeRegisterButton.setOnClickListener(new View.OnClickListener() { //현지인 등록 버튼
                                             @Override
                                             public void onClick(View v) {
                                                 Intent intent = new Intent(getActivity(), Native_Register.class);
@@ -365,4 +366,3 @@ public class Setting_Fragment extends Fragment {
 
 
 }
-

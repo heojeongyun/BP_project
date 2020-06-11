@@ -1,96 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="110dp">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="?attr/selectableItemBackground">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <ImageView
+        android:id="@+id/activity_ncm_image"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="7dp"
+        android:src="@drawable/user"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/activity_ncm_nickname"
+        android:layout_width="65dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginLeft="18dp"
+        android:text="별명"
+        android:layout_marginStart="15dp"
+        android:textAlignment="center"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/nanumbarungothic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frienditem_imageview"/>
 
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="5dp">
+    <Button
+        android:id="@+id/activity_ncm_btn_accept"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/button_selector"
+        android:text="수락"
+        android:textColor="@android:color/background_light"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:layout_marginRight="90dp"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/nanumbarungothic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/activity_ncm_image"
-                    android:layout_width="65dp"
-                    android:layout_height="65dp"
-                    android:layout_marginLeft="18dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/user"/>
-
-
-                <TextView
-                    android:id="@+id/activity_ncm_nickname"
-                    android:layout_width="65dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="18dp"
-                    android:text="별명"
-                    android:textAlignment="center"
-                    android:textSize="16dp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginBottom="5dp"
-                    android:fontFamily="@font/nanumbarungothic"/>
-
-            </LinearLayout>
-
-        </FrameLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/activity_ncm_btn_accept"
-                android:layout_width="70dp"
-                android:layout_height="40dp"
-                android:background="@drawable/button_selector"
-                android:text="수락"
-                android:textColor="@android:color/background_light"
-                android:textSize="17dp"
-                android:textStyle="bold"
-                android:layout_marginLeft="170dp"
-                android:fontFamily="@font/nanumbarungothic"/>
-
-            <Button
-                android:layout_toRightOf="@+id/activity_ncm_btn_accept"
-                android:id="@+id/activity_ncm_btn_reject"
-                android:layout_width="70dp"
-                android:layout_height="40dp"
-                android:background="@drawable/button_selector"
-                android:text="거절"
-                android:textColor="@android:color/background_light"
-                android:textSize="17dp"
-                android:textStyle="bold"
-                android:layout_marginLeft="10dp"
-                android:fontFamily="@font/nanumbarungothic"/>
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
+    <Button
+        android:id="@+id/activity_ncm_btn_reject"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/button_selector"
+        android:text="거절"
+        android:textColor="@android:color/background_light"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/nanumbarungothic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="#E3E0E0">
+        android:background="#E3E0E0"
+        android:layout_marginTop="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frienditem_imageview">
     </LinearLayout>
 
-</LinearLayout>
-
-
-
+</androidx.constraintlayout.widget.ConstraintLayout>
 

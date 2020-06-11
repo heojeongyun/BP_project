@@ -1,130 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-    <LinearLayout
+    android:background="?attr/selectableItemBackground">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/textView1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="40dp">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="296dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="15dp"
-                android:fontFamily="@font/nanumbarungothic"
-                android:gravity="center_vertical"
-                android:text="현지인 등록 신청하기"
-                android:textColor="#0070C0"
-                android:textSize="25dp"
-                android:textStyle="bold" />
-        </LinearLayout>
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/hangeulnurib"
+            android:layout_marginStart="15dp"
+            android:gravity="center_vertical"
+            android:text="현지인 등록 신청하기"
+            android:textColor="#0070C0"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
-            android:layout_width="372dp"
-            android:layout_height="48dp"
+            android:id="@+id/native_explain"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/nanumbarungothic"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:text="현지인은 여행자들에게 실용적인 정보를 제공하는 역할을 합니다. 여행자를 위해 최선을 다해주세요!"
-            android:textColor="#000000"
             android:textSize="11.5dp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:textStyle="bold"
+            android:textColor="#6B6D73"
+            android:fontFamily="@font/nanumbarungothic"
+            app:layout_constraintTop_toBottomOf="@id/textView1"
+            app:layout_constraintStart_toStartOf="parent"
+            />
 
-    <LinearLayout
-        android:padding="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        >
         <TextView
+            android:id="@+id/text1"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="17dp"
             android:gravity="left"
             android:text="이름 (본명)"
             android:textSize="20dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/nanumbarungothic"
-            />
+            app:layout_constraintTop_toBottomOf="@id/native_explain"
+            app:layout_constraintStart_toStartOf="parent"/>
+
         <EditText
             android:id="@+id/native_name"
-            android:layout_width="360dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
             android:textSize="20dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
             android:layout_gravity="center"
             android:fontFamily="@font/nanumbarungothic"
-            android:inputType="text"/>
-    </LinearLayout>
+            android:inputType="text"
+            app:layout_constraintTop_toBottomOf="@id/text1"
+            app:layout_constraintStart_toStartOf="parent"/>
 
-    <LinearLayout
-        android:padding="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp"
-        >
         <TextView
+            android:id="@+id/text2"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="17dp"
+            android:layout_marginTop="10dp"
             android:gravity="left"
             android:text="전화번호"
             android:textSize="20dp"
             android:fontFamily="@font/nanumbarungothic"
-            />
+            app:layout_constraintTop_toBottomOf="@id/native_name"
+            app:layout_constraintStart_toStartOf="parent"/>
+
         <EditText
             android:id="@+id/phone_number"
-            android:layout_width="360dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
             android:textSize="20dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
             android:layout_gravity="center"
-            android:fontFamily="@font/nanumbarungothic"
-            android:inputType="phone"/>
-    </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@id/text2"
+            app:layout_constraintStart_toStartOf="parent"/>
 
-    <LinearLayout
-        android:padding="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp"
-        >
         <TextView
+            android:id="@+id/text3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="17dp"
             android:gravity="left"
             android:text="해시태그 (작성 예시 : #맛집 #카페)"
             android:textSize="20dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/nanumbarungothic"
-            />
+            app:layout_constraintTop_toBottomOf="@id/phone_number"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <EditText
             android:id="@+id/activity_nativeregister_hashtag_information"
-            android:layout_width="360dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
             android:textSize="20dp"
             android:layout_gravity="center"
-            android:fontFamily="@font/nanumbarungothic"/>
-    </LinearLayout>
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:fontFamily="@font/nanumbarungothic"
+            app:layout_constraintTop_toBottomOf="@id/text3"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <LinearLayout
-        android:padding="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
         <TextView
             android:id="@+id/tv_region"
             android:layout_width="70dp"
@@ -133,27 +129,40 @@
             android:gravity="left"
             android:text="지역"
             android:textSize="20dp"
-            android:fontFamily="@font/nanumbarungothic"/>
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/nanumbarungothic"
+            app:layout_constraintTop_toBottomOf="@id/activity_nativeregister_hashtag_information"
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <Spinner
             android:id="@+id/native_spinner"
-            android:layout_width="357dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
             android:entries="@array/현지인지역구"
             android:gravity="left"
-            android:fontFamily="@font/nanumbarungothic"/>
-    </LinearLayout>
-    <Button
-        android:id="@+id/submit_button"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/button_selector"
-        android:text="등록 신청하기"
-        android:textColor="@android:color/background_light"
-        android:textSize="17dp"
-        android:textStyle="bold"
-        android:fontFamily="@font/nanumbarungothic"/>
-</LinearLayout>
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:fontFamily="@font/nanumbarungothic"
+            app:layout_constraintTop_toBottomOf="@id/tv_region"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <Button
+            android:id="@+id/submit_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_selector"
+            android:text="등록 신청하기"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:textColor="@android:color/background_light"
+            android:textSize="17dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/nanumbarungothic"
+            app:layout_constraintTop_toBottomOf="@id/native_spinner"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
