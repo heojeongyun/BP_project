@@ -164,10 +164,13 @@ public class Profile extends AppCompatActivity {
 
         // 현지인과 채팅을 하기 위해 매칭요청 하는 버튼
         Button chat_button=(Button) findViewById(R.id.profile_chat_button);
+        CheckBox activity_profile_BookMark=(CheckBox) findViewById(R.id.activity_profile_BookMark);
 
         if(uid.equals(destinationUid)){
             chat_button.setVisibility(View.GONE);
             chat_button.setClickable(false);
+            activity_profile_BookMark.setVisibility(View.GONE);
+            activity_profile_BookMark.setClickable(false);
         } 
 
         //현지인에게 매칭 요청 리스너
@@ -193,7 +196,7 @@ public class Profile extends AppCompatActivity {
 
 
 
-        activity_profile_BookMark=(CheckBox) findViewById(R.id.activity_profile_BookMark);
+
 
         //문서 위치 선언
         db=FirebaseFirestore.getInstance();

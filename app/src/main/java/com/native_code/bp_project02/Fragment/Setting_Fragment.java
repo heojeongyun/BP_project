@@ -164,10 +164,12 @@ public class Setting_Fragment extends Fragment {
                                 }
                                 if (userModel.getImageurl() != null) { // 이미지의 URL값이 존재할 경우에만 사진을 가져온다
                                     register_ImageURL = userModel.getImageurl();
-                                    Glide.with(getActivity())
-                                            .load(register_ImageURL)
-                                            .apply(new RequestOptions().circleCrop())
-                                            .into(ivUser);
+                                    if(isAdded()) {
+                                        Glide.with(getActivity())
+                                                .load(register_ImageURL)
+                                                .apply(new RequestOptions().circleCrop())
+                                                .into(ivUser);
+                                    }
                                 }
                                 nick_textview.setText(userModel.getName());
 
