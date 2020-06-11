@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.native_code.bp_project02.BookmarkActivity;
+import com.native_code.bp_project02.Check;
 import com.native_code.bp_project02.CustomData.UserModel;
 import com.native_code.bp_project02.Feedback;
 import com.native_code.bp_project02.LoginActivity;
@@ -152,8 +153,7 @@ public class Setting_Fragment extends Fragment {
                                         NativeRegisterButton.setOnClickListener(new View.OnClickListener() { //현지인 등록 버튼
                                             @Override
                                             public void onClick(View v) {
-                                                Intent intent = new Intent(getActivity(), Native_Register.class);
-                                                //intent.putExtra("user_kind", "여행자");
+                                                Intent intent = new Intent(getActivity(), Check.class);
                                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                 startActivity(intent);
 
