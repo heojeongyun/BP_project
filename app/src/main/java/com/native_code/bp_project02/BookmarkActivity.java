@@ -71,12 +71,18 @@ public class BookmarkActivity extends AppCompatActivity {
 
 
 
+        @Override
+        public int getItemViewType(int position) {
+            return position;
+        }
 
 
         List<UserModel> userModels;
 
 
         public ActivityBookmarkRecyclerViewAdapter() {
+
+
 
 
 
