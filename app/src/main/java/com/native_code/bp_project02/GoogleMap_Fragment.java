@@ -10,12 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.firebase.database.Query;
 import com.native_code.bp_project02.Chat.MessageActivity;
 import com.native_code.bp_project02.CustomData.InfoWindowData;
 import com.native_code.bp_project02.CustomData.MarkerModel;
@@ -51,6 +53,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -83,7 +86,7 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
     private Bitmap bitmap;
 
     private StorageReference MapImageref;
-    private ArrayList<MarkerModel.MarkerData> markerModels;
+    private List<MarkerModel.MarkerData> markerModels;
     private  DatabaseReference mMarkerDatabase;
     private  ValueEventListener postListener;
 
@@ -92,7 +95,7 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
 
     public GoogleMap_Fragment() {
 
-        markerModels=new ArrayList<MarkerModel.MarkerData>();
+        markerModels=new ArrayList<>();
 
 
 
@@ -164,6 +167,7 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
 
 
         Button button=(Button) layout.findViewById(R.id.button);
+        Button list_button=(Button) layout.findViewById(R.id.list_button);
 
         //Google Places Api 초기 설튼 설정
 
@@ -196,6 +200,15 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
                         .build(getContext());
                 startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
 
+            }
+        });
+
+        list_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), MarkerList.class);
+                intent.putExtra("Markermodels", (Serializable) markerModels);
+                startActivity(intent);
             }
         });
 
@@ -369,54 +382,64 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
         mMarkerDatabase =FirebaseDatabase.getInstance().getReference().child("chatrooms").child(MessageActivity.chatRoomUid).child("CustomMarker");
 
 
+        Query sequence_query=FirebaseDatabase.getInstance().getReference().child("chatrooms").child(MessageActivity.chatRoomUid).child("CustomMarker").orderByChild("sequence");
 
          postListener= new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-
+                //초기화
                 mMap.clear();
-                // Get Post object and use the values to update the UI
-                for(DataSnapshot snapshot: dataSnapshot.getChildren()){
+                markerModels.clear();
+
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
 
-                    Log.e(TAG,"변경");
-                    Log.e(TAG,"snapshot:"+ snapshot);
+                            Log.e(TAG, "변경");
+                            Log.e(TAG, "snapshot:" + snapshot);
 
-                    MarkerModel.MarkerData markerModel=snapshot.getValue(MarkerModel.MarkerData.class);
+                            MarkerModel.MarkerData markerModel = snapshot.getValue(MarkerModel.MarkerData.class);
+                                markerModel.key=snapshot.getKey();
+                                markerModels.add(markerModel);
 
-                    LatLng currentLocation =new LatLng(markerModel.Latitude,markerModel.Longitude);
-
-
-
-                    // 마커 설정
-                    Marker Marker= mMap.addMarker(new MarkerOptions()
-                            .position(currentLocation)
-                            .title(markerModel.markerTitle)
-                            .snippet(markerModel.markerSnippet)
-                            .draggable(false)
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                                //Log.e(TAG,"markerModels:"+markerModels.get(0).markerTitle);
 
 
-                    InfoWindowData info=new InfoWindowData();
-                    info.setMarker_Content(markerModel.Content);
-
-                    Marker.setTag(info);
+                                LatLng currentLocation = new LatLng(markerModel.Latitude, markerModel.Longitude);
 
 
+                                // 마커 설정
+                                Marker Marker = mMap.addMarker(new MarkerOptions()
+                                        .position(currentLocation)
+                                        .title(markerModel.markerTitle)
+                                        .snippet(markerModel.markerSnippet)
+                                        .draggable(false)
+                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+
+
+                                InfoWindowData info = new InfoWindowData();
+                                info.setMarker_Content(markerModel.Content);
+
+                                Marker.setTag(info);
+
+
+                    }
+
+
+                    // ...
                 }
 
-                // ...
-            }
+                @Override
+                public void onCancelled (DatabaseError databaseError){
+                    // Getting Post failed, log a message
+                    Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                    // ...
+                }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-                // ...
-            }
         };
-        mMarkerDatabase.addValueEventListener(postListener);
+
+        sequence_query.addValueEventListener(postListener);
 
 
 
