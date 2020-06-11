@@ -16,15 +16,15 @@
         android:roundIcon="@mipmap/loding_icons_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.native_code.bp_project02.Feedback"></activity>
-        <activity android:name="com.native_code.bp_project02.ReviewActivity" />
-        <activity android:name="com.native_code.bp_project02.InfoWindow_Edit" />
-        <activity android:name="com.native_code.bp_project02.Chat.GoogleMapActivity" />
+        <activity android:name=".MarkerList"></activity>
+        <activity android:name=".Feedback" />
+        <activity android:name=".ReviewActivity" />
+        <activity android:name=".InfoWindow_Edit" />
+        <activity android:name=".Chat.GoogleMapActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyA7YlrC4J7fuD4VCTkCNgoQzg8zTVJytsg" />
-
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"
@@ -46,30 +46,30 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name="com.native_code.bp_project02.BookmarkActivity" />
-        <activity android:name="com.native_code.bp_project02.MemberTypeActivity" />
-        <activity android:name="com.native_code.bp_project02.Chat.MessageActivity" />
-        <activity android:name="com.native_code.bp_project02.MainActivity" />
-        <activity android:name="com.native_code.bp_project02.SplashActivity">
+        <activity android:name=".BookmarkActivity" />
+        <activity android:name=".MemberTypeActivity" />
+        <activity android:name=".Chat.MessageActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.native_code.bp_project02.LoginActivity" />
-        <activity android:name="com.native_code.bp_project02.Sign_UpActivity" />
-        <activity android:name="com.native_code.bp_project02.PasswordResetActivity" />
-        <activity android:name="com.native_code.bp_project02.MemberActivity" />
-        <activity android:name="com.native_code.bp_project02.Native_Register" />
-        <activity android:name="com.native_code.bp_project02.Native_Profile.Profile" />
-        <activity android:name="com.native_code.bp_project02.NativeSearch" />
-        <activity android:name="com.native_code.bp_project02.Traveler_Chat_Management" />
-        <activity android:name="com.native_code.bp_project02.Native_Chat_Management" />
-        <activity android:name="com.native_code.bp_project02.Native_Profile_Management.profile_edit" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".Sign_UpActivity" />
+        <activity android:name=".PasswordResetActivity" />
+        <activity android:name=".MemberActivity" />
+        <activity android:name=".Native_Register" />
+        <activity android:name=".Native_Profile.Profile" />
+        <activity android:name=".NativeSearch" />
+        <activity android:name=".Traveler_Chat_Management" />
+        <activity android:name=".Native_Chat_Management" />
+        <activity android:name=".Native_Profile_Management.profile_edit" />
 
         <service
-            android:name="com.native_code.bp_project02.Chat.FirebaseMessagingService"
+            android:name=".Chat.FirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
