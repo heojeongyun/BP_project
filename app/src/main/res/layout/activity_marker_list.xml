@@ -1,19 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:background="?attr/selectableItemBackground"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:background="?attr/selectableItemBackground">
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/markerlist_recyclerview"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumbarungothic"
-        >
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/hangeulnurib"
+            android:layout_marginStart="15dp"
+            android:gravity="center_vertical"
+            android:text="현지인 추천 경로"
+            android:textColor="#0070C0"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <TextView
+            android:id="@+id/explain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center_vertical"
+            android:text="현지인이 추천해주는 여행 경로 순서입니다. 현지인과 함께 하는 행복한 여행되세요!"
+            android:textSize="11.5dp"
+            android:textStyle="bold"
+            android:textColor="#6B6D73"
+            android:fontFamily="@font/nanumbarungothic"
+            app:layout_constraintTop_toBottomOf="@id/textView1"
+            app:layout_constraintStart_toStartOf="parent"
 
-</LinearLayout>
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/markerlist_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/nanumbarungothic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/explain">
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
