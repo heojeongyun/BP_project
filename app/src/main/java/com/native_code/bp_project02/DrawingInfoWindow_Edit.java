@@ -1,9 +1,5 @@
 package com.native_code.bp_project02;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,10 +16,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
-import com.native_code.bp_project02.Chat.MessageActivity;
-import com.native_code.bp_project02.CustomData.UserModel;
-import com.native_code.bp_project02.CustomData.MarkerModel;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -44,12 +41,15 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.native_code.bp_project02.Chat.MessageActivity;
+import com.native_code.bp_project02.CustomData.MarkerModel;
+import com.native_code.bp_project02.CustomData.UserModel;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InfoWindow_Edit extends AppCompatActivity {
+public class DrawingInfoWindow_Edit extends AppCompatActivity {
 
     private String Place_Name;
     private String Place_Adress;
@@ -59,7 +59,7 @@ public class InfoWindow_Edit extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private String ClickMarkerAdress;
 
-    private String TAG = "InfoWindow_Edit";
+    private String TAG = "DrawingInfoWindow_Edit";
 
     private TextView PlaceName_TextView;
     private TextView PlaceAdress_TextView;
@@ -80,7 +80,7 @@ public class InfoWindow_Edit extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_infowindow__edit);
+        setContentView(R.layout.activity_drawinginfowindow__edit);
 
         PlaceName_TextView = (TextView) findViewById(R.id.activity_infowindow_edit_PlaceName);
         PlaceAdress_TextView = (TextView) findViewById(R.id.activity_infowindow_edit_PlaceAdress);
@@ -202,7 +202,6 @@ public class InfoWindow_Edit extends AppCompatActivity {
                     makrer.timestamp = ServerValue.TIMESTAMP; //시간정보 설정;
 
 
-
                     //스토리지에 사진 업로드
                     final StorageReference ref = FirebaseStorage.getInstance().getReference().child("GoogleMapImages").child(Place_Adress);
                     UploadTask uploadTask = ref.putBytes(data);
@@ -293,7 +292,7 @@ public class InfoWindow_Edit extends AppCompatActivity {
 
 
                                 //알림메세지
-                                final AlertDialog.Builder builder = new AlertDialog.Builder(InfoWindow_Edit.this);
+                                final AlertDialog.Builder builder = new AlertDialog.Builder(DrawingInfoWindow_Edit.this);
                                 builder.setTitle("마커 정보 수정");
                                 builder.setMessage("해당 마커 정보를 수정 하시겠습니까?");
                                 builder.setPositiveButton("예",
@@ -303,7 +302,6 @@ public class InfoWindow_Edit extends AppCompatActivity {
                                                 MarkerModel.MarkerData NewMarKerData=new MarkerModel.MarkerData();
 
                                                 //마커 정보 설정
-
                                                 NewMarKerData.Content = Content_EditText.getText().toString();
                                                 NewMarKerData.Latitude = markerData.Latitude;
                                                 NewMarKerData.Longitude = markerData.Longitude;

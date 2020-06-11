@@ -328,8 +328,8 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //getSupportFragmentManager().beginTransaction().replace(R.id.container,googleMap_drawing_fragment).commit();
-                //attachFragment(googleMap_drawing_fragment);
-                Toast.makeText(getApplicationContext(),"업데이트 예정 입니다.",Toast.LENGTH_SHORT).show();
+                attachFragment(googleMap_drawing_fragment);
+                //Toast.makeText(getApplicationContext(),"업데이트 예정 입니다.",Toast.LENGTH_SHORT).show();
             }
         });
 
