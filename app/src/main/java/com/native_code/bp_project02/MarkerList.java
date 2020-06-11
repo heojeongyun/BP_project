@@ -85,7 +85,7 @@ public class MarkerList extends AppCompatActivity {
 
         public MarkerListRecyclerViewAdapter() {
 
-            Log.e(TAG, "Mar:" + markerDataList.get(0).key);
+            //Log.e(TAG, "Mar:" + markerDataList.get(0).key);
 
         }
 

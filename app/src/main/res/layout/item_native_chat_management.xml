@@ -31,7 +31,7 @@
         android:layout_marginBottom="5dp"
         android:fontFamily="@font/nanumbarungothic"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frienditem_imageview"/>
+        app:layout_constraintTop_toBottomOf="@+id/activity_ncm_image"/>
 
     <Button
         android:id="@+id/activity_ncm_btn_accept"
@@ -69,10 +69,10 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="#E3E0E0"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="7dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frienditem_imageview">
+        app:layout_constraintTop_toBottomOf="@+id/activity_ncm_nickname">
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
