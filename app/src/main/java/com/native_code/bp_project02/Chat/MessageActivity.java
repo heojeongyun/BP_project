@@ -31,12 +31,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.native_code.bp_project02.CustomData.ChatModel;
 import com.native_code.bp_project02.CustomData.UserModel;
 import com.native_code.bp_project02.Fragment.Chatting_Fragment;
 import com.native_code.bp_project02.GoogleMap_Drawing_Fragment;
 import com.native_code.bp_project02.GoogleMap_Fragment;
 import com.native_code.bp_project02.CustomData.NotificationModel;
+import com.native_code.bp_project02.LoginActivity;
 import com.native_code.bp_project02.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -104,6 +109,11 @@ public class MessageActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private ValueEventListener valueEventListener;
     int peopleCount=0;
+
+    private UserModel userModel;
+    private String user_kind;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private String user_uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
     //지도 프래그먼트 선언
@@ -336,7 +346,7 @@ public class MessageActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //getSupportFragmentManager().beginTransaction().replace(R.id.container,googleMap_drawing_fragment).commit();
                 //attachFragment(googleMap_drawing_fragment);
-                Toast.makeText(getApplicationContext(),"업데이트 예정 입니다.",Toast.LENGTH_SHORT).show();
+                startToast("업데이트 예정 입니다.");
             }
         });
 
@@ -602,9 +612,39 @@ public class MessageActivity extends AppCompatActivity {
                     activtiy_message_MapButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            db.collection("users")
+                                    .whereEqualTo("uid", user_uid)
+                                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onEvent(@Nullable QuerySnapshot value,
+                                                            @Nullable FirebaseFirestoreException e) {
+                                            if (e != null) {
+                                                Log.w(TAG, "Listen failed.", e);
+                                                return;
+                                            }
+
+                                            for (QueryDocumentSnapshot doc : value) {
+
+                                                if (doc != null) {
+                                                    userModel = doc.toObject(UserModel.class);
+                                                    user_kind = userModel.getUser_kind();
+                                                    if (user_kind != null) {
+                                                        if (user_kind.equals("여행자")) { //여행자인 경우 토스트 뜨게
+                                                            startToast("현지인이 생성한 파란색 핀을 터치해 상세정보를 확인하세요!");
+                                                        }
+                                                    }
+                                                    Log.e(TAG,"respone");
+
+
+
+                                                }
+                                            }
+                                        }
+                                    });
                             //getSupportFragmentManager().beginTransaction().replace(R.id.container,googleMap_fragment).commit();
                             attachFragment(googleMap_fragment);
                             recyclerView.scrollToPosition(comments.size() - 1);
+
                         }
                     });
 
@@ -952,6 +992,10 @@ public class MessageActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    private void startToast (String msg){
 
+        Toast.makeText(MessageActivity.this, msg,
+                Toast.LENGTH_SHORT).show();
+    }
 
 }
