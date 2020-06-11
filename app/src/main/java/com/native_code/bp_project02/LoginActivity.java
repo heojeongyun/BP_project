@@ -321,6 +321,7 @@ public class LoginActivity extends AppCompatActivity  {
 
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
@@ -328,7 +329,7 @@ public class LoginActivity extends AppCompatActivity  {
                             } else {
 
                                 if (task.getException() != null) {
-                                    startToast(task.getException().toString());
+                                    startToast("이메일 또는 비밀번호를 확인해주세요.");
                                 }
                             }
 
