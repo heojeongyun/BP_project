@@ -1,125 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.native_code.bp_project02.Native_Profile.ReviewClass">
+    android:background="?attr/selectableItemBackground">
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/textView1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/hangeulnurib"
+            android:layout_marginStart="15dp"
+            android:gravity="center_vertical"
+            android:text="리뷰 작성하기"
+            android:textColor="#0070C0"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-            <TextView
-                android:layout_width="296dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="15dp"
-                android:fontFamily="@font/hangeulnurib"
-                android:gravity="center_vertical"
-                android:text="리뷰 작성하기"
-                android:textColor="#0070C0"
-                android:textSize="25dp"
-                android:textStyle="bold"
-                android:layout_marginTop="40dp"/>
+        <ImageView
+            android:id="@+id/review_profile_Image"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/user"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView1"/>
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+        <TextView
+            android:id="@+id/review_nickTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="별명"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/nanumbarungothic"
+            android:layout_gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/review_profile_Image"/>
 
-                <ImageView
-                    android:id="@+id/review_profile_Image"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:layout_marginTop="20dp"
-                    android:src="@drawable/user"
-                    android:layout_gravity="center"/>
+        <TextView
+            android:id="@+id/textview2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:text="매칭 평점을 자유롭게 매겨주세요."
+            android:textSize="15dp"
+            android:fontFamily="@font/nanumbarungothic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/review_nickTV"/>
 
-                <TextView
-                    android:id="@+id/review_nickTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="별명"
-                    android:textAlignment="center"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/nanumbarungothic"
-                    android:layout_gravity="center"
-                    />
+        <RatingBar
+            android:id="@+id/ratingBar1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:isIndicator="false"
+            android:max="5"
+            android:progressBackgroundTint="@color/quantum_grey400"
+            android:progressTint="@color/Gold"
+            android:secondaryProgressTint="@color/quantum_grey300"
+            android:numStars="5"
+            android:rating="0"
+            android:stepSize="0.5"
+            style="?android:attr/ratingBarStyle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview2"/>
 
-            </LinearLayout>
+        <EditText
+            android:id="@+id/review_edit"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/border"
+            android:gravity="top"
+            android:hint="여행후기를 자유롭게 작성해주세요."
+            android:inputType="textMultiLine"
+            android:fontFamily="@font/nanumbarungothic"
+            android:textSize="15dp"
+            android:padding="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ratingBar1"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="10dp"
-                android:text="매칭 평점을 자유롭게 매겨주세요."
-                android:textSize="15dp"
-                android:fontFamily="@font/nanumbarungothic"/>
+        <Button
+            android:id="@+id/register_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/button_selector"
+            android:onClick="onButton1Clicked"
+            android:text="등록하기"
+            android:textColor="@android:color/background_light"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            tools:ignore="OnClick"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:fontFamily="@font/nanumbarungothic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/review_edit"/>
 
-
-            <RatingBar
-                android:id="@+id/ratingBar1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:isIndicator="false"
-                android:max="5"
-                android:progressBackgroundTint="@color/quantum_grey400"
-                android:progressTint="@color/Gold"
-                android:secondaryProgressTint="@color/quantum_grey300"
-                android:numStars="5"
-                android:rating="0"
-                android:stepSize="0.5"
-                style="?android:attr/ratingBarStyle" />
-
-
-            <EditText
-                android:id="@+id/review_edit"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/border"
-                android:gravity="top"
-                android:hint="여행후기를 자유롭게 작성해주세요."
-                android:inputType="textMultiLine"
-                android:fontFamily="@font/nanumbarungothic"
-                android:textSize="15dp"
-                android:padding="10dp"/>
-
-            <Button
-                android:id="@+id/register_button"
-                android:layout_width="390dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/button_selector"
-                android:onClick="onButton1Clicked"
-                android:text="등록하기"
-                android:textColor="@android:color/background_light"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                tools:ignore="OnClick"
-                android:fontFamily="@font/nanumbarungothic" />
-        </LinearLayout>
-    </ScrollView>
-
-</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
