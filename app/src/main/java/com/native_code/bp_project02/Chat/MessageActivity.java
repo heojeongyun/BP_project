@@ -326,7 +326,7 @@ public class MessageActivity extends AppCompatActivity {
 
 
                 }
-
+                editText.setText("");
                 button.setEnabled(true);
 
             }
