@@ -134,6 +134,9 @@ public class MessageActivity extends AppCompatActivity {
         uid=FirebaseAuth.getInstance().getCurrentUser().getUid(); //어플 현재 이용자 아이디
         destinationUid=data.getStringExtra("destination_Uid"); // 상대방 아이디
 
+
+
+
         //보내는 사람 닉네임 가져오기
         FirebaseFirestore.getInstance().collection("users").document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -290,36 +293,40 @@ public class MessageActivity extends AppCompatActivity {
                          checkChatRoom();
                      }
                  });
-
-
-             }
-             else{
-
-                 ChatModel.Comment comment=new ChatModel.Comment();
-                 comment.uid=uid;
-                 comment.message=editText.getText().toString();
-                 comment.IsImage=false;
-                 comment.timestamp= ServerValue.TIMESTAMP;
-                 FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment).addOnCompleteListener(new OnCompleteListener<Void>() {
-                     @Override
-                     public void onComplete(@NonNull Task<Void> task) {
-                         sendGcm();
-                         editText.setText("");
-
-                     }
-                 });
-
-
              }
 
 
+
+                else if(editText.getText().toString().equals("")) {
+                 button.setEnabled(false);
+             } else {
+                    ChatModel.Comment comment=new ChatModel.Comment();
+                    comment.uid=uid;
+                    comment.message=editText.getText().toString();
+                    comment.IsImage=false;
+                    comment.timestamp= ServerValue.TIMESTAMP;
+                    FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            sendGcm();
+                            editText.setText("");
+
+                        }
+                    });
+
+
+                }
+
+                button.setEnabled(true);
 
             }
+
         });
 
 
-        activtiy_message_MapButton=(Button)findViewById(R.id.activity_message_MapButton);
 
+
+        activtiy_message_MapButton=(Button)findViewById(R.id.activity_message_MapButton);
 
 
         Button activtiy_message_Map_Drawing_Button=(Button)findViewById(R.id.activtiy_message_Map_Drawing_Button);
