@@ -54,7 +54,6 @@ import java.util.TreeMap;
 public class Chatting_Fragment extends Fragment {
 
 
-
     private SimpleDateFormat simpleDateFormat=new SimpleDateFormat("MM.dd HH:mm"); //사람이 알아볼 수 있게 데이터 포맷을 정해 줌
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -219,9 +218,6 @@ public class Chatting_Fragment extends Fragment {
 
 
             final CustomViewHolder customViewHolder=(CustomViewHolder)holder;
-
-
-
 
 
 

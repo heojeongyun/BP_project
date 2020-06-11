@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/loding_icons_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MarkerList"></activity>
+        <activity android:name=".Check"></activity>
+        <activity android:name=".MarkerList" />
         <activity android:name=".Feedback" />
         <activity android:name=".ReviewActivity" />
         <activity android:name=".InfoWindow_Edit" />

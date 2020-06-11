@@ -350,10 +350,10 @@ public class NativeSearch extends AppCompatActivity {
             bookmarks_number=userModels.get(position).bookmarks_number;
 
             if((bookmarks_number !=null)&& (bookmarks_number!=0)){
-                if(bookmarks_number>=2){
+                if(bookmarks_number>=4){
                     //((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(Gold);
                     ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.medal1);
-                }else{
+                }else if(bookmarks_number>=2){
                     //((CustomViewHolder)holder).fragment_people_ItemLayout.setBackgroundColor(Silver);
                     ((CustomViewHolder)holder).item_friend_RankImage.setImageResource(R.drawable.medal2);
                 }

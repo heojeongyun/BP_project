@@ -1,5 +1,6 @@
 package com.native_code.bp_project02;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -19,6 +20,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -46,7 +49,10 @@ public class MarkerList extends AppCompatActivity {
     private List<MarkerModel.MarkerData> markerDataList;
     private MarkerListRecyclerViewAdapter adapter;
     private ItemTouchHelper helper;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+    private String user_uid;
+    private UserModel userModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +65,8 @@ public class MarkerList extends AppCompatActivity {
 
         markerDataList = (ArrayList) data.getSerializableExtra("Markermodels");
 
+        user_uid=FirebaseAuth.getInstance().getUid();
+
         adapter = new MarkerListRecyclerViewAdapter();
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.markerlist_recyclerview);
@@ -67,14 +75,33 @@ public class MarkerList extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
 
-        //ItemTouchHelper 생성
-        helper = new ItemTouchHelper(new ItemTouchHelperCallback(adapter));
 
-        //RecyclerView에 ItemTouchHelper 붙이기
+        //현지인일 경우만 마커 리스트 순서 변경 가능
+        db.collection("users")
+                .whereEqualTo("uid", user_uid)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                userModel = document.toObject(UserModel.class);
+                                if(userModel.user_kind.equals("현지인")){
 
-        helper.attachToRecyclerView(recyclerView);
+                                    //ItemTouchHelper 생성
+                                    helper = new ItemTouchHelper(new ItemTouchHelperCallback(adapter));
 
+                                    //RecyclerView에 ItemTouchHelper 붙이기
 
+                                    helper.attachToRecyclerView(recyclerView);
+
+                                }
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
 
 
     }
@@ -88,6 +115,7 @@ public class MarkerList extends AppCompatActivity {
             //Log.e(TAG, "Mar:" + markerDataList.get(0).key);
 
         }
+
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -112,6 +140,15 @@ public class MarkerList extends AppCompatActivity {
                         .load(markerDataList.get(position).ImageUrl)
                         .into(((CustomViewHolder) holder).imageview);
             }
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(getApplicationContext(),InfoWindow_Edit.class);
+                    intent.putExtra("MarkerAdress",markerDataList.get(position).markerSnippet);
+                    startActivity(intent);
+                }
+            });
 
 
         }

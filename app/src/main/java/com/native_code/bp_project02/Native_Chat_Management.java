@@ -205,6 +205,7 @@ public class  Native_Chat_Management extends AppCompatActivity {
                         .apply(new RequestOptions().circleCrop())
                         .into(((CustomViewHolder) holder).imageView);
             }
+
             ((CustomViewHolder) holder).Nick_textView.setText(userModels.get(position).name);
 
 
@@ -212,7 +213,7 @@ public class  Native_Chat_Management extends AppCompatActivity {
                 @Override
                 public void onClick(View v) { // 수락 버튼 클릭시 1:1 대화창으로 이동
                     Intent intent = new Intent(getApplicationContext(), MessageActivity.class);
-                    intent.putExtra("destination_Uid", requests_array.get(position));//누구랑 대화할지
+                    intent.putExtra("destination_Uid", userModels.get(position).getUid());//누구랑 대화할지
                     startActivity(intent);
 
                     Ref.update("requests",FieldValue.arrayRemove(userModels.get(position).getUid())); // 현지인 관리목록에서 삭제
