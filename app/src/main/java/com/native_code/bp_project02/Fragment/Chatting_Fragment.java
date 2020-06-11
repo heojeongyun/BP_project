@@ -224,9 +224,6 @@ public class Chatting_Fragment extends Fragment {
 
 
 
-
-
-
             // 일일이 챗방에 있는 유저를 체크
             for(String user:chatModels.get(position).users.keySet()){
 
