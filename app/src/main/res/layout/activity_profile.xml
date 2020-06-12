@@ -151,44 +151,62 @@
                 android:text="안녕하세요! 처음 부산에 오셨다면 아름다운 남구로 오세요. 더위에 지친 당신을 위해 시원한 여름코스를 준비해 놨습니다. 망설이지말고 블루밍하세요~! "/>
 
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_below="@+id/introduction_Text"
                 android:layout_marginTop="70dp"
-                android:layout_below="@+id/introduction_Text">
+                android:orientation="horizontal">
 
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/handshake"
-                    android:layout_marginTop="5dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="매칭리뷰"
-                    android:textSize="20dp"
-                    android:textColor="@color/quantum_black_text"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/nanumbarungothic"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <ImageView
+                        android:id="@+id/review0"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/handshake"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/review1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/nanumbarungothic"
+                        android:text="매칭리뷰"
+                        android:textColor="@color/quantum_black_text"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/review0"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
-                <Button
-                    android:id="@+id/actvity_profile_review_button"
-                    android:layout_width="70dp"
-                    android:layout_height="30dp"
-                    android:textColor="@android:color/background_light"
-                    android:layout_marginLeft="190dp"
-                    android:text="리뷰 작성"
-                    android:fontFamily="@font/nanumbarungothic"
-                    android:textStyle="bold"
-                    android:textSize="13dp"
-                    android:background="@drawable/button_selector"/>
+                    <Button
+                        android:id="@+id/actvity_profile_review_button"
+                        android:layout_width="70dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/button_selector"
+                        android:fontFamily="@font/nanumbarungothic"
+                        android:text="리뷰 작성"
+                        android:textColor="@android:color/background_light"
+                        android:textSize="13dp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintLeft_toRightOf="@+id/review1" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
             </LinearLayout>
 
