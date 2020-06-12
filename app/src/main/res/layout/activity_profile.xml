@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,6 +9,8 @@
     tools:context=".MainActivity">
 
     <ScrollView
+        android:id="@+id/scrollView"
+        app:layout_constraintBottom_toTopOf="@+id/profile_chat_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -22,15 +24,25 @@
             android:layout_height="match_parent"
             android:layout_margin="20dp"
             android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             >
 
             <LinearLayout
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent"
+                android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="142dp"
-                android:orientation="vertical">
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:orientation="vertical"
+                >
 
                 <CheckBox
                     android:id="@+id/activity_profile_BookMark"
+                    app:layout_constraintEnd_toEndOf="parent"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="right"
@@ -40,7 +52,9 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
 
                     <ImageView
                         android:id="@+id/profile_Image"
@@ -48,7 +62,9 @@
                         android:layout_height="890dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginBottom="3dp"
-                        android:src="@drawable/user" />
+                        android:src="@drawable/user"
+                        app:layout_constraintStart_toStartOf="parent"
+                        />
 
 
 
@@ -109,12 +125,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="40dp">
+                android:layout_marginTop="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/technology"/>
+                    android:src="@drawable/technology"
+                    app:layout_constraintStart_toStartOf="parent"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -144,6 +163,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 android:fontFamily="@font/nanumbarungothic"
                 android:textColor="#757575"
                 android:textSize="15dp"
@@ -151,12 +172,17 @@
                 android:text="안녕하세요! 처음 부산에 오셨다면 아름다운 남구로 오세요. 더위에 지친 당신을 위해 시원한 여름코스를 준비해 놨습니다. 망설이지말고 블루밍하세요~! "/>
 
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/introduction_Text"
+                android:orientation="horizontal"
                 android:layout_marginTop="70dp"
-                android:orientation="horizontal">
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_below="@+id/introduction_Text">
+
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -199,25 +225,23 @@
                         android:textColor="@android:color/background_light"
                         android:textSize="13dp"
                         android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintLeft_toRightOf="@+id/review1" />
+                        app:layout_constraintLeft_toRightOf="@+id/review1"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#E3E0E0"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="5dp"
+                android:background="#E3E0E0">
             </LinearLayout>
-
-
 
 
             <TextView
@@ -323,6 +347,7 @@
 
     <Button
         android:id="@+id/profile_chat_button"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#4472C4"
@@ -330,7 +355,6 @@
         android:text="매칭 요청"
         android:textSize="20dp"
         android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
         />
-
-</LinearLayout>
-
+</androidx.constraintlayout.widget.ConstraintLayout>
