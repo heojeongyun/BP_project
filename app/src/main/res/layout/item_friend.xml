@@ -26,7 +26,6 @@
         android:layout_marginTop="7dp"
         android:src="@drawable/medal3"
         android:layout_marginBottom="3dp"
-        app:layout_constraintLeft_toRightOf="@+id/chatitem_imageview"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
