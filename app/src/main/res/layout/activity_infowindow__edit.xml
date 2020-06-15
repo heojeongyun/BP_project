@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:id="@+id/activity_infowindow_edit_PlaceImage"
-            android:src="@drawable/loding_icons"
+            android:src="@drawable/map_icons"
             android:scaleType="fitXY"
             />
 

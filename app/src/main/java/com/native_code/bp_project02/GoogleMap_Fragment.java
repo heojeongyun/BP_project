@@ -331,7 +331,7 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
                     //장소 사진 정보가 없을 때
                 }else{
 
-                    bitmap= BitmapFactory.decodeResource(getContext().getResources(), R.drawable.loding_icons);
+                    bitmap= BitmapFactory.decodeResource(getContext().getResources(), R.drawable.map_icons);
                     setCurrentLocation(location, place.getName(), place.getAddress(), "장소를 설명해주세요!", bitmap);
 
                 }
@@ -511,6 +511,8 @@ public class GoogleMap_Fragment extends Fragment implements OnMapReadyCallback, 
 
 
     }
+
+
 
 
 
