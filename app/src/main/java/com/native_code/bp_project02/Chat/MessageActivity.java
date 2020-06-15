@@ -117,7 +117,7 @@ public class MessageActivity extends AppCompatActivity {
 
 
     //지도 프래그먼트 선언
-    private GoogleMap_Fragment googleMap_fragment;
+    private GoogleMap_Fragment googleMap_fragment=null;
     private GoogleMap_Drawing_Fragment googleMap_drawing_fragment;
     private Chatting_Fragment Chatting_Fragment;
 
@@ -135,7 +135,7 @@ public class MessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
 
-        googleMap_fragment=new GoogleMap_Fragment();
+
         googleMap_drawing_fragment=new GoogleMap_Drawing_Fragment();
 
         Intent data=getIntent();
@@ -260,8 +260,12 @@ public class MessageActivity extends AppCompatActivity {
                 public boolean onTouch(View v, MotionEvent event) {
                     switch(event.getAction()) {
                         case MotionEvent.ACTION_DOWN: {
+
                             //터치했을 때 프래그먼트 화면 없애기
-                            removeFragment(googleMap_fragment);
+                            if(googleMap_fragment!=null) {
+                                removeFragment(googleMap_fragment);
+                                googleMap_fragment = null;
+                            }
                             //키보드 숨기
                             //imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                             break;
@@ -288,12 +292,19 @@ public class MessageActivity extends AppCompatActivity {
 
 
         button.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+
+                if(editText.getText().toString().equals("")) {
+                    return;
+                }
 
              ChatModel chatModel=new ChatModel();
              chatModel.users.put(uid,true);
              chatModel.users.put(destinationUid,true);
+
+
 
              if(chatRoomUid==null){
                  button.setEnabled(false);
@@ -303,15 +314,12 @@ public class MessageActivity extends AppCompatActivity {
                          checkChatRoom();
                      }
                  });
-             }
-             if(editText.getText().toString().equals("")) {
-                 button.setEnabled(false);
-             } else {
-                 ChatModel.Comment comment=new ChatModel.Comment();
-                 comment.uid=uid;
-                 comment.message=editText.getText().toString();
-                 comment.IsImage=false;
-                 comment.timestamp= ServerValue.TIMESTAMP;
+             }else {
+                 ChatModel.Comment comment = new ChatModel.Comment();
+                 comment.uid = uid;
+                 comment.message = editText.getText().toString();
+                 comment.IsImage = false;
+                 comment.timestamp = ServerValue.TIMESTAMP;
                  FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment).addOnCompleteListener(new OnCompleteListener<Void>() {
                      @Override
                      public void onComplete(@NonNull Task<Void> task) {
@@ -319,13 +327,14 @@ public class MessageActivity extends AppCompatActivity {
                          editText.setText("");
                      }
                  });
-
              }
 
-                button.setEnabled(true);
+
             }
 
         });
+
+
 
 
 
@@ -637,6 +646,7 @@ public class MessageActivity extends AppCompatActivity {
                                         }
                                     });
                             //getSupportFragmentManager().beginTransaction().replace(R.id.container,googleMap_fragment).commit();
+                            googleMap_fragment=new GoogleMap_Fragment();
                             attachFragment(googleMap_fragment);
                             recyclerView.scrollToPosition(comments.size() - 1);
 
@@ -955,12 +965,22 @@ public class MessageActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        if(valueEventListener!=null) {
-            databaseReference.removeEventListener(valueEventListener);
-        }
+
         super.onBackPressed();
-        finish();
-        overridePendingTransition(R.anim.fromleft,R.anim.toright);
+
+        if(googleMap_fragment!=null) {
+            removeFragment(googleMap_fragment);
+            googleMap_fragment=null;
+        }else{
+            if(valueEventListener!=null) {
+                databaseReference.removeEventListener(valueEventListener);
+            }
+            finish();
+            overridePendingTransition(R.anim.fromleft,R.anim.toright);
+        }
+
+
+
 
     }
 
@@ -986,6 +1006,9 @@ public class MessageActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+
+
 
 
 }

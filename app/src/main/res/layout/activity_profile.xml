@@ -28,28 +28,31 @@
             app:layout_constraintStart_toStartOf="parent"
             >
 
+            <CheckBox
+                android:id="@+id/activity_profile_BookMark"
+                app:layout_constraintEnd_toEndOf="@+id/profile"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right"
+                android:background="@drawable/btn_star"
+                android:button="@null"
+                android:layout_marginTop="45dp"/>
+
             <LinearLayout
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="parent"
-                android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
-                android:layout_height="142dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 android:orientation="vertical"
                 >
 
-                <CheckBox
-                    android:id="@+id/activity_profile_BookMark"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="right"
-                    android:background="@drawable/btn_star"
-                    android:button="@null" />
+
 
                 <FrameLayout
+                    android:id="@+id/profile"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:orientation="horizontal"
